@@ -1,14 +1,14 @@
 CREATE TABLE entrada (
   id UUID NOT NULL,
   placa VARCHAR(8) NOT NULL,
-  datahora TIMESTAMP,
+  datahora TIMESTAMP NOT NULL,
   CONSTRAINT pk_entrada PRIMARY KEY(id)
 );
 
 CREATE TABLE saida (
   id UUID NOT NULL,
   placa VARCHAR(8) NOT NULL,
-  datahora TIMESTAMP,
+  datahora TIMESTAMP NOT NULL,
   CONSTRAINT pk_saida PRIMARY KEY(id)
 );
 

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package br.edu.ifpe.ead.si;
+package br.edu.ifpe.ead.si.mandacarupark;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

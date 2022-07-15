@@ -1,9 +1,9 @@
-package br.edu.ifpe.ead.si;
+package br.edu.ifpe.ead.si.mandacarupark;
 
 import java.time.LocalDateTime;
 
 public interface Locacao {
-    Ticket ticket();
+    Placa placa();
     LocalDateTime entrada();
     LocalDateTime saida();
     double valor();

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package br.edu.ifpe.ead.si;
+package br.edu.ifpe.ead.si.mandacarupark;
 
 import java.util.Objects;
 
@@ -38,12 +38,12 @@ public class Placa {
     @Override
     public boolean equals(Object obj) {
         return this == obj || obj instanceof Placa &&
-            Placa.class.cast(obj).numeros.equals(numeros);
+            Placa.class.cast(obj).numeros.equals(this.numeros);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(numeros);
+        return Objects.hash(this.numeros);
     }
 
     @Override
