@@ -1,9 +1,9 @@
-package br.edu.ifpe.ead.si.mandacarupark.tabela;
+package br.edu.ifpe.ead.si.mandacarupark.preco;
 
-import br.edu.ifpe.ead.si.mandacarupark.TabelaPrecos;
+import br.edu.ifpe.ead.si.mandacarupark.Precos;
 import java.time.LocalDateTime;
 
-public class PrecoFixo implements TabelaPrecos {
+public class PrecoFixo implements Precos {
     private final double valor;
 
     public PrecoFixo(double valor) {

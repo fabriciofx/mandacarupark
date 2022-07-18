@@ -1,7 +1,7 @@
 package br.edu.ifpe.ead.si.mandacarupark;
 
 import br.edu.ifpe.ead.si.mandacarupark.fake.FakeEstacionamento;
-import br.edu.ifpe.ead.si.mandacarupark.tabela.PrecoFixo;
+import br.edu.ifpe.ead.si.mandacarupark.preco.PrecoFixo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
