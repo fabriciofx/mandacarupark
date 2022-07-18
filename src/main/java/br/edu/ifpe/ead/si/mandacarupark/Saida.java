@@ -2,8 +2,8 @@ package br.edu.ifpe.ead.si.mandacarupark;
 
 import java.time.LocalDateTime;
 
-public interface Pagamento {
+public interface Saida {
     Uuid id();
+    Placa placa();
     LocalDateTime dataHora();
-    double valor();
 }

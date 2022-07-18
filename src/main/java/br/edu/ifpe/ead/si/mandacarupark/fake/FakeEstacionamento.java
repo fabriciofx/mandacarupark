@@ -1,9 +1,10 @@
 package br.edu.ifpe.ead.si.mandacarupark.fake;
 
+import br.edu.ifpe.ead.si.mandacarupark.Entrada;
 import br.edu.ifpe.ead.si.mandacarupark.Estacionamento;
-import br.edu.ifpe.ead.si.mandacarupark.Locacao;
 import br.edu.ifpe.ead.si.mandacarupark.Pagamento;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
+import br.edu.ifpe.ead.si.mandacarupark.Saida;
 import br.edu.ifpe.ead.si.mandacarupark.TabelaPrecos;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
@@ -12,59 +13,66 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FakeEstacionamento implements Estacionamento {
-    private final Map<Uuid, Locacao> locacoes;
+    private final Map<Uuid, Entrada> entradas;
+    private final Map<Uuid, Saida> saidas;
+    private final Map<Uuid, Pagamento> pagamentos;
     private final TabelaPrecos tabela;
 
     public FakeEstacionamento(TabelaPrecos tabela) {
-        this(new HashMap<>(), tabela);
-    }
-
-    public FakeEstacionamento(
-        Map<Uuid, Locacao> locacoes,
-        TabelaPrecos tabela
-    ) {
-        this.locacoes = locacoes;
+        this.entradas = new HashMap<>();
+        this.saidas = new HashMap<>();
+        this.pagamentos = new HashMap<>();
         this.tabela = tabela;
     }
 
     @Override
     public Ticket entrada(Placa placa, LocalDateTime dataHora) {
-        Ticket ticket = new FakeTicket(placa, dataHora);
-        LocalDateTime invalida = LocalDateTime.of(0, 1, 1, 0, 0, 0, 0);
-        this.locacoes.put(
+        Ticket ticket = new FakeTicket(this.pagamentos, placa, dataHora);
+        this.entradas.put(
             ticket.id(),
-            new FakeLocacao(
+            new FakeEntrada(
                 ticket.id(),
                 ticket.placa(),
-                ticket.dataHora(),
-                invalida,
-                0.0
+                dataHora
             )
         );
         return ticket;
     }
 
     @Override
-    public Pagamento pagamento(Ticket ticket, LocalDateTime dataHora) {
-        return this.tabela.pagamento(ticket, dataHora);
+    public Ticket pagamento(Ticket ticket, LocalDateTime dataHora) {
+        double valor = this.tabela.valor(ticket.dataHora(), dataHora);
+        this.pagamentos.put(
+            ticket.id(),
+            new FakePagamento(
+                ticket.id(),
+                dataHora,
+                valor
+            )
+        );
+        return new FakeTicket(
+            this.pagamentos,
+            ticket.id(),
+            ticket.placa(),
+            ticket.dataHora(),
+            valor
+        );
     }
 
     @Override
     public void saida(Ticket ticket, Placa placa, LocalDateTime dataHora) {
         if (!ticket.validado()) {
-            throw new RuntimeException("Locação não paga!");
+            throw new RuntimeException("Ticket não validado!");
         }
         if (!ticket.placa().equals(placa)) {
             throw new RuntimeException("Ticket não confere com a placa!");
         }
-        this.locacoes.put(
+        this.saidas.put(
             ticket.id(),
-            new FakeLocacao(
+            new FakeSaida(
                 ticket.id(),
                 ticket.placa(),
-                ticket.dataHora(),
-                dataHora,
-                ticket.valor()
+                dataHora
             )
         );
     }

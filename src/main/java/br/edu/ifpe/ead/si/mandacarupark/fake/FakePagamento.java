@@ -1,30 +1,32 @@
 package br.edu.ifpe.ead.si.mandacarupark.fake;
 
 import br.edu.ifpe.ead.si.mandacarupark.Pagamento;
-import br.edu.ifpe.ead.si.mandacarupark.Ticket;
+import br.edu.ifpe.ead.si.mandacarupark.Uuid;
+import java.time.LocalDateTime;
 
 public class FakePagamento implements Pagamento {
-    private final Ticket ticket;
+    private final Uuid id;
+    private final LocalDateTime dataHora;
     private final double valor;
 
-    public FakePagamento(Ticket ticket, double valor) {
-        this.ticket = ticket;
+    public FakePagamento(Uuid id, LocalDateTime dataHora, double valor) {
+        this.id = id;
+        this.dataHora = dataHora;
         this.valor = valor;
+    }
+
+    @Override
+    public Uuid id() {
+        return this.id;
+    }
+
+    @Override
+    public LocalDateTime dataHora() {
+        return this.dataHora;
     }
 
     @Override
     public double valor() {
         return this.valor;
-    }
-
-    @Override
-    public Ticket valida() {
-        return new FakeTicket(
-            this.ticket.id(),
-            this.ticket.placa(),
-            this.ticket.dataHora(),
-            this.valor,
-            true
-        );
     }
 }
