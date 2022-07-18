@@ -4,8 +4,8 @@ import br.edu.ifpe.ead.si.mandacarupark.Entrada;
 import br.edu.ifpe.ead.si.mandacarupark.Estacionamento;
 import br.edu.ifpe.ead.si.mandacarupark.Pagamento;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
-import br.edu.ifpe.ead.si.mandacarupark.Saida;
 import br.edu.ifpe.ead.si.mandacarupark.Precos;
+import br.edu.ifpe.ead.si.mandacarupark.Saida;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import java.time.LocalDateTime;
@@ -18,11 +18,25 @@ public class FakeEstacionamento implements Estacionamento {
     private final Map<Uuid, Pagamento> pagamentos;
     private final Precos precos;
 
-    public FakeEstacionamento(Precos precos) {
-        this.entradas = new HashMap<>();
-        this.saidas = new HashMap<>();
-        this.pagamentos = new HashMap<>();
+    public FakeEstacionamento(
+        Map<Uuid, Entrada> entradas,
+        Map<Uuid, Saida> saidas,
+        Map<Uuid, Pagamento> pagamentos,
+        Precos precos
+    ) {
+        this.entradas = entradas;
+        this.saidas = saidas;
+        this.pagamentos = pagamentos;
         this.precos = precos;
+    }
+
+    public FakeEstacionamento(Precos precos) {
+        this(
+            new HashMap<>(),
+            new HashMap<>(),
+            new HashMap<>(),
+            precos
+        );
     }
 
     @Override
