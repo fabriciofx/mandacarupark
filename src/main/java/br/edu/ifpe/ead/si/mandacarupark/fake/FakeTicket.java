@@ -1,5 +1,6 @@
 package br.edu.ifpe.ead.si.mandacarupark.fake;
 
+import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
 import br.edu.ifpe.ead.si.mandacarupark.Pagamento;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
@@ -12,7 +13,7 @@ public class FakeTicket implements Ticket {
     private final Uuid id;
     private final Placa placa;
     private final LocalDateTime dataHora;
-    private final double valor;
+    private final Dinheiro valor;
 
     public FakeTicket(
         Map<Uuid, Pagamento> pagamentos,
@@ -24,7 +25,7 @@ public class FakeTicket implements Ticket {
             new Uuid(),
             placa,
             dataHora,
-            0.0
+            new Dinheiro("0.0")
         );
     }
 
@@ -33,7 +34,7 @@ public class FakeTicket implements Ticket {
         Uuid id,
         Placa placa,
         LocalDateTime dataHora,
-        double valor
+        Dinheiro valor
     ) {
         this.pagamentos = pagamentos;
         this.id = id;
@@ -58,7 +59,7 @@ public class FakeTicket implements Ticket {
     }
 
     @Override
-    public double valor() {
+    public Dinheiro valor() {
         Pagamento pagamento = this.pagamentos.get(this.id);
         return pagamento.valor();
     }

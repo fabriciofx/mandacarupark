@@ -6,5 +6,5 @@ public interface Locacao {
     Placa placa();
     LocalDateTime entrada();
     LocalDateTime saida();
-    double valor();
+    Dinheiro valor();
 }

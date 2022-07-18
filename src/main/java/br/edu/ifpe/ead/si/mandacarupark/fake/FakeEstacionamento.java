@@ -1,5 +1,6 @@
 package br.edu.ifpe.ead.si.mandacarupark.fake;
 
+import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
 import br.edu.ifpe.ead.si.mandacarupark.Entrada;
 import br.edu.ifpe.ead.si.mandacarupark.Estacionamento;
 import br.edu.ifpe.ead.si.mandacarupark.Pagamento;
@@ -55,7 +56,7 @@ public class FakeEstacionamento implements Estacionamento {
 
     @Override
     public Ticket pagamento(Ticket ticket, LocalDateTime dataHora) {
-        double valor = this.precos.valor(ticket.dataHora(), dataHora);
+        Dinheiro valor = this.precos.valor(ticket.dataHora(), dataHora);
         this.pagamentos.put(
             ticket.id(),
             new FakePagamento(

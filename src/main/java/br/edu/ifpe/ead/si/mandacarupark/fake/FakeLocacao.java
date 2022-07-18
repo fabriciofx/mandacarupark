@@ -1,5 +1,6 @@
 package br.edu.ifpe.ead.si.mandacarupark.fake;
 
+import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
 import br.edu.ifpe.ead.si.mandacarupark.Locacao;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
@@ -10,14 +11,14 @@ public class FakeLocacao implements Locacao {
     private final Placa placa;
     private final LocalDateTime entrada;
     private final LocalDateTime saida;
-    private final double valor;
+    private final Dinheiro valor;
 
     public FakeLocacao(
         Uuid id,
         Placa placa,
         LocalDateTime entrada,
         LocalDateTime saida,
-        double valor
+        Dinheiro valor
     ) {
         this.id = id;
         this.placa = placa;
@@ -42,7 +43,7 @@ public class FakeLocacao implements Locacao {
     }
 
     @Override
-    public double valor() {
+    public Dinheiro valor() {
         return this.valor;
     }
 }

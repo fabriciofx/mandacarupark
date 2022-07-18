@@ -1,5 +1,6 @@
 package br.edu.ifpe.ead.si.mandacarupark.fake;
 
+import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
 import br.edu.ifpe.ead.si.mandacarupark.Pagamento;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import java.time.LocalDateTime;
@@ -7,9 +8,9 @@ import java.time.LocalDateTime;
 public class FakePagamento implements Pagamento {
     private final Uuid id;
     private final LocalDateTime dataHora;
-    private final double valor;
+    private final Dinheiro valor;
 
-    public FakePagamento(Uuid id, LocalDateTime dataHora, double valor) {
+    public FakePagamento(Uuid id, LocalDateTime dataHora, Dinheiro valor) {
         this.id = id;
         this.dataHora = dataHora;
         this.valor = valor;
@@ -26,7 +27,7 @@ public class FakePagamento implements Pagamento {
     }
 
     @Override
-    public double valor() {
+    public Dinheiro valor() {
         return this.valor;
     }
 }

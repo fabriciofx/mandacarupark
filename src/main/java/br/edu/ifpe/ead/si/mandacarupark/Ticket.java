@@ -6,6 +6,6 @@ public interface Ticket {
     Uuid id();
     Placa placa();
     LocalDateTime dataHora();
-    double valor();
+    Dinheiro valor();
     boolean validado();
 }

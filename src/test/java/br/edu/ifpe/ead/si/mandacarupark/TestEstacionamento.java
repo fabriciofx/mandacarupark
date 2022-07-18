@@ -10,7 +10,7 @@ public class TestEstacionamento {
     @Test
     void locacao() {
         Estacionamento estacionamento = new FakeEstacionamento(
-            new PrecoFixo(5.00)
+            new PrecoFixo(new Dinheiro("5.00"))
         );
         Placa placa = new Placa("ABC1234");
         LocalDateTime agora = LocalDateTime.now();
@@ -18,7 +18,7 @@ public class TestEstacionamento {
         ticket = estacionamento.pagamento(ticket, agora.plusMinutes(60));
         estacionamento.saida(ticket, placa, agora.plusMinutes(70));
         Assertions.assertTrue(ticket.validado());
-        Assertions.assertEquals(ticket.valor(), 5.00);
+        Assertions.assertEquals(ticket.valor(), new Dinheiro("5.00"));
     }
 
     @Test()
@@ -27,7 +27,7 @@ public class TestEstacionamento {
             RuntimeException.class,
             () -> {
                 Estacionamento estacionamento = new FakeEstacionamento(
-                    new PrecoFixo(5.00)
+                    new PrecoFixo(new Dinheiro("5.00"))
                 );
                 Placa placa = new Placa("ABC1234");
                 LocalDateTime agora = LocalDateTime.now();

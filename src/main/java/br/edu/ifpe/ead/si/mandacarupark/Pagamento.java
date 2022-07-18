@@ -5,5 +5,5 @@ import java.time.LocalDateTime;
 public interface Pagamento {
     Uuid id();
     LocalDateTime dataHora();
-    double valor();
+    Dinheiro valor();
 }
