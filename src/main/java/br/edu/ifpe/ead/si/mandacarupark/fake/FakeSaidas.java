@@ -52,7 +52,7 @@ public class FakeSaidas implements Saidas {
     }
 
     @Override
-    public Saida get(Uuid id) {
+    public Saida procura(Uuid id) {
         return this.items.get(id);
     }
 

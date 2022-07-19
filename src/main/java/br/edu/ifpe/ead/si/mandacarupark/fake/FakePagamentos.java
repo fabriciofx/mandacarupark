@@ -56,7 +56,7 @@ public class FakePagamentos implements Pagamentos {
     }
 
     @Override
-    public Pagamento get(Uuid id) {
+    public Pagamento procura(Uuid id) {
         return this.items.get(id);
     }
 

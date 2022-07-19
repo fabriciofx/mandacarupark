@@ -51,7 +51,7 @@ public class FakeEntradas implements Entradas {
     }
 
     @Override
-    public Entrada get(Uuid id) {
+    public Entrada procura(Uuid id) {
         return this.items.get(id);
     }
 
