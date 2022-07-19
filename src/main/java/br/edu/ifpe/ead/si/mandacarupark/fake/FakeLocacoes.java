@@ -74,25 +74,4 @@ public class FakeLocacoes implements Locacoes {
         }
         return items.iterator();
     }
-
-    @Override
-    public int count() {
-        List<Locacao> items = new ArrayList<>();
-        for (Entrada entrada : this.entradas) {
-            if (this.periodo.contem(entrada.dataHora())) {
-                Saida saida = this.saidas.get(entrada.id());
-                Pagamento pagamento = this.pagamentos.get(entrada.id());
-                items.add(
-                    new FakeLocacao(
-                        entrada.id(),
-                        entrada.placa(),
-                        entrada.dataHora(),
-                        saida.dataHora(),
-                        pagamento.valor()
-                    )
-                );
-            }
-        }
-        return items.size();
-    }
 }
