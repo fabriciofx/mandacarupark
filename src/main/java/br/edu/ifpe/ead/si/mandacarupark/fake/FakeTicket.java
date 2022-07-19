@@ -2,21 +2,21 @@ package br.edu.ifpe.ead.si.mandacarupark.fake;
 
 import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
 import br.edu.ifpe.ead.si.mandacarupark.Pagamento;
+import br.edu.ifpe.ead.si.mandacarupark.Pagamentos;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import java.time.LocalDateTime;
-import java.util.Map;
 
 public class FakeTicket implements Ticket {
-    private final Map<Uuid, Pagamento> pagamentos;
+    private final Pagamentos pagamentos;
     private final Uuid id;
     private final Placa placa;
     private final LocalDateTime dataHora;
     private final Dinheiro valor;
 
     public FakeTicket(
-        Map<Uuid, Pagamento> pagamentos,
+        Pagamentos pagamentos,
         Placa placa,
         LocalDateTime dataHora
     ) {
@@ -30,7 +30,7 @@ public class FakeTicket implements Ticket {
     }
 
     public FakeTicket(
-        Map<Uuid, Pagamento> pagamentos,
+        Pagamentos pagamentos,
         Uuid id,
         Placa placa,
         LocalDateTime dataHora,

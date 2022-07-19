@@ -4,26 +4,23 @@ import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
 import br.edu.ifpe.ead.si.mandacarupark.Entrada;
 import br.edu.ifpe.ead.si.mandacarupark.Entradas;
 import br.edu.ifpe.ead.si.mandacarupark.Estacionamento;
-import br.edu.ifpe.ead.si.mandacarupark.Pagamento;
+import br.edu.ifpe.ead.si.mandacarupark.Pagamentos;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Precos;
 import br.edu.ifpe.ead.si.mandacarupark.Saidas;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
-import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 public class FakeEstacionamento implements Estacionamento {
     private final Entradas entradas;
     private final Saidas saidas;
-    private final Map<Uuid, Pagamento> pagamentos;
+    private final Pagamentos pagamentos;
     private final Precos precos;
 
     public FakeEstacionamento(
         Entradas entradas,
         Saidas saidas,
-        Map<Uuid, Pagamento> pagamentos,
+        Pagamentos pagamentos,
         Precos precos
     ) {
         this.entradas = entradas;
@@ -36,7 +33,7 @@ public class FakeEstacionamento implements Estacionamento {
         this(
             new FakeEntradas(),
             new FakeSaidas(),
-            new HashMap<>(),
+            new FakePagamentos(),
             precos
         );
     }
@@ -57,14 +54,7 @@ public class FakeEstacionamento implements Estacionamento {
     @Override
     public Ticket pagamento(Ticket ticket, LocalDateTime dataHora) {
         Dinheiro valor = this.precos.valor(ticket.dataHora(), dataHora);
-        this.pagamentos.put(
-            ticket.id(),
-            new FakePagamento(
-                ticket.id(),
-                dataHora,
-                valor
-            )
-        );
+        this.pagamentos.pagamento(ticket, dataHora, valor);
         return new FakeTicket(
             this.pagamentos,
             ticket.id(),
