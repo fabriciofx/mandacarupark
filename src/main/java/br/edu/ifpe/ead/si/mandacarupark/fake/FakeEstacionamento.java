@@ -2,6 +2,7 @@ package br.edu.ifpe.ead.si.mandacarupark.fake;
 
 import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
 import br.edu.ifpe.ead.si.mandacarupark.Entrada;
+import br.edu.ifpe.ead.si.mandacarupark.Entradas;
 import br.edu.ifpe.ead.si.mandacarupark.Estacionamento;
 import br.edu.ifpe.ead.si.mandacarupark.Pagamento;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
@@ -14,13 +15,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FakeEstacionamento implements Estacionamento {
-    private final Map<Uuid, Entrada> entradas;
+    private final Entradas entradas;
     private final Map<Uuid, Saida> saidas;
     private final Map<Uuid, Pagamento> pagamentos;
     private final Precos precos;
 
     public FakeEstacionamento(
-        Map<Uuid, Entrada> entradas,
+        Entradas entradas,
         Map<Uuid, Saida> saidas,
         Map<Uuid, Pagamento> pagamentos,
         Precos precos
@@ -33,7 +34,7 @@ public class FakeEstacionamento implements Estacionamento {
 
     public FakeEstacionamento(Precos precos) {
         this(
-            new HashMap<>(),
+            new FakeEntradas(),
             new HashMap<>(),
             new HashMap<>(),
             precos
@@ -42,14 +43,13 @@ public class FakeEstacionamento implements Estacionamento {
 
     @Override
     public Ticket entrada(Placa placa, LocalDateTime dataHora) {
-        Ticket ticket = new FakeTicket(this.pagamentos, placa, dataHora);
-        this.entradas.put(
-            ticket.id(),
-            new FakeEntrada(
-                ticket.id(),
-                ticket.placa(),
-                dataHora
-            )
+        Entrada entrada = entradas.entrada(placa, dataHora);
+        Ticket ticket = new FakeTicket(
+            this.pagamentos,
+            entrada.id(),
+            placa,
+            dataHora,
+            new Dinheiro("0.0")
         );
         return ticket;
     }
