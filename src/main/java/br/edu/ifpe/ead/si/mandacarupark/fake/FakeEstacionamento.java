@@ -7,7 +7,7 @@ import br.edu.ifpe.ead.si.mandacarupark.Estacionamento;
 import br.edu.ifpe.ead.si.mandacarupark.Pagamento;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Precos;
-import br.edu.ifpe.ead.si.mandacarupark.Saida;
+import br.edu.ifpe.ead.si.mandacarupark.Saidas;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import java.time.LocalDateTime;
@@ -16,13 +16,13 @@ import java.util.Map;
 
 public class FakeEstacionamento implements Estacionamento {
     private final Entradas entradas;
-    private final Map<Uuid, Saida> saidas;
+    private final Saidas saidas;
     private final Map<Uuid, Pagamento> pagamentos;
     private final Precos precos;
 
     public FakeEstacionamento(
         Entradas entradas,
-        Map<Uuid, Saida> saidas,
+        Saidas saidas,
         Map<Uuid, Pagamento> pagamentos,
         Precos precos
     ) {
@@ -35,7 +35,7 @@ public class FakeEstacionamento implements Estacionamento {
     public FakeEstacionamento(Precos precos) {
         this(
             new FakeEntradas(),
-            new HashMap<>(),
+            new FakeSaidas(),
             new HashMap<>(),
             precos
         );
@@ -82,13 +82,6 @@ public class FakeEstacionamento implements Estacionamento {
         if (!ticket.placa().equals(placa)) {
             throw new RuntimeException("Ticket não confere com a placa!");
         }
-        this.saidas.put(
-            ticket.id(),
-            new FakeSaida(
-                ticket.id(),
-                ticket.placa(),
-                dataHora
-            )
-        );
+        this.saidas.saida(ticket, placa, dataHora);
     }
 }
