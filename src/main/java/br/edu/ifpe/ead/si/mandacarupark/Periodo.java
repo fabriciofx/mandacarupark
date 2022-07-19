@@ -42,4 +42,9 @@ public final class Periodo {
         Duration decorrido = Duration.between(this.inicio, this.termino);
         return decorrido.toMinutes();
     }
+
+    public boolean contem(LocalDateTime dataHora) {
+        return this.inicio.compareTo(dataHora) <= 0 &&
+            this.termino.compareTo(dataHora) >= 0;
+    }
 }

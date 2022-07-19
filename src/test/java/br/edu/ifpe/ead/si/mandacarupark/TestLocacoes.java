@@ -23,42 +23,49 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark;
 
+import br.edu.ifpe.ead.si.mandacarupark.fake.FakeEntradas;
 import br.edu.ifpe.ead.si.mandacarupark.fake.FakeEstacionamento;
+import br.edu.ifpe.ead.si.mandacarupark.fake.FakeLocacoes;
+import br.edu.ifpe.ead.si.mandacarupark.fake.FakePagamentos;
+import br.edu.ifpe.ead.si.mandacarupark.fake.FakeSaidas;
 import br.edu.ifpe.ead.si.mandacarupark.preco.PrecoFixo;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 
-public class TestEstacionamento {
+public class TestLocacoes {
     @Test
-    void locacao() {
+    public void locacoes() {
+        Entradas entradas = new FakeEntradas();
+        Saidas saidas = new FakeSaidas();
+        Pagamentos pagamentos = new FakePagamentos();
         Estacionamento estacionamento = new FakeEstacionamento(
+            entradas,
+            saidas,
+            pagamentos,
             new PrecoFixo(new Dinheiro("5.00"))
         );
+        // Locação 1
         Placa placa = new Placa("ABC1234");
         LocalDateTime agora = LocalDateTime.now();
         Ticket ticket = estacionamento.entrada(placa, agora);
         ticket = estacionamento.pagamento(ticket, agora.plusMinutes(60));
         estacionamento.saida(ticket, placa, agora.plusMinutes(70));
-        Assertions.assertTrue(ticket.validado());
-        Assertions.assertEquals(ticket.valor(), new Dinheiro("5.00"));
-    }
-
-    @Test()
-    void sairSemValidarTicket() {
-        RuntimeException exception = Assertions.assertThrows(
-            RuntimeException.class,
-            () -> {
-                Estacionamento estacionamento = new FakeEstacionamento(
-                    new PrecoFixo(new Dinheiro("5.00"))
-                );
-                Placa placa = new Placa("ABC1234");
-                LocalDateTime agora = LocalDateTime.now();
-                Ticket ticket = estacionamento.entrada(placa, agora);
-                estacionamento.saida(ticket, placa, agora.plusMinutes(70));
-                ticket.validado();
-            }
+        // Locação 2
+        placa = new Placa("DEF5678");
+        ticket = estacionamento.entrada(placa, agora.plusMinutes(1));
+        ticket = estacionamento.pagamento(ticket, agora.plusMinutes(40));
+        estacionamento.saida(ticket, placa, agora.plusMinutes(45));
+        // Locação 3
+        placa = new Placa("GHI9012");
+        ticket = estacionamento.entrada(placa, agora.plusMinutes(2));
+        ticket = estacionamento.pagamento(ticket, agora.plusMinutes(55));
+        estacionamento.saida(ticket, placa, agora.plusMinutes(52));
+        Locacoes locacoes = new FakeLocacoes(
+            entradas,
+            saidas,
+            pagamentos,
+            new Periodo(agora.minusMinutes(5), agora.plusMinutes(80))
         );
-        Assertions.assertEquals("Ticket não validado!", exception.getMessage());
+
     }
 }
