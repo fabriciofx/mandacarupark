@@ -27,9 +27,8 @@ import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
+import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
 
@@ -68,26 +67,24 @@ public class SqlTicket implements Ticket {
 
     @Override
     public Dinheiro valor() {
-        Dinheiro valor = null;
         String sql = String.format(
             "SELECT valor FROM pagamento WHERE id = '%s'",
             this.id
         );
-        try (Connection conn = this.session.connection()) {
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                try (ResultSet rset = stmt.executeQuery()) {
-                    if (rset.next()) {
-                        valor = new Dinheiro(rset.getBigDecimal(1));
-                    }
-                }
+        try {
+            Dinheiro valor;
+            ResultSet rset = new Select(this.session, sql).result();
+            if (rset.next()) {
+                valor = new Dinheiro(rset.getBigDecimal(1));
+            } else {
+                throw new RuntimeException(
+                    "Valor inexistente ou inválida!"
+                );
             }
+            return valor;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-        if (valor == null) {
-            throw new RuntimeException("Valor inválido!");
-        }
-        return valor;
     }
 
     @Override
@@ -96,18 +93,19 @@ public class SqlTicket implements Ticket {
             "SELECT COUNT(*) FROM pagamento WHERE id = '%s'",
             this.id
         );
-        int quantidade = 0;
-        try (Connection conn = this.session.connection()) {
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                try (ResultSet rset = stmt.executeQuery()) {
-                    if (rset.next()) {
-                        quantidade = rset.getInt(1);
-                    }
-                }
+        try {
+            int quantidade;
+            ResultSet rset = new Select(this.session, sql).result();
+            if (rset.next()) {
+                quantidade = rset.getInt(1);
+            } else {
+                throw new RuntimeException(
+                    "Validação inexistente ou inválida!"
+                );
             }
+            return quantidade != 0;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-        return quantidade != 0;
     }
 }
