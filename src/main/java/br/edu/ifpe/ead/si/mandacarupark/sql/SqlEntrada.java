@@ -28,8 +28,6 @@ import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -57,24 +55,22 @@ public class SqlEntrada implements Entrada {
             "SELECT placa FROM entrada WHERE id = '%s'",
             this.id
         );
-        Placa placa = null;
         try {
+            Placa placa ;
             ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 placa = new Placa(rset.getString(1));
+            } else {
+                throw new RuntimeException("Placa inexistente ou inválida!");
             }
+            return placa;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-        if (placa == null) {
-            throw new RuntimeException("Placa inválida!");
-        }
-        return placa;
     }
 
     @Override
     public LocalDateTime dataHora() {
-        LocalDateTime dataHora = null;
         DateTimeFormatter formato = DateTimeFormatter.ofPattern(
             "yyyy-MM-dd HH:mm:ss.SSSX"
         );
@@ -82,23 +78,19 @@ public class SqlEntrada implements Entrada {
             "SELECT datahora FROM entrada WHERE id = '%s'",
             this.id
         );
-        try (Connection conn = this.session.connection()) {
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                try (ResultSet rset = stmt.executeQuery()) {
-                    if (rset.next()) {
-                        dataHora = LocalDateTime.parse(
-                            rset.getString(1),
-                            formato
-                        );
-                    }
-                }
+        try {
+            LocalDateTime dataHora;
+            ResultSet rset = new Select(this.session, sql).result();
+            if (rset.next()) {
+                dataHora = LocalDateTime.parse(rset.getString(1), formato);
+            } else {
+                throw new RuntimeException(
+                    "Data/Hora inexistente ou inválida!"
+                );
             }
+            return dataHora;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-        if (dataHora == null) {
-            throw new RuntimeException("Data/Hora inválida!");
-        }
-        return dataHora;
     }
 }
