@@ -26,6 +26,7 @@ package br.edu.ifpe.ead.si.mandacarupark.sql;
 import br.edu.ifpe.ead.si.mandacarupark.Entrada;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
+import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -52,18 +53,15 @@ public class SqlEntrada implements Entrada {
 
     @Override
     public Placa placa() {
-        Placa placa = null;
         String sql = String.format(
             "SELECT placa FROM entrada WHERE id = '%s'",
             this.id
         );
-        try (Connection conn = this.session.connection()) {
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                try (ResultSet rset = stmt.executeQuery()) {
-                    if (rset.next()) {
-                        placa = new Placa(rset.getString(1));
-                    }
-                }
+        Placa placa = null;
+        try {
+            ResultSet rset = new Select(this.session, sql).result();
+            if (rset.next()) {
+                placa = new Placa(rset.getString(1));
             }
         } catch (Exception ex) {
             throw new RuntimeException(ex);
