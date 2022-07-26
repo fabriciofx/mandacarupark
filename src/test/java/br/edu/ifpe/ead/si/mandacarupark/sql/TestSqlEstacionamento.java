@@ -7,6 +7,7 @@ import br.edu.ifpe.ead.si.mandacarupark.Estacionamento;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.db.H2Server;
+import br.edu.ifpe.ead.si.mandacarupark.db.RandomName;
 import br.edu.ifpe.ead.si.mandacarupark.db.Server;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
 import br.edu.ifpe.ead.si.mandacarupark.db.SqlScript;
@@ -19,7 +20,7 @@ public class TestSqlEstacionamento {
     @Test
     public void entrada() throws Exception {
         Server server = new H2Server(
-            "mandacarupark",
+            new RandomName().toString(),
             new SqlScript("mandacarupark.sql")
         );
         server.start();
@@ -43,7 +44,7 @@ public class TestSqlEstacionamento {
     @Test
     void locacao() throws Exception {
         Server server = new H2Server(
-            "mandacarupark",
+            new RandomName().toString(),
             new SqlScript("mandacarupark.sql")
         );
         server.start();
@@ -72,7 +73,7 @@ public class TestSqlEstacionamento {
             RuntimeException.class,
             () -> {
                 Server server = new H2Server(
-                    "mandacarupark",
+                    new RandomName().toString(),
                     new SqlScript("mandacarupark.sql")
                 );
                 server.start();
