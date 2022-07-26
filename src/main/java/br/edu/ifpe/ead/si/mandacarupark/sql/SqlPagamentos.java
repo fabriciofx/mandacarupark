@@ -28,9 +28,8 @@ import br.edu.ifpe.ead.si.mandacarupark.Pagamento;
 import br.edu.ifpe.ead.si.mandacarupark.Pagamentos;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
+import br.edu.ifpe.ead.si.mandacarupark.db.Insert;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.time.LocalDateTime;
 import java.util.Iterator;
 
@@ -53,13 +52,7 @@ public class SqlPagamentos implements Pagamentos {
             dataHora,
             valor.quantia()
         );
-        try (Connection conn = this.session.connection()) {
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.execute();
-            }
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
+        new Insert(this.session, sql).execute();
         return new SqlPagamento(this.session, ticket.id());
     }
 

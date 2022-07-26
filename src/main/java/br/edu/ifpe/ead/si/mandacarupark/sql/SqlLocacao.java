@@ -27,9 +27,8 @@ import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
 import br.edu.ifpe.ead.si.mandacarupark.Locacao;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
+import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -45,31 +44,26 @@ public class SqlLocacao implements Locacao {
 
     @Override
     public Placa placa() {
-        Placa placa = null;
         String sql = String.format(
             "SELECT placa FROM locacao WHERE id = '%s'",
             this.id
         );
-        try (Connection conn = this.session.connection()) {
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                try (ResultSet rset = stmt.executeQuery()) {
-                    if (rset.next()) {
-                        placa = new Placa(rset.getString(1));
-                    }
-                }
+        try {
+            Placa placa ;
+            ResultSet rset = new Select(this.session, sql).result();
+            if (rset.next()) {
+                placa = new Placa(rset.getString(1));
+            } else {
+                throw new RuntimeException("Placa inexistente ou inválida!");
             }
+            return placa;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-        if (placa == null) {
-            throw new RuntimeException("Placa inválida!");
-        }
-        return placa;
     }
 
     @Override
     public LocalDateTime entrada() {
-        LocalDateTime dataHora = null;
         DateTimeFormatter formato = DateTimeFormatter.ofPattern(
             "yyyy-MM-dd HH:mm:ss.SSSX"
         );
@@ -77,29 +71,24 @@ public class SqlLocacao implements Locacao {
             "SELECT entrada FROM locacao WHERE id = '%s'",
             this.id
         );
-        try (Connection conn = this.session.connection()) {
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                try (ResultSet rset = stmt.executeQuery()) {
-                    if (rset.next()) {
-                        dataHora = LocalDateTime.parse(
-                            rset.getString(1),
-                            formato
-                        );
-                    }
-                }
+        try {
+            LocalDateTime dataHora;
+            ResultSet rset = new Select(this.session, sql).result();
+            if (rset.next()) {
+                dataHora = LocalDateTime.parse(rset.getString(1), formato);
+            } else {
+                throw new RuntimeException(
+                    "Data/Hora inexistente ou inválida!"
+                );
             }
+            return dataHora;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-        if (dataHora == null) {
-            throw new RuntimeException("Data/Hora inválida!");
-        }
-        return dataHora;
     }
 
     @Override
     public LocalDateTime saida() {
-        LocalDateTime dataHora = null;
         DateTimeFormatter formato = DateTimeFormatter.ofPattern(
             "yyyy-MM-dd HH:mm:ss.SSSX"
         );
@@ -107,47 +96,41 @@ public class SqlLocacao implements Locacao {
             "SELECT saida FROM locacao WHERE id = '%s'",
             this.id
         );
-        try (Connection conn = this.session.connection()) {
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                try (ResultSet rset = stmt.executeQuery()) {
-                    if (rset.next()) {
-                        dataHora = LocalDateTime.parse(
-                            rset.getString(1),
-                            formato
-                        );
-                    }
-                }
+        try {
+            LocalDateTime dataHora;
+            ResultSet rset = new Select(this.session, sql).result();
+            if (rset.next()) {
+                dataHora = LocalDateTime.parse(rset.getString(1), formato);
+            } else {
+                throw new RuntimeException(
+                    "Data/Hora inexistente ou inválida!"
+                );
             }
+            return dataHora;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-        if (dataHora == null) {
-            throw new RuntimeException("Data/Hora inválida!");
-        }
-        return dataHora;
     }
 
     @Override
     public Dinheiro valor() {
-        Dinheiro valor = null;
         String sql = String.format(
             "SELECT valor FROM pagamento WHERE id = '%s'",
             this.id
         );
-        try (Connection conn = this.session.connection()) {
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                try (ResultSet rset = stmt.executeQuery()) {
-                    if (rset.next()) {
-                        valor = new Dinheiro(rset.getBigDecimal(1));
-                    }
-                }
+        try {
+            Dinheiro valor;
+            ResultSet rset = new Select(this.session, sql).result();
+            if (rset.next()) {
+                valor = new Dinheiro(rset.getBigDecimal(1));
+            } else {
+                throw new RuntimeException(
+                    "Valor inexistente ou inválida!"
+                );
             }
+            return valor;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-        if (valor == null) {
-            throw new RuntimeException("Valor inválido!");
-        }
-        return valor;
     }
 }
