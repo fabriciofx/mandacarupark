@@ -29,9 +29,13 @@ import br.edu.ifpe.ead.si.mandacarupark.Pagamentos;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import br.edu.ifpe.ead.si.mandacarupark.db.Insert;
+import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
+import java.sql.ResultSet;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class SqlPagamentos implements Pagamentos {
     private final Session session;
@@ -58,11 +62,47 @@ public class SqlPagamentos implements Pagamentos {
 
     @Override
     public Pagamento procura(Uuid id) {
-        return null;
+        String sql = String.format(
+            "SELECT COUNT(*) FROM pagamento WHERE id = '%s'",
+            id
+        );
+        int quantidade = 0;
+        try {
+            ResultSet rset = new Select(this.session, sql).result();
+            if (rset.next()) {
+                quantidade = rset.getInt(1);
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+        if (quantidade == 0) {
+            throw new RuntimeException(
+                String.format(
+                    "Pagamento com id '%s' não encontrado!",
+                    id
+                )
+            );
+        }
+        return new SqlPagamento(this.session, id);
     }
 
     @Override
     public Iterator<Pagamento> iterator() {
-        return null;
+        String sql = String.format("SELECT * FROM pagamento");
+        List<Pagamento> items = new ArrayList<>();
+        try {
+            ResultSet rset = new Select(this.session, sql).result();
+            while (rset.next()) {
+                items.add(
+                    new SqlPagamento(
+                        this.session,
+                        new Uuid(rset.getString(1))
+                    )
+                );
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+        return items.iterator();
     }
 }

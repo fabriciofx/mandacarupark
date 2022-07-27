@@ -32,7 +32,9 @@ import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class SqlEntradas implements Entradas {
     private final Session session;
@@ -82,6 +84,21 @@ public class SqlEntradas implements Entradas {
 
     @Override
     public Iterator<Entrada> iterator() {
-        return null;
+        String sql = String.format("SELECT * FROM entrada");
+        List<Entrada> items = new ArrayList<>();
+        try {
+            ResultSet rset = new Select(this.session, sql).result();
+            while (rset.next()) {
+                items.add(
+                    new SqlEntrada(
+                        this.session,
+                        new Uuid(rset.getString(1))
+                    )
+                );
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+        return items.iterator();
     }
 }
