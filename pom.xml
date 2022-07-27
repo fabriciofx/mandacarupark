@@ -69,8 +69,7 @@
             scm:git:git@github.com:fabriciofx/mandacarupark.git
         </developerConnection>
         <url>https://github.com/fabriciofx/mandacarupark</url>
-        <tag>mandacarupark-1.0exit
-        </tag>
+        <tag>mandacarupark-1.0</tag>
     </scm>
     <distributionManagement>
         <site>
