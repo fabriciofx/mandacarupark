@@ -35,8 +35,10 @@ import br.edu.ifpe.ead.si.mandacarupark.db.Server;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
 import br.edu.ifpe.ead.si.mandacarupark.db.SqlScript;
 import br.edu.ifpe.ead.si.mandacarupark.preco.PrecoFixo;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import java.time.LocalDateTime;
 
 public class TestSqlEstacionamento {
@@ -60,12 +62,12 @@ public class TestSqlEstacionamento {
         LocalDateTime agora = LocalDateTime.now();
         Ticket ticket = estacionamento.entrada(placa, agora);
         Entrada entrada = entradas.procura(ticket.id());
-        Assertions.assertEquals(entrada.placa().toString(), "ABC1234");
+        Assert.assertEquals(entrada.placa().toString(), "ABC1234");
         server.stop();
     }
 
     @Test
-    void locacao() throws Exception {
+    public void locacao() throws Exception {
         Server server = new H2Server(
             new RandomName().toString(),
             new SqlScript("mandacarupark.sql")
@@ -85,37 +87,36 @@ public class TestSqlEstacionamento {
         Ticket ticket = estacionamento.entrada(placa, agora);
         ticket = estacionamento.pagamento(ticket, agora.plusMinutes(60));
         estacionamento.saida(ticket, placa, agora.plusMinutes(70));
-        Assertions.assertTrue(ticket.validado());
-        Assertions.assertEquals(ticket.valor(), new Dinheiro("5.00"));
+        Assert.assertTrue(ticket.validado());
+        Assert.assertEquals(ticket.valor(), new Dinheiro("5.00"));
         server.stop();
     }
 
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
+
     @Test()
-    void sairSemValidarTicket() {
-        RuntimeException exception = Assertions.assertThrows(
-            RuntimeException.class,
-            () -> {
-                Server server = new H2Server(
-                    new RandomName().toString(),
-                    new SqlScript("mandacarupark.sql")
-                );
-                server.start();
-                Session session = server.session();
-                Estacionamento estacionamento = new SqlEstacionamento(
-                    session,
-                    new SqlEntradas(session),
-                    new SqlSaidas(session),
-                    new SqlPagamentos(session),
-                    new PrecoFixo(new Dinheiro("5.00"))
-                );
-                Placa placa = new Placa("ABC1234");
-                LocalDateTime agora = LocalDateTime.now();
-                Ticket ticket = estacionamento.entrada(placa, agora);
-                estacionamento.saida(ticket, placa, agora.plusMinutes(70));
-                ticket.validado();
-                server.stop();
-            }
+    public void sairSemValidarTicket() throws Exception {
+        exception.expect(RuntimeException.class);
+        exception.expectMessage("Ticket não validado!");
+        Server server = new H2Server(
+            new RandomName().toString(),
+            new SqlScript("mandacarupark.sql")
         );
-        Assertions.assertEquals("Ticket não validado!", exception.getMessage());
+        server.start();
+        Session session = server.session();
+        Estacionamento estacionamento = new SqlEstacionamento(
+            session,
+            new SqlEntradas(session),
+            new SqlSaidas(session),
+            new SqlPagamentos(session),
+            new PrecoFixo(new Dinheiro("5.00"))
+        );
+        Placa placa = new Placa("ABC1234");
+        LocalDateTime agora = LocalDateTime.now();
+        Ticket ticket = estacionamento.entrada(placa, agora);
+        estacionamento.saida(ticket, placa, agora.plusMinutes(70));
+        ticket.validado();
+        server.stop();
     }
 }

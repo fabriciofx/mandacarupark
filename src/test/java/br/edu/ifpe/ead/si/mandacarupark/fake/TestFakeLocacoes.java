@@ -33,7 +33,7 @@ import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Saidas;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.preco.PrecoFixo;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import java.time.LocalDateTime;
 
 public class TestFakeLocacoes {
@@ -70,6 +70,5 @@ public class TestFakeLocacoes {
             pagamentos,
             new Periodo(agora.minusMinutes(5), agora.plusMinutes(80))
         );
-
     }
 }

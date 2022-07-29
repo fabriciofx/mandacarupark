@@ -23,21 +23,21 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 import java.time.LocalDateTime;
 
 public class TestPeriodo {
     @Test
     public void contemAgora() {
         LocalDateTime agora = LocalDateTime.now();
-        Assertions.assertTrue(new Periodo(agora, agora).contem(agora));
+        Assert.assertTrue(new Periodo(agora, agora).contem(agora));
     }
 
     @Test
     public void contem() {
         LocalDateTime agora = LocalDateTime.now();
-        Assertions.assertTrue(
+        Assert.assertTrue(
             new Periodo(agora, agora.plusMinutes(5)).contem(agora)
         );
     }

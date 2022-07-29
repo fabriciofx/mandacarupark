@@ -32,13 +32,13 @@ import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Saidas;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.preco.PrecoFixo;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 import java.time.LocalDateTime;
 
 public class TestFakeEstacionamento {
     @Test
-    void entrada() throws Exception {
+    public void entrada() throws Exception {
         Entradas entradas = new FakeEntradas();
         Saidas saidas = new FakeSaidas();
         Pagamentos pagamentos = new FakePagamentos();
@@ -52,11 +52,11 @@ public class TestFakeEstacionamento {
         LocalDateTime agora = LocalDateTime.now();
         Ticket ticket = estacionamento.entrada(placa, agora);
         Entrada entrada = entradas.procura(ticket.id());
-        Assertions.assertEquals(entrada.placa().toString(), "ABC1234");
+        Assert.assertEquals(entrada.placa().toString(), "ABC1234");
     }
 
     @Test
-    void locacao() {
+    public void locacao() {
         Estacionamento estacionamento = new FakeEstacionamento(
             new PrecoFixo(new Dinheiro("5.00"))
         );
@@ -65,13 +65,13 @@ public class TestFakeEstacionamento {
         Ticket ticket = estacionamento.entrada(placa, agora);
         ticket = estacionamento.pagamento(ticket, agora.plusMinutes(60));
         estacionamento.saida(ticket, placa, agora.plusMinutes(70));
-        Assertions.assertTrue(ticket.validado());
-        Assertions.assertEquals(ticket.valor(), new Dinheiro("5.00"));
+        Assert.assertTrue(ticket.validado());
+        Assert.assertEquals(ticket.valor(), new Dinheiro("5.00"));
     }
 
     @Test()
-    void sairSemValidarTicket() {
-        RuntimeException exception = Assertions.assertThrows(
+    public void sairSemValidarTicket() {
+        RuntimeException exception = Assert.assertThrows(
             RuntimeException.class,
             () -> {
                 Estacionamento estacionamento = new FakeEstacionamento(
@@ -84,6 +84,6 @@ public class TestFakeEstacionamento {
                 ticket.validado();
             }
         );
-        Assertions.assertEquals("Ticket não validado!", exception.getMessage());
+        Assert.assertEquals("Ticket não validado!", exception.getMessage());
     }
 }
