@@ -36,9 +36,7 @@ import br.edu.ifpe.ead.si.mandacarupark.db.Session;
 import br.edu.ifpe.ead.si.mandacarupark.db.SqlScript;
 import br.edu.ifpe.ead.si.mandacarupark.preco.PrecoFixo;
 import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import java.time.LocalDateTime;
 
 public class TestSqlEstacionamento {
@@ -92,31 +90,32 @@ public class TestSqlEstacionamento {
         server.stop();
     }
 
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
-
     @Test()
     public void sairSemValidarTicket() throws Exception {
-        exception.expect(RuntimeException.class);
-        exception.expectMessage("Ticket não validado!");
-        Server server = new H2Server(
-            new RandomName().toString(),
-            new SqlScript("mandacarupark.sql")
+        Assert.assertThrows(
+            "Ticket não validado!",
+            RuntimeException.class,
+            () -> {
+                Server server = new H2Server(
+                    new RandomName().toString(),
+                    new SqlScript("mandacarupark.sql")
+                );
+                server.start();
+                Session session = server.session();
+                Estacionamento estacionamento = new SqlEstacionamento(
+                    session,
+                    new SqlEntradas(session),
+                    new SqlSaidas(session),
+                    new SqlPagamentos(session),
+                    new PrecoFixo(new Dinheiro("5.00"))
+                );
+                Placa placa = new Placa("ABC1234");
+                LocalDateTime agora = LocalDateTime.now();
+                Ticket ticket = estacionamento.entrada(placa, agora);
+                estacionamento.saida(ticket, placa, agora.plusMinutes(70));
+                ticket.validado();
+                server.stop();
+            }
         );
-        server.start();
-        Session session = server.session();
-        Estacionamento estacionamento = new SqlEstacionamento(
-            session,
-            new SqlEntradas(session),
-            new SqlSaidas(session),
-            new SqlPagamentos(session),
-            new PrecoFixo(new Dinheiro("5.00"))
-        );
-        Placa placa = new Placa("ABC1234");
-        LocalDateTime agora = LocalDateTime.now();
-        Ticket ticket = estacionamento.entrada(placa, agora);
-        estacionamento.saida(ticket, placa, agora.plusMinutes(70));
-        ticket.validado();
-        server.stop();
     }
 }
