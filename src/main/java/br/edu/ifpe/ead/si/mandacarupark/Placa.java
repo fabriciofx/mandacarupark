@@ -24,11 +24,15 @@
 package br.edu.ifpe.ead.si.mandacarupark;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 /**
  * Verifica se uma determinada placa é válida.
  */
 public class Placa {
+    private static final Pattern PADRAO = Pattern.compile(
+        "^[A-Z]{3}[0-9][0-9A-Z][0-9]{2}"
+    );
     private final String numero;
 
     public Placa(final String numero) {
@@ -37,6 +41,7 @@ public class Placa {
 
     @Override
     public boolean equals(final Object obj) {
+        this.valida(this.numero);
         return this == obj || obj instanceof Placa &&
             Placa.class.cast(obj).numero.equals(this.numero);
     }
@@ -48,6 +53,13 @@ public class Placa {
 
     @Override
     public String toString() {
+        this.valida(this.numero);
         return this.numero;
+    }
+
+    private void valida(final String numero) {
+        if (this.PADRAO.matcher(numero).matches()) {
+            throw new RuntimeException("Placa: número inválido!");
+        }
     }
 }
