@@ -36,7 +36,7 @@ public class SqlPagamento implements Pagamento {
     private final Session session;
     private final Uuid id;
 
-    public SqlPagamento(Session session, Uuid id) {
+    public SqlPagamento(final Session session, final Uuid id) {
         this.session = session;
         this.id = id;
     }

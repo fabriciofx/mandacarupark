@@ -30,12 +30,15 @@ import java.time.LocalDateTime;
 public class PrecoFixo implements Precos {
     private final Dinheiro valor;
 
-    public PrecoFixo(Dinheiro valor) {
+    public PrecoFixo(final Dinheiro valor) {
         this.valor = valor;
     }
 
     @Override
-    public Dinheiro valor(LocalDateTime entrada, LocalDateTime saida) {
+    public Dinheiro valor(
+        final LocalDateTime entrada,
+        final LocalDateTime saida
+    ) {
         return this.valor;
     }
 }

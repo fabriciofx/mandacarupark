@@ -38,7 +38,7 @@ public class SqlLocacoes implements Locacoes {
     private final Session session;
     private final Periodo periodo;
 
-    public SqlLocacoes(Session session, Periodo periodo) {
+    public SqlLocacoes(final Session session, final Periodo periodo) {
         this.session = session;
         this.periodo = periodo;
     }

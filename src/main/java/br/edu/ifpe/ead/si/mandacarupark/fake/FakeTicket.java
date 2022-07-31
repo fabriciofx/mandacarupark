@@ -39,9 +39,9 @@ public class FakeTicket implements Ticket {
     private final Dinheiro valor;
 
     public FakeTicket(
-        Pagamentos pagamentos,
-        Placa placa,
-        LocalDateTime dataHora
+        final Pagamentos pagamentos,
+        final Placa placa,
+        final LocalDateTime dataHora
     ) {
         this(
             pagamentos,
@@ -53,11 +53,11 @@ public class FakeTicket implements Ticket {
     }
 
     public FakeTicket(
-        Pagamentos pagamentos,
-        Uuid id,
-        Placa placa,
-        LocalDateTime dataHora,
-        Dinheiro valor
+        final Pagamentos pagamentos,
+        final Uuid id,
+        final Placa placa,
+        final LocalDateTime dataHora,
+        final Dinheiro valor
     ) {
         this.pagamentos = pagamentos;
         this.id = id;

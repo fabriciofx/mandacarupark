@@ -30,7 +30,7 @@ public class Insert {
     private final Session session;
     private final String query;
 
-    public Insert(Session session, String query) {
+    public Insert(final Session session, final String query) {
         this.session = session;
         this.query = query;
     }

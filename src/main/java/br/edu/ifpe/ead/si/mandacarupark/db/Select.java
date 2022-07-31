@@ -34,7 +34,7 @@ public class Select {
     private final Session session;
     private final String query;
 
-    public Select(Session session, String query) {
+    public Select(final Session session, final String query) {
         this.session = session;
         this.query = query;
     }

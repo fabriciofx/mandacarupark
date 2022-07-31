@@ -40,19 +40,23 @@ public class FakeSaidas implements Saidas {
         this(new HashMap<>());
     }
 
-    public FakeSaidas(Map<Uuid, Saida> items) {
+    public FakeSaidas(final Map<Uuid, Saida> items) {
         this.items = items;
     }
 
     @Override
-    public Saida saida(Ticket ticket, Placa placa, LocalDateTime dataHora) {
+    public Saida saida(
+        final Ticket ticket,
+        final Placa placa,
+        final LocalDateTime dataHora
+    ) {
         Saida evento = new FakeSaida(ticket.id(), placa, dataHora);
         this.items.put(evento.id(), evento);
         return evento;
     }
 
     @Override
-    public Saida procura(Uuid id) {
+    public Saida procura(final Uuid id) {
         return this.items.get(id);
     }
 

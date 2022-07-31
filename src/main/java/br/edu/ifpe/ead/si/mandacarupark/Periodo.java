@@ -34,7 +34,7 @@ public final class Periodo {
     private final LocalDateTime inicio;
     private final LocalDateTime termino;
 
-    public Periodo(LocalDateTime inicio, LocalDateTime termino) {
+    public Periodo(final LocalDateTime inicio, final LocalDateTime termino) {
         this.inicio = inicio;
         this.termino = termino;
     }
@@ -44,7 +44,7 @@ public final class Periodo {
         return decorrido.toMinutes();
     }
 
-    public boolean contem(LocalDateTime dataHora) {
+    public boolean contem(final LocalDateTime dataHora) {
         return this.inicio.compareTo(dataHora) <= 0 &&
             this.termino.compareTo(dataHora) >= 0;
     }

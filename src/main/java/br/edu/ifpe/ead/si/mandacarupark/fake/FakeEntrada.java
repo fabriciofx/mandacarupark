@@ -33,7 +33,11 @@ public class FakeEntrada implements Entrada {
     private final Placa placa;
     private final LocalDateTime dataHora;
 
-    public FakeEntrada(Uuid id, Placa placa, LocalDateTime dataHora) {
+    public FakeEntrada(
+        final Uuid id,
+        final Placa placa,
+        final LocalDateTime dataHora
+    ) {
         this.id = id;
         this.placa = placa;
         this.dataHora = dataHora;

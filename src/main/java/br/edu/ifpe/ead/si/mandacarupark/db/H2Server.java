@@ -26,10 +26,13 @@ package br.edu.ifpe.ead.si.mandacarupark.db;
 import java.io.IOException;
 
 public class H2Server implements Server {
+    /**
+     *
+     */
     private final String dbname;
     private final SqlScript script;
 
-    public H2Server(String dbname, SqlScript scrpt) {
+    public H2Server(final String dbname, final SqlScript scrpt) {
         this.dbname = dbname;
         this.script = scrpt;
     }

@@ -26,19 +26,36 @@ package br.edu.ifpe.ead.si.mandacarupark;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Uuid.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
+ * @since 0.0.1
+ */
 public final class Uuid {
+    /**
+     * O uuid.
+     */
     private final String numero;
 
+    /**
+     * Ctor.
+     */
     public Uuid() {
         this(UUID.randomUUID().toString().toUpperCase().replaceAll("-",""));
     }
 
-    public Uuid(String numero) {
+    /**
+     * Ctor.
+     * @param numero Um número uuid.
+     */
+    public Uuid(final String numero) {
         this.numero = numero;
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         return this == obj || obj instanceof Uuid &&
             Uuid.class.cast(obj).numero.equals(this.numero);
     }

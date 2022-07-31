@@ -39,10 +39,10 @@ public class SqlTicket implements Ticket {
     private final LocalDateTime dataHora;
 
     public SqlTicket(
-        Session session,
-        Uuid id,
-        Placa placa,
-        LocalDateTime dataHora
+        final Session session,
+        final Uuid id,
+        final Placa placa,
+        final LocalDateTime dataHora
     ) {
         this.session = session;
         this.id = id;

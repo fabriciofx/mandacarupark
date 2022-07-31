@@ -33,7 +33,11 @@ public class FakeSaida implements Saida {
     private final Placa placa;
     private final LocalDateTime dataHora;
 
-    public FakeSaida(Uuid id, Placa placa, LocalDateTime dataHora) {
+    public FakeSaida(
+        final Uuid id,
+        final Placa placa,
+        final LocalDateTime dataHora
+    ) {
         this.id = id;
         this.placa = placa;
         this.dataHora = dataHora;

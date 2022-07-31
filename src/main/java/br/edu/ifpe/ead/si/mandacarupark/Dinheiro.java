@@ -34,11 +34,11 @@ public class Dinheiro implements Comparable<Dinheiro> {
     private final Currency moeda;
     private final Locale localizacao;
 
-    public Dinheiro(String quantia) {
+    public Dinheiro(final String quantia) {
         this(new BigDecimal(quantia));
     }
 
-    public Dinheiro(BigDecimal quantia) {
+    public Dinheiro(final BigDecimal quantia) {
         this(
             quantia,
             Currency.getInstance("BRL"),
@@ -46,7 +46,11 @@ public class Dinheiro implements Comparable<Dinheiro> {
         );
     }
 
-    public Dinheiro(BigDecimal quantia, Currency moeda, Locale localizacao) {
+    public Dinheiro(
+        final BigDecimal quantia,
+        final Currency moeda,
+        final Locale localizacao
+    ) {
         this.quantia = quantia;
         this.moeda = moeda;
         this.localizacao = localizacao;
@@ -72,7 +76,7 @@ public class Dinheiro implements Comparable<Dinheiro> {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -95,7 +99,7 @@ public class Dinheiro implements Comparable<Dinheiro> {
     }
 
     @Override
-    public int compareTo(Dinheiro dinheiro) {
+    public int compareTo(final Dinheiro dinheiro) {
         return this.quantia.compareTo(dinheiro.quantia);
     }
 }

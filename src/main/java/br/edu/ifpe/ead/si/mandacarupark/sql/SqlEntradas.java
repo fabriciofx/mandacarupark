@@ -39,12 +39,12 @@ import java.util.List;
 public class SqlEntradas implements Entradas {
     private final Session session;
 
-    public SqlEntradas(Session session) {
+    public SqlEntradas(final Session session) {
         this.session = session;
     }
 
     @Override
-    public Entrada entrada(Placa placa, LocalDateTime dataHora) {
+    public Entrada entrada(final Placa placa, final LocalDateTime dataHora) {
         Uuid id = new Uuid();
         String sql = String.format(
             "INSERT INTO entrada (id, placa, datahora) VALUES ('%s', '%s', '%s')",
@@ -57,7 +57,7 @@ public class SqlEntradas implements Entradas {
     }
 
     @Override
-    public Entrada procura(Uuid id) {
+    public Entrada procura(final Uuid id) {
         String sql = String.format(
             "SELECT COUNT(*) FROM entrada WHERE id = '%s'",
             id

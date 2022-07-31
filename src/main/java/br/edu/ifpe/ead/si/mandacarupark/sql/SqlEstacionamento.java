@@ -43,11 +43,11 @@ public class SqlEstacionamento implements Estacionamento {
     private final Precos precos;
 
     public SqlEstacionamento(
-        Session session,
-        Entradas entradas,
-        Saidas saidas,
-        Pagamentos pagamentos,
-        Precos precos
+        final Session session,
+        final Entradas entradas,
+        final Saidas saidas,
+        final Pagamentos pagamentos,
+        final Precos precos
     ) {
         this.session = session;
         this.entradas = entradas;
@@ -57,13 +57,13 @@ public class SqlEstacionamento implements Estacionamento {
     }
 
     @Override
-    public Ticket entrada(Placa placa, LocalDateTime dataHora) {
+    public Ticket entrada(final Placa placa, final LocalDateTime dataHora) {
         Entrada entrada = this.entradas.entrada(placa, dataHora);
         return new SqlTicket(this.session, entrada.id(), placa, dataHora);
     }
 
     @Override
-    public Ticket pagamento(Ticket ticket, LocalDateTime dataHora) {
+    public Ticket pagamento(final Ticket ticket, final LocalDateTime dataHora) {
         Dinheiro valor = this.precos.valor(ticket.dataHora(), dataHora);
         this.pagamentos.pagamento(ticket, dataHora, valor);
         return new SqlTicket(
@@ -75,7 +75,11 @@ public class SqlEstacionamento implements Estacionamento {
     }
 
     @Override
-    public void saida(Ticket ticket, Placa placa, LocalDateTime dataHora) {
+    public void saida(
+        final Ticket ticket,
+        final Placa placa,
+        final LocalDateTime dataHora
+    ) {
         if (!ticket.validado()) {
             throw new RuntimeException("Ticket não validado!");
         }

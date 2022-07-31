@@ -41,10 +41,10 @@ public class FakeEstacionamento implements Estacionamento {
     private final Precos precos;
 
     public FakeEstacionamento(
-        Entradas entradas,
-        Saidas saidas,
-        Pagamentos pagamentos,
-        Precos precos
+        final Entradas entradas,
+        final Saidas saidas,
+        final Pagamentos pagamentos,
+        final Precos precos
     ) {
         this.entradas = entradas;
         this.saidas = saidas;
@@ -52,7 +52,7 @@ public class FakeEstacionamento implements Estacionamento {
         this.precos = precos;
     }
 
-    public FakeEstacionamento(Precos precos) {
+    public FakeEstacionamento(final Precos precos) {
         this(
             new FakeEntradas(),
             new FakeSaidas(),
@@ -62,7 +62,7 @@ public class FakeEstacionamento implements Estacionamento {
     }
 
     @Override
-    public Ticket entrada(Placa placa, LocalDateTime dataHora) {
+    public Ticket entrada(final Placa placa, final LocalDateTime dataHora) {
         Entrada entrada = entradas.entrada(placa, dataHora);
         Ticket ticket = new FakeTicket(
             this.pagamentos,
@@ -75,7 +75,7 @@ public class FakeEstacionamento implements Estacionamento {
     }
 
     @Override
-    public Ticket pagamento(Ticket ticket, LocalDateTime dataHora) {
+    public Ticket pagamento(final Ticket ticket, final LocalDateTime dataHora) {
         Dinheiro valor = this.precos.valor(ticket.dataHora(), dataHora);
         this.pagamentos.pagamento(ticket, dataHora, valor);
         return new FakeTicket(
@@ -88,7 +88,11 @@ public class FakeEstacionamento implements Estacionamento {
     }
 
     @Override
-    public void saida(Ticket ticket, Placa placa, LocalDateTime dataHora) {
+    public void saida(
+        final Ticket ticket,
+        final Placa placa,
+        final LocalDateTime dataHora
+    ) {
         if (!ticket.validado()) {
             throw new RuntimeException("Ticket não validado!");
         }

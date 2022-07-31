@@ -36,10 +36,7 @@ public class SqlEntrada implements Entrada {
     private final Session session;
     private final Uuid id;
 
-    public SqlEntrada(
-        Session session,
-        Uuid id
-    ) {
+    public SqlEntrada(final Session session, final Uuid id) {
         this.session = session;
         this.id = id;
     }

@@ -39,17 +39,21 @@ import java.util.List;
 public class SqlSaidas implements Saidas {
     private final Session session;
 
-    public SqlSaidas(Session session) {
+    public SqlSaidas(final Session session) {
         this.session = session;
     }
 
     @Override
-    public Saida saida(Ticket ticket, Placa placa, LocalDateTime dataHora) {
+    public Saida saida(
+        final Ticket ticket,
+        final Placa placa,
+        final LocalDateTime dataHora
+    ) {
         return new SqlSaida(this.session, ticket.id());
     }
 
     @Override
-    public Saida procura(Uuid id) {
+    public Saida procura(final Uuid id) {
         String sql = String.format(
             "SELECT COUNT(*) FROM saida WHERE id = '%s'",
             id

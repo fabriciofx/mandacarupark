@@ -43,7 +43,8 @@ public class H2DataSource implements DataSource {
     public H2DataSource(final Driver drvr, final String dbname) {
         this.driver = drvr;
         this.url = String.format(
-            "jdbc:h2:mem:%s;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS %s\\;SET SCHEMA %s",
+            "jdbc:h2:mem:%s;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT " +
+                "EXISTS %s\\;SET SCHEMA %s",
             dbname,
             dbname,
             dbname
@@ -56,7 +57,10 @@ public class H2DataSource implements DataSource {
     }
 
     @Override
-    public Connection getConnection(String username, String password)
+    public Connection getConnection(
+        final String username,
+        final String password
+    )
         throws SQLException {
         final Properties props = new Properties();
         props.put("user", username);

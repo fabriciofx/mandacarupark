@@ -40,15 +40,15 @@ import java.util.List;
 public class SqlPagamentos implements Pagamentos {
     private final Session session;
 
-    public SqlPagamentos(Session session) {
+    public SqlPagamentos(final Session session) {
         this.session = session;
     }
 
     @Override
     public Pagamento pagamento(
-        Ticket ticket,
-        LocalDateTime dataHora,
-        Dinheiro valor
+        final Ticket ticket,
+        final LocalDateTime dataHora,
+        final Dinheiro valor
     ) {
         String sql = String.format(
             "INSERT INTO pagamento (id, datahora, valor) VALUES ('%s', '%s', '%s')",
@@ -61,7 +61,7 @@ public class SqlPagamentos implements Pagamentos {
     }
 
     @Override
-    public Pagamento procura(Uuid id) {
+    public Pagamento procura(final Uuid id) {
         String sql = String.format(
             "SELECT COUNT(*) FROM pagamento WHERE id = '%s'",
             id

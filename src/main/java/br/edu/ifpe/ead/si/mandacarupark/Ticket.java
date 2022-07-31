@@ -25,10 +25,34 @@ package br.edu.ifpe.ead.si.mandacarupark;
 
 import java.time.LocalDateTime;
 
+/**
+ * Ticket do estacionamento.
+ *
+ * @since 0.0.1
+ */
 public interface Ticket {
+    /**
+     * Id do ticket.
+     * @return O id do ticket
+     */
     Uuid id();
+
+    /**
+     * Placa do veículo do ticket.
+     * @return A placa do veículo
+     */
     Placa placa();
+
+    /**
+     * A data e hora que o ticket foi emitido.
+     * @return A data e hora
+     */
     LocalDateTime dataHora();
+
+    /**
+     *
+     * @return
+     */
     Dinheiro valor();
     boolean validado();
 }

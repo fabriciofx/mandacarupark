@@ -40,15 +40,15 @@ public class FakePagamentos implements Pagamentos {
         this(new HashMap<>());
     }
 
-    public FakePagamentos(Map<Uuid, Pagamento> items) {
+    public FakePagamentos(final Map<Uuid, Pagamento> items) {
         this.items = items;
     }
 
     @Override
     public Pagamento pagamento(
-        Ticket ticket,
-        LocalDateTime dataHora,
-        Dinheiro valor
+        final Ticket ticket,
+        final LocalDateTime dataHora,
+        final Dinheiro valor
     ) {
         Pagamento evento = new FakePagamento(ticket.id(), dataHora, valor);
         this.items.put(ticket.id(), evento);
@@ -56,7 +56,7 @@ public class FakePagamentos implements Pagamentos {
     }
 
     @Override
-    public Pagamento procura(Uuid id) {
+    public Pagamento procura(final Uuid id) {
         return this.items.get(id);
     }
 

@@ -37,11 +37,11 @@ public class FakeLocacao implements Locacao {
     private final Dinheiro valor;
 
     public FakeLocacao(
-        Uuid id,
-        Placa placa,
-        LocalDateTime entrada,
-        LocalDateTime saida,
-        Dinheiro valor
+        final Uuid id,
+        final Placa placa,
+        final LocalDateTime entrada,
+        final LocalDateTime saida,
+        final Dinheiro valor
     ) {
         this.id = id;
         this.placa = placa;

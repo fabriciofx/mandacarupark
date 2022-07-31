@@ -33,7 +33,11 @@ public class FakePagamento implements Pagamento {
     private final LocalDateTime dataHora;
     private final Dinheiro valor;
 
-    public FakePagamento(Uuid id, LocalDateTime dataHora, Dinheiro valor) {
+    public FakePagamento(
+        final Uuid id,
+        final LocalDateTime dataHora,
+        final Dinheiro valor
+    ) {
         this.id = id;
         this.dataHora = dataHora;
         this.valor = valor;

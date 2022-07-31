@@ -39,19 +39,19 @@ public class FakeEntradas implements Entradas {
         this(new HashMap<>());
     }
 
-    public FakeEntradas(Map<Uuid, Entrada> items) {
+    public FakeEntradas(final Map<Uuid, Entrada> items) {
         this.items = items;
     }
 
     @Override
-    public Entrada entrada(Placa placa, LocalDateTime dataHora) {
+    public Entrada entrada(final Placa placa, final LocalDateTime dataHora) {
         Entrada evento = new FakeEntrada(new Uuid(), placa, dataHora);
         this.items.put(evento.id(), evento);
         return evento;
     }
 
     @Override
-    public Entrada procura(Uuid id) {
+    public Entrada procura(final Uuid id) {
         return this.items.get(id);
     }
 

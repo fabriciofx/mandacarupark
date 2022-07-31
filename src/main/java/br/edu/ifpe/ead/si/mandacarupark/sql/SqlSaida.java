@@ -36,7 +36,7 @@ public class SqlSaida implements Saida {
     private final Session session;
     private final Uuid id;
 
-    public SqlSaida(Session session, Uuid id) {
+    public SqlSaida(final Session session, final Uuid id) {
         this.session = session;
         this.id = id;
     }

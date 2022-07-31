@@ -29,25 +29,25 @@ import java.util.Objects;
  * Verifica se uma determinada placa é válida.
  */
 public class Placa {
-    private final String numeros;
+    private final String numero;
 
-    public Placa(String numeros) {
-        this.numeros = numeros;
+    public Placa(final String numero) {
+        this.numero = numero;
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         return this == obj || obj instanceof Placa &&
-            Placa.class.cast(obj).numeros.equals(this.numeros);
+            Placa.class.cast(obj).numero.equals(this.numero);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.numeros);
+        return Objects.hash(this.numero);
     }
 
     @Override
     public String toString() {
-        return this.numeros;
+        return this.numero;
     }
 }

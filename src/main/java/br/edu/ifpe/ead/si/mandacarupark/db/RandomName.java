@@ -33,7 +33,7 @@ public class RandomName {
         this(5);
     }
 
-    public RandomName(int length) {
+    public RandomName(final int length) {
         this(
             length,
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -41,7 +41,7 @@ public class RandomName {
         );
     }
 
-    public RandomName(int length, char ...chars) {
+    public RandomName(final int length, final char ...chars) {
         this.length = length;
         this.chars = chars;
     }

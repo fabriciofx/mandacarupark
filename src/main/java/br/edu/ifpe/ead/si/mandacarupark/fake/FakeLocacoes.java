@@ -43,10 +43,10 @@ public class FakeLocacoes implements Locacoes {
     private final Periodo periodo;
 
     public FakeLocacoes(
-        Entradas entradas,
-        Saidas saidas,
-        Pagamentos pagamentos,
-        Periodo periodo
+        final Entradas entradas,
+        final Saidas saidas,
+        final Pagamentos pagamentos,
+        final Periodo periodo
     ) {
         this.entradas = entradas;
         this.saidas = saidas;

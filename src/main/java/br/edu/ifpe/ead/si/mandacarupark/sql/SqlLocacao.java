@@ -37,7 +37,7 @@ public class SqlLocacao implements Locacao {
     private final Session session;
     private final Uuid id;
 
-    public SqlLocacao(Session session, Uuid id) {
+    public SqlLocacao(final Session session, final Uuid id) {
         this.session = session;
         this.id = id;
     }
