@@ -44,7 +44,7 @@ public class TestPeriodo {
 
     @Test
     public void inicioAntesTermino() {
-        RuntimeException exception = Assert.assertThrows(
+        Assert.assertThrows(
             "Periodo: o tempo de ínicio não pode ser depois do término",
             RuntimeException.class,
             () -> {

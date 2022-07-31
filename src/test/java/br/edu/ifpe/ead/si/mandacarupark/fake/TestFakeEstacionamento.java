@@ -71,7 +71,8 @@ public class TestFakeEstacionamento {
 
     @Test()
     public void sairSemValidarTicket() {
-        RuntimeException exception = Assert.assertThrows(
+        Assert.assertThrows(
+            "Ticket não validado!",
             RuntimeException.class,
             () -> {
                 Estacionamento estacionamento = new FakeEstacionamento(
@@ -84,6 +85,5 @@ public class TestFakeEstacionamento {
                 ticket.validado();
             }
         );
-        Assert.assertEquals("Ticket não validado!", exception.getMessage());
     }
 }
