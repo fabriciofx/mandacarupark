@@ -40,16 +40,19 @@ public final class Periodo {
     }
 
     public long minutos() {
+        this.inicioAntesTermino(this.inicio, this.termino);
         Duration decorrido = Duration.between(this.inicio, this.termino);
         return decorrido.toMinutes();
     }
 
     public boolean contem(final LocalDateTime dataHora) {
+        this.inicioAntesTermino(this.inicio, this.termino);
         return this.inicio.compareTo(dataHora) <= 0 &&
             this.termino.compareTo(dataHora) >= 0;
     }
 
     public String inicio() {
+        this.inicioAntesTermino(this.inicio, this.termino);
         DateTimeFormatter formato = DateTimeFormatter.ofPattern(
             "yyyy-MM-dd HH:mm:ss"
         );
@@ -57,9 +60,21 @@ public final class Periodo {
     }
 
     public String termino() {
+        this.inicioAntesTermino(this.inicio, this.termino);
         DateTimeFormatter formato = DateTimeFormatter.ofPattern(
             "yyyy-MM-dd HH:mm:ss"
         );
         return this.termino.format(formato);
+    }
+
+    private void inicioAntesTermino(
+        final LocalDateTime inicio,
+        final LocalDateTime termino
+    ) {
+        if (inicio.isAfter(termino)) {
+            throw new RuntimeException(
+                "Periodo: o tempo de ínicio não pode ser depois do término"
+            );
+        }
     }
 }

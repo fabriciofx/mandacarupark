@@ -41,4 +41,16 @@ public class TestPeriodo {
             new Periodo(agora, agora.plusMinutes(5)).contem(agora)
         );
     }
+
+    @Test
+    public void inicioAntesTermino() {
+        RuntimeException exception = Assert.assertThrows(
+            "Periodo: o tempo de ínicio não pode ser depois do término",
+            RuntimeException.class,
+            () -> {
+                LocalDateTime agora = LocalDateTime.now();
+                new Periodo(agora.plusMinutes(1), agora).minutos();
+            }
+        );
+    }
 }
