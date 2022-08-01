@@ -44,13 +44,13 @@ public class SqlLocacao implements Locacao {
 
     @Override
     public Placa placa() {
-        String sql = String.format(
+        final String sql = String.format(
             "SELECT placa FROM locacao WHERE id = '%s'",
             this.id
         );
         try {
-            Placa placa ;
-            ResultSet rset = new Select(this.session, sql).result();
+            final Placa placa ;
+            final ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 placa = new Placa(rset.getString(1));
             } else {
@@ -64,16 +64,16 @@ public class SqlLocacao implements Locacao {
 
     @Override
     public LocalDateTime entrada() {
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern(
+        final DateTimeFormatter formato = DateTimeFormatter.ofPattern(
             "yyyy-MM-dd HH:mm:ss.SSSX"
         );
-        String sql = String.format(
+        final String sql = String.format(
             "SELECT entrada FROM locacao WHERE id = '%s'",
             this.id
         );
         try {
-            LocalDateTime dataHora;
-            ResultSet rset = new Select(this.session, sql).result();
+            final LocalDateTime dataHora;
+            final ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 dataHora = LocalDateTime.parse(rset.getString(1), formato);
             } else {
@@ -89,16 +89,16 @@ public class SqlLocacao implements Locacao {
 
     @Override
     public LocalDateTime saida() {
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern(
+        final DateTimeFormatter formato = DateTimeFormatter.ofPattern(
             "yyyy-MM-dd HH:mm:ss.SSSX"
         );
-        String sql = String.format(
+        final String sql = String.format(
             "SELECT saida FROM locacao WHERE id = '%s'",
             this.id
         );
         try {
-            LocalDateTime dataHora;
-            ResultSet rset = new Select(this.session, sql).result();
+            final LocalDateTime dataHora;
+            final ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 dataHora = LocalDateTime.parse(rset.getString(1), formato);
             } else {
@@ -114,13 +114,13 @@ public class SqlLocacao implements Locacao {
 
     @Override
     public Dinheiro valor() {
-        String sql = String.format(
+        final String sql = String.format(
             "SELECT valor FROM pagamento WHERE id = '%s'",
             this.id
         );
         try {
-            Dinheiro valor;
-            ResultSet rset = new Select(this.session, sql).result();
+            final Dinheiro valor;
+            final ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 valor = new Dinheiro(rset.getBigDecimal(1));
             } else {

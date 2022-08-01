@@ -54,13 +54,13 @@ public class SqlSaidas implements Saidas {
 
     @Override
     public Saida procura(final Uuid id) {
-        String sql = String.format(
+        final String sql = String.format(
             "SELECT COUNT(*) FROM saida WHERE id = '%s'",
             id
         );
         int quantidade = 0;
         try {
-            ResultSet rset = new Select(this.session, sql).result();
+            final ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 quantidade = rset.getInt(1);
             }
@@ -80,8 +80,8 @@ public class SqlSaidas implements Saidas {
 
     @Override
     public Iterator<Saida> iterator() {
-        String sql = String.format("SELECT * FROM saida");
-        List<Saida> items = new ArrayList<>();
+        final String sql = String.format("SELECT * FROM saida");
+        final List<Saida> items = new ArrayList<>();
         try {
             ResultSet rset = new Select(this.session, sql).result();
             while (rset.next()) {

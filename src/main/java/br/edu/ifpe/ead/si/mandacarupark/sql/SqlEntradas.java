@@ -45,8 +45,8 @@ public class SqlEntradas implements Entradas {
 
     @Override
     public Entrada entrada(final Placa placa, final LocalDateTime dataHora) {
-        Uuid id = new Uuid();
-        String sql = String.format(
+        final Uuid id = new Uuid();
+        final String sql = String.format(
             "INSERT INTO entrada (id, placa, datahora) VALUES ('%s', '%s', '%s')",
             id,
             placa,
@@ -58,13 +58,13 @@ public class SqlEntradas implements Entradas {
 
     @Override
     public Entrada procura(final Uuid id) {
-        String sql = String.format(
+        final String sql = String.format(
             "SELECT COUNT(*) FROM entrada WHERE id = '%s'",
             id
         );
         int quantidade = 0;
         try {
-            ResultSet rset = new Select(this.session, sql).result();
+            final ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 quantidade = rset.getInt(1);
             }

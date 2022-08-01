@@ -42,46 +42,46 @@ import java.time.LocalDateTime;
 public class TestSqlEstacionamento {
     @Test
     public void entrada() throws Exception {
-        Server server = new H2Server(
+        final Server server = new H2Server(
             new RandomName().toString(),
             new SqlScript("mandacarupark.sql")
         );
         server.start();
-        Session session = server.session();
-        Entradas entradas = new SqlEntradas(session);
-        Estacionamento estacionamento = new SqlEstacionamento(
+        final Session session = server.session();
+        final Entradas entradas = new SqlEntradas(session);
+        final Estacionamento estacionamento = new SqlEstacionamento(
             session,
             entradas,
             new SqlSaidas(session),
             new SqlPagamentos(session),
             new PrecoFixo(new Dinheiro("5.00"))
         );
-        Placa placa = new Placa("ABC1234");
-        LocalDateTime agora = LocalDateTime.now();
-        Ticket ticket = estacionamento.entrada(placa, agora);
-        Entrada entrada = entradas.procura(ticket.id());
+        final Placa placa = new Placa("ABC1234");
+        final LocalDateTime agora = LocalDateTime.now();
+        final Ticket ticket = estacionamento.entrada(placa, agora);
+        final Entrada entrada = entradas.procura(ticket.id());
         Assert.assertEquals(entrada.placa().toString(), "ABC1234");
         server.stop();
     }
 
     @Test
     public void locacao() throws Exception {
-        Server server = new H2Server(
+        final Server server = new H2Server(
             new RandomName().toString(),
             new SqlScript("mandacarupark.sql")
         );
         server.start();
-        Session session = server.session();
-        Entradas entradas = new SqlEntradas(session);
-        Estacionamento estacionamento = new SqlEstacionamento(
+        final Session session = server.session();
+        final Entradas entradas = new SqlEntradas(session);
+        final Estacionamento estacionamento = new SqlEstacionamento(
             session,
             entradas,
             new SqlSaidas(session),
             new SqlPagamentos(session),
             new PrecoFixo(new Dinheiro("5.00"))
         );
-        Placa placa = new Placa("ABC1234");
-        LocalDateTime agora = LocalDateTime.now();
+        final Placa placa = new Placa("ABC1234");
+        final LocalDateTime agora = LocalDateTime.now();
         Ticket ticket = estacionamento.entrada(placa, agora);
         ticket = estacionamento.pagamento(ticket, agora.plusMinutes(60));
         estacionamento.saida(ticket, placa, agora.plusMinutes(70));
@@ -96,22 +96,22 @@ public class TestSqlEstacionamento {
             "Ticket não validado!",
             RuntimeException.class,
             () -> {
-                Server server = new H2Server(
+                final Server server = new H2Server(
                     new RandomName().toString(),
                     new SqlScript("mandacarupark.sql")
                 );
                 server.start();
-                Session session = server.session();
-                Estacionamento estacionamento = new SqlEstacionamento(
+                final Session session = server.session();
+                final Estacionamento estacionamento = new SqlEstacionamento(
                     session,
                     new SqlEntradas(session),
                     new SqlSaidas(session),
                     new SqlPagamentos(session),
                     new PrecoFixo(new Dinheiro("5.00"))
                 );
-                Placa placa = new Placa("ABC1234");
-                LocalDateTime agora = LocalDateTime.now();
-                Ticket ticket = estacionamento.entrada(placa, agora);
+                final Placa placa = new Placa("ABC1234");
+                final LocalDateTime agora = LocalDateTime.now();
+                final Ticket ticket = estacionamento.entrada(placa, agora);
                 estacionamento.saida(ticket, placa, agora.plusMinutes(70));
                 ticket.validado();
                 server.stop();

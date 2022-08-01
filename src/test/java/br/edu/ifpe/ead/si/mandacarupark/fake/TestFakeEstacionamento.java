@@ -39,29 +39,29 @@ import java.time.LocalDateTime;
 public class TestFakeEstacionamento {
     @Test
     public void entrada() throws Exception {
-        Entradas entradas = new FakeEntradas();
-        Saidas saidas = new FakeSaidas();
-        Pagamentos pagamentos = new FakePagamentos();
-        Estacionamento estacionamento = new FakeEstacionamento(
+        final Entradas entradas = new FakeEntradas();
+        final Saidas saidas = new FakeSaidas();
+        final Pagamentos pagamentos = new FakePagamentos();
+        final Estacionamento estacionamento = new FakeEstacionamento(
             entradas,
             saidas,
             pagamentos,
             new PrecoFixo(new Dinheiro("5.00"))
         );
-        Placa placa = new Placa("ABC1234");
-        LocalDateTime agora = LocalDateTime.now();
-        Ticket ticket = estacionamento.entrada(placa, agora);
-        Entrada entrada = entradas.procura(ticket.id());
+        final Placa placa = new Placa("ABC1234");
+        final LocalDateTime agora = LocalDateTime.now();
+        final Ticket ticket = estacionamento.entrada(placa, agora);
+        final Entrada entrada = entradas.procura(ticket.id());
         Assert.assertEquals(entrada.placa().toString(), "ABC1234");
     }
 
     @Test
     public void locacao() {
-        Estacionamento estacionamento = new FakeEstacionamento(
+        final Estacionamento estacionamento = new FakeEstacionamento(
             new PrecoFixo(new Dinheiro("5.00"))
         );
-        Placa placa = new Placa("ABC1234");
-        LocalDateTime agora = LocalDateTime.now();
+        final Placa placa = new Placa("ABC1234");
+        final LocalDateTime agora = LocalDateTime.now();
         Ticket ticket = estacionamento.entrada(placa, agora);
         ticket = estacionamento.pagamento(ticket, agora.plusMinutes(60));
         estacionamento.saida(ticket, placa, agora.plusMinutes(70));

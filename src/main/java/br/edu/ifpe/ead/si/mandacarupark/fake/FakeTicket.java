@@ -83,14 +83,14 @@ public class FakeTicket implements Ticket {
 
     @Override
     public Dinheiro valor() {
-        Pagamento pagamento = this.pagamentos.procura(this.id);
+        final Pagamento pagamento = this.pagamentos.procura(this.id);
         return pagamento.valor();
     }
 
     @Override
     public boolean validado() {
         boolean result = false;
-        Pagamento pagamento = this.pagamentos.procura(this.id);
+        final Pagamento pagamento = this.pagamentos.procura(this.id);
         if (pagamento != null) {
             result = true;
         }

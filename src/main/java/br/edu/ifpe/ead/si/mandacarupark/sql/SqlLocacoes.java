@@ -45,13 +45,13 @@ public class SqlLocacoes implements Locacoes {
 
     @Override
     public Iterator<Locacao> iterator() {
-        String sql = String.format(
+        final String sql = String.format(
             "SELECT * FROM locacao WHERE entrada >= '%s' AND saida <= '%s'",
             this.periodo.inicio(), this.periodo.termino()
         );
-        List<Locacao> items = new ArrayList<>();
+        final List<Locacao> items = new ArrayList<>();
         try {
-            ResultSet rset = new Select(this.session, sql).result();
+            final ResultSet rset = new Select(this.session, sql).result();
             while (rset.next()) {
                 items.add(
                     new SqlLocacao(

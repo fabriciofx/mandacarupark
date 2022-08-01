@@ -63,8 +63,8 @@ public class FakeEstacionamento implements Estacionamento {
 
     @Override
     public Ticket entrada(final Placa placa, final LocalDateTime dataHora) {
-        Entrada entrada = entradas.entrada(placa, dataHora);
-        Ticket ticket = new FakeTicket(
+        final Entrada entrada = entradas.entrada(placa, dataHora);
+        final Ticket ticket = new FakeTicket(
             this.pagamentos,
             entrada.id(),
             placa,
@@ -76,7 +76,7 @@ public class FakeEstacionamento implements Estacionamento {
 
     @Override
     public Ticket pagamento(final Ticket ticket, final LocalDateTime dataHora) {
-        Dinheiro valor = this.precos.valor(ticket.dataHora(), dataHora);
+        final Dinheiro valor = this.precos.valor(ticket.dataHora(), dataHora);
         this.pagamentos.pagamento(ticket, dataHora, valor);
         return new FakeTicket(
             this.pagamentos,

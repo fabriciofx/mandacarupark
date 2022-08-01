@@ -58,13 +58,13 @@ public class SqlEstacionamento implements Estacionamento {
 
     @Override
     public Ticket entrada(final Placa placa, final LocalDateTime dataHora) {
-        Entrada entrada = this.entradas.entrada(placa, dataHora);
+        final Entrada entrada = this.entradas.entrada(placa, dataHora);
         return new SqlTicket(this.session, entrada.id(), placa, dataHora);
     }
 
     @Override
     public Ticket pagamento(final Ticket ticket, final LocalDateTime dataHora) {
-        Dinheiro valor = this.precos.valor(ticket.dataHora(), dataHora);
+        final Dinheiro valor = this.precos.valor(ticket.dataHora(), dataHora);
         this.pagamentos.pagamento(ticket, dataHora, valor);
         return new SqlTicket(
             this.session,

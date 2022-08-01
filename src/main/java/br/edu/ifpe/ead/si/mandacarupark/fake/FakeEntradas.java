@@ -45,7 +45,7 @@ public class FakeEntradas implements Entradas {
 
     @Override
     public Entrada entrada(final Placa placa, final LocalDateTime dataHora) {
-        Entrada evento = new FakeEntrada(new Uuid(), placa, dataHora);
+        final Entrada evento = new FakeEntrada(new Uuid(), placa, dataHora);
         this.items.put(evento.id(), evento);
         return evento;
     }

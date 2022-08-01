@@ -41,7 +41,7 @@ public final class Periodo {
 
     public long minutos() {
         this.inicioAntesTermino(this.inicio, this.termino);
-        Duration decorrido = Duration.between(this.inicio, this.termino);
+        final Duration decorrido = Duration.between(this.inicio, this.termino);
         return decorrido.toMinutes();
     }
 
@@ -53,7 +53,7 @@ public final class Periodo {
 
     public String inicio() {
         this.inicioAntesTermino(this.inicio, this.termino);
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern(
+        final DateTimeFormatter formato = DateTimeFormatter.ofPattern(
             "yyyy-MM-dd HH:mm:ss"
         );
         return this.inicio.format(formato);
@@ -61,7 +61,7 @@ public final class Periodo {
 
     public String termino() {
         this.inicioAntesTermino(this.inicio, this.termino);
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern(
+        final DateTimeFormatter formato = DateTimeFormatter.ofPattern(
             "yyyy-MM-dd HH:mm:ss"
         );
         return this.termino.format(formato);

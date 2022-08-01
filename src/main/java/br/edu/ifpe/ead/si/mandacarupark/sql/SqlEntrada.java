@@ -48,12 +48,12 @@ public class SqlEntrada implements Entrada {
 
     @Override
     public Placa placa() {
-        String sql = String.format(
+        final String sql = String.format(
             "SELECT placa FROM entrada WHERE id = '%s'",
             this.id
         );
         try {
-            Placa placa ;
+            final Placa placa ;
             ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 placa = new Placa(rset.getString(1));
@@ -68,16 +68,16 @@ public class SqlEntrada implements Entrada {
 
     @Override
     public LocalDateTime dataHora() {
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern(
+        final DateTimeFormatter formato = DateTimeFormatter.ofPattern(
             "yyyy-MM-dd HH:mm:ss.SSSX"
         );
-        String sql = String.format(
+        final String sql = String.format(
             "SELECT datahora FROM entrada WHERE id = '%s'",
             this.id
         );
         try {
-            LocalDateTime dataHora;
-            ResultSet rset = new Select(this.session, sql).result();
+            final LocalDateTime dataHora;
+            final ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 dataHora = LocalDateTime.parse(rset.getString(1), formato);
             } else {

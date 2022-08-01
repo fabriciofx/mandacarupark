@@ -83,7 +83,7 @@ public class Dinheiro implements Comparable<Dinheiro> {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        Dinheiro dinheiro = (Dinheiro) obj;
+        final Dinheiro dinheiro = (Dinheiro) obj;
         return Objects.equals(
             this.quantia,
             dinheiro.quantia

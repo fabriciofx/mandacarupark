@@ -39,10 +39,10 @@ import java.time.LocalDateTime;
 public class TestFakeLocacoes {
     @Test
     public void locacoes() {
-        Entradas entradas = new FakeEntradas();
-        Saidas saidas = new FakeSaidas();
-        Pagamentos pagamentos = new FakePagamentos();
-        Estacionamento estacionamento = new FakeEstacionamento(
+        final Entradas entradas = new FakeEntradas();
+        final Saidas saidas = new FakeSaidas();
+        final Pagamentos pagamentos = new FakePagamentos();
+        final Estacionamento estacionamento = new FakeEstacionamento(
             entradas,
             saidas,
             pagamentos,
@@ -50,7 +50,7 @@ public class TestFakeLocacoes {
         );
         // Locação 1
         Placa placa = new Placa("ABC1234");
-        LocalDateTime agora = LocalDateTime.now();
+        final LocalDateTime agora = LocalDateTime.now();
         Ticket ticket = estacionamento.entrada(placa, agora);
         ticket = estacionamento.pagamento(ticket, agora.plusMinutes(60));
         estacionamento.saida(ticket, placa, agora.plusMinutes(70));
@@ -64,7 +64,7 @@ public class TestFakeLocacoes {
         ticket = estacionamento.entrada(placa, agora.plusMinutes(2));
         ticket = estacionamento.pagamento(ticket, agora.plusMinutes(55));
         estacionamento.saida(ticket, placa, agora.plusMinutes(52));
-        Locacoes locacoes = new FakeLocacoes(
+        final Locacoes locacoes = new FakeLocacoes(
             entradas,
             saidas,
             pagamentos,

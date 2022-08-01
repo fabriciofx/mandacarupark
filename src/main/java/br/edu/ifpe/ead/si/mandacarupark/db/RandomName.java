@@ -48,10 +48,10 @@ public class RandomName {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        Random rand = new Random();
+        final StringBuilder sb = new StringBuilder();
+        final Random rand = new Random();
         for(int idx = 0; idx < this.length; idx++) {
-            int pos = rand.nextInt(this.chars.length);
+            final int pos = rand.nextInt(this.chars.length);
             sb.append(this.chars[pos]);
         }
         return sb.toString();

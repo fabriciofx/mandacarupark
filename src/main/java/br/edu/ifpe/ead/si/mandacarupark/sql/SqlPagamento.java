@@ -48,16 +48,16 @@ public class SqlPagamento implements Pagamento {
 
     @Override
     public LocalDateTime dataHora() {
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern(
+        final DateTimeFormatter formato = DateTimeFormatter.ofPattern(
             "yyyy-MM-dd HH:mm:ss.SSSX"
         );
-        String sql = String.format(
+        final String sql = String.format(
             "SELECT datahora FROM pagamento WHERE id = '%s'",
             this.id
         );
         try {
-            LocalDateTime dataHora;
-            ResultSet rset = new Select(this.session, sql).result();
+            final LocalDateTime dataHora;
+            final ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 dataHora = LocalDateTime.parse(rset.getString(1), formato);
             } else {
@@ -73,13 +73,13 @@ public class SqlPagamento implements Pagamento {
 
     @Override
     public Dinheiro valor() {
-        String sql = String.format(
+        final String sql = String.format(
             "SELECT valor FROM pagamento WHERE id = '%s'",
             this.id
         );
         try {
-            Dinheiro valor;
-            ResultSet rset = new Select(this.session, sql).result();
+            final Dinheiro valor;
+            final ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 valor = new Dinheiro(rset.getBigDecimal(1));
             } else {

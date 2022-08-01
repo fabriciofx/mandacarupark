@@ -29,7 +29,7 @@ import org.junit.Test;
 public class TestRandomName {
     @Test
     public void nameWith5Chars() {
-        String name = new RandomName().toString();
+        final String name = new RandomName().toString();
         Assert.assertEquals(name.length(), 5);
     }
 }

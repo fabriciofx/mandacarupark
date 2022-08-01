@@ -67,13 +67,13 @@ public class SqlTicket implements Ticket {
 
     @Override
     public Dinheiro valor() {
-        String sql = String.format(
+        final String sql = String.format(
             "SELECT valor FROM pagamento WHERE id = '%s'",
             this.id
         );
         try {
-            Dinheiro valor;
-            ResultSet rset = new Select(this.session, sql).result();
+            final Dinheiro valor;
+            final ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 valor = new Dinheiro(rset.getBigDecimal(1));
             } else {
@@ -89,13 +89,13 @@ public class SqlTicket implements Ticket {
 
     @Override
     public boolean validado() {
-        String sql = String.format(
+        final String sql = String.format(
             "SELECT COUNT(*) FROM pagamento WHERE id = '%s'",
             this.id
         );
         try {
             int quantidade;
-            ResultSet rset = new Select(this.session, sql).result();
+            final ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 quantidade = rset.getInt(1);
             } else {

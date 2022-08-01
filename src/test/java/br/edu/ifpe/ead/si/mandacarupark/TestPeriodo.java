@@ -30,13 +30,13 @@ import java.time.LocalDateTime;
 public class TestPeriodo {
     @Test
     public void contemAgora() {
-        LocalDateTime agora = LocalDateTime.now();
+        final LocalDateTime agora = LocalDateTime.now();
         Assert.assertTrue(new Periodo(agora, agora).contem(agora));
     }
 
     @Test
     public void contem() {
-        LocalDateTime agora = LocalDateTime.now();
+        final LocalDateTime agora = LocalDateTime.now();
         Assert.assertTrue(
             new Periodo(agora, agora.plusMinutes(5)).contem(agora)
         );
@@ -48,7 +48,7 @@ public class TestPeriodo {
             "Periodo: o tempo de ínicio não pode ser depois do término",
             RuntimeException.class,
             () -> {
-                LocalDateTime agora = LocalDateTime.now();
+                final LocalDateTime agora = LocalDateTime.now();
                 new Periodo(agora.plusMinutes(1), agora).minutos();
             }
         );

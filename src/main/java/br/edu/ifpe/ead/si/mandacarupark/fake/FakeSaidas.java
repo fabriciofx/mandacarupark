@@ -50,7 +50,7 @@ public class FakeSaidas implements Saidas {
         final Placa placa,
         final LocalDateTime dataHora
     ) {
-        Saida evento = new FakeSaida(ticket.id(), placa, dataHora);
+        final Saida evento = new FakeSaida(ticket.id(), placa, dataHora);
         this.items.put(evento.id(), evento);
         return evento;
     }

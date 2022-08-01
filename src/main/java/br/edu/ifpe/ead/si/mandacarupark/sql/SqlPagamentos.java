@@ -50,7 +50,7 @@ public class SqlPagamentos implements Pagamentos {
         final LocalDateTime dataHora,
         final Dinheiro valor
     ) {
-        String sql = String.format(
+        final String sql = String.format(
             "INSERT INTO pagamento (id, datahora, valor) VALUES ('%s', '%s', '%s')",
             ticket.id(),
             dataHora,
@@ -62,13 +62,13 @@ public class SqlPagamentos implements Pagamentos {
 
     @Override
     public Pagamento procura(final Uuid id) {
-        String sql = String.format(
+        final String sql = String.format(
             "SELECT COUNT(*) FROM pagamento WHERE id = '%s'",
             id
         );
         int quantidade = 0;
         try {
-            ResultSet rset = new Select(this.session, sql).result();
+            final ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 quantidade = rset.getInt(1);
             }
@@ -88,10 +88,10 @@ public class SqlPagamentos implements Pagamentos {
 
     @Override
     public Iterator<Pagamento> iterator() {
-        String sql = String.format("SELECT * FROM pagamento");
-        List<Pagamento> items = new ArrayList<>();
+        final String sql = String.format("SELECT * FROM pagamento");
+        final List<Pagamento> items = new ArrayList<>();
         try {
-            ResultSet rset = new Select(this.session, sql).result();
+            final ResultSet rset = new Select(this.session, sql).result();
             while (rset.next()) {
                 items.add(
                     new SqlPagamento(

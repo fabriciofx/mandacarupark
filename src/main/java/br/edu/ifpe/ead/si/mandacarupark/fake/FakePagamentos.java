@@ -50,7 +50,11 @@ public class FakePagamentos implements Pagamentos {
         final LocalDateTime dataHora,
         final Dinheiro valor
     ) {
-        Pagamento evento = new FakePagamento(ticket.id(), dataHora, valor);
+        final Pagamento evento = new FakePagamento(
+            ticket.id(),
+            dataHora,
+            valor
+        );
         this.items.put(ticket.id(), evento);
         return evento;
     }
