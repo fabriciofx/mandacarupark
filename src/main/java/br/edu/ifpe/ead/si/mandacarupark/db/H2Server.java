@@ -38,8 +38,9 @@ public class H2Server implements Server {
     }
 
     @Override
-    public void start() throws Exception {
+    public Server start() throws Exception {
         this.script.run(this.session());
+        return this;
     }
 
     @Override
@@ -56,6 +57,10 @@ public class H2Server implements Server {
 
     @Override
     public void close() throws IOException {
-        // Intended empty.
+        try {
+            this.stop();
+        } catch(Exception ex) {
+            throw new IOException(ex);
+        }
     }
 }
