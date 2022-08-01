@@ -37,10 +37,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class SqlPagamentos implements Pagamentos {
+public class PagamentosSql implements Pagamentos {
     private final Session session;
 
-    public SqlPagamentos(final Session session) {
+    public PagamentosSql(final Session session) {
         this.session = session;
     }
 
@@ -57,7 +57,7 @@ public class SqlPagamentos implements Pagamentos {
             valor.quantia()
         );
         new Insert(this.session, sql).execute();
-        return new SqlPagamento(this.session, ticket.id());
+        return new PagamentoSql(this.session, ticket.id());
     }
 
     @Override
@@ -82,7 +82,7 @@ public class SqlPagamentos implements Pagamentos {
                 )
             );
         }
-        return new SqlPagamento(this.session, id);
+        return new PagamentoSql(this.session, id);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class SqlPagamentos implements Pagamentos {
             final List<Pagamento> items = new ArrayList<>();
             while (rset.next()) {
                 items.add(
-                    new SqlPagamento(
+                    new PagamentoSql(
                         this.session,
                         new Uuid(rset.getString(1))
                     )

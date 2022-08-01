@@ -23,43 +23,69 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.sql;
 
-import br.edu.ifpe.ead.si.mandacarupark.Locacao;
-import br.edu.ifpe.ead.si.mandacarupark.Locacoes;
-import br.edu.ifpe.ead.si.mandacarupark.Periodo;
+import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
+import br.edu.ifpe.ead.si.mandacarupark.Pagamento;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-public class SqlLocacoes implements Locacoes {
+public class PagamentoSql implements Pagamento {
     private final Session session;
-    private final Periodo periodo;
+    private final Uuid id;
 
-    public SqlLocacoes(final Session session, final Periodo periodo) {
+    public PagamentoSql(final Session session, final Uuid id) {
         this.session = session;
-        this.periodo = periodo;
+        this.id = id;
     }
 
     @Override
-    public Iterator<Locacao> iterator() {
+    public Uuid id() {
+        return this.id;
+    }
+
+    @Override
+    public LocalDateTime dataHora() {
+        final DateTimeFormatter formato = DateTimeFormatter.ofPattern(
+            "yyyy-MM-dd HH:mm:ss.SSSX"
+        );
         final String sql = String.format(
-            "SELECT * FROM locacao WHERE entrada >= '%s' AND saida <= '%s'",
-            this.periodo.inicio(), this.periodo.termino()
+            "SELECT datahora FROM pagamento WHERE id = '%s'",
+            this.id
         );
         try (final ResultSet rset = new Select(this.session, sql).result()) {
-            final List<Locacao> items = new ArrayList<>();
-            while (rset.next()) {
-                items.add(
-                    new SqlLocacao(
-                        this.session,
-                        new Uuid(rset.getString(1))
-                    )
+            final LocalDateTime dataHora;
+            if (rset.next()) {
+                dataHora = LocalDateTime.parse(rset.getString(1), formato);
+            } else {
+                throw new RuntimeException(
+                    "Data/Hora inexistente ou inválida!"
                 );
             }
-            return items.iterator();
+            return dataHora;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    @Override
+    public Dinheiro valor() {
+        final String sql = String.format(
+            "SELECT valor FROM pagamento WHERE id = '%s'",
+            this.id
+        );
+        try (final ResultSet rset = new Select(this.session, sql).result()) {
+            final Dinheiro valor;
+            if (rset.next()) {
+                valor = new Dinheiro(rset.getBigDecimal(1));
+            } else {
+                throw new RuntimeException(
+                    "Valor inexistente ou inválida!"
+                );
+            }
+            return valor;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

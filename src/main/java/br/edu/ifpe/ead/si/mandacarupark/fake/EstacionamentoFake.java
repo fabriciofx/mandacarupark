@@ -34,13 +34,13 @@ import br.edu.ifpe.ead.si.mandacarupark.Saidas;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import java.time.LocalDateTime;
 
-public class FakeEstacionamento implements Estacionamento {
+public class EstacionamentoFake implements Estacionamento {
     private final Entradas entradas;
     private final Saidas saidas;
     private final Pagamentos pagamentos;
     private final Precos precos;
 
-    public FakeEstacionamento(
+    public EstacionamentoFake(
         final Entradas entradas,
         final Saidas saidas,
         final Pagamentos pagamentos,
@@ -52,11 +52,11 @@ public class FakeEstacionamento implements Estacionamento {
         this.precos = precos;
     }
 
-    public FakeEstacionamento(final Precos precos) {
+    public EstacionamentoFake(final Precos precos) {
         this(
-            new FakeEntradas(),
-            new FakeSaidas(),
-            new FakePagamentos(),
+            new EntradasFake(),
+            new SaidasFake(),
+            new PagamentosFake(),
             precos
         );
     }
@@ -64,7 +64,7 @@ public class FakeEstacionamento implements Estacionamento {
     @Override
     public Ticket entrada(final Placa placa, final LocalDateTime dataHora) {
         final Entrada entrada = entradas.entrada(placa, dataHora);
-        final Ticket ticket = new FakeTicket(
+        final Ticket ticket = new TicketFake(
             this.pagamentos,
             entrada.id(),
             placa,
@@ -78,7 +78,7 @@ public class FakeEstacionamento implements Estacionamento {
     public Ticket pagamento(final Ticket ticket, final LocalDateTime dataHora) {
         final Dinheiro valor = this.precos.valor(ticket.dataHora(), dataHora);
         this.pagamentos.pagamento(ticket, dataHora, valor);
-        return new FakeTicket(
+        return new TicketFake(
             this.pagamentos,
             ticket.id(),
             ticket.placa(),

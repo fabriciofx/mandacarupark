@@ -23,45 +23,38 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.fake;
 
+import br.edu.ifpe.ead.si.mandacarupark.Entrada;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
-import br.edu.ifpe.ead.si.mandacarupark.Saida;
-import br.edu.ifpe.ead.si.mandacarupark.Saidas;
-import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
-public class FakeSaidas implements Saidas {
-    private final Map<Uuid, Saida> items;
+public class EntradaFake implements Entrada {
+    private final Uuid id;
+    private final Placa placa;
+    private final LocalDateTime dataHora;
 
-    public FakeSaidas() {
-        this(new HashMap<>());
-    }
-
-    public FakeSaidas(final Map<Uuid, Saida> items) {
-        this.items = items;
-    }
-
-    @Override
-    public Saida saida(
-        final Ticket ticket,
+    public EntradaFake(
+        final Uuid id,
         final Placa placa,
         final LocalDateTime dataHora
     ) {
-        final Saida evento = new FakeSaida(ticket.id(), placa, dataHora);
-        this.items.put(evento.id(), evento);
-        return evento;
+        this.id = id;
+        this.placa = placa;
+        this.dataHora = dataHora;
     }
 
     @Override
-    public Saida procura(final Uuid id) {
-        return this.items.get(id);
+    public Uuid id() {
+        return this.id;
     }
 
     @Override
-    public Iterator<Saida> iterator() {
-        return this.items.values().iterator();
+    public Placa placa() {
+        return this.placa;
+    }
+
+    @Override
+    public LocalDateTime dataHora() {
+        return this.dataHora;
     }
 }

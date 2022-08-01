@@ -23,11 +23,11 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.sql;
 
+import br.edu.ifpe.ead.si.mandacarupark.Entrada;
+import br.edu.ifpe.ead.si.mandacarupark.Entradas;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
-import br.edu.ifpe.ead.si.mandacarupark.Saida;
-import br.edu.ifpe.ead.si.mandacarupark.Saidas;
-import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
+import br.edu.ifpe.ead.si.mandacarupark.db.Insert;
 import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
 import java.sql.ResultSet;
@@ -36,26 +36,30 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class SqlSaidas implements Saidas {
+public class EntradasSql implements Entradas {
     private final Session session;
 
-    public SqlSaidas(final Session session) {
+    public EntradasSql(final Session session) {
         this.session = session;
     }
 
     @Override
-    public Saida saida(
-        final Ticket ticket,
-        final Placa placa,
-        final LocalDateTime dataHora
-    ) {
-        return new SqlSaida(this.session, ticket.id());
+    public Entrada entrada(final Placa placa, final LocalDateTime dataHora) {
+        final Uuid id = new Uuid();
+        final String sql = String.format(
+            "INSERT INTO entrada (id, placa, datahora) VALUES ('%s', '%s', '%s')",
+            id,
+            placa,
+            dataHora
+        );
+        new Insert(this.session, sql).execute();
+        return new EntradaSql(this.session, id);
     }
 
     @Override
-    public Saida procura(final Uuid id) {
+    public Entrada procura(final Uuid id) {
         final String sql = String.format(
-            "SELECT COUNT(*) FROM saida WHERE id = '%s'",
+            "SELECT COUNT(*) FROM entrada WHERE id = '%s'",
             id
         );
         int quantidade = 0;
@@ -74,17 +78,17 @@ public class SqlSaidas implements Saidas {
                 )
             );
         }
-        return new SqlSaida(this.session, id);
+        return new EntradaSql(this.session, id);
     }
 
     @Override
-    public Iterator<Saida> iterator() {
-        final String sql = "SELECT * FROM saida";
+    public Iterator<Entrada> iterator() {
+        final String sql = "SELECT * FROM entrada";
         try (final ResultSet rset = new Select(this.session, sql).result()) {
-            final List<Saida> items = new ArrayList<>();
+            final List<Entrada> items = new ArrayList<>();
             while (rset.next()) {
                 items.add(
-                    new SqlSaida(
+                    new EntradaSql(
                         this.session,
                         new Uuid(rset.getString(1))
                     )

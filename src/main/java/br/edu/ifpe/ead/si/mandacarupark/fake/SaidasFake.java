@@ -23,50 +23,45 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.fake;
 
-import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
-import br.edu.ifpe.ead.si.mandacarupark.Locacao;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
+import br.edu.ifpe.ead.si.mandacarupark.Saida;
+import br.edu.ifpe.ead.si.mandacarupark.Saidas;
+import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
-public class FakeLocacao implements Locacao {
-    private final Uuid id;
-    private final Placa placa;
-    private final LocalDateTime entrada;
-    private final LocalDateTime saida;
-    private final Dinheiro valor;
+public class SaidasFake implements Saidas {
+    private final Map<Uuid, Saida> items;
 
-    public FakeLocacao(
-        final Uuid id,
+    public SaidasFake() {
+        this(new HashMap<>());
+    }
+
+    public SaidasFake(final Map<Uuid, Saida> items) {
+        this.items = items;
+    }
+
+    @Override
+    public Saida saida(
+        final Ticket ticket,
         final Placa placa,
-        final LocalDateTime entrada,
-        final LocalDateTime saida,
-        final Dinheiro valor
+        final LocalDateTime dataHora
     ) {
-        this.id = id;
-        this.placa = placa;
-        this.entrada = entrada;
-        this.saida = saida;
-        this.valor = valor;
+        final Saida evento = new SaidaFake(ticket.id(), placa, dataHora);
+        this.items.put(evento.id(), evento);
+        return evento;
     }
 
     @Override
-    public Placa placa() {
-        return this.placa;
+    public Saida procura(final Uuid id) {
+        return this.items.get(id);
     }
 
     @Override
-    public LocalDateTime entrada() {
-        return this.entrada;
-    }
-
-    @Override
-    public LocalDateTime saida() {
-        return this.saida;
-    }
-
-    @Override
-    public Dinheiro valor() {
-        return this.valor;
+    public Iterator<Saida> iterator() {
+        return this.items.values().iterator();
     }
 }

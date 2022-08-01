@@ -23,31 +23,22 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.sql;
 
-import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
+import br.edu.ifpe.ead.si.mandacarupark.Entrada;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
-import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-public class SqlTicket implements Ticket {
+public class EntradaSql implements Entrada {
     private final Session session;
     private final Uuid id;
-    private final Placa placa;
-    private final LocalDateTime dataHora;
 
-    public SqlTicket(
-        final Session session,
-        final Uuid id,
-        final Placa placa,
-        final LocalDateTime dataHora
-    ) {
+    public EntradaSql(final Session session, final Uuid id) {
         this.session = session;
         this.id = id;
-        this.placa = placa;
-        this.dataHora = dataHora;
     }
 
     @Override
@@ -57,51 +48,42 @@ public class SqlTicket implements Ticket {
 
     @Override
     public Placa placa() {
-        return this.placa;
-    }
-
-    @Override
-    public LocalDateTime dataHora() {
-        return this.dataHora;
-    }
-
-    @Override
-    public Dinheiro valor() {
         final String sql = String.format(
-            "SELECT valor FROM pagamento WHERE id = '%s'",
+            "SELECT placa FROM entrada WHERE id = '%s'",
             this.id
         );
         try (final ResultSet rset = new Select(this.session, sql).result()) {
-            final Dinheiro valor;
+            final Placa placa ;
             if (rset.next()) {
-                valor = new Dinheiro(rset.getBigDecimal(1));
+                placa = new Placa(rset.getString(1));
             } else {
-                throw new RuntimeException(
-                    "Valor inexistente ou inválida!"
-                );
+                throw new RuntimeException("Placa inexistente ou inválida!");
             }
-            return valor;
+            return placa;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
 
     @Override
-    public boolean validado() {
+    public LocalDateTime dataHora() {
+        final DateTimeFormatter formato = DateTimeFormatter.ofPattern(
+            "yyyy-MM-dd HH:mm:ss.SSSX"
+        );
         final String sql = String.format(
-            "SELECT COUNT(*) FROM pagamento WHERE id = '%s'",
+            "SELECT datahora FROM entrada WHERE id = '%s'",
             this.id
         );
         try (final ResultSet rset = new Select(this.session, sql).result()) {
-            int quantidade;
+            final LocalDateTime dataHora;
             if (rset.next()) {
-                quantidade = rset.getInt(1);
+                dataHora = LocalDateTime.parse(rset.getString(1), formato);
             } else {
                 throw new RuntimeException(
-                    "Validação inexistente ou inválida!"
+                    "Data/Hora inexistente ou inválida!"
                 );
             }
-            return quantidade != 0;
+            return dataHora;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

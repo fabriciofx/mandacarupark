@@ -23,67 +23,43 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.sql;
 
-import br.edu.ifpe.ead.si.mandacarupark.Entrada;
-import br.edu.ifpe.ead.si.mandacarupark.Placa;
+import br.edu.ifpe.ead.si.mandacarupark.Locacao;
+import br.edu.ifpe.ead.si.mandacarupark.Locacoes;
+import br.edu.ifpe.ead.si.mandacarupark.Periodo;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
 import java.sql.ResultSet;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-public class SqlEntrada implements Entrada {
+public class LocacoesSql implements Locacoes {
     private final Session session;
-    private final Uuid id;
+    private final Periodo periodo;
 
-    public SqlEntrada(final Session session, final Uuid id) {
+    public LocacoesSql(final Session session, final Periodo periodo) {
         this.session = session;
-        this.id = id;
+        this.periodo = periodo;
     }
 
     @Override
-    public Uuid id() {
-        return this.id;
-    }
-
-    @Override
-    public Placa placa() {
+    public Iterator<Locacao> iterator() {
         final String sql = String.format(
-            "SELECT placa FROM entrada WHERE id = '%s'",
-            this.id
+            "SELECT * FROM locacao WHERE entrada >= '%s' AND saida <= '%s'",
+            this.periodo.inicio(), this.periodo.termino()
         );
         try (final ResultSet rset = new Select(this.session, sql).result()) {
-            final Placa placa ;
-            if (rset.next()) {
-                placa = new Placa(rset.getString(1));
-            } else {
-                throw new RuntimeException("Placa inexistente ou inválida!");
-            }
-            return placa;
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    @Override
-    public LocalDateTime dataHora() {
-        final DateTimeFormatter formato = DateTimeFormatter.ofPattern(
-            "yyyy-MM-dd HH:mm:ss.SSSX"
-        );
-        final String sql = String.format(
-            "SELECT datahora FROM entrada WHERE id = '%s'",
-            this.id
-        );
-        try (final ResultSet rset = new Select(this.session, sql).result()) {
-            final LocalDateTime dataHora;
-            if (rset.next()) {
-                dataHora = LocalDateTime.parse(rset.getString(1), formato);
-            } else {
-                throw new RuntimeException(
-                    "Data/Hora inexistente ou inválida!"
+            final List<Locacao> items = new ArrayList<>();
+            while (rset.next()) {
+                items.add(
+                    new LocacaoSql(
+                        this.session,
+                        new Uuid(rset.getString(1))
+                    )
                 );
             }
-            return dataHora;
+            return items.iterator();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

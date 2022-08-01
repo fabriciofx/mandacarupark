@@ -21,23 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package br.edu.ifpe.ead.si.mandacarupark.fake;
+package br.edu.ifpe.ead.si.mandacarupark.sql;
 
+import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
-import br.edu.ifpe.ead.si.mandacarupark.Saida;
+import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
+import br.edu.ifpe.ead.si.mandacarupark.db.Select;
+import br.edu.ifpe.ead.si.mandacarupark.db.Session;
+import java.sql.ResultSet;
 import java.time.LocalDateTime;
 
-public class FakeSaida implements Saida {
+public class TicketSql implements Ticket {
+    private final Session session;
     private final Uuid id;
     private final Placa placa;
     private final LocalDateTime dataHora;
 
-    public FakeSaida(
+    public TicketSql(
+        final Session session,
         final Uuid id,
         final Placa placa,
         final LocalDateTime dataHora
     ) {
+        this.session = session;
         this.id = id;
         this.placa = placa;
         this.dataHora = dataHora;
@@ -56,5 +63,47 @@ public class FakeSaida implements Saida {
     @Override
     public LocalDateTime dataHora() {
         return this.dataHora;
+    }
+
+    @Override
+    public Dinheiro valor() {
+        final String sql = String.format(
+            "SELECT valor FROM pagamento WHERE id = '%s'",
+            this.id
+        );
+        try (final ResultSet rset = new Select(this.session, sql).result()) {
+            final Dinheiro valor;
+            if (rset.next()) {
+                valor = new Dinheiro(rset.getBigDecimal(1));
+            } else {
+                throw new RuntimeException(
+                    "Valor inexistente ou inválida!"
+                );
+            }
+            return valor;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    @Override
+    public boolean validado() {
+        final String sql = String.format(
+            "SELECT COUNT(*) FROM pagamento WHERE id = '%s'",
+            this.id
+        );
+        try (final ResultSet rset = new Select(this.session, sql).result()) {
+            int quantidade;
+            if (rset.next()) {
+                quantidade = rset.getInt(1);
+            } else {
+                throw new RuntimeException(
+                    "Validação inexistente ou inválida!"
+                );
+            }
+            return quantidade != 0;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

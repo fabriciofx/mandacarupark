@@ -32,20 +32,20 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class FakeEntradas implements Entradas {
+public class EntradasFake implements Entradas {
     private final Map<Uuid, Entrada> items;
 
-    public FakeEntradas() {
+    public EntradasFake() {
         this(new HashMap<>());
     }
 
-    public FakeEntradas(final Map<Uuid, Entrada> items) {
+    public EntradasFake(final Map<Uuid, Entrada> items) {
         this.items = items;
     }
 
     @Override
     public Entrada entrada(final Placa placa, final LocalDateTime dataHora) {
-        final Entrada evento = new FakeEntrada(new Uuid(), placa, dataHora);
+        final Entrada evento = new EntradaFake(new Uuid(), placa, dataHora);
         this.items.put(evento.id(), evento);
         return evento;
     }

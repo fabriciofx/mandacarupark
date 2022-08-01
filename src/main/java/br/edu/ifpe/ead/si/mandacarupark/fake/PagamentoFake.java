@@ -28,12 +28,12 @@ import br.edu.ifpe.ead.si.mandacarupark.Pagamento;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import java.time.LocalDateTime;
 
-public class FakePagamento implements Pagamento {
+public class PagamentoFake implements Pagamento {
     private final Uuid id;
     private final LocalDateTime dataHora;
     private final Dinheiro valor;
 
-    public FakePagamento(
+    public PagamentoFake(
         final Uuid id,
         final LocalDateTime dataHora,
         final Dinheiro valor

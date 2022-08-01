@@ -37,13 +37,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import java.time.LocalDateTime;
 
-public class TestFakeEstacionamento {
+public class TestEstacionamentoFake {
     @Test
     public void entrada() throws Exception {
-        final Entradas entradas = new FakeEntradas();
-        final Saidas saidas = new FakeSaidas();
-        final Pagamentos pagamentos = new FakePagamentos();
-        final Estacionamento estacionamento = new FakeEstacionamento(
+        final Entradas entradas = new EntradasFake();
+        final Saidas saidas = new SaidasFake();
+        final Pagamentos pagamentos = new PagamentosFake();
+        final Estacionamento estacionamento = new EstacionamentoFake(
             entradas,
             saidas,
             pagamentos,
@@ -60,7 +60,7 @@ public class TestFakeEstacionamento {
 
     @Test
     public void locacao() {
-        final Estacionamento estacionamento = new FakeEstacionamento(
+        final Estacionamento estacionamento = new EstacionamentoFake(
             new Tolerancia(
                 new PrecoFixo(new Dinheiro("5.00"))
             )
@@ -76,7 +76,7 @@ public class TestFakeEstacionamento {
 
     @Test
     public void tolerancia() {
-        final Estacionamento estacionamento = new FakeEstacionamento(
+        final Estacionamento estacionamento = new EstacionamentoFake(
             new Tolerancia(
                 new PrecoFixo(new Dinheiro("5.00"))
             )
@@ -96,7 +96,7 @@ public class TestFakeEstacionamento {
             "Ticket não validado!",
             RuntimeException.class,
             () -> {
-                Estacionamento estacionamento = new FakeEstacionamento(
+                Estacionamento estacionamento = new EstacionamentoFake(
                     new Tolerancia(
                         new PrecoFixo(new Dinheiro("5.00"))
                     )

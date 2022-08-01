@@ -40,7 +40,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import java.time.LocalDateTime;
 
-public class TestSqlEstacionamento {
+public class TestEstacionamentoSql {
     @Test
     public void entrada() throws Exception {
         try (
@@ -50,12 +50,12 @@ public class TestSqlEstacionamento {
             ).start()
         ) {
             final Session session = server.session();
-            final Entradas entradas = new SqlEntradas(session);
-            final Estacionamento estacionamento = new SqlEstacionamento(
+            final Entradas entradas = new EntradasSql(session);
+            final Estacionamento estacionamento = new EstacionamentoSql(
                 session,
                 entradas,
-                new SqlSaidas(session),
-                new SqlPagamentos(session),
+                new SaidasSql(session),
+                new PagamentosSql(session),
                 new Tolerancia(
                     new PrecoFixo(new Dinheiro("5.00"))
                 )
@@ -77,12 +77,12 @@ public class TestSqlEstacionamento {
             ).start()
         ) {
             final Session session = server.session();
-            final Entradas entradas = new SqlEntradas(session);
-            final Estacionamento estacionamento = new SqlEstacionamento(
+            final Entradas entradas = new EntradasSql(session);
+            final Estacionamento estacionamento = new EstacionamentoSql(
                 session,
                 entradas,
-                new SqlSaidas(session),
-                new SqlPagamentos(session),
+                new SaidasSql(session),
+                new PagamentosSql(session),
                 new Tolerancia(
                     new PrecoFixo(new Dinheiro("5.00"))
                 )
@@ -106,12 +106,12 @@ public class TestSqlEstacionamento {
             ).start()
         ) {
             final Session session = server.session();
-            final Entradas entradas = new SqlEntradas(session);
-            final Estacionamento estacionamento = new SqlEstacionamento(
+            final Entradas entradas = new EntradasSql(session);
+            final Estacionamento estacionamento = new EstacionamentoSql(
                 session,
                 entradas,
-                new SqlSaidas(session),
-                new SqlPagamentos(session),
+                new SaidasSql(session),
+                new PagamentosSql(session),
                 new Tolerancia(
                     new PrecoFixo(new Dinheiro("5.00"))
                 )
@@ -139,11 +139,11 @@ public class TestSqlEstacionamento {
                     ).start()
                 ) {
                     final Session session = server.session();
-                    final Estacionamento estacionamento = new SqlEstacionamento(
+                    final Estacionamento estacionamento = new EstacionamentoSql(
                         session,
-                        new SqlEntradas(session),
-                        new SqlSaidas(session),
-                        new SqlPagamentos(session),
+                        new EntradasSql(session),
+                        new SaidasSql(session),
+                        new PagamentosSql(session),
                         new Tolerancia(
                             new PrecoFixo(new Dinheiro("5.00"))
                         )

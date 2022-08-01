@@ -23,69 +23,74 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.sql;
 
-import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
-import br.edu.ifpe.ead.si.mandacarupark.Pagamento;
+import br.edu.ifpe.ead.si.mandacarupark.Placa;
+import br.edu.ifpe.ead.si.mandacarupark.Saida;
+import br.edu.ifpe.ead.si.mandacarupark.Saidas;
+import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-public class SqlPagamento implements Pagamento {
+public class SaidasSql implements Saidas {
     private final Session session;
-    private final Uuid id;
 
-    public SqlPagamento(final Session session, final Uuid id) {
+    public SaidasSql(final Session session) {
         this.session = session;
-        this.id = id;
     }
 
     @Override
-    public Uuid id() {
-        return this.id;
+    public Saida saida(
+        final Ticket ticket,
+        final Placa placa,
+        final LocalDateTime dataHora
+    ) {
+        return new SaidaSql(this.session, ticket.id());
     }
 
     @Override
-    public LocalDateTime dataHora() {
-        final DateTimeFormatter formato = DateTimeFormatter.ofPattern(
-            "yyyy-MM-dd HH:mm:ss.SSSX"
-        );
+    public Saida procura(final Uuid id) {
         final String sql = String.format(
-            "SELECT datahora FROM pagamento WHERE id = '%s'",
-            this.id
+            "SELECT COUNT(*) FROM saida WHERE id = '%s'",
+            id
         );
+        int quantidade = 0;
         try (final ResultSet rset = new Select(this.session, sql).result()) {
-            final LocalDateTime dataHora;
             if (rset.next()) {
-                dataHora = LocalDateTime.parse(rset.getString(1), formato);
-            } else {
-                throw new RuntimeException(
-                    "Data/Hora inexistente ou inválida!"
-                );
+                quantidade = rset.getInt(1);
             }
-            return dataHora;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+        if (quantidade == 0) {
+            throw new RuntimeException(
+                String.format(
+                    "Entrada com id '%s' não encontrada!",
+                    id
+                )
+            );
+        }
+        return new SaidaSql(this.session, id);
     }
 
     @Override
-    public Dinheiro valor() {
-        final String sql = String.format(
-            "SELECT valor FROM pagamento WHERE id = '%s'",
-            this.id
-        );
+    public Iterator<Saida> iterator() {
+        final String sql = "SELECT * FROM saida";
         try (final ResultSet rset = new Select(this.session, sql).result()) {
-            final Dinheiro valor;
-            if (rset.next()) {
-                valor = new Dinheiro(rset.getBigDecimal(1));
-            } else {
-                throw new RuntimeException(
-                    "Valor inexistente ou inválida!"
+            final List<Saida> items = new ArrayList<>();
+            while (rset.next()) {
+                items.add(
+                    new SaidaSql(
+                        this.session,
+                        new Uuid(rset.getString(1))
+                    )
                 );
             }
-            return valor;
+            return items.iterator();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

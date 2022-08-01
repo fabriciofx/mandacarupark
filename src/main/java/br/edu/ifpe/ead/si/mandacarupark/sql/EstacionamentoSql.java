@@ -21,59 +21,71 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package br.edu.ifpe.ead.si.mandacarupark.fake;
+package br.edu.ifpe.ead.si.mandacarupark.sql;
 
+import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
 import br.edu.ifpe.ead.si.mandacarupark.Entrada;
 import br.edu.ifpe.ead.si.mandacarupark.Entradas;
-import br.edu.ifpe.ead.si.mandacarupark.Locacao;
-import br.edu.ifpe.ead.si.mandacarupark.Locacoes;
-import br.edu.ifpe.ead.si.mandacarupark.Pagamento;
+import br.edu.ifpe.ead.si.mandacarupark.Estacionamento;
 import br.edu.ifpe.ead.si.mandacarupark.Pagamentos;
-import br.edu.ifpe.ead.si.mandacarupark.Periodo;
-import br.edu.ifpe.ead.si.mandacarupark.Saida;
+import br.edu.ifpe.ead.si.mandacarupark.Placa;
+import br.edu.ifpe.ead.si.mandacarupark.Precos;
 import br.edu.ifpe.ead.si.mandacarupark.Saidas;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import br.edu.ifpe.ead.si.mandacarupark.Ticket;
+import br.edu.ifpe.ead.si.mandacarupark.db.Session;
+import java.time.LocalDateTime;
 
-public class FakeLocacoes implements Locacoes {
+public class EstacionamentoSql implements Estacionamento {
+    private final Session session;
     private final Entradas entradas;
     private final Saidas saidas;
     private final Pagamentos pagamentos;
-    private final Periodo periodo;
+    private final Precos precos;
 
-    public FakeLocacoes(
+    public EstacionamentoSql(
+        final Session session,
         final Entradas entradas,
         final Saidas saidas,
         final Pagamentos pagamentos,
-        final Periodo periodo
+        final Precos precos
     ) {
+        this.session = session;
         this.entradas = entradas;
         this.saidas = saidas;
         this.pagamentos = pagamentos;
-        this.periodo = periodo;
+        this.precos = precos;
     }
 
     @Override
-    public Iterator<Locacao> iterator() {
-        final List<Locacao> items = new ArrayList<>();
-        for (Entrada entrada : this.entradas) {
-            if (this.periodo.contem(entrada.dataHora())) {
-                final Saida saida = this.saidas.procura(entrada.id());
-                final Pagamento pagamento = this.pagamentos.procura(
-                    entrada.id()
-                );
-                items.add(
-                    new FakeLocacao(
-                        entrada.id(),
-                        entrada.placa(),
-                        entrada.dataHora(),
-                        saida.dataHora(),
-                        pagamento.valor()
-                    )
-                );
-            }
+    public Ticket entrada(final Placa placa, final LocalDateTime dataHora) {
+        final Entrada entrada = this.entradas.entrada(placa, dataHora);
+        return new TicketSql(this.session, entrada.id(), placa, dataHora);
+    }
+
+    @Override
+    public Ticket pagamento(final Ticket ticket, final LocalDateTime dataHora) {
+        final Dinheiro valor = this.precos.valor(ticket.dataHora(), dataHora);
+        this.pagamentos.pagamento(ticket, dataHora, valor);
+        return new TicketSql(
+            this.session,
+            ticket.id(),
+            ticket.placa(),
+            ticket.dataHora()
+        );
+    }
+
+    @Override
+    public void saida(
+        final Ticket ticket,
+        final Placa placa,
+        final LocalDateTime dataHora
+    ) {
+        if (!ticket.validado()) {
+            throw new RuntimeException("Ticket não validado!");
         }
-        return items.iterator();
+        if (!ticket.placa().equals(placa)) {
+            throw new RuntimeException("Ticket não confere com a placa!");
+        }
+        this.saidas.saida(ticket, placa, dataHora);
     }
 }

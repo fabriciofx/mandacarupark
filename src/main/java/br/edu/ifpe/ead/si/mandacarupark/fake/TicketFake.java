@@ -31,14 +31,14 @@ import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import java.time.LocalDateTime;
 
-public class FakeTicket implements Ticket {
+public class TicketFake implements Ticket {
     private final Pagamentos pagamentos;
     private final Uuid id;
     private final Placa placa;
     private final LocalDateTime dataHora;
     private final Dinheiro valor;
 
-    public FakeTicket(
+    public TicketFake(
         final Pagamentos pagamentos,
         final Placa placa,
         final LocalDateTime dataHora
@@ -52,7 +52,7 @@ public class FakeTicket implements Ticket {
         );
     }
 
-    public FakeTicket(
+    public TicketFake(
         final Pagamentos pagamentos,
         final Uuid id,
         final Placa placa,

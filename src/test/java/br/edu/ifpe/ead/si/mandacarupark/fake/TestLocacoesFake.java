@@ -36,13 +36,13 @@ import br.edu.ifpe.ead.si.mandacarupark.preco.PrecoFixo;
 import org.junit.Test;
 import java.time.LocalDateTime;
 
-public class TestFakeLocacoes {
+public class TestLocacoesFake {
     @Test
     public void locacoes() {
-        final Entradas entradas = new FakeEntradas();
-        final Saidas saidas = new FakeSaidas();
-        final Pagamentos pagamentos = new FakePagamentos();
-        final Estacionamento estacionamento = new FakeEstacionamento(
+        final Entradas entradas = new EntradasFake();
+        final Saidas saidas = new SaidasFake();
+        final Pagamentos pagamentos = new PagamentosFake();
+        final Estacionamento estacionamento = new EstacionamentoFake(
             entradas,
             saidas,
             pagamentos,
@@ -64,7 +64,7 @@ public class TestFakeLocacoes {
         ticket = estacionamento.entrada(placa, agora.plusMinutes(2));
         ticket = estacionamento.pagamento(ticket, agora.plusMinutes(55));
         estacionamento.saida(ticket, placa, agora.plusMinutes(52));
-        final Locacoes locacoes = new FakeLocacoes(
+        final Locacoes locacoes = new LocacoesFake(
             entradas,
             saidas,
             pagamentos,
