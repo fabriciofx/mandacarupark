@@ -58,7 +58,7 @@ public class Placa {
     }
 
     private void valida(final String numero) {
-        if (this.PADRAO.matcher(numero).matches()) {
+        if (!this.PADRAO.matcher(numero).matches()) {
             throw new RuntimeException("Placa: número inválido!");
         }
     }
