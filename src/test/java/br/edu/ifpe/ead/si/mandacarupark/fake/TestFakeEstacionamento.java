@@ -32,6 +32,7 @@ import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Saidas;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.preco.PrecoFixo;
+import br.edu.ifpe.ead.si.mandacarupark.preco.Tolerancia;
 import org.junit.Assert;
 import org.junit.Test;
 import java.time.LocalDateTime;
@@ -46,7 +47,9 @@ public class TestFakeEstacionamento {
             entradas,
             saidas,
             pagamentos,
-            new PrecoFixo(new Dinheiro("5.00"))
+            new Tolerancia(
+                new PrecoFixo(new Dinheiro("5.00"))
+            )
         );
         final Placa placa = new Placa("ABC1234");
         final LocalDateTime agora = LocalDateTime.now();
@@ -58,7 +61,9 @@ public class TestFakeEstacionamento {
     @Test
     public void locacao() {
         final Estacionamento estacionamento = new FakeEstacionamento(
-            new PrecoFixo(new Dinheiro("5.00"))
+            new Tolerancia(
+                new PrecoFixo(new Dinheiro("5.00"))
+            )
         );
         final Placa placa = new Placa("ABC1234");
         final LocalDateTime agora = LocalDateTime.now();
@@ -69,6 +74,22 @@ public class TestFakeEstacionamento {
         Assert.assertEquals(ticket.valor(), new Dinheiro("5.00"));
     }
 
+    @Test
+    public void tolerancia() {
+        final Estacionamento estacionamento = new FakeEstacionamento(
+            new Tolerancia(
+                new PrecoFixo(new Dinheiro("5.00"))
+            )
+        );
+        final Placa placa = new Placa("ABC1234");
+        final LocalDateTime agora = LocalDateTime.now();
+        Ticket ticket = estacionamento.entrada(placa, agora);
+        ticket = estacionamento.pagamento(ticket, agora.plusMinutes(20));
+        estacionamento.saida(ticket, placa, agora.plusMinutes(25));
+        Assert.assertTrue(ticket.validado());
+        Assert.assertEquals(ticket.valor(), new Dinheiro("0.00"));
+    }
+
     @Test()
     public void sairSemValidarTicket() {
         Assert.assertThrows(
@@ -76,7 +97,9 @@ public class TestFakeEstacionamento {
             RuntimeException.class,
             () -> {
                 Estacionamento estacionamento = new FakeEstacionamento(
-                    new PrecoFixo(new Dinheiro("5.00"))
+                    new Tolerancia(
+                        new PrecoFixo(new Dinheiro("5.00"))
+                    )
                 );
                 Placa placa = new Placa("ABC1234");
                 LocalDateTime agora = LocalDateTime.now();

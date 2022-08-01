@@ -35,6 +35,7 @@ import br.edu.ifpe.ead.si.mandacarupark.db.Server;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
 import br.edu.ifpe.ead.si.mandacarupark.db.SqlScript;
 import br.edu.ifpe.ead.si.mandacarupark.preco.PrecoFixo;
+import br.edu.ifpe.ead.si.mandacarupark.preco.Tolerancia;
 import org.junit.Assert;
 import org.junit.Test;
 import java.time.LocalDateTime;
@@ -54,7 +55,9 @@ public class TestSqlEstacionamento {
             entradas,
             new SqlSaidas(session),
             new SqlPagamentos(session),
-            new PrecoFixo(new Dinheiro("5.00"))
+            new Tolerancia(
+                new PrecoFixo(new Dinheiro("5.00"))
+            )
         );
         final Placa placa = new Placa("ABC1234");
         final LocalDateTime agora = LocalDateTime.now();
@@ -78,7 +81,9 @@ public class TestSqlEstacionamento {
             entradas,
             new SqlSaidas(session),
             new SqlPagamentos(session),
-            new PrecoFixo(new Dinheiro("5.00"))
+            new Tolerancia(
+                new PrecoFixo(new Dinheiro("5.00"))
+            )
         );
         final Placa placa = new Placa("ABC1234");
         final LocalDateTime agora = LocalDateTime.now();
@@ -87,6 +92,34 @@ public class TestSqlEstacionamento {
         estacionamento.saida(ticket, placa, agora.plusMinutes(70));
         Assert.assertTrue(ticket.validado());
         Assert.assertEquals(ticket.valor(), new Dinheiro("5.00"));
+        server.stop();
+    }
+
+    @Test
+    public void tolerancia() throws Exception {
+        final Server server = new H2Server(
+            new RandomName().toString(),
+            new SqlScript("mandacarupark.sql")
+        );
+        server.start();
+        final Session session = server.session();
+        final Entradas entradas = new SqlEntradas(session);
+        final Estacionamento estacionamento = new SqlEstacionamento(
+            session,
+            entradas,
+            new SqlSaidas(session),
+            new SqlPagamentos(session),
+            new Tolerancia(
+                new PrecoFixo(new Dinheiro("5.00"))
+            )
+        );
+        final Placa placa = new Placa("ABC1234");
+        final LocalDateTime agora = LocalDateTime.now();
+        Ticket ticket = estacionamento.entrada(placa, agora);
+        ticket = estacionamento.pagamento(ticket, agora.plusMinutes(20));
+        estacionamento.saida(ticket, placa, agora.plusMinutes(25));
+        Assert.assertTrue(ticket.validado());
+        Assert.assertEquals(ticket.valor(), new Dinheiro("0.00"));
         server.stop();
     }
 
@@ -107,7 +140,9 @@ public class TestSqlEstacionamento {
                     new SqlEntradas(session),
                     new SqlSaidas(session),
                     new SqlPagamentos(session),
-                    new PrecoFixo(new Dinheiro("5.00"))
+                    new Tolerancia(
+                        new PrecoFixo(new Dinheiro("5.00"))
+                    )
                 );
                 final Placa placa = new Placa("ABC1234");
                 final LocalDateTime agora = LocalDateTime.now();
