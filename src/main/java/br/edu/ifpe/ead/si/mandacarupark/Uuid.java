@@ -43,7 +43,7 @@ public final class Uuid {
      * Ctor.
      */
     public Uuid() {
-        this(UUID.randomUUID().toString().toUpperCase().replaceAll("-",""));
+        this(UUID.randomUUID().toString().toUpperCase().replaceAll("-", ""));
     }
 
     /**
@@ -56,8 +56,8 @@ public final class Uuid {
 
     @Override
     public boolean equals(final Object obj) {
-        return this == obj || obj instanceof Uuid &&
-            Uuid.class.cast(obj).numero.equals(this.numero);
+        return this == obj || obj instanceof Uuid
+            && Uuid.class.cast(obj).numero.equals(this.numero);
     }
 
     @Override

@@ -49,7 +49,7 @@ public class SqlLocacao implements Locacao {
             this.id
         );
         try (final ResultSet rset = new Select(this.session, sql).result()) {
-            final Placa placa ;
+            final Placa placa;
             if (rset.next()) {
                 placa = new Placa(rset.getString(1));
             } else {
