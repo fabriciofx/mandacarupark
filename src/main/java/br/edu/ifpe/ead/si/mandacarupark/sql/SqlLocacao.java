@@ -48,9 +48,8 @@ public class SqlLocacao implements Locacao {
             "SELECT placa FROM locacao WHERE id = '%s'",
             this.id
         );
-        try {
+        try (final ResultSet rset = new Select(this.session, sql).result()) {
             final Placa placa ;
-            final ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 placa = new Placa(rset.getString(1));
             } else {
@@ -71,9 +70,8 @@ public class SqlLocacao implements Locacao {
             "SELECT entrada FROM locacao WHERE id = '%s'",
             this.id
         );
-        try {
+        try (final ResultSet rset = new Select(this.session, sql).result()) {
             final LocalDateTime dataHora;
-            final ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 dataHora = LocalDateTime.parse(rset.getString(1), formato);
             } else {
@@ -96,9 +94,8 @@ public class SqlLocacao implements Locacao {
             "SELECT saida FROM locacao WHERE id = '%s'",
             this.id
         );
-        try {
+        try (final ResultSet rset = new Select(this.session, sql).result()) {
             final LocalDateTime dataHora;
-            final ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 dataHora = LocalDateTime.parse(rset.getString(1), formato);
             } else {
@@ -118,9 +115,8 @@ public class SqlLocacao implements Locacao {
             "SELECT valor FROM pagamento WHERE id = '%s'",
             this.id
         );
-        try {
+        try (final ResultSet rset = new Select(this.session, sql).result()) {
             final Dinheiro valor;
-            final ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 valor = new Dinheiro(rset.getBigDecimal(1));
             } else {

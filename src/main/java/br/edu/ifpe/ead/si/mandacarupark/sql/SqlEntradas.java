@@ -63,8 +63,7 @@ public class SqlEntradas implements Entradas {
             id
         );
         int quantidade = 0;
-        try {
-            final ResultSet rset = new Select(this.session, sql).result();
+        try (final ResultSet rset = new Select(this.session, sql).result()) {
             if (rset.next()) {
                 quantidade = rset.getInt(1);
             }
@@ -84,10 +83,9 @@ public class SqlEntradas implements Entradas {
 
     @Override
     public Iterator<Entrada> iterator() {
-        String sql = String.format("SELECT * FROM entrada");
-        List<Entrada> items = new ArrayList<>();
-        try {
-            ResultSet rset = new Select(this.session, sql).result();
+        final String sql = "SELECT * FROM entrada";
+        try (final ResultSet rset = new Select(this.session, sql).result()) {
+            final List<Entrada> items = new ArrayList<>();
             while (rset.next()) {
                 items.add(
                     new SqlEntrada(
@@ -96,9 +94,9 @@ public class SqlEntradas implements Entradas {
                     )
                 );
             }
+            return items.iterator();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-        return items.iterator();
     }
 }

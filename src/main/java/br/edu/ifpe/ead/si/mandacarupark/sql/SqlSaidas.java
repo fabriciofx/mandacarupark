@@ -59,8 +59,7 @@ public class SqlSaidas implements Saidas {
             id
         );
         int quantidade = 0;
-        try {
-            final ResultSet rset = new Select(this.session, sql).result();
+        try (final ResultSet rset = new Select(this.session, sql).result()) {
             if (rset.next()) {
                 quantidade = rset.getInt(1);
             }
@@ -80,10 +79,9 @@ public class SqlSaidas implements Saidas {
 
     @Override
     public Iterator<Saida> iterator() {
-        final String sql = String.format("SELECT * FROM saida");
-        final List<Saida> items = new ArrayList<>();
-        try {
-            ResultSet rset = new Select(this.session, sql).result();
+        final String sql = "SELECT * FROM saida";
+        try (final ResultSet rset = new Select(this.session, sql).result()) {
+            final List<Saida> items = new ArrayList<>();
             while (rset.next()) {
                 items.add(
                     new SqlSaida(
@@ -92,9 +90,9 @@ public class SqlSaidas implements Saidas {
                     )
                 );
             }
+            return items.iterator();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-        return items.iterator();
     }
 }

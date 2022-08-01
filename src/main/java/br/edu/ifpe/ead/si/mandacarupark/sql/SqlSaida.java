@@ -52,9 +52,8 @@ public class SqlSaida implements Saida {
             "SELECT placa FROM saida WHERE id = '%s'",
             this.id
         );
-        try {
+        try (final ResultSet rset = new Select(this.session, sql).result()) {
             final Placa placa ;
-            final ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 placa = new Placa(rset.getString(1));
             } else {
@@ -75,9 +74,8 @@ public class SqlSaida implements Saida {
             "SELECT datahora FROM saida WHERE id = '%s'",
             this.id
         );
-        try {
+        try (final ResultSet rset = new Select(this.session, sql).result()) {
             final LocalDateTime dataHora;
-            final ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 dataHora = LocalDateTime.parse(rset.getString(1), formato);
             } else {

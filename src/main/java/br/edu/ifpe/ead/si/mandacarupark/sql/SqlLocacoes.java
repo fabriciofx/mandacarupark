@@ -49,9 +49,8 @@ public class SqlLocacoes implements Locacoes {
             "SELECT * FROM locacao WHERE entrada >= '%s' AND saida <= '%s'",
             this.periodo.inicio(), this.periodo.termino()
         );
-        final List<Locacao> items = new ArrayList<>();
-        try {
-            final ResultSet rset = new Select(this.session, sql).result();
+        try (final ResultSet rset = new Select(this.session, sql).result()) {
+            final List<Locacao> items = new ArrayList<>();
             while (rset.next()) {
                 items.add(
                     new SqlLocacao(
@@ -60,9 +59,9 @@ public class SqlLocacoes implements Locacoes {
                     )
                 );
             }
+            return items.iterator();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-        return items.iterator();
     }
 }

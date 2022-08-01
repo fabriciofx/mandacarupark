@@ -71,9 +71,8 @@ public class SqlTicket implements Ticket {
             "SELECT valor FROM pagamento WHERE id = '%s'",
             this.id
         );
-        try {
+        try (final ResultSet rset = new Select(this.session, sql).result()) {
             final Dinheiro valor;
-            final ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 valor = new Dinheiro(rset.getBigDecimal(1));
             } else {
@@ -93,9 +92,8 @@ public class SqlTicket implements Ticket {
             "SELECT COUNT(*) FROM pagamento WHERE id = '%s'",
             this.id
         );
-        try {
+        try (final ResultSet rset = new Select(this.session, sql).result()) {
             int quantidade;
-            final ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 quantidade = rset.getInt(1);
             } else {

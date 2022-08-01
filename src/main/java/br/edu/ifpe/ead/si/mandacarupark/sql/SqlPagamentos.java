@@ -67,8 +67,7 @@ public class SqlPagamentos implements Pagamentos {
             id
         );
         int quantidade = 0;
-        try {
-            final ResultSet rset = new Select(this.session, sql).result();
+        try (final ResultSet rset = new Select(this.session, sql).result()) {
             if (rset.next()) {
                 quantidade = rset.getInt(1);
             }
@@ -89,9 +88,8 @@ public class SqlPagamentos implements Pagamentos {
     @Override
     public Iterator<Pagamento> iterator() {
         final String sql = String.format("SELECT * FROM pagamento");
-        final List<Pagamento> items = new ArrayList<>();
-        try {
-            final ResultSet rset = new Select(this.session, sql).result();
+        try (final ResultSet rset = new Select(this.session, sql).result()) {
+            final List<Pagamento> items = new ArrayList<>();
             while (rset.next()) {
                 items.add(
                     new SqlPagamento(
@@ -100,9 +98,9 @@ public class SqlPagamentos implements Pagamentos {
                     )
                 );
             }
+            return items.iterator();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-        return items.iterator();
     }
 }

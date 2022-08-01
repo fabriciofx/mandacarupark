@@ -55,9 +55,8 @@ public class SqlPagamento implements Pagamento {
             "SELECT datahora FROM pagamento WHERE id = '%s'",
             this.id
         );
-        try {
+        try (final ResultSet rset = new Select(this.session, sql).result()) {
             final LocalDateTime dataHora;
-            final ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 dataHora = LocalDateTime.parse(rset.getString(1), formato);
             } else {
@@ -77,9 +76,8 @@ public class SqlPagamento implements Pagamento {
             "SELECT valor FROM pagamento WHERE id = '%s'",
             this.id
         );
-        try {
+        try (final ResultSet rset = new Select(this.session, sql).result()) {
             final Dinheiro valor;
-            final ResultSet rset = new Select(this.session, sql).result();
             if (rset.next()) {
                 valor = new Dinheiro(rset.getBigDecimal(1));
             } else {
