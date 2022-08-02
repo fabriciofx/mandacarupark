@@ -21,10 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package br.edu.ifpe.ead.si.mandacarupark.conta;
 
-/**
- * Preços.
- *
- * @since 0.0.1
- */
-package br.edu.ifpe.ead.si.mandacarupark.preco;
+import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
+import br.edu.ifpe.ead.si.mandacarupark.Conta;
+import java.time.LocalDateTime;
+
+public class ValorFixo implements Conta {
+    private final Dinheiro valor;
+
+    public ValorFixo() {
+        this(new Dinheiro("7.00"));
+    }
+
+    public ValorFixo(final Dinheiro valor) {
+        this.valor = valor;
+    }
+
+    @Override
+    public boolean avalie(LocalDateTime entrada, LocalDateTime saida) {
+        return true;
+    }
+
+    @Override
+    public Dinheiro valor(
+        final LocalDateTime entrada,
+        final LocalDateTime saida
+    ) {
+        return this.valor;
+    }
+}

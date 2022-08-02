@@ -32,7 +32,10 @@ import br.edu.ifpe.ead.si.mandacarupark.Periodo;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Saidas;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
-import br.edu.ifpe.ead.si.mandacarupark.preco.PrecoFixo;
+import br.edu.ifpe.ead.si.mandacarupark.Contas;
+import br.edu.ifpe.ead.si.mandacarupark.conta.DomingoGratis;
+import br.edu.ifpe.ead.si.mandacarupark.conta.Tolerancia;
+import br.edu.ifpe.ead.si.mandacarupark.conta.ValorFixo;
 import org.junit.Test;
 import java.time.LocalDateTime;
 
@@ -46,7 +49,11 @@ public class TestLocacoesFake {
             entradas,
             saidas,
             pagamentos,
-            new PrecoFixo(new Dinheiro("5.00"))
+            new Contas(
+                new DomingoGratis(),
+                new Tolerancia(),
+                new ValorFixo(new Dinheiro("5.00"))
+            )
         );
         // Locação 1
         Placa placa = new Placa("ABC1234");

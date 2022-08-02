@@ -21,24 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package br.edu.ifpe.ead.si.mandacarupark.preco;
+package br.edu.ifpe.ead.si.mandacarupark;
 
-import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
-import br.edu.ifpe.ead.si.mandacarupark.Precos;
 import java.time.LocalDateTime;
 
-public class PrecoFixo implements Precos {
-    private final Dinheiro valor;
-
-    public PrecoFixo(final Dinheiro valor) {
-        this.valor = valor;
-    }
-
-    @Override
-    public Dinheiro valor(
-        final LocalDateTime entrada,
-        final LocalDateTime saida
-    ) {
-        return this.valor;
-    }
+public interface Conta {
+    boolean avalie(LocalDateTime entrada, LocalDateTime saida);
+    Dinheiro valor(LocalDateTime entrada, LocalDateTime saida);
 }

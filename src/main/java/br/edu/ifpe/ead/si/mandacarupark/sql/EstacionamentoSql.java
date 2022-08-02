@@ -29,9 +29,9 @@ import br.edu.ifpe.ead.si.mandacarupark.Entradas;
 import br.edu.ifpe.ead.si.mandacarupark.Estacionamento;
 import br.edu.ifpe.ead.si.mandacarupark.Pagamentos;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
-import br.edu.ifpe.ead.si.mandacarupark.Precos;
 import br.edu.ifpe.ead.si.mandacarupark.Saidas;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
+import br.edu.ifpe.ead.si.mandacarupark.Contas;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
 import java.time.LocalDateTime;
 
@@ -40,20 +40,20 @@ public class EstacionamentoSql implements Estacionamento {
     private final Entradas entradas;
     private final Saidas saidas;
     private final Pagamentos pagamentos;
-    private final Precos precos;
+    private final Contas contas;
 
     public EstacionamentoSql(
         final Session session,
         final Entradas entradas,
         final Saidas saidas,
         final Pagamentos pagamentos,
-        final Precos precos
+        final Contas contas
     ) {
         this.session = session;
         this.entradas = entradas;
         this.saidas = saidas;
         this.pagamentos = pagamentos;
-        this.precos = precos;
+        this.contas = contas;
     }
 
     @Override
@@ -64,7 +64,13 @@ public class EstacionamentoSql implements Estacionamento {
 
     @Override
     public Ticket pagamento(final Ticket ticket, final LocalDateTime dataHora) {
-        final Dinheiro valor = this.precos.valor(ticket.dataHora(), dataHora);
+        final Dinheiro valor = this.contas.conta(
+            ticket.dataHora(),
+            dataHora
+        ).valor(
+            ticket.dataHora(),
+            dataHora
+        );
         this.pagamentos.pagamento(ticket, dataHora, valor);
         return new TicketSql(
             this.session,

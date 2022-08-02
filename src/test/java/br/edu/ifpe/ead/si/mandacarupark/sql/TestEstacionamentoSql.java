@@ -29,13 +29,15 @@ import br.edu.ifpe.ead.si.mandacarupark.Entradas;
 import br.edu.ifpe.ead.si.mandacarupark.Estacionamento;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
+import br.edu.ifpe.ead.si.mandacarupark.Contas;
+import br.edu.ifpe.ead.si.mandacarupark.conta.DomingoGratis;
+import br.edu.ifpe.ead.si.mandacarupark.conta.Tolerancia;
+import br.edu.ifpe.ead.si.mandacarupark.conta.ValorFixo;
 import br.edu.ifpe.ead.si.mandacarupark.db.H2Server;
 import br.edu.ifpe.ead.si.mandacarupark.db.RandomName;
 import br.edu.ifpe.ead.si.mandacarupark.db.Server;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
 import br.edu.ifpe.ead.si.mandacarupark.db.SqlScript;
-import br.edu.ifpe.ead.si.mandacarupark.preco.PrecoFixo;
-import br.edu.ifpe.ead.si.mandacarupark.preco.Tolerancia;
 import org.junit.Assert;
 import org.junit.Test;
 import java.time.LocalDateTime;
@@ -56,8 +58,10 @@ public class TestEstacionamentoSql {
                 entradas,
                 new SaidasSql(session),
                 new PagamentosSql(session),
-                new Tolerancia(
-                    new PrecoFixo(new Dinheiro("5.00"))
+                new Contas(
+                    new DomingoGratis(),
+                    new Tolerancia(),
+                    new ValorFixo(new Dinheiro("5.00"))
                 )
             );
             final Placa placa = new Placa("ABC1234");
@@ -83,8 +87,10 @@ public class TestEstacionamentoSql {
                 entradas,
                 new SaidasSql(session),
                 new PagamentosSql(session),
-                new Tolerancia(
-                    new PrecoFixo(new Dinheiro("5.00"))
+                new Contas(
+                    new DomingoGratis(),
+                    new Tolerancia(),
+                    new ValorFixo(new Dinheiro("5.00"))
                 )
             );
             final Placa placa = new Placa("ABC1234");
@@ -112,8 +118,10 @@ public class TestEstacionamentoSql {
                 entradas,
                 new SaidasSql(session),
                 new PagamentosSql(session),
-                new Tolerancia(
-                    new PrecoFixo(new Dinheiro("5.00"))
+                new Contas(
+                    new DomingoGratis(),
+                    new Tolerancia(),
+                    new ValorFixo(new Dinheiro("5.00"))
                 )
             );
             final Placa placa = new Placa("ABC1234");
@@ -144,8 +152,10 @@ public class TestEstacionamentoSql {
                         new EntradasSql(session),
                         new SaidasSql(session),
                         new PagamentosSql(session),
-                        new Tolerancia(
-                            new PrecoFixo(new Dinheiro("5.00"))
+                        new Contas(
+                            new DomingoGratis(),
+                            new Tolerancia(),
+                            new ValorFixo(new Dinheiro("5.00"))
                         )
                     );
                     final Placa placa = new Placa("ABC1234");

@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package br.edu.ifpe.ead.si.mandacarupark;
 
-import java.time.LocalDateTime;
-
-public interface Precos {
-    Dinheiro valor(LocalDateTime entrada, LocalDateTime saida);
-}
+/**
+ * Conta.
+ *
+ * @since 0.0.1
+ */
+package br.edu.ifpe.ead.si.mandacarupark.conta;
