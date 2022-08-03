@@ -57,25 +57,25 @@ public class TestLocacoesFake {
         );
         // Locação 1
         Placa placa = new Placa("ABC1234");
-        final LocalDateTime agora = LocalDateTime.now();
-        Ticket ticket = estacionamento.entrada(placa, agora);
-        ticket = estacionamento.pagamento(ticket, agora.plusMinutes(60));
-        estacionamento.saida(ticket, placa, agora.plusMinutes(70));
+        final LocalDateTime dataHora = LocalDateTime.of(2022, 8, 2, 10, 30);
+        Ticket ticket = estacionamento.entrada(placa, dataHora);
+        ticket = estacionamento.pagamento(ticket, dataHora.plusMinutes(60));
+        estacionamento.saida(ticket, placa, dataHora.plusMinutes(70));
         // Locação 2
         placa = new Placa("DEF5678");
-        ticket = estacionamento.entrada(placa, agora.plusMinutes(1));
-        ticket = estacionamento.pagamento(ticket, agora.plusMinutes(40));
-        estacionamento.saida(ticket, placa, agora.plusMinutes(45));
+        ticket = estacionamento.entrada(placa, dataHora.plusMinutes(1));
+        ticket = estacionamento.pagamento(ticket, dataHora.plusMinutes(40));
+        estacionamento.saida(ticket, placa, dataHora.plusMinutes(45));
         // Locação 3
         placa = new Placa("GHI9012");
-        ticket = estacionamento.entrada(placa, agora.plusMinutes(2));
-        ticket = estacionamento.pagamento(ticket, agora.plusMinutes(55));
-        estacionamento.saida(ticket, placa, agora.plusMinutes(52));
+        ticket = estacionamento.entrada(placa, dataHora.plusMinutes(2));
+        ticket = estacionamento.pagamento(ticket, dataHora.plusMinutes(55));
+        estacionamento.saida(ticket, placa, dataHora.plusMinutes(52));
         final Locacoes locacoes = new LocacoesFake(
             entradas,
             saidas,
             pagamentos,
-            new Periodo(agora.minusMinutes(5), agora.plusMinutes(80))
+            new Periodo(dataHora.minusMinutes(5), dataHora.plusMinutes(80))
         );
     }
 }
