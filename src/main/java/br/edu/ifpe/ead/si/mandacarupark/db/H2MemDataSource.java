@@ -41,6 +41,7 @@ public class H2DataSource implements DataSource {
     }
 
     public H2DataSource(final Driver drvr, final String dbname) {
+        //jdbc:h2:./mandacarupark
         this.driver = drvr;
         this.url = String.format(
             "jdbc:h2:mem:%s;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT " +
