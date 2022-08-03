@@ -33,7 +33,7 @@ import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.conta.DomingoGratis;
 import br.edu.ifpe.ead.si.mandacarupark.conta.Tolerancia;
 import br.edu.ifpe.ead.si.mandacarupark.conta.ValorFixo;
-import br.edu.ifpe.ead.si.mandacarupark.db.H2Server;
+import br.edu.ifpe.ead.si.mandacarupark.db.H2TestServer;
 import br.edu.ifpe.ead.si.mandacarupark.db.RandomName;
 import br.edu.ifpe.ead.si.mandacarupark.db.Server;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
@@ -46,7 +46,7 @@ public class TestEstacionamentoSql {
     @Test
     public void entrada() throws Exception {
         try (
-            final Server server = new H2Server(
+            final Server server = new H2TestServer(
                 new RandomName().toString(),
                 new SqlScript("mandacarupark.sql")
             ).start()
@@ -75,7 +75,7 @@ public class TestEstacionamentoSql {
     @Test
     public void locacao() throws Exception {
         try (
-            final Server server = new H2Server(
+            final Server server = new H2TestServer(
                 new RandomName().toString(),
                 new SqlScript("mandacarupark.sql")
             ).start()
@@ -113,7 +113,7 @@ public class TestEstacionamentoSql {
     @Test
     public void tolerancia() throws Exception {
         try (
-            final Server server = new H2Server(
+            final Server server = new H2TestServer(
                 new RandomName().toString(),
                 new SqlScript("mandacarupark.sql")
             ).start()
@@ -151,7 +151,7 @@ public class TestEstacionamentoSql {
     @Test
     public void domingoGratis() throws Exception {
         try (
-            final Server server = new H2Server(
+            final Server server = new H2TestServer(
                 new RandomName().toString(),
                 new SqlScript("mandacarupark.sql")
             ).start()
@@ -195,7 +195,7 @@ public class TestEstacionamentoSql {
             RuntimeException.class,
             () -> {
                 try (
-                    final Server server = new H2Server(
+                    final Server server = new H2TestServer(
                         new RandomName().toString(),
                         new SqlScript("mandacarupark.sql")
                     ).start()

@@ -25,15 +25,21 @@ package br.edu.ifpe.ead.si.mandacarupark.db;
 
 import java.io.IOException;
 
-public class H2TestServer implements Server {
-    /**
-     *
-     */
-    private final String dbname;
+public class H2Server implements Server {
+    private final Session session;
     private final SqlScript script;
 
-    public H2TestServer(final String dbname, final SqlScript scrpt) {
-        this.dbname = dbname;
+    public H2Server(final String dbname, final SqlScript scrpt) {
+        this(
+            new NoAuthSession(
+                new H2MemDataSource(dbname)
+            ),
+            scrpt
+        );
+    }
+
+    public H2Server(final Session session, final SqlScript scrpt) {
+        this.session = session;
         this.script = scrpt;
     }
 
@@ -45,14 +51,12 @@ public class H2TestServer implements Server {
 
     @Override
     public void stop() throws Exception {
-        // Intended empty.
+        new Insert(this.session, "SHUTDOWN").execute();
     }
 
     @Override
     public Session session() {
-        return new NoAuthSession(
-            new H2MemDataSource(this.dbname)
-        );
+        return this.session;
     }
 
     @Override
