@@ -1,4 +1,4 @@
-CREATE TABLE entrada
+CREATE TABLE IF NOT EXISTS entrada
 (
   id UUID NOT NULL,
   placa VARCHAR(8) NOT NULL,
@@ -6,7 +6,7 @@ CREATE TABLE entrada
   CONSTRAINT pk_entrada PRIMARY KEY (id)
 );
 
-CREATE TABLE saida
+CREATE TABLE IF NOT EXISTS saida
 (
   id UUID NOT NULL,
   placa VARCHAR(8) NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE saida
   CONSTRAINT pk_saida PRIMARY KEY (id)
 );
 
-CREATE TABLE pagamento
+CREATE TABLE IF NOT EXISTS pagamento
 (
   id UUID NOT NULL,
   datahora TIMESTAMP NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE pagamento
   CONSTRAINT pk_pagamento PRIMARY KEY (id)
 );
 
-INSERT
+MERGE
   INTO entrada (
   id,
   placa,
@@ -44,7 +44,7 @@ VALUES (
     '2022-07-21 12:06:51'
   );
 
-INSERT
+MERGE
   INTO saida (
   id,
   placa,
@@ -66,7 +66,7 @@ VALUES (
     '2022-07-21 17:11:12'
   );
 
-INSERT
+MERGE
   INTO pagamento (
   id,
   datahora,
@@ -88,7 +88,7 @@ VALUES (
     '5.00'
   );
 
-CREATE VIEW locacao
+CREATE VIEW IF NOT EXISTS locacao
 AS
 SELECT entrada.id  AS id,
   entrada.placa    AS placa,
