@@ -23,13 +23,13 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.sql;
 
+import br.edu.ifpe.ead.si.mandacarupark.Contas;
 import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
 import br.edu.ifpe.ead.si.mandacarupark.Entrada;
 import br.edu.ifpe.ead.si.mandacarupark.Entradas;
 import br.edu.ifpe.ead.si.mandacarupark.Estacionamento;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
-import br.edu.ifpe.ead.si.mandacarupark.Contas;
 import br.edu.ifpe.ead.si.mandacarupark.conta.DomingoGratis;
 import br.edu.ifpe.ead.si.mandacarupark.conta.Tolerancia;
 import br.edu.ifpe.ead.si.mandacarupark.conta.ValorFixo;
@@ -129,6 +129,39 @@ public class TestEstacionamentoSql {
             Ticket ticket = estacionamento.entrada(placa, dataHora);
             ticket = estacionamento.pagamento(ticket, dataHora.plusMinutes(20));
             estacionamento.saida(ticket, placa, dataHora.plusMinutes(25));
+            Assert.assertTrue(ticket.validado());
+            Assert.assertEquals(ticket.valor(), new Dinheiro("0.00"));
+        }
+    }
+
+    @Test
+    public void domingoGratis() throws Exception {
+        try (
+            final Server server = new H2Server(
+                new RandomName().toString(),
+                new SqlScript("mandacarupark.sql")
+            ).start()
+        ) {
+            final Session session = server.session();
+            final Entradas entradas = new EntradasSql(session);
+            final Estacionamento estacionamento = new EstacionamentoSql(
+                session,
+                entradas,
+                new SaidasSql(session),
+                new PagamentosSql(session),
+                new Contas(
+                    new DomingoGratis(),
+                    new Tolerancia(),
+                    new ValorFixo(new Dinheiro("5.00"))
+                )
+            );
+            final Placa placa = new Placa("ABC1234");
+            final LocalDateTime dataHora = LocalDateTime.of(
+                2022, 7, 31, 10, 30
+            );
+            Ticket ticket = estacionamento.entrada(placa, dataHora);
+            ticket = estacionamento.pagamento(ticket, dataHora.plusMinutes(60));
+            estacionamento.saida(ticket, placa, dataHora.plusMinutes(70));
             Assert.assertTrue(ticket.validado());
             Assert.assertEquals(ticket.valor(), new Dinheiro("0.00"));
         }

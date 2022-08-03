@@ -98,6 +98,24 @@ public class TestEstacionamentoFake {
         Assert.assertEquals(ticket.valor(), new Dinheiro("0.00"));
     }
 
+    @Test
+    public void domingoGratis() {
+        final Estacionamento estacionamento = new EstacionamentoFake(
+            new Contas(
+                new DomingoGratis(),
+                new Tolerancia(),
+                new ValorFixo(new Dinheiro("5.00"))
+            )
+        );
+        final Placa placa = new Placa("ABC1234");
+        final LocalDateTime dataHora = LocalDateTime.of(2022, 7, 31, 10, 30);
+        Ticket ticket = estacionamento.entrada(placa, dataHora);
+        ticket = estacionamento.pagamento(ticket, dataHora.plusMinutes(60));
+        estacionamento.saida(ticket, placa, dataHora.plusMinutes(70));
+        Assert.assertTrue(ticket.validado());
+        Assert.assertEquals(ticket.valor(), new Dinheiro("0.00"));
+    }
+
     @Test()
     public void sairSemValidarTicket() {
         Assert.assertThrows(
