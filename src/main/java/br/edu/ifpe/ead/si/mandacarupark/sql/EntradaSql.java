@@ -68,7 +68,7 @@ public class EntradaSql implements Entrada {
     @Override
     public LocalDateTime dataHora() {
         final DateTimeFormatter formato = DateTimeFormatter.ofPattern(
-            "yyyy-MM-dd HH:mm:ss.SSSX"
+            "yyyy-MM-dd HH:mm:ss.S"
         );
         final String sql = String.format(
             "SELECT datahora FROM entrada WHERE id = '%s'",
