@@ -50,9 +50,14 @@ public interface Ticket {
     LocalDateTime dataHora();
 
     /**
-     *
-     * @return
+     * O valor da locação em reais.
+     * @return O valor da locação em reais.
      */
     Dinheiro valor();
+
+    /**
+     * Verifica se o ticket foi pago, isto é, validado.
+     * @return Verdadeiro se o ticket foi pago, falso caso contrário.
+     */
     boolean validado();
 }
