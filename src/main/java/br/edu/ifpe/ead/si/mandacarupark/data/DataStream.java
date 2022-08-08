@@ -29,6 +29,7 @@ import java.io.OutputStream;
 public interface DataStream {
     int read(byte[] bytes, int offset, int length);
     int write(byte[] bytes, int offset, int length);
+    int size();
     InputStream input();
     OutputStream output();
 }

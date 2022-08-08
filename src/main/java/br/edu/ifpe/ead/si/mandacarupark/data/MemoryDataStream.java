@@ -93,6 +93,11 @@ public final class MemoryDataStream implements DataStream {
     }
 
     @Override
+    public int size() {
+        return this.data.length;
+    }
+
+    @Override
     public InputStream input() {
         return new ByteArrayInputStream(this.data);
     }
