@@ -27,6 +27,9 @@ import br.edu.ifpe.ead.si.mandacarupark.Entrada;
 import br.edu.ifpe.ead.si.mandacarupark.Entradas;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
+import br.edu.ifpe.ead.si.mandacarupark.data.DataStream;
+import br.edu.ifpe.ead.si.mandacarupark.data.MemoryDataStream;
+import br.edu.ifpe.ead.si.mandacarupark.data.StringAsBytes;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -53,6 +56,17 @@ public class EntradasFake implements Entradas {
     @Override
     public Entrada procura(final Uuid id) {
         return this.items.get(id);
+    }
+
+    @Override
+    public DataStream sobre() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("<entradas>");
+        for (final Entrada entrada : this) {
+            sb.append(new String(entrada.sobre().asBytes()));
+        }
+        sb.append("</entradas>");
+        return new MemoryDataStream(new StringAsBytes(sb.toString()));
     }
 
     @Override

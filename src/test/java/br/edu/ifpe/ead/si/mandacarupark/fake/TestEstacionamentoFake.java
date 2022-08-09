@@ -23,6 +23,7 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.fake;
 
+import br.edu.ifpe.ead.si.mandacarupark.Contas;
 import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
 import br.edu.ifpe.ead.si.mandacarupark.Entrada;
 import br.edu.ifpe.ead.si.mandacarupark.Entradas;
@@ -31,13 +32,13 @@ import br.edu.ifpe.ead.si.mandacarupark.Pagamentos;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Saidas;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
-import br.edu.ifpe.ead.si.mandacarupark.Contas;
 import br.edu.ifpe.ead.si.mandacarupark.conta.DomingoGratis;
-import br.edu.ifpe.ead.si.mandacarupark.conta.ValorFixo;
 import br.edu.ifpe.ead.si.mandacarupark.conta.Tolerancia;
+import br.edu.ifpe.ead.si.mandacarupark.conta.ValorFixo;
 import org.junit.Assert;
 import org.junit.Test;
 import java.time.LocalDateTime;
+import java.util.regex.Pattern;
 
 public class TestEstacionamentoFake {
     @Test
@@ -146,6 +147,32 @@ public class TestEstacionamentoFake {
                 estacionamento.saida(ticket, placa, dataHora.plusMinutes(70));
                 ticket.validado();
             }
+        );
+    }
+
+    @Test
+    public void sobreEntradas() throws Exception {
+        final Entradas entradas = new EntradasFake();
+        final Saidas saidas = new SaidasFake();
+        final Pagamentos pagamentos = new PagamentosFake();
+        final Estacionamento estacionamento = new EstacionamentoFake(
+            entradas,
+            saidas,
+            pagamentos,
+            new Contas(
+                new DomingoGratis(),
+                new Tolerancia(),
+                new ValorFixo(new Dinheiro("5.00"))
+            )
+        );
+        final Placa placa = new Placa("ABC1234");
+        final LocalDateTime dataHora = LocalDateTime.of(2022, 8, 2, 10, 30);
+        final Ticket ticket = estacionamento.entrada(placa, dataHora);
+        final Pattern padrao = Pattern.compile(
+            "<entradas><entrada><id>[A-Z0-9]+</id><placa>ABC1234</placa><dataHora>2022-08-02T10:30<dataHora></entrada></entradas>"
+        );
+        Assert.assertTrue(
+            padrao.matcher(entradas.sobre().toString()).matches()
         );
     }
 }

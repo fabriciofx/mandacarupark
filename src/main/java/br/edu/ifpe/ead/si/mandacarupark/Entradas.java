@@ -23,9 +23,11 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark;
 
+import br.edu.ifpe.ead.si.mandacarupark.data.DataStream;
 import java.time.LocalDateTime;
 
 public interface Entradas extends Iterable<Entrada> {
     Entrada entrada(Placa placa, LocalDateTime dataHora);
     Entrada procura(Uuid id);
+    DataStream sobre();
 }
