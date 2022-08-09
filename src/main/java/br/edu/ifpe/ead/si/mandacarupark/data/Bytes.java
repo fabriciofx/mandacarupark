@@ -23,25 +23,6 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.data;
 
-import org.junit.Assert;
-import org.junit.Test;
-
-public final class TestMemoryDataStream {
-    @Test
-    public void copy() {
-        final String msg = "The quick brown fox jumps over the lazy dog";
-        final DataStream input = new MemoryDataStream(new StringAsBytes(msg));
-        final DataStream output = new MemoryDataStream();
-        int copied = 0;
-        byte[] buffer = new byte[5];
-        while (true) {
-            int read = input.read(buffer, 0, 5);
-            if (read < 0) {
-                break;
-            }
-            output.write(buffer, 0, read);
-            copied = copied + read;
-        }
-        Assert.assertEquals(msg, new String(output.asBytes()));
-    }
+public interface Bytes {
+    byte[] asBytes();
 }

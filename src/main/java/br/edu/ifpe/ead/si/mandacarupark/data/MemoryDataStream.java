@@ -23,94 +23,63 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.data;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
 public final class MemoryDataStream implements DataStream {
-    private final byte[] data;
+    private final byte[] buffer;
+    private int position;
 
     public MemoryDataStream() {
-        this(256);
+        this(128);
     }
 
     public MemoryDataStream(int length) {
         this(new byte[length]);
     }
 
+    public MemoryDataStream(final Bytes bytes) {
+        this(bytes.asBytes());
+    }
+
     public MemoryDataStream(final byte[] data) {
-        this.data = data;
+        this.buffer = data;
+        this.position = 0;
     }
 
     @Override
     public int read(byte[] bytes, int offset, int length) {
-        if (bytes == null) {
-            throw new NullPointerException("bytes[] is null!");
+        if (this.position >= this.buffer.length) {
+            return -1;
         }
-        if (offset < 0) {
-            throw new IndexOutOfBoundsException("offset is negative!");
+        final int remaining = this.buffer.length - this.position;
+        if (length > remaining) {
+            length = remaining;
         }
-        if (length < 0) {
-            throw new IndexOutOfBoundsException("length is negative!");
-        }
-        if (length > bytes.length - offset) {
-            throw new IndexOutOfBoundsException(
-                "length > bytes.length - offset!"
-            );
-        }
-        int read = 0;
-        while (read < length && read < this.data.length) {
-            bytes[offset + read] = this.data[read];
-            read++;
-        }
-        return read;
+        System.arraycopy(this.buffer, this.position, bytes, offset, length);
+        this.position = this.position + length;
+        return length;
     }
 
     @Override
-    public int write(byte[] bytes, int offset, int length) {
-        if (bytes == null) {
-            throw new NullPointerException("bytes[] is null!");
-        }
-        if (offset < 0) {
-            throw new IndexOutOfBoundsException("offset is negative!");
-        }
-        if (length < 0) {
-            throw new IndexOutOfBoundsException("length is negative!");
-        }
-        if (offset + length > this.data.length) {
-            throw new IndexOutOfBoundsException(
-                "offset + length > data length!"
-            );
-        }
-        int written = 0;
-        while (written < length) {
-            this.data[written] = bytes[offset + written];
-            written++;
-        }
-        return written;
+    public void write(byte[] bytes, int offset, int length) {
+        System.arraycopy(bytes, offset, this.buffer, this.position, length);
+        this.position = this.position + length;
     }
 
     @Override
     public int size() {
-        return this.data.length;
+        return this.buffer.length;
     }
 
     @Override
-    public InputStream input() {
-        return new ByteArrayInputStream(this.data);
-    }
-
-    @Override
-    public OutputStream output() {
-        final OutputStream stream = new ByteArrayOutputStream(this.data.length);
-        try {
-            stream.write(this.data);
-            stream.flush();
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
+    public void seek(int position) {
+        if (position < this.buffer.length) {
+            this.position = position;
         }
-        return stream;
+    }
+
+    @Override
+    public byte[] asBytes() {
+        final byte[] result = new byte[this.position];
+        System.arraycopy(this.buffer, 0, result, 0, this.position);
+        return result;
     }
 }

@@ -23,13 +23,9 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.data;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-
-public interface DataStream {
+public interface DataStream extends Bytes {
     int read(byte[] bytes, int offset, int length);
-    int write(byte[] bytes, int offset, int length);
+    void write(byte[] bytes, int offset, int length);
     int size();
-    InputStream input();
-    OutputStream output();
+    void seek(int position);
 }
