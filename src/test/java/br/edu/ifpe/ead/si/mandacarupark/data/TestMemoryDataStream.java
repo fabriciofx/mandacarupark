@@ -44,4 +44,11 @@ public final class TestMemoryDataStream {
         }
         Assert.assertEquals(msg, new String(output.asBytes()));
     }
+
+    @Test
+    public void asString() {
+        final String msg = "The quick brown fox jumps over the lazy dog";
+        final DataStream input = new MemoryDataStream(new StringAsBytes(msg));
+        Assert.assertEquals(msg, new String(input.asBytes()));
+    }
 }

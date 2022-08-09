@@ -78,8 +78,21 @@ public final class MemoryDataStream implements DataStream {
 
     @Override
     public byte[] asBytes() {
-        final byte[] result = new byte[this.position];
-        System.arraycopy(this.buffer, 0, result, 0, this.position);
+        int length = this.position;
+        if (length == 0) {
+            length = this.buffer.length;
+        }
+        final byte[] result = new byte[length];
+        System.arraycopy(this.buffer, 0, result, 0, length);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        int length = this.position;
+        if (length == 0) {
+            length = this.buffer.length;
+        }
+        return new String(this.buffer, 0, length);
     }
 }
