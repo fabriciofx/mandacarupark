@@ -12,41 +12,41 @@ import java.util.Iterator;
 import java.util.List;
 
 public class EntradasSource implements Entradas {
-    private final Entradas entradas;
+    private final Entradas origin;
     private final List<Target<Entrada>> targets;
 
     public EntradasSource(
         final Entradas entradas,
         final Target<Entrada>... targets
     ) {
-        this.entradas = entradas;
+        this.origin = entradas;
         this.targets = Arrays.asList(targets);
     }
 
     @Override
     public Entrada entrada(Placa placa, LocalDateTime dataHora) {
-        final Entrada entrada = entradas.entrada(placa, dataHora);
+        final Entrada entrada = this.origin.entrada(placa, dataHora);
         this.targets.forEach(target -> target.notifique(entrada));
         return entrada;
     }
 
     @Override
     public Entrada procura(Uuid id) {
-        return this.entradas.procura(id);
+        return this.origin.procura(id);
     }
 
     @Override
     public Ticket ticket(Uuid id) {
-        return this.entradas.ticket(id);
+        return this.origin.ticket(id);
     }
 
     @Override
     public DataStream sobre() {
-        return this.entradas.sobre();
+        return this.origin.sobre();
     }
 
     @Override
     public Iterator<Entrada> iterator() {
-        return this.entradas.iterator();
+        return this.origin.iterator();
     }
 }
