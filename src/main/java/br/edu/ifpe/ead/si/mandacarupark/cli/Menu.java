@@ -23,8 +23,8 @@ public class Menu {
     public void run() {
         final Map<Integer, Opcao> escolhas = new HashMap<>();
         this.opcoes.forEach(opcao -> escolhas.put(opcao.numero(), opcao));
+        this.console.clear();
         while (true) {
-            this.console.clear();
             this.console.write(this.header + "\n");
             this.opcoes.forEach(opcao -> opcao.mensagem());
             this.console.write("\nOpção: ");
