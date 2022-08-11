@@ -36,7 +36,6 @@ public class TicketFake implements Ticket {
     private final Uuid id;
     private final Placa placa;
     private final LocalDateTime dataHora;
-    private final Dinheiro valor;
 
     public TicketFake(
         final Pagamentos pagamentos,
@@ -47,8 +46,7 @@ public class TicketFake implements Ticket {
             pagamentos,
             new Uuid(),
             placa,
-            dataHora,
-            new Dinheiro("0.0")
+            dataHora
         );
     }
 
@@ -56,14 +54,12 @@ public class TicketFake implements Ticket {
         final Pagamentos pagamentos,
         final Uuid id,
         final Placa placa,
-        final LocalDateTime dataHora,
-        final Dinheiro valor
+        final LocalDateTime dataHora
     ) {
         this.pagamentos = pagamentos;
         this.id = id;
         this.placa = placa;
         this.dataHora = dataHora;
-        this.valor = valor;
     }
 
     @Override

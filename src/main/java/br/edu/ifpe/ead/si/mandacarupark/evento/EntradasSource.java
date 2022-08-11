@@ -3,6 +3,7 @@ package br.edu.ifpe.ead.si.mandacarupark.evento;
 import br.edu.ifpe.ead.si.mandacarupark.Entrada;
 import br.edu.ifpe.ead.si.mandacarupark.Entradas;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
+import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import br.edu.ifpe.ead.si.mandacarupark.data.DataStream;
 import java.time.LocalDateTime;
@@ -32,6 +33,11 @@ public class EntradasSource implements Entradas {
     @Override
     public Entrada procura(Uuid id) {
         return this.entradas.procura(id);
+    }
+
+    @Override
+    public Ticket ticket(Uuid id) {
+        return this.entradas.ticket(id);
     }
 
     @Override

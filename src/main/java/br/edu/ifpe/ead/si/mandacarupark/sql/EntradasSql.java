@@ -26,6 +26,7 @@ package br.edu.ifpe.ead.si.mandacarupark.sql;
 import br.edu.ifpe.ead.si.mandacarupark.Entrada;
 import br.edu.ifpe.ead.si.mandacarupark.Entradas;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
+import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import br.edu.ifpe.ead.si.mandacarupark.data.DataStream;
 import br.edu.ifpe.ead.si.mandacarupark.data.MemoryDataStream;
@@ -81,6 +82,17 @@ public class EntradasSql implements Entradas {
             );
         }
         return new EntradaSql(this.session, id);
+    }
+
+    @Override
+    public Ticket ticket(Uuid id) {
+        final Entrada entrada = this.procura(id);
+        return new TicketSql(
+            this.session,
+            id,
+            entrada.placa(),
+            entrada.dataHora()
+        );
     }
 
     @Override

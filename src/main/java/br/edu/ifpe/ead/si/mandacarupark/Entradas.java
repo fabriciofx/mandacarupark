@@ -29,5 +29,6 @@ import java.time.LocalDateTime;
 public interface Entradas extends Iterable<Entrada> {
     Entrada entrada(Placa placa, LocalDateTime dataHora);
     Entrada procura(Uuid id);
+    Ticket ticket(Uuid id);
     DataStream sobre();
 }

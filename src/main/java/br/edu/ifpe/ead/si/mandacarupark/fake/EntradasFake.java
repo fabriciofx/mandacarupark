@@ -25,7 +25,9 @@ package br.edu.ifpe.ead.si.mandacarupark.fake;
 
 import br.edu.ifpe.ead.si.mandacarupark.Entrada;
 import br.edu.ifpe.ead.si.mandacarupark.Entradas;
+import br.edu.ifpe.ead.si.mandacarupark.Pagamentos;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
+import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import br.edu.ifpe.ead.si.mandacarupark.data.DataStream;
 import br.edu.ifpe.ead.si.mandacarupark.data.MemoryDataStream;
@@ -37,12 +39,21 @@ import java.util.Map;
 
 public class EntradasFake implements Entradas {
     private final Map<Uuid, Entrada> items;
+    private final Pagamentos pagamentos;
 
     public EntradasFake() {
-        this(new HashMap<>());
+        this(new PagamentosFake());
     }
 
-    public EntradasFake(final Map<Uuid, Entrada> items) {
+    public EntradasFake(final Pagamentos pagamentos) {
+        this(pagamentos, new HashMap<>());
+    }
+
+    public EntradasFake(
+        final Pagamentos pagamentos,
+        final Map<Uuid, Entrada> items
+    ) {
+        this.pagamentos = pagamentos;
         this.items = items;
     }
 
@@ -56,6 +67,17 @@ public class EntradasFake implements Entradas {
     @Override
     public Entrada procura(final Uuid id) {
         return this.items.get(id);
+    }
+
+    @Override
+    public Ticket ticket(Uuid id) {
+        final Entrada entrada = this.procura(id);
+        return new TicketFake(
+            this.pagamentos,
+            id,
+            entrada.placa(),
+            entrada.dataHora()
+        );
     }
 
     @Override

@@ -68,8 +68,7 @@ public class EstacionamentoFake implements Estacionamento {
             this.pagamentos,
             entrada.id(),
             placa,
-            dataHora,
-            new Dinheiro("0.0")
+            dataHora
         );
         return ticket;
     }
@@ -88,8 +87,7 @@ public class EstacionamentoFake implements Estacionamento {
             this.pagamentos,
             ticket.id(),
             ticket.placa(),
-            ticket.dataHora(),
-            valor
+            ticket.dataHora()
         );
     }
 
