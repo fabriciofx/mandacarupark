@@ -24,7 +24,27 @@
 package br.edu.ifpe.ead.si.mandacarupark.data;
 
 public interface DataStream extends Bytes {
+    boolean readBoolean();
+    byte readByte();
+    int readUnsignedByte();
+    short readShort();
+    int readUnsignedShort();
+    char readChar();
+    int readInt();
+    long readLong();
+    float readFloat();
+    double readDouble();
+    String readString();
     int read(byte[] bytes, int offset, int length);
+    void writeBoolean(boolean value);
+    void writeByte(int value);
+    void writeShort(int value);
+    void writeChar(int value);
+    void writeInt(int value);
+    void writeLong(long value);
+    void writeFloat(float value);
+    void writeDouble(double value);
+    void writeString(String value);
     void write(byte[] bytes, int offset, int length);
     int size();
     void seek(int position);

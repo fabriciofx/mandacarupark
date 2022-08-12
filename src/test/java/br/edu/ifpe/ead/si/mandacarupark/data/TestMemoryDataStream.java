@@ -48,7 +48,37 @@ public final class TestMemoryDataStream {
     @Test
     public void asString() {
         final String msg = "The quick brown fox jumps over the lazy dog";
-        final DataStream input = new MemoryDataStream(new StringAsBytes(msg));
-        Assert.assertEquals(msg, new String(input.asBytes()));
+        final DataStream stream = new MemoryDataStream(new StringAsBytes(msg));
+        Assert.assertEquals(msg, new String(stream.asBytes()));
+    }
+
+    @Test
+    public void writeIntBe() {
+        final DataStream stream = new MemoryDataStream();
+        final int expected = 1234567;
+        stream.writeInt(expected);
+        stream.seek(0);
+        final int actual = stream.readInt();
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void writeIntLe() {
+        final DataStream stream = new MemoryDataStream();
+        final int expected = 7654321;
+        stream.writeInt(expected);
+        stream.seek(0);
+        final int actual = stream.readInt();
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void writeFloatBe() {
+        final DataStream stream = new MemoryDataStream();
+        final float expected = 12345.678910f;
+        stream.writeFloat(expected);
+        stream.seek(0);
+        final float actual = stream.readFloat();
+        Assert.assertEquals(expected, actual, 0.00001);
     }
 }
