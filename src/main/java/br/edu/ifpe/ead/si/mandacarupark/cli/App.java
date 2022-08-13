@@ -9,11 +9,11 @@ import br.edu.ifpe.ead.si.mandacarupark.Saidas;
 import br.edu.ifpe.ead.si.mandacarupark.conta.DomingoGratis;
 import br.edu.ifpe.ead.si.mandacarupark.conta.Tolerancia;
 import br.edu.ifpe.ead.si.mandacarupark.conta.ValorFixo;
-import br.edu.ifpe.ead.si.mandacarupark.db.H2Server;
+import br.edu.ifpe.ead.si.mandacarupark.db.ServerH2;
 import br.edu.ifpe.ead.si.mandacarupark.db.RandomName;
 import br.edu.ifpe.ead.si.mandacarupark.db.Server;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
-import br.edu.ifpe.ead.si.mandacarupark.db.SqlScript;
+import br.edu.ifpe.ead.si.mandacarupark.db.ScriptSql;
 import br.edu.ifpe.ead.si.mandacarupark.sql.EntradasSql;
 import br.edu.ifpe.ead.si.mandacarupark.sql.EstacionamentoSql;
 import br.edu.ifpe.ead.si.mandacarupark.sql.PagamentosSql;
@@ -22,9 +22,9 @@ import br.edu.ifpe.ead.si.mandacarupark.sql.SaidasSql;
 public class App {
     public static void main(String[] args) {
         try (
-            final Server server = new H2Server(
+            final Server server = new ServerH2(
                 new RandomName().toString(),
-                new SqlScript("mandacarupark.sql")
+                new ScriptSql("mandacarupark.sql")
             ).start()
         ) {
             final Session session = server.session();

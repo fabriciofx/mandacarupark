@@ -25,10 +25,10 @@ package br.edu.ifpe.ead.si.mandacarupark.gui;
 
 import br.edu.ifpe.ead.si.mandacarupark.Entrada;
 import br.edu.ifpe.ead.si.mandacarupark.Entradas;
-import br.edu.ifpe.ead.si.mandacarupark.db.H2Server;
+import br.edu.ifpe.ead.si.mandacarupark.db.ServerH2;
 import br.edu.ifpe.ead.si.mandacarupark.db.RandomName;
 import br.edu.ifpe.ead.si.mandacarupark.db.Server;
-import br.edu.ifpe.ead.si.mandacarupark.db.SqlScript;
+import br.edu.ifpe.ead.si.mandacarupark.db.ScriptSql;
 import br.edu.ifpe.ead.si.mandacarupark.sql.EntradasSql;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -111,9 +111,9 @@ public class Dashboard extends Application {
     private ObservableList<Map> generateDataInMap() {
         final ObservableList<Map> linhas = FXCollections.observableArrayList();
         try (
-            final Server server = new H2Server(
+            final Server server = new ServerH2(
                 new RandomName().toString(),
-                new SqlScript("mandacarupark.sql")
+                new ScriptSql("mandacarupark.sql")
             ).start()
         ) {
             final Entradas entradas = new EntradasSql(server.session());

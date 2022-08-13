@@ -33,11 +33,11 @@ import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.conta.DomingoGratis;
 import br.edu.ifpe.ead.si.mandacarupark.conta.Tolerancia;
 import br.edu.ifpe.ead.si.mandacarupark.conta.ValorFixo;
-import br.edu.ifpe.ead.si.mandacarupark.db.H2Server;
+import br.edu.ifpe.ead.si.mandacarupark.db.ServerH2;
 import br.edu.ifpe.ead.si.mandacarupark.db.RandomName;
 import br.edu.ifpe.ead.si.mandacarupark.db.Server;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
-import br.edu.ifpe.ead.si.mandacarupark.db.SqlScript;
+import br.edu.ifpe.ead.si.mandacarupark.db.ScriptSql;
 import org.junit.Assert;
 import org.junit.Test;
 import java.time.LocalDateTime;
@@ -46,9 +46,9 @@ public class TestEstacionamentoSql {
     @Test
     public void entrada() throws Exception {
         try (
-            final Server server = new H2Server(
+            final Server server = new ServerH2(
                 new RandomName().toString(),
-                new SqlScript("mandacarupark.sql")
+                new ScriptSql("mandacarupark.sql")
             ).start()
         ) {
             final Session session = server.session();
@@ -75,9 +75,9 @@ public class TestEstacionamentoSql {
     @Test
     public void locacao() throws Exception {
         try (
-            final Server server = new H2Server(
+            final Server server = new ServerH2(
                 new RandomName().toString(),
-                new SqlScript("mandacarupark.sql")
+                new ScriptSql("mandacarupark.sql")
             ).start()
         ) {
             final Session session = server.session();
@@ -113,9 +113,9 @@ public class TestEstacionamentoSql {
     @Test
     public void tolerancia() throws Exception {
         try (
-            final Server server = new H2Server(
+            final Server server = new ServerH2(
                 new RandomName().toString(),
-                new SqlScript("mandacarupark.sql")
+                new ScriptSql("mandacarupark.sql")
             ).start()
         ) {
             final Session session = server.session();
@@ -151,9 +151,9 @@ public class TestEstacionamentoSql {
     @Test
     public void domingoGratis() throws Exception {
         try (
-            final Server server = new H2Server(
+            final Server server = new ServerH2(
                 new RandomName().toString(),
-                new SqlScript("mandacarupark.sql")
+                new ScriptSql("mandacarupark.sql")
             ).start()
         ) {
             final Session session = server.session();
@@ -195,9 +195,9 @@ public class TestEstacionamentoSql {
             RuntimeException.class,
             () -> {
                 try (
-                    final Server server = new H2Server(
+                    final Server server = new ServerH2(
                         new RandomName().toString(),
-                        new SqlScript("mandacarupark.sql")
+                        new ScriptSql("mandacarupark.sql")
                     ).start()
                 ) {
                     final Session session = server.session();

@@ -32,17 +32,23 @@ import java.sql.SQLFeatureNotSupportedException;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-public class H2FileDataSource implements DataSource {
+public class DataSourceH2Mem implements DataSource {
     private final String url;
     private final Driver driver;
 
-    public H2FileDataSource(final String dbname) {
+    public DataSourceH2Mem(final String dbname) {
         this(new org.h2.Driver(), dbname);
     }
 
-    public H2FileDataSource(final Driver drvr, final String dbname) {
+    public DataSourceH2Mem(final Driver drvr, final String dbname) {
         this.driver = drvr;
-        this.url = String.format("jdbc:h2:./%s", dbname);
+        this.url = String.format(
+            "jdbc:h2:mem:%s;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT " +
+                "EXISTS %s\\;SET SCHEMA %s",
+            dbname,
+            dbname,
+            dbname
+        );
     }
 
     @Override

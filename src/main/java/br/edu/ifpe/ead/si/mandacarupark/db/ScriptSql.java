@@ -32,17 +32,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
-public class SqlScript implements Script {
+public class ScriptSql implements Script {
     private final InputStream input;
 
-    public SqlScript(final String filename) {
+    public ScriptSql(final String filename) {
         this(
             Thread.currentThread().getContextClassLoader().
                 getResourceAsStream(filename)
         );
     }
 
-    public SqlScript(final InputStream stream) {
+    public ScriptSql(final InputStream stream) {
         this.input = stream;
     }
 

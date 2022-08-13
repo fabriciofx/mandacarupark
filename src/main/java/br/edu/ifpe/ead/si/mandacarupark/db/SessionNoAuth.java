@@ -26,10 +26,10 @@ package br.edu.ifpe.ead.si.mandacarupark.db;
 import javax.sql.DataSource;
 import java.sql.Connection;
 
-public class NoAuthSession implements Session {
+public class SessionNoAuth implements Session {
     private final DataSource source;
 
-    public NoAuthSession(final DataSource source) {
+    public SessionNoAuth(final DataSource source) {
         this.source = source;
     }
 

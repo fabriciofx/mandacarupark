@@ -25,20 +25,20 @@ package br.edu.ifpe.ead.si.mandacarupark.db;
 
 import java.io.IOException;
 
-public class H2Server implements Server {
+public class ServerH2 implements Server {
     private final Session session;
-    private final SqlScript script;
+    private final ScriptSql script;
 
-    public H2Server(final String dbname, final SqlScript scrpt) {
+    public ServerH2(final String dbname, final ScriptSql scrpt) {
         this(
-            new NoAuthSession(
-                new H2MemDataSource(dbname)
+            new SessionNoAuth(
+                new DataSourceH2Mem(dbname)
             ),
             scrpt
         );
     }
 
-    public H2Server(final Session session, final SqlScript scrpt) {
+    public ServerH2(final Session session, final ScriptSql scrpt) {
         this.session = session;
         this.script = scrpt;
     }
