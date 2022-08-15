@@ -24,6 +24,7 @@
 package br.edu.ifpe.ead.si.mandacarupark.fake;
 
 import br.edu.ifpe.ead.si.mandacarupark.Contas;
+import br.edu.ifpe.ead.si.mandacarupark.DataHora;
 import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
 import br.edu.ifpe.ead.si.mandacarupark.Entrada;
 import br.edu.ifpe.ead.si.mandacarupark.Entradas;
@@ -57,7 +58,9 @@ public class TestEstacionamentoFake {
             )
         );
         final Placa placa = new Placa("ABC1234");
-        final LocalDateTime dataHora = LocalDateTime.of(2022, 8, 2, 10, 30);
+        final DataHora dataHora = new DataHora(
+            LocalDateTime.of(2022, 8, 2, 10, 30)
+        );
         final Ticket ticket = estacionamento.entrada(placa, dataHora);
         final Entrada entrada = entradas.procura(ticket.id());
         Assert.assertEquals(entrada.placa().toString(), "ABC1234");
@@ -73,13 +76,20 @@ public class TestEstacionamentoFake {
             )
         );
         final Placa placa = new Placa("ABC1234");
-        final LocalDateTime dataHora = LocalDateTime.of(2022, 8, 2, 10, 30);
-        final Ticket ticket = estacionamento.entrada(placa, dataHora);
+        final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
+        final Ticket ticket = estacionamento.entrada(
+            placa,
+            new DataHora(dateTime)
+        );
         final Ticket ticketValidado = estacionamento.pagamento(
             ticket,
-            dataHora.plusMinutes(60)
+            new DataHora(dateTime.plusMinutes(60))
         );
-        estacionamento.saida(ticketValidado, placa, dataHora.plusMinutes(70));
+        estacionamento.saida(
+            ticketValidado,
+            placa,
+            new DataHora(dateTime.plusMinutes(70))
+        );
         Assert.assertTrue(ticketValidado.validado());
         Assert.assertEquals(ticketValidado.valor(), new Dinheiro("5.00"));
     }
@@ -94,13 +104,20 @@ public class TestEstacionamentoFake {
             )
         );
         final Placa placa = new Placa("ABC1234");
-        final LocalDateTime dataHora = LocalDateTime.of(2022, 8, 2, 10, 30);
-        final Ticket ticket = estacionamento.entrada(placa, dataHora);
+        final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
+        final Ticket ticket = estacionamento.entrada(
+            placa,
+            new DataHora(dateTime)
+        );
         final Ticket ticketValidado = estacionamento.pagamento(
             ticket,
-            dataHora.plusMinutes(20)
+            new DataHora(dateTime.plusMinutes(20))
         );
-        estacionamento.saida(ticketValidado, placa, dataHora.plusMinutes(25));
+        estacionamento.saida(
+            ticketValidado,
+            placa,
+            new DataHora(dateTime.plusMinutes(25))
+        );
         Assert.assertTrue(ticketValidado.validado());
         Assert.assertEquals(ticketValidado.valor(), new Dinheiro("0.00"));
     }
@@ -115,13 +132,20 @@ public class TestEstacionamentoFake {
             )
         );
         final Placa placa = new Placa("ABC1234");
-        final LocalDateTime dataHora = LocalDateTime.of(2022, 7, 31, 10, 30);
-        final Ticket ticket = estacionamento.entrada(placa, dataHora);
+        final LocalDateTime dateTime = LocalDateTime.of(2022, 7, 31, 10, 30);
+        final Ticket ticket = estacionamento.entrada(
+            placa,
+            new DataHora(dateTime)
+        );
         final Ticket ticketValidado = estacionamento.pagamento(
             ticket,
-            dataHora.plusMinutes(60)
+            new DataHora(dateTime.plusMinutes(60))
         );
-        estacionamento.saida(ticketValidado, placa, dataHora.plusMinutes(70));
+        estacionamento.saida(
+            ticketValidado,
+            placa,
+            new DataHora(dateTime.plusMinutes(70))
+        );
         Assert.assertTrue(ticketValidado.validado());
         Assert.assertEquals(ticketValidado.valor(), new Dinheiro("0.00"));
     }
@@ -140,11 +164,18 @@ public class TestEstacionamentoFake {
                     )
                 );
                 Placa placa = new Placa("ABC1234");
-                final LocalDateTime dataHora = LocalDateTime.of(
+                final LocalDateTime dateTime = LocalDateTime.of(
                     2022, 8, 2, 10, 30
                 );
-                final Ticket ticket = estacionamento.entrada(placa, dataHora);
-                estacionamento.saida(ticket, placa, dataHora.plusMinutes(70));
+                final Ticket ticket = estacionamento.entrada(
+                    placa,
+                    new DataHora(dateTime)
+                );
+                estacionamento.saida(
+                    ticket,
+                    placa,
+                    new DataHora(dateTime.plusMinutes(70))
+                );
                 ticket.validado();
             }
         );
@@ -166,7 +197,9 @@ public class TestEstacionamentoFake {
             )
         );
         final Placa placa = new Placa("ABC1234");
-        final LocalDateTime dataHora = LocalDateTime.of(2022, 8, 2, 10, 30);
+        final DataHora dataHora = new DataHora(
+            LocalDateTime.of(2022, 8, 2, 10, 30)
+        );
         final Ticket ticket = estacionamento.entrada(placa, dataHora);
         final Pattern padrao = Pattern.compile(
             "<entradas><entrada><id>[A-Z0-9]+</id><placa>ABC1234</placa><dataHora>2022-08-02T10:30<dataHora></entrada></entradas>"

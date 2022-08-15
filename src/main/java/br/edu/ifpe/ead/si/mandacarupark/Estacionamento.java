@@ -23,10 +23,8 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark;
 
-import java.time.LocalDateTime;
-
 public interface Estacionamento {
-    Ticket entrada(Placa placa, LocalDateTime dataHora);
-    Ticket pagamento(Ticket ticket, LocalDateTime dataHora);
-    void saida(Ticket ticket, Placa placa, LocalDateTime dataHora);
+    Ticket entrada(Placa placa, DataHora dataHora);
+    Ticket pagamento(Ticket ticket, DataHora dataHora);
+    void saida(Ticket ticket, Placa placa, DataHora dataHora);
 }

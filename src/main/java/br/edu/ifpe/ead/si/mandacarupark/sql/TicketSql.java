@@ -23,6 +23,7 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.sql;
 
+import br.edu.ifpe.ead.si.mandacarupark.DataHora;
 import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
@@ -30,19 +31,18 @@ import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
 import java.sql.ResultSet;
-import java.time.LocalDateTime;
 
 public class TicketSql implements Ticket {
     private final Session session;
     private final Uuid id;
     private final Placa placa;
-    private final LocalDateTime dataHora;
+    private final DataHora dataHora;
 
     public TicketSql(
         final Session session,
         final Uuid id,
         final Placa placa,
-        final LocalDateTime dataHora
+        final DataHora dataHora
     ) {
         this.session = session;
         this.id = id;
@@ -61,7 +61,7 @@ public class TicketSql implements Ticket {
     }
 
     @Override
-    public LocalDateTime dataHora() {
+    public DataHora dataHora() {
         return this.dataHora;
     }
 

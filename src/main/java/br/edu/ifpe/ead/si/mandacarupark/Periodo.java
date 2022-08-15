@@ -34,6 +34,10 @@ public final class Periodo {
     private final LocalDateTime inicio;
     private final LocalDateTime termino;
 
+    public Periodo(final DataHora inicio, final DataHora termino) {
+        this(inicio.dateTime(), termino.dateTime());
+    }
+
     public Periodo(final LocalDateTime inicio, final LocalDateTime termino) {
         this.inicio = inicio;
         this.termino = termino;

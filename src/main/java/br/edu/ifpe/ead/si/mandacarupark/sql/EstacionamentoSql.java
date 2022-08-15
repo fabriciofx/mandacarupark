@@ -23,6 +23,8 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.sql;
 
+import br.edu.ifpe.ead.si.mandacarupark.Contas;
+import br.edu.ifpe.ead.si.mandacarupark.DataHora;
 import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
 import br.edu.ifpe.ead.si.mandacarupark.Entrada;
 import br.edu.ifpe.ead.si.mandacarupark.Entradas;
@@ -31,9 +33,7 @@ import br.edu.ifpe.ead.si.mandacarupark.Pagamentos;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Saidas;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
-import br.edu.ifpe.ead.si.mandacarupark.Contas;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
-import java.time.LocalDateTime;
 
 public class EstacionamentoSql implements Estacionamento {
     private final Session session;
@@ -57,13 +57,13 @@ public class EstacionamentoSql implements Estacionamento {
     }
 
     @Override
-    public Ticket entrada(final Placa placa, final LocalDateTime dataHora) {
+    public Ticket entrada(final Placa placa, final DataHora dataHora) {
         final Entrada entrada = this.entradas.entrada(placa, dataHora);
         return new TicketSql(this.session, entrada.id(), placa, dataHora);
     }
 
     @Override
-    public Ticket pagamento(final Ticket ticket, final LocalDateTime dataHora) {
+    public Ticket pagamento(final Ticket ticket, final DataHora dataHora) {
         final Dinheiro valor = this.contas.conta(
             ticket.dataHora(),
             dataHora
@@ -84,7 +84,7 @@ public class EstacionamentoSql implements Estacionamento {
     public void saida(
         final Ticket ticket,
         final Placa placa,
-        final LocalDateTime dataHora
+        final DataHora dataHora
     ) {
         if (!ticket.validado()) {
             throw new RuntimeException("Ticket não validado!");

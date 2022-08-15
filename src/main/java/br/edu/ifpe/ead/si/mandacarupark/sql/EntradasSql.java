@@ -23,6 +23,7 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.sql;
 
+import br.edu.ifpe.ead.si.mandacarupark.DataHora;
 import br.edu.ifpe.ead.si.mandacarupark.Entrada;
 import br.edu.ifpe.ead.si.mandacarupark.Entradas;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
@@ -34,7 +35,6 @@ import br.edu.ifpe.ead.si.mandacarupark.db.Insert;
 import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
 import java.sql.ResultSet;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -47,7 +47,7 @@ public class EntradasSql implements Entradas {
     }
 
     @Override
-    public Entrada entrada(final Placa placa, final LocalDateTime dataHora) {
+    public Entrada entrada(final Placa placa, final DataHora dataHora) {
         final Uuid id = new Uuid();
         final String sql = String.format(
             "INSERT INTO entrada (id, placa, datahora) VALUES ('%s', '%s', '%s')",

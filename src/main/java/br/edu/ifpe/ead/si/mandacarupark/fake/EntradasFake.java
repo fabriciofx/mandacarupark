@@ -23,6 +23,7 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.fake;
 
+import br.edu.ifpe.ead.si.mandacarupark.DataHora;
 import br.edu.ifpe.ead.si.mandacarupark.Entrada;
 import br.edu.ifpe.ead.si.mandacarupark.Entradas;
 import br.edu.ifpe.ead.si.mandacarupark.Pagamentos;
@@ -32,7 +33,6 @@ import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import br.edu.ifpe.ead.si.mandacarupark.data.DataStream;
 import br.edu.ifpe.ead.si.mandacarupark.data.MemoryDataStream;
 import br.edu.ifpe.ead.si.mandacarupark.data.StringAsBytes;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -58,7 +58,7 @@ public class EntradasFake implements Entradas {
     }
 
     @Override
-    public Entrada entrada(final Placa placa, final LocalDateTime dataHora) {
+    public Entrada entrada(final Placa placa, final DataHora dataHora) {
         final Entrada evento = new EntradaFake(new Uuid(), placa, dataHora);
         this.items.put(evento.id(), evento);
         return evento;

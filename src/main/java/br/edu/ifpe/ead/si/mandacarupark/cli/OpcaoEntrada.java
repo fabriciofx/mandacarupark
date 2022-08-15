@@ -1,9 +1,9 @@
 package br.edu.ifpe.ead.si.mandacarupark.cli;
 
+import br.edu.ifpe.ead.si.mandacarupark.DataHora;
 import br.edu.ifpe.ead.si.mandacarupark.Estacionamento;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
-import java.time.LocalDateTime;
 
 public class OpcaoEntrada implements Opcao {
     private final String mensagem;
@@ -34,7 +34,7 @@ public class OpcaoEntrada implements Opcao {
     public void run() {
         this.console.write("Placa: ");
         final Placa placa = new Placa(this.console.read());
-        final LocalDateTime dataHora = LocalDateTime.now();
+        final DataHora dataHora = new DataHora();
         final Ticket ticket = this.estacionamento.entrada(
             placa,
             dataHora

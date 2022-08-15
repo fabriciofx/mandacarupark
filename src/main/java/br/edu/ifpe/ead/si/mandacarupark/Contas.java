@@ -1,7 +1,5 @@
 package br.edu.ifpe.ead.si.mandacarupark;
 
-import br.edu.ifpe.ead.si.mandacarupark.Conta;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,7 +14,7 @@ public class Contas {
         this.items = items;
     }
 
-    public Conta conta(LocalDateTime entrada, LocalDateTime saida) {
+    public Conta conta(DataHora entrada, DataHora saida) {
         for (final Conta item : this.items) {
             if (item.avalie(entrada, saida)) {
                 return item;

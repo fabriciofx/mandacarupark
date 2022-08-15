@@ -23,24 +23,24 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.fake;
 
+import br.edu.ifpe.ead.si.mandacarupark.DataHora;
 import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
 import br.edu.ifpe.ead.si.mandacarupark.Pagamento;
 import br.edu.ifpe.ead.si.mandacarupark.Pagamentos;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
-import java.time.LocalDateTime;
 
 public class TicketFake implements Ticket {
     private final Pagamentos pagamentos;
     private final Uuid id;
     private final Placa placa;
-    private final LocalDateTime dataHora;
+    private final DataHora dataHora;
 
     public TicketFake(
         final Pagamentos pagamentos,
         final Placa placa,
-        final LocalDateTime dataHora
+        final DataHora dataHora
     ) {
         this(
             pagamentos,
@@ -54,7 +54,7 @@ public class TicketFake implements Ticket {
         final Pagamentos pagamentos,
         final Uuid id,
         final Placa placa,
-        final LocalDateTime dataHora
+        final DataHora dataHora
     ) {
         this.pagamentos = pagamentos;
         this.id = id;
@@ -73,7 +73,7 @@ public class TicketFake implements Ticket {
     }
 
     @Override
-    public LocalDateTime dataHora() {
+    public DataHora dataHora() {
         return this.dataHora;
     }
 

@@ -1,9 +1,9 @@
 package br.edu.ifpe.ead.si.mandacarupark.conta;
 
 import br.edu.ifpe.ead.si.mandacarupark.Conta;
+import br.edu.ifpe.ead.si.mandacarupark.DataHora;
 import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
 import br.edu.ifpe.ead.si.mandacarupark.Periodo;
-import java.time.LocalDateTime;
 
 public class Tolerancia implements Conta {
     private final int minutos;
@@ -17,7 +17,7 @@ public class Tolerancia implements Conta {
     }
 
     @Override
-    public boolean avalie(LocalDateTime entrada, LocalDateTime saida) {
+    public boolean avalie(DataHora entrada, DataHora saida) {
         boolean resultado = false;
         if (new Periodo(entrada, saida).minutos() <= this.minutos) {
             resultado = true;
@@ -26,7 +26,7 @@ public class Tolerancia implements Conta {
     }
 
     @Override
-    public Dinheiro valor(LocalDateTime entrada, LocalDateTime saida) {
+    public Dinheiro valor(DataHora entrada, DataHora saida) {
         return new Dinheiro("0.00");
     }
 }

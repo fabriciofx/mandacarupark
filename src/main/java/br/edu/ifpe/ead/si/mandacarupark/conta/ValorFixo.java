@@ -23,9 +23,9 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.conta;
 
-import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
 import br.edu.ifpe.ead.si.mandacarupark.Conta;
-import java.time.LocalDateTime;
+import br.edu.ifpe.ead.si.mandacarupark.DataHora;
+import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
 
 public class ValorFixo implements Conta {
     private final Dinheiro valor;
@@ -39,14 +39,14 @@ public class ValorFixo implements Conta {
     }
 
     @Override
-    public boolean avalie(LocalDateTime entrada, LocalDateTime saida) {
+    public boolean avalie(DataHora entrada, DataHora saida) {
         return true;
     }
 
     @Override
     public Dinheiro valor(
-        final LocalDateTime entrada,
-        final LocalDateTime saida
+        final DataHora entrada,
+        final DataHora saida
     ) {
         return this.valor;
     }

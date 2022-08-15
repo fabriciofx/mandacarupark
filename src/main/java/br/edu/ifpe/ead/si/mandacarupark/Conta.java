@@ -23,9 +23,7 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark;
 
-import java.time.LocalDateTime;
-
 public interface Conta {
-    boolean avalie(LocalDateTime entrada, LocalDateTime saida);
-    Dinheiro valor(LocalDateTime entrada, LocalDateTime saida);
+    boolean avalie(DataHora entrada, DataHora saida);
+    Dinheiro valor(DataHora entrada, DataHora saida);
 }

@@ -23,12 +23,12 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.fake;
 
+import br.edu.ifpe.ead.si.mandacarupark.DataHora;
 import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
 import br.edu.ifpe.ead.si.mandacarupark.Pagamento;
 import br.edu.ifpe.ead.si.mandacarupark.Pagamentos;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -47,7 +47,7 @@ public class PagamentosFake implements Pagamentos {
     @Override
     public Pagamento pagamento(
         final Ticket ticket,
-        final LocalDateTime dataHora,
+        final DataHora dataHora,
         final Dinheiro valor
     ) {
         final Pagamento evento = new PagamentoFake(

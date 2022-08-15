@@ -23,6 +23,7 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.sql;
 
+import br.edu.ifpe.ead.si.mandacarupark.DataHora;
 import br.edu.ifpe.ead.si.mandacarupark.Dinheiro;
 import br.edu.ifpe.ead.si.mandacarupark.Locacao;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
@@ -30,8 +31,6 @@ import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
 import java.sql.ResultSet;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class LocacaoSql implements Locacao {
     private final Session session;
@@ -62,18 +61,15 @@ public class LocacaoSql implements Locacao {
     }
 
     @Override
-    public LocalDateTime entrada() {
-        final DateTimeFormatter formato = DateTimeFormatter.ofPattern(
-            "yyyy-MM-dd HH:mm:ss.SSSX"
-        );
+    public DataHora entrada() {
         final String sql = String.format(
             "SELECT entrada FROM locacao WHERE id = '%s'",
             this.id
         );
         try (final ResultSet rset = new Select(this.session, sql).result()) {
-            final LocalDateTime dataHora;
+            final DataHora dataHora;
             if (rset.next()) {
-                dataHora = LocalDateTime.parse(rset.getString(1), formato);
+                dataHora = new DataHora(rset.getString(1));
             } else {
                 throw new RuntimeException(
                     "Data/Hora inexistente ou inválida!"
@@ -86,18 +82,15 @@ public class LocacaoSql implements Locacao {
     }
 
     @Override
-    public LocalDateTime saida() {
-        final DateTimeFormatter formato = DateTimeFormatter.ofPattern(
-            "yyyy-MM-dd HH:mm:ss.SSSX"
-        );
+    public DataHora saida() {
         final String sql = String.format(
             "SELECT saida FROM locacao WHERE id = '%s'",
             this.id
         );
         try (final ResultSet rset = new Select(this.session, sql).result()) {
-            final LocalDateTime dataHora;
+            final DataHora dataHora;
             if (rset.next()) {
-                dataHora = LocalDateTime.parse(rset.getString(1), formato);
+                dataHora = new DataHora(rset.getString(1));
             } else {
                 throw new RuntimeException(
                     "Data/Hora inexistente ou inválida!"

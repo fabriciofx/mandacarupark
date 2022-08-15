@@ -23,20 +23,20 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.fake;
 
+import br.edu.ifpe.ead.si.mandacarupark.DataHora;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Saida;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
-import java.time.LocalDateTime;
 
 public class SaidaFake implements Saida {
     private final Uuid id;
     private final Placa placa;
-    private final LocalDateTime dataHora;
+    private final DataHora dataHora;
 
     public SaidaFake(
         final Uuid id,
         final Placa placa,
-        final LocalDateTime dataHora
+        final DataHora dataHora
     ) {
         this.id = id;
         this.placa = placa;
@@ -54,7 +54,7 @@ public class SaidaFake implements Saida {
     }
 
     @Override
-    public LocalDateTime dataHora() {
+    public DataHora dataHora() {
         return this.dataHora;
     }
 }

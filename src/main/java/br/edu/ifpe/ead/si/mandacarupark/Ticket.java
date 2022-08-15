@@ -23,8 +23,6 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark;
 
-import java.time.LocalDateTime;
-
 /**
  * Ticket do estacionamento.
  *
@@ -47,7 +45,7 @@ public interface Ticket {
      * A data e hora que o ticket foi emitido.
      * @return A data e hora
      */
-    LocalDateTime dataHora();
+    DataHora dataHora();
 
     /**
      * O valor da locação em reais.

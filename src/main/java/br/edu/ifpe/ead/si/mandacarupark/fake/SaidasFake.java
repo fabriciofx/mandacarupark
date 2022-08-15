@@ -23,12 +23,12 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.fake;
 
+import br.edu.ifpe.ead.si.mandacarupark.DataHora;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Saida;
 import br.edu.ifpe.ead.si.mandacarupark.Saidas;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -48,7 +48,7 @@ public class SaidasFake implements Saidas {
     public Saida saida(
         final Ticket ticket,
         final Placa placa,
-        final LocalDateTime dataHora
+        final DataHora dataHora
     ) {
         final Saida evento = new SaidaFake(ticket.id(), placa, dataHora);
         this.items.put(evento.id(), evento);

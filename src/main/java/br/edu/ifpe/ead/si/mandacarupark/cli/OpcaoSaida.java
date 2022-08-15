@@ -1,11 +1,11 @@
 package br.edu.ifpe.ead.si.mandacarupark.cli;
 
+import br.edu.ifpe.ead.si.mandacarupark.DataHora;
 import br.edu.ifpe.ead.si.mandacarupark.Entradas;
 import br.edu.ifpe.ead.si.mandacarupark.Estacionamento;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
-import java.time.LocalDateTime;
 
 public class OpcaoSaida implements Opcao {
     private final String mensagem;
@@ -43,6 +43,6 @@ public class OpcaoSaida implements Opcao {
         final Ticket ticket = this.entradas.ticket(
             new Uuid(this.console.read())
         );
-        this.estacionamento.saida(ticket, placa, LocalDateTime.now());
+        this.estacionamento.saida(ticket, placa, new DataHora());
     }
 }
