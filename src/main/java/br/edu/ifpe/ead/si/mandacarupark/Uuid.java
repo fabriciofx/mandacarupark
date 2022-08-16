@@ -43,7 +43,7 @@ public final class Uuid {
      * Ctor.
      */
     public Uuid() {
-        this(UUID.randomUUID().toString().toUpperCase().replaceAll("-", ""));
+        this(UUID.randomUUID().toString());
     }
 
     /**
