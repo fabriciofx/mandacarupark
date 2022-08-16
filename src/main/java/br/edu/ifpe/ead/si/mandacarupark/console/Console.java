@@ -21,62 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package br.edu.ifpe.ead.si.mandacarupark.cli;
-
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.util.Scanner;
+package br.edu.ifpe.ead.si.mandacarupark.console;
 
 /**
  * Commandline user interface (CLI).
  *
  * @since 0.0.1
  */
-public final class ConsoleUnix implements Console {
-    /**
-     * Cli input.
-     */
-    private final InputStream input;
-    /**
-     * Cli output.
-     */
-    private final OutputStream output;
-
-    /**
-     * Ctor.
-     */
-    public ConsoleUnix() {
-        this(System.in, System.out);
-    }
-
-    /**
-     * Ctor.
-     *
-     * @param npt Cli input
-     * @param tpt Cli output
-     */
-    public ConsoleUnix(final InputStream npt, final OutputStream tpt) {
-        this.input = npt;
-        this.output = tpt;
-    }
-
-    @Override
-    public void clear() {
-        try {
-            new ProcessBuilder("clear").inheritIO().start().waitFor();
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    @Override
-    public void write(final String message) {
-        new PrintStream(this.output).print(message);
-    }
-
-   @Override
-    public String read() {
-        return new Scanner(this.input).next();
-    }
+public interface Console {
+    void clear();
+    void write(final String message);
+    String read();
 }

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package br.edu.ifpe.ead.si.mandacarupark.cli;
+package br.edu.ifpe.ead.si.mandacarupark.console;
 
 import java.io.InputStream;
 import java.io.OutputStream;

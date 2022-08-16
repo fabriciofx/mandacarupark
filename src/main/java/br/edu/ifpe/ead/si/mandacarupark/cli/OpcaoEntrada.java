@@ -27,6 +27,7 @@ import br.edu.ifpe.ead.si.mandacarupark.DataHora;
 import br.edu.ifpe.ead.si.mandacarupark.Estacionamento;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
+import br.edu.ifpe.ead.si.mandacarupark.console.Console;
 
 public class OpcaoEntrada implements Opcao {
     private final String mensagem;
