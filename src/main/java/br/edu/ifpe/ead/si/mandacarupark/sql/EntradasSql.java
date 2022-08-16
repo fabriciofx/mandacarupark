@@ -97,7 +97,7 @@ public class EntradasSql implements Entradas {
 
     @Override
     public Iterator<Entrada> iterator() {
-        final String sql = "SELECT * FROM entrada";
+        final String sql = "SELECT * FROM entrada WHERE NOT EXISTS (SELECT FROM saida WHERE entrada.id = saida.id)";
         try (final ResultSet rset = new Select(this.session, sql).result()) {
             final List<Entrada> items = new ArrayList<>();
             while (rset.next()) {

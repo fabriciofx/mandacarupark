@@ -64,9 +64,10 @@ public class OpcaoEntrada implements Opcao {
         );
         this.console.write(
             String.format(
-                "Ticket id: %s em %s\n",
+                "Ticket id: %s em %s %s\n",
                 ticket.id(),
-                dataHora.toString()
+                dataHora.data(),
+                dataHora.hora()
             )
         );
     }

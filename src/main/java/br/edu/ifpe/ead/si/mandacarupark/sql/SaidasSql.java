@@ -29,6 +29,7 @@ import br.edu.ifpe.ead.si.mandacarupark.Saida;
 import br.edu.ifpe.ead.si.mandacarupark.Saidas;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
+import br.edu.ifpe.ead.si.mandacarupark.db.Insert;
 import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
 import java.sql.ResultSet;
@@ -49,6 +50,13 @@ public class SaidasSql implements Saidas {
         final Placa placa,
         final DataHora dataHora
     ) {
+        final String sql = String.format(
+            "INSERT INTO saida (id, placa, datahora) VALUES ('%s', '%s', '%s')",
+            ticket.id(),
+            placa,
+            dataHora
+        );
+        new Insert(this.session, sql).execute();
         return new SaidaSql(this.session, ticket.id());
     }
 

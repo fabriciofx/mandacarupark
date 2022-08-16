@@ -72,8 +72,23 @@ public class App {
             new Menu(
                 console,
                 "-------------- MandacaruPark --------------",
-                new OpcaoEntrada("1 - Entrada", console, estacionamento),
-                new OpcaoSaida("2 - Saída", console, estacionamento, entradas),
+                new OpcaoEntrada(
+                    "1 - Entrada",
+                    console,
+                    estacionamento
+                ),
+                new OpcaoSaida(
+                    "2 - Saída",
+                    console,
+                    estacionamento,
+                    entradas
+                ),
+                new OpcaoPagamento(
+                    "3 - Pagamento",
+                    console,
+                    estacionamento,
+                    entradas
+                ),
                 new Encerrar(
                     new OpcaoEncerrar(
                         "9 - Encerrar",
