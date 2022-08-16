@@ -34,6 +34,7 @@ import br.edu.ifpe.ead.si.mandacarupark.data.MemoryDataStream;
 import br.edu.ifpe.ead.si.mandacarupark.db.Insert;
 import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
+import br.edu.ifpe.ead.si.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -49,24 +50,30 @@ public class EntradasSql implements Entradas {
     @Override
     public Entrada entrada(final Placa placa, final DataHora dataHora) {
         final Uuid id = new Uuid();
-        final String sql = String.format(
-            "INSERT INTO entrada (id, placa, datahora) VALUES ('%s', '%s', '%s')",
-            id,
-            placa,
-            dataHora
-        );
-        new Insert(this.session, sql).execute();
+        new Insert(
+            this.session,
+            new Sprintf(
+                "INSERT INTO entrada (id, placa, datahora) VALUES ('%s', '%s', '%s')",
+                id,
+                placa,
+                dataHora
+            )
+        ).execute();
         return new EntradaSql(this.session, id);
     }
 
     @Override
     public Entrada procura(final Uuid id) {
-        final String sql = String.format(
-            "SELECT COUNT(*) FROM entrada WHERE id = '%s'",
-            id
-        );
         int quantidade = 0;
-        try (final ResultSet rset = new Select(this.session, sql).result()) {
+        try (
+            final ResultSet rset = new Select(
+                this.session,
+                new Sprintf(
+                    "SELECT COUNT(*) FROM entrada WHERE id = '%s'",
+                    id
+                )
+            ).result()
+        ) {
             if (rset.next()) {
                 quantidade = rset.getInt(1);
             }
@@ -97,8 +104,12 @@ public class EntradasSql implements Entradas {
 
     @Override
     public Iterator<Entrada> iterator() {
-        final String sql = "SELECT * FROM entrada WHERE NOT EXISTS (SELECT FROM saida WHERE entrada.id = saida.id)";
-        try (final ResultSet rset = new Select(this.session, sql).result()) {
+        try (
+            final ResultSet rset = new Select(
+                this.session,
+                "SELECT * FROM entrada WHERE NOT EXISTS (SELECT FROM saida WHERE entrada.id = saida.id)"
+            ).result()
+        ) {
             final List<Entrada> items = new ArrayList<>();
             while (rset.next()) {
                 items.add(

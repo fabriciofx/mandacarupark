@@ -21,32 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package br.edu.ifpe.ead.si.mandacarupark.db;
+package br.edu.ifpe.ead.si.mandacarupark.text;
 
-import br.edu.ifpe.ead.si.mandacarupark.text.Sprintf;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+public class Sprintf {
+    private final String format;
+    private final Object[] args;
 
-public class Insert {
-    private final Session session;
-    private final String query;
-
-    public Insert(final Session session, final Sprintf query) {
-        this(session, query.toString());
+    public Sprintf(final String format, final Object... args) {
+        this.format = format;
+        this.args = args;
     }
 
-    public Insert(final Session session, final String query) {
-        this.session = session;
-        this.query = query;
-    }
-
-    public boolean execute() {
-        try (Connection conn = this.session.connection()) {
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                return stmt.execute();
-            }
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
+    @Override
+    public String toString() {
+        return String.format(this.format, this.args);
     }
 }

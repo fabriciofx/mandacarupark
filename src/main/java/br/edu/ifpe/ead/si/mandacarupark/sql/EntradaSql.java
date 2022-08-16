@@ -31,6 +31,7 @@ import br.edu.ifpe.ead.si.mandacarupark.data.DataStream;
 import br.edu.ifpe.ead.si.mandacarupark.data.MemoryDataStream;
 import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
+import br.edu.ifpe.ead.si.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 
 public class EntradaSql implements Entrada {
@@ -49,11 +50,15 @@ public class EntradaSql implements Entrada {
 
     @Override
     public Placa placa() {
-        final String sql = String.format(
-            "SELECT placa FROM entrada WHERE id = '%s'",
-            this.id
-        );
-        try (final ResultSet rset = new Select(this.session, sql).result()) {
+        try (
+            final ResultSet rset = new Select(
+                this.session,
+                new Sprintf(
+                    "SELECT placa FROM entrada WHERE id = '%s'",
+                    this.id
+                )
+            ).result()
+        ) {
             final Placa placa ;
             if (rset.next()) {
                 placa = new Placa(rset.getString(1));
@@ -68,11 +73,15 @@ public class EntradaSql implements Entrada {
 
     @Override
     public DataHora dataHora() {
-        final String sql = String.format(
-            "SELECT datahora FROM entrada WHERE id = '%s'",
-            this.id
-        );
-        try (final ResultSet rset = new Select(this.session, sql).result()) {
+        try (
+            final ResultSet rset = new Select(
+                this.session,
+                new Sprintf(
+                    "SELECT datahora FROM entrada WHERE id = '%s'",
+                    this.id
+                )
+            ).result()
+        ) {
             final DataHora dataHora;
             if (rset.next()) {
                 dataHora = new DataHora(rset.getString(1));

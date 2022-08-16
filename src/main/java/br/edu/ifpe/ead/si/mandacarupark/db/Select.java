@@ -23,6 +23,7 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.db;
 
+import br.edu.ifpe.ead.si.mandacarupark.text.Sprintf;
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetFactory;
 import javax.sql.rowset.RowSetProvider;
@@ -33,6 +34,10 @@ import java.sql.ResultSet;
 public class Select {
     private final Session session;
     private final String query;
+
+    public Select(final Session session, final Sprintf query) {
+        this(session, query.toString());
+    }
 
     public Select(final Session session, final String query) {
         this.session = session;
