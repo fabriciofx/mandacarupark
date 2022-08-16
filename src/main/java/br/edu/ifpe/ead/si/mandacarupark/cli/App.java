@@ -29,6 +29,8 @@ import br.edu.ifpe.ead.si.mandacarupark.Entradas;
 import br.edu.ifpe.ead.si.mandacarupark.Estacionamento;
 import br.edu.ifpe.ead.si.mandacarupark.Pagamentos;
 import br.edu.ifpe.ead.si.mandacarupark.Saidas;
+import br.edu.ifpe.ead.si.mandacarupark.console.Console;
+import br.edu.ifpe.ead.si.mandacarupark.console.Consoles;
 import br.edu.ifpe.ead.si.mandacarupark.conta.DomingoGratis;
 import br.edu.ifpe.ead.si.mandacarupark.conta.Tolerancia;
 import br.edu.ifpe.ead.si.mandacarupark.conta.ValorFixo;

@@ -25,6 +25,7 @@ package br.edu.ifpe.ead.si.mandacarupark.cli;
 
 import br.edu.ifpe.ead.si.mandacarupark.Entrada;
 import br.edu.ifpe.ead.si.mandacarupark.Entradas;
+import br.edu.ifpe.ead.si.mandacarupark.console.Console;
 
 public class OpcaoEncerrar implements Opcao {
     private final String mensagem;
