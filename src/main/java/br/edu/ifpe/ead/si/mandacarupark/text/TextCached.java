@@ -21,51 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package br.edu.ifpe.ead.si.mandacarupark.db;
+package br.edu.ifpe.ead.si.mandacarupark.text;
 
-import br.edu.ifpe.ead.si.mandacarupark.text.Text;
-import java.io.IOException;
+public class TextCached implements Text {
+    private final String origin;
 
-public class ServerH2 implements Server {
-    private final Session session;
-    private final ScriptSql script;
-
-    public ServerH2(final Text dbname, final ScriptSql scrpt) {
-        this(
-            new SessionNoAuth(
-                new DataSourceH2Mem(dbname)
-            ),
-            scrpt
-        );
+    public TextCached(final Text text) {
+        this(text.asString());
     }
 
-    public ServerH2(final Session session, final ScriptSql scrpt) {
-        this.session = session;
-        this.script = scrpt;
+    public TextCached(final String text) {
+        this.origin = text;
     }
 
     @Override
-    public Server start() throws Exception {
-        this.script.run(this.session());
-        return this;
-    }
-
-    @Override
-    public void stop() throws Exception {
-        new Insert(this.session, "SHUTDOWN").execute();
-    }
-
-    @Override
-    public Session session() {
-        return this.session;
-    }
-
-    @Override
-    public void close() throws IOException {
-        try {
-            this.stop();
-        } catch(Exception ex) {
-            throw new IOException(ex);
-        }
+    public String asString() {
+        return this.origin;
     }
 }

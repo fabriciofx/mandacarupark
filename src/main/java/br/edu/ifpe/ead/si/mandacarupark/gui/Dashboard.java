@@ -112,7 +112,7 @@ public class Dashboard extends Application {
         final ObservableList<Map> linhas = FXCollections.observableArrayList();
         try (
             final Server server = new ServerH2(
-                new RandomName().toString(),
+                new RandomName(),
                 new ScriptSql("mandacarupark.sql")
             ).start()
         ) {

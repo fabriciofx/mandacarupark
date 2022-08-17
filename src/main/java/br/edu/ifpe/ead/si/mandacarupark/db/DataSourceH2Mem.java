@@ -23,6 +23,8 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.db;
 
+import br.edu.ifpe.ead.si.mandacarupark.text.Sprintf;
+import br.edu.ifpe.ead.si.mandacarupark.text.Text;
 import javax.sql.DataSource;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -33,27 +35,31 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 public class DataSourceH2Mem implements DataSource {
-    private final String url;
+    private final Text url;
     private final Driver driver;
 
     public DataSourceH2Mem(final String dbname) {
+        this(() -> dbname);
+    }
+
+    public DataSourceH2Mem(final Text dbname) {
         this(new org.h2.Driver(), dbname);
     }
 
-    public DataSourceH2Mem(final Driver drvr, final String dbname) {
+    public DataSourceH2Mem(final Driver drvr, final Text dbname) {
         this.driver = drvr;
-        this.url = String.format(
+        this.url = new Sprintf(
             "jdbc:h2:mem:%s;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT " +
                 "EXISTS %s\\;SET SCHEMA %s",
-            dbname,
-            dbname,
-            dbname
+            dbname.asString(),
+            dbname.asString(),
+            dbname.asString()
         );
     }
 
     @Override
     public Connection getConnection() throws SQLException {
-        return this.driver.connect(this.url, new Properties());
+        return this.driver.connect(this.url.asString(), new Properties());
     }
 
     @Override
@@ -65,7 +71,7 @@ public class DataSourceH2Mem implements DataSource {
         final Properties props = new Properties();
         props.put("user", username);
         props.put("password", password);
-        return this.driver.connect(this.url, props);
+        return this.driver.connect(this.url.asString(), props);
     }
 
     @Override

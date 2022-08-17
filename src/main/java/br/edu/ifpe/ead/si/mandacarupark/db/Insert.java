@@ -24,25 +24,30 @@
 package br.edu.ifpe.ead.si.mandacarupark.db;
 
 import br.edu.ifpe.ead.si.mandacarupark.text.Sprintf;
+import br.edu.ifpe.ead.si.mandacarupark.text.Text;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 public class Insert {
     private final Session session;
-    private final String query;
-
-    public Insert(final Session session, final Sprintf query) {
-        this(session, query.toString());
-    }
+    private final Text query;
 
     public Insert(final Session session, final String query) {
+        this(session, () -> query);
+    }
+
+    public Insert(final Session session, final Text query) {
         this.session = session;
         this.query = query;
     }
 
     public boolean execute() {
-        try (Connection conn = this.session.connection()) {
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (final Connection conn = this.session.connection()) {
+            try (
+                final PreparedStatement stmt = conn.prepareStatement(
+                    this.query.asString()
+                )
+            ) {
                 return stmt.execute();
             }
         } catch (Exception ex) {

@@ -48,7 +48,7 @@ public class TestEstacionamentoSql {
     public void entrada() throws Exception {
         try (
             final Server server = new ServerH2(
-                new RandomName().toString(),
+                new RandomName(),
                 new ScriptSql("mandacarupark.sql")
             ).start()
         ) {
@@ -80,7 +80,7 @@ public class TestEstacionamentoSql {
     public void locacao() throws Exception {
         try (
             final Server server = new ServerH2(
-                new RandomName().toString(),
+                new RandomName(),
                 new ScriptSql("mandacarupark.sql")
             ).start()
         ) {
@@ -121,7 +121,7 @@ public class TestEstacionamentoSql {
     public void tolerancia() throws Exception {
         try (
             final Server server = new ServerH2(
-                new RandomName().toString(),
+                new RandomName(),
                 new ScriptSql("mandacarupark.sql")
             ).start()
         ) {
@@ -162,7 +162,7 @@ public class TestEstacionamentoSql {
     public void domingoGratis() throws Exception {
         try (
             final Server server = new ServerH2(
-                new RandomName().toString(),
+                new RandomName(),
                 new ScriptSql("mandacarupark.sql")
             ).start()
         ) {
@@ -209,7 +209,7 @@ public class TestEstacionamentoSql {
             () -> {
                 try (
                     final Server server = new ServerH2(
-                        new RandomName().toString(),
+                        new RandomName(),
                         new ScriptSql("mandacarupark.sql")
                     ).start()
                 ) {

@@ -23,7 +23,7 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.text;
 
-public class Sprintf {
+public class Sprintf implements Text {
     private final String format;
     private final Object[] args;
 
@@ -33,7 +33,7 @@ public class Sprintf {
     }
 
     @Override
-    public String toString() {
+    public String asString() {
         return String.format(this.format, this.args);
     }
 }

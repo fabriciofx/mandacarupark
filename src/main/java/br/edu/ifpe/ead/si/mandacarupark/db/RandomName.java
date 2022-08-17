@@ -23,11 +23,12 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.db;
 
+import br.edu.ifpe.ead.si.mandacarupark.text.Text;
+import br.edu.ifpe.ead.si.mandacarupark.text.TextCached;
 import java.util.Random;
 
-public class RandomName {
-    private final int length;
-    private final char[] chars;
+public class RandomName implements Text {
+    private final Text name;
 
     public RandomName() {
         this(5);
@@ -42,18 +43,21 @@ public class RandomName {
     }
 
     public RandomName(final int length, final char ...chars) {
-        this.length = length;
-        this.chars = chars;
+        this.name = new TextCached(
+            () -> {
+                final StringBuilder sb = new StringBuilder();
+                final Random rand = new Random();
+                for(int idx = 0; idx < length; idx++) {
+                    final int pos = rand.nextInt(chars.length);
+                    sb.append(chars[pos]);
+                }
+                return sb.toString();
+            }
+        );
     }
 
     @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder();
-        final Random rand = new Random();
-        for(int idx = 0; idx < this.length; idx++) {
-            final int pos = rand.nextInt(this.chars.length);
-            sb.append(this.chars[pos]);
-        }
-        return sb.toString();
+    public String asString() {
+        return this.name.asString();
     }
 }

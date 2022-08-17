@@ -23,7 +23,7 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.db;
 
-import br.edu.ifpe.ead.si.mandacarupark.text.Sprintf;
+import br.edu.ifpe.ead.si.mandacarupark.text.Text;
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetFactory;
 import javax.sql.rowset.RowSetProvider;
@@ -33,21 +33,25 @@ import java.sql.ResultSet;
 
 public class Select {
     private final Session session;
-    private final String query;
-
-    public Select(final Session session, final Sprintf query) {
-        this(session, query.toString());
-    }
+    private final Text query;
 
     public Select(final Session session, final String query) {
+        this(session, () -> query);
+    }
+
+    public Select(final Session session, final Text query) {
         this.session = session;
         this.query = query;
     }
 
     public ResultSet result() {
-        try (Connection conn = this.session.connection()) {
-            try (PreparedStatement stmt = conn.prepareStatement(this.query)) {
-                try (ResultSet rset = stmt.executeQuery()) {
+        try (final Connection conn = this.session.connection()) {
+            try (
+                final PreparedStatement stmt = conn.prepareStatement(
+                    this.query.asString()
+                )
+            ) {
+                try (final ResultSet rset = stmt.executeQuery()) {
                     final RowSetFactory rsf = RowSetProvider.newFactory();
                     final CachedRowSet crs = rsf.createCachedRowSet();
                     crs.populate(rset);
