@@ -32,6 +32,7 @@ import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import br.edu.ifpe.ead.si.mandacarupark.db.Insert;
 import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
+import br.edu.ifpe.ead.si.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -50,24 +51,30 @@ public class SaidasSql implements Saidas {
         final Placa placa,
         final DataHora dataHora
     ) {
-        final String sql = String.format(
-            "INSERT INTO saida (id, placa, datahora) VALUES ('%s', '%s', '%s')",
-            ticket.id(),
-            placa,
-            dataHora
-        );
-        new Insert(this.session, sql).execute();
+        new Insert(
+            this.session,
+            new Sprintf(
+                "INSERT INTO saida (id, placa, datahora) VALUES ('%s', '%s', '%s')",
+                ticket.id(),
+                placa,
+                dataHora
+            )
+        ).execute();
         return new SaidaSql(this.session, ticket.id());
     }
 
     @Override
     public Saida procura(final Uuid id) {
-        final String sql = String.format(
-            "SELECT COUNT(*) FROM saida WHERE id = '%s'",
-            id
-        );
         int quantidade = 0;
-        try (final ResultSet rset = new Select(this.session, sql).result()) {
+        try (
+            final ResultSet rset = new Select(
+                this.session,
+                new Sprintf(
+                    "SELECT COUNT(*) FROM saida WHERE id = '%s'",
+                    id
+                )
+            ).result()
+        ) {
             if (rset.next()) {
                 quantidade = rset.getInt(1);
             }
@@ -87,8 +94,12 @@ public class SaidasSql implements Saidas {
 
     @Override
     public Iterator<Saida> iterator() {
-        final String sql = "SELECT * FROM saida";
-        try (final ResultSet rset = new Select(this.session, sql).result()) {
+        try (
+            final ResultSet rset = new Select(
+                this.session,
+                "SELECT * FROM saida"
+            ).result()
+        ) {
             final List<Saida> items = new ArrayList<>();
             while (rset.next()) {
                 items.add(

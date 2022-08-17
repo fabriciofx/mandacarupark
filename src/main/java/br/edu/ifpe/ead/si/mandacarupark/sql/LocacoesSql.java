@@ -29,6 +29,7 @@ import br.edu.ifpe.ead.si.mandacarupark.Periodo;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
+import br.edu.ifpe.ead.si.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -45,11 +46,16 @@ public class LocacoesSql implements Locacoes {
 
     @Override
     public Iterator<Locacao> iterator() {
-        final String sql = String.format(
-            "SELECT * FROM locacao WHERE entrada >= '%s' AND saida <= '%s'",
-            this.periodo.inicio(), this.periodo.termino()
-        );
-        try (final ResultSet rset = new Select(this.session, sql).result()) {
+        try (
+            final ResultSet rset = new Select(
+                this.session,
+                new Sprintf(
+                    "SELECT * FROM locacao WHERE entrada >= '%s' AND saida <= '%s'",
+                    this.periodo.inicio(),
+                    this.periodo.termino()
+                )
+            ).result()
+        ) {
             final List<Locacao> items = new ArrayList<>();
             while (rset.next()) {
                 items.add(

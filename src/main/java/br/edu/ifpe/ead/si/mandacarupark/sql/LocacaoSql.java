@@ -30,6 +30,7 @@ import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
+import br.edu.ifpe.ead.si.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 
 public class LocacaoSql implements Locacao {
@@ -43,11 +44,15 @@ public class LocacaoSql implements Locacao {
 
     @Override
     public Placa placa() {
-        final String sql = String.format(
-            "SELECT placa FROM locacao WHERE id = '%s'",
-            this.id
-        );
-        try (final ResultSet rset = new Select(this.session, sql).result()) {
+        try (
+            final ResultSet rset = new Select(
+                this.session,
+                new Sprintf(
+                    "SELECT placa FROM locacao WHERE id = '%s'",
+                    this.id
+                )
+            ).result()
+        ) {
             final Placa placa;
             if (rset.next()) {
                 placa = new Placa(rset.getString(1));
@@ -62,11 +67,15 @@ public class LocacaoSql implements Locacao {
 
     @Override
     public DataHora entrada() {
-        final String sql = String.format(
-            "SELECT entrada FROM locacao WHERE id = '%s'",
-            this.id
-        );
-        try (final ResultSet rset = new Select(this.session, sql).result()) {
+        try (
+            final ResultSet rset = new Select(
+                this.session,
+                new Sprintf(
+                    "SELECT entrada FROM locacao WHERE id = '%s'",
+                    this.id
+                )
+            ).result()
+        ) {
             final DataHora dataHora;
             if (rset.next()) {
                 dataHora = new DataHora(rset.getString(1));
@@ -83,11 +92,15 @@ public class LocacaoSql implements Locacao {
 
     @Override
     public DataHora saida() {
-        final String sql = String.format(
-            "SELECT saida FROM locacao WHERE id = '%s'",
-            this.id
-        );
-        try (final ResultSet rset = new Select(this.session, sql).result()) {
+        try (
+            final ResultSet rset = new Select(
+                this.session,
+                new Sprintf(
+                    "SELECT saida FROM locacao WHERE id = '%s'",
+                    this.id
+                )
+            ).result()
+        ) {
             final DataHora dataHora;
             if (rset.next()) {
                 dataHora = new DataHora(rset.getString(1));
@@ -104,11 +117,15 @@ public class LocacaoSql implements Locacao {
 
     @Override
     public Dinheiro valor() {
-        final String sql = String.format(
-            "SELECT valor FROM pagamento WHERE id = '%s'",
-            this.id
-        );
-        try (final ResultSet rset = new Select(this.session, sql).result()) {
+        try (
+            final ResultSet rset = new Select(
+                this.session,
+                new Sprintf(
+                    "SELECT valor FROM pagamento WHERE id = '%s'",
+                    this.id
+                )
+            ).result()
+        ) {
             final Dinheiro valor;
             if (rset.next()) {
                 valor = new Dinheiro(rset.getBigDecimal(1));

@@ -30,6 +30,7 @@ import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
+import br.edu.ifpe.ead.si.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 
 public class TicketSql implements Ticket {
@@ -67,11 +68,15 @@ public class TicketSql implements Ticket {
 
     @Override
     public Dinheiro valor() {
-        final String sql = String.format(
-            "SELECT valor FROM pagamento WHERE id = '%s'",
-            this.id
-        );
-        try (final ResultSet rset = new Select(this.session, sql).result()) {
+        try (
+            final ResultSet rset = new Select(
+                this.session,
+                new Sprintf(
+                    "SELECT valor FROM pagamento WHERE id = '%s'",
+                    this.id
+                )
+            ).result()
+        ) {
             final Dinheiro valor;
             if (rset.next()) {
                 valor = new Dinheiro(rset.getBigDecimal(1));
@@ -88,11 +93,15 @@ public class TicketSql implements Ticket {
 
     @Override
     public boolean validado() {
-        final String sql = String.format(
-            "SELECT COUNT(*) FROM pagamento WHERE id = '%s'",
-            this.id
-        );
-        try (final ResultSet rset = new Select(this.session, sql).result()) {
+        try (
+            final ResultSet rset = new Select(
+                this.session,
+                new Sprintf(
+                    "SELECT COUNT(*) FROM pagamento WHERE id = '%s'",
+                    this.id
+                )
+            ).result()
+        ) {
             int quantidade;
             if (rset.next()) {
                 quantidade = rset.getInt(1);

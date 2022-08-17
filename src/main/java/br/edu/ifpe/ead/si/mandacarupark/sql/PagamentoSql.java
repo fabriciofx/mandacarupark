@@ -29,6 +29,7 @@ import br.edu.ifpe.ead.si.mandacarupark.Pagamento;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
+import br.edu.ifpe.ead.si.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 
 public class PagamentoSql implements Pagamento {
@@ -47,11 +48,15 @@ public class PagamentoSql implements Pagamento {
 
     @Override
     public DataHora dataHora() {
-        final String sql = String.format(
-            "SELECT datahora FROM pagamento WHERE id = '%s'",
-            this.id
-        );
-        try (final ResultSet rset = new Select(this.session, sql).result()) {
+        try (
+            final ResultSet rset = new Select(
+                this.session,
+                new Sprintf(
+                    "SELECT datahora FROM pagamento WHERE id = '%s'",
+                    this.id
+                )
+            ).result()
+        ) {
             final DataHora dataHora;
             if (rset.next()) {
                 dataHora = new DataHora(rset.getString(1));

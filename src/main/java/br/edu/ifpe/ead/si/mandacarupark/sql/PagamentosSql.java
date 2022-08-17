@@ -32,6 +32,7 @@ import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import br.edu.ifpe.ead.si.mandacarupark.db.Insert;
 import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
+import br.edu.ifpe.ead.si.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -50,24 +51,30 @@ public class PagamentosSql implements Pagamentos {
         final DataHora dataHora,
         final Dinheiro valor
     ) {
-        final String sql = String.format(
-            "INSERT INTO pagamento (id, datahora, valor) VALUES ('%s', '%s', '%s')",
-            ticket.id(),
-            dataHora,
-            valor.quantia()
-        );
-        new Insert(this.session, sql).execute();
+        new Insert(
+            this.session,
+            new Sprintf(
+                "INSERT INTO pagamento (id, datahora, valor) VALUES ('%s', '%s', '%s')",
+                ticket.id(),
+                dataHora,
+                valor.quantia()
+            )
+        ).execute();
         return new PagamentoSql(this.session, ticket.id());
     }
 
     @Override
     public Pagamento procura(final Uuid id) {
-        final String sql = String.format(
-            "SELECT COUNT(*) FROM pagamento WHERE id = '%s'",
-            id
-        );
         int quantidade = 0;
-        try (final ResultSet rset = new Select(this.session, sql).result()) {
+        try (
+            final ResultSet rset = new Select(
+                this.session,
+                new Sprintf(
+                    "SELECT COUNT(*) FROM pagamento WHERE id = '%s'",
+                    id
+                )
+            ).result()
+        ) {
             if (rset.next()) {
                 quantidade = rset.getInt(1);
             }
@@ -87,8 +94,11 @@ public class PagamentosSql implements Pagamentos {
 
     @Override
     public Iterator<Pagamento> iterator() {
-        final String sql = String.format("SELECT * FROM pagamento");
-        try (final ResultSet rset = new Select(this.session, sql).result()) {
+        try (
+            final ResultSet rset = new Select(
+                this.session,
+                "SELECT * FROM pagamento"
+            ).result()) {
             final List<Pagamento> items = new ArrayList<>();
             while (rset.next()) {
                 items.add(
