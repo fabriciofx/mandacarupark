@@ -202,7 +202,7 @@ public class TestEstacionamentoFake {
         );
         final Ticket ticket = estacionamento.entrada(placa, dataHora);
         final Pattern padrao = Pattern.compile(
-            "<entradas><entrada><id>[A-Z0-9]+</id><placa>ABC1234</placa><dataHora>2022-08-02T10:30<dataHora></entrada></entradas>"
+            "<entradas><entrada><id>[a-z0-9-]+</id><placa>ABC1234</placa><dataHora>2022-08-02T10:30<dataHora></entrada></entradas>"
         );
         Assert.assertTrue(
             padrao.matcher(entradas.sobre().toString()).matches()
