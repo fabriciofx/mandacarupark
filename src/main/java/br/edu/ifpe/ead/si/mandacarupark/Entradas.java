@@ -23,11 +23,11 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark;
 
-import br.edu.ifpe.ead.si.mandacarupark.data.DataStream;
+import java.util.Map;
 
 public interface Entradas extends Iterable<Entrada> {
     Entrada entrada(Placa placa, DataHora dataHora);
     Entrada procura(Uuid id);
     Ticket ticket(Uuid id);
-    DataStream sobre();
+    Map<String, String> sobre();
 }

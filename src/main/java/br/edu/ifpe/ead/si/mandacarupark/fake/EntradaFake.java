@@ -30,6 +30,8 @@ import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import br.edu.ifpe.ead.si.mandacarupark.data.DataStream;
 import br.edu.ifpe.ead.si.mandacarupark.data.MemoryDataStream;
 import br.edu.ifpe.ead.si.mandacarupark.data.StringAsBytes;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EntradaFake implements Entrada {
     private final Uuid id;
@@ -52,26 +54,11 @@ public class EntradaFake implements Entrada {
     }
 
     @Override
-    public Placa placa() {
-        return this.placa;
-    }
-
-    @Override
-    public DataHora dataHora() {
-        return this.dataHora;
-    }
-
-    @Override
-    public DataStream sobre() {
-        return new MemoryDataStream(
-            new StringAsBytes(
-                String.format(
-                    "<entrada><id>%s</id><placa>%s</placa><dataHora>%s<dataHora></entrada>",
-                    this.id,
-                    this.placa,
-                    this.dataHora
-                )
-            )
+    public Map<String, String> sobre() {
+        return Map.of(
+            "id", this.id.toString(),
+            "placa", this.placa.toString(),
+            "dataHora", this.dataHora.toString()
         );
     }
 }

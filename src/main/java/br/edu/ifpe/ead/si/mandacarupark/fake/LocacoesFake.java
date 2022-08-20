@@ -23,6 +23,7 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark.fake;
 
+import br.edu.ifpe.ead.si.mandacarupark.DataHora;
 import br.edu.ifpe.ead.si.mandacarupark.Entrada;
 import br.edu.ifpe.ead.si.mandacarupark.Entradas;
 import br.edu.ifpe.ead.si.mandacarupark.Locacao;
@@ -30,6 +31,7 @@ import br.edu.ifpe.ead.si.mandacarupark.Locacoes;
 import br.edu.ifpe.ead.si.mandacarupark.Pagamento;
 import br.edu.ifpe.ead.si.mandacarupark.Pagamentos;
 import br.edu.ifpe.ead.si.mandacarupark.Periodo;
+import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Saida;
 import br.edu.ifpe.ead.si.mandacarupark.Saidas;
 import java.util.ArrayList;
@@ -58,7 +60,8 @@ public class LocacoesFake implements Locacoes {
     public Iterator<Locacao> iterator() {
         final List<Locacao> items = new ArrayList<>();
         for (Entrada entrada : this.entradas) {
-            if (this.periodo.contem(entrada.dataHora().dateTime())) {
+            final DataHora dataHora = new DataHora(entrada.sobre().get("dataHora"));
+            if (this.periodo.contem(dataHora.dateTime())) {
                 final Saida saida = this.saidas.procura(entrada.id());
                 final Pagamento pagamento = this.pagamentos.procura(
                     entrada.id()
@@ -66,8 +69,8 @@ public class LocacoesFake implements Locacoes {
                 items.add(
                     new LocacaoFake(
                         entrada.id(),
-                        entrada.placa(),
-                        entrada.dataHora(),
+                        new Placa(entrada.sobre().get("placa")),
+                        new DataHora(entrada.sobre().get("dataHora")),
                         saida.dataHora(),
                         pagamento.valor()
                     )

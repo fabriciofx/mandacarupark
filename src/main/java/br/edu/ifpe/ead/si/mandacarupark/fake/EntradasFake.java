@@ -33,8 +33,10 @@ import br.edu.ifpe.ead.si.mandacarupark.Uuid;
 import br.edu.ifpe.ead.si.mandacarupark.data.DataStream;
 import br.edu.ifpe.ead.si.mandacarupark.data.MemoryDataStream;
 import br.edu.ifpe.ead.si.mandacarupark.data.StringAsBytes;
+import br.edu.ifpe.ead.si.mandacarupark.text.Sprintf;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class EntradasFake implements Entradas {
@@ -75,20 +77,31 @@ public class EntradasFake implements Entradas {
         return new TicketFake(
             this.pagamentos,
             id,
-            entrada.placa(),
-            entrada.dataHora()
+            new Placa(entrada.sobre().get("placa")),
+            new DataHora(entrada.sobre().get("dataHora"))
         );
     }
 
     @Override
-    public DataStream sobre() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("<entradas>");
+    public Map<String, String> sobre() {
+        final Map<String, String> dados = new LinkedHashMap<>();
+        int idx = 0;
         for (final Entrada entrada : this) {
-            sb.append(new String(entrada.sobre().asBytes()));
+            dados.put(
+                new Sprintf("entrada[%d].id", idx).asString(),
+                entrada.sobre().get("id")
+            );
+            dados.put(
+                new Sprintf("entrada[%d].placa", idx).asString(),
+                entrada.sobre().get("placa")
+            );
+            dados.put(
+                new Sprintf("entrada[%d].dataHora", idx).asString(),
+                entrada.sobre().get("dataHora")
+            );
+            idx++;
         }
-        sb.append("</entradas>");
-        return new MemoryDataStream(new StringAsBytes(sb.toString()));
+        return dados;
     }
 
     @Override

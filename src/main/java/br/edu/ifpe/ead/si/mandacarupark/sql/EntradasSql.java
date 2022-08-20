@@ -39,6 +39,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class EntradasSql implements Entradas {
     private final Session session;
@@ -97,8 +98,8 @@ public class EntradasSql implements Entradas {
         return new TicketSql(
             this.session,
             id,
-            entrada.placa(),
-            entrada.dataHora()
+            new Placa(entrada.sobre().get("placa")),
+            new DataHora(entrada.sobre().get("dataHora"))
         );
     }
 
@@ -126,7 +127,7 @@ public class EntradasSql implements Entradas {
     }
 
     @Override
-    public DataStream sobre() {
-        return new MemoryDataStream();
+    public Map<String, String> sobre() {
+        return null;
     }
 }

@@ -43,7 +43,7 @@ import java.util.regex.Pattern;
 
 public class TestEstacionamentoFake {
     @Test
-    public void entrada() throws Exception {
+    public void entrada() {
         final Entradas entradas = new EntradasFake();
         final Saidas saidas = new SaidasFake();
         final Pagamentos pagamentos = new PagamentosFake();
@@ -63,7 +63,7 @@ public class TestEstacionamentoFake {
         );
         final Ticket ticket = estacionamento.entrada(placa, dataHora);
         final Entrada entrada = entradas.procura(ticket.id());
-        Assert.assertEquals(entrada.placa().toString(), "ABC1234");
+        Assert.assertEquals(entrada.sobre().get("placa"), "ABC1234");
     }
 
     @Test
@@ -182,7 +182,7 @@ public class TestEstacionamentoFake {
     }
 
     @Test
-    public void sobreEntradas() throws Exception {
+    public void sobreEntradas() {
         final Entradas entradas = new EntradasFake();
         final Saidas saidas = new SaidasFake();
         final Pagamentos pagamentos = new PagamentosFake();
@@ -200,9 +200,9 @@ public class TestEstacionamentoFake {
         final DataHora dataHora = new DataHora(
             LocalDateTime.of(2022, 8, 2, 10, 30)
         );
-        final Ticket ticket = estacionamento.entrada(placa, dataHora);
+        estacionamento.entrada(placa, dataHora);
         final Pattern padrao = Pattern.compile(
-            "<entradas><entrada><id>[a-z0-9-]+</id><placa>ABC1234</placa><dataHora>2022-08-02T10:30<dataHora></entrada></entradas>"
+            "\\{entrada\\[0\\].id=[a-z0-9-]+, entrada\\[0\\].placa=ABC1234, entrada\\[0\\].dataHora=2022-08-02T10:30\\}"
         );
         Assert.assertTrue(
             padrao.matcher(entradas.sobre().toString()).matches()

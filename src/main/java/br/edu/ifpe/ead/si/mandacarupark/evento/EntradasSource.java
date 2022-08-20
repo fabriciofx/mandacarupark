@@ -33,6 +33,7 @@ import br.edu.ifpe.ead.si.mandacarupark.data.DataStream;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class EntradasSource implements Entradas {
     private final Entradas origin;
@@ -64,7 +65,7 @@ public class EntradasSource implements Entradas {
     }
 
     @Override
-    public DataStream sobre() {
+    public Map<String, String> sobre() {
         return this.origin.sobre();
     }
 

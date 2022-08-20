@@ -33,6 +33,7 @@ import br.edu.ifpe.ead.si.mandacarupark.db.Select;
 import br.edu.ifpe.ead.si.mandacarupark.db.Session;
 import br.edu.ifpe.ead.si.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
+import java.util.Map;
 
 public class EntradaSql implements Entrada {
     private final Session session;
@@ -49,55 +50,30 @@ public class EntradaSql implements Entrada {
     }
 
     @Override
-    public Placa placa() {
+    public Map<String, String> sobre() {
         try (
             final ResultSet rset = new Select(
                 this.session,
                 new Sprintf(
-                    "SELECT placa FROM entrada WHERE id = '%s'",
+                    "SELECT placa, datahora FROM entrada WHERE id = '%s'",
                     this.id
                 )
             ).result()
         ) {
-            final Placa placa ;
+            final Map<String, String> dados;
             if (rset.next()) {
-                placa = new Placa(rset.getString(1));
+                final DataHora dataHora = new DataHora(rset.getString(2));
+                dados = Map.of(
+                    "id", this.id.toString(),
+                    "placa", rset.getString(1),
+                    "dataHora", dataHora.toString()
+                );
             } else {
                 throw new RuntimeException("Placa inexistente ou inválida!");
             }
-            return placa;
+            return dados;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-    }
-
-    @Override
-    public DataHora dataHora() {
-        try (
-            final ResultSet rset = new Select(
-                this.session,
-                new Sprintf(
-                    "SELECT datahora FROM entrada WHERE id = '%s'",
-                    this.id
-                )
-            ).result()
-        ) {
-            final DataHora dataHora;
-            if (rset.next()) {
-                dataHora = new DataHora(rset.getString(1));
-            } else {
-                throw new RuntimeException(
-                    "Data/Hora inexistente ou inválida!"
-                );
-            }
-            return dataHora;
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    @Override
-    public DataStream sobre() {
-        return new MemoryDataStream();
     }
 }

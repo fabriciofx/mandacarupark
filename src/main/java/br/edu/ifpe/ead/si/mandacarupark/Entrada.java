@@ -23,11 +23,9 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark;
 
-import br.edu.ifpe.ead.si.mandacarupark.data.DataStream;
+import java.util.Map;
 
 public interface Entrada {
     Uuid id();
-    Placa placa();
-    DataHora dataHora();
-    DataStream sobre();
+    Map<String, String> sobre();
 }
