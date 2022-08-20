@@ -33,7 +33,7 @@ import java.util.UUID;
  *
  * @since 0.0.1
  */
-public final class Uuid {
+public final class Uuid implements Comparable<Uuid> {
     /**
      * O uuid.
      */
@@ -68,5 +68,10 @@ public final class Uuid {
     @Override
     public String toString() {
         return this.numero;
+    }
+
+    @Override
+    public int compareTo(final Uuid uuid) {
+        return this.numero.compareTo(uuid.numero);
     }
 }

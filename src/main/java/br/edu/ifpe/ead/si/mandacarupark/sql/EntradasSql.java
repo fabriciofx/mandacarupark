@@ -125,9 +125,4 @@ public class EntradasSql implements Entradas {
             throw new RuntimeException(ex);
         }
     }
-
-    @Override
-    public Map<String, String> sobre() {
-        return null;
-    }
 }

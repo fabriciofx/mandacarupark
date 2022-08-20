@@ -65,11 +65,6 @@ public class EntradasSource implements Entradas {
     }
 
     @Override
-    public Map<String, String> sobre() {
-        return this.origin.sobre();
-    }
-
-    @Override
     public Iterator<Entrada> iterator() {
         return this.origin.iterator();
     }

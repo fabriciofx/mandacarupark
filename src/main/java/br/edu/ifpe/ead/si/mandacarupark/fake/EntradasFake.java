@@ -30,13 +30,8 @@ import br.edu.ifpe.ead.si.mandacarupark.Pagamentos;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Ticket;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
-import br.edu.ifpe.ead.si.mandacarupark.data.DataStream;
-import br.edu.ifpe.ead.si.mandacarupark.data.MemoryDataStream;
-import br.edu.ifpe.ead.si.mandacarupark.data.StringAsBytes;
-import br.edu.ifpe.ead.si.mandacarupark.text.Sprintf;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class EntradasFake implements Entradas {
@@ -80,28 +75,6 @@ public class EntradasFake implements Entradas {
             new Placa(entrada.sobre().get("placa")),
             new DataHora(entrada.sobre().get("dataHora"))
         );
-    }
-
-    @Override
-    public Map<String, String> sobre() {
-        final Map<String, String> dados = new LinkedHashMap<>();
-        int idx = 0;
-        for (final Entrada entrada : this) {
-            dados.put(
-                new Sprintf("entrada[%d].id", idx).asString(),
-                entrada.sobre().get("id")
-            );
-            dados.put(
-                new Sprintf("entrada[%d].placa", idx).asString(),
-                entrada.sobre().get("placa")
-            );
-            dados.put(
-                new Sprintf("entrada[%d].dataHora", idx).asString(),
-                entrada.sobre().get("dataHora")
-            );
-            idx++;
-        }
-        return dados;
     }
 
     @Override

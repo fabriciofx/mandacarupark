@@ -196,16 +196,27 @@ public class TestEstacionamentoFake {
                 new ValorFixo(new Dinheiro("5.00"))
             )
         );
-        final Placa placa = new Placa("ABC1234");
-        final DataHora dataHora = new DataHora(
-            LocalDateTime.of(2022, 8, 2, 10, 30)
+        estacionamento.entrada(
+            new Placa("ABC1234"),
+            new DataHora(
+                LocalDateTime.of(2022, 8, 2, 10, 30)
+            )
         );
-        estacionamento.entrada(placa, dataHora);
-        final Pattern padrao = Pattern.compile(
-            "\\{entrada\\[0\\].id=[a-z0-9-]+, entrada\\[0\\].placa=ABC1234, entrada\\[0\\].dataHora=2022-08-02T10:30\\}"
+        estacionamento.entrada(
+            new Placa("XYZ9876"),
+            new DataHora(
+                LocalDateTime.of(2022, 8, 2, 11, 12)
+            )
         );
+        final StringBuilder sb = new StringBuilder();
+        for (final Entrada entrada : entradas) {
+            sb.append(entrada.sobre().toString());
+        }
         Assert.assertTrue(
-            padrao.matcher(entradas.sobre().toString()).matches()
+            sb.toString().contains("placa=XYZ9876") &&
+            sb.toString().contains("dataHora=2022-08-02T11:12") &&
+            sb.toString().contains("placa=ABC1234") &&
+            sb.toString().contains("dataHora=2022-08-02T10:30")
         );
     }
 }
