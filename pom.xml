@@ -117,7 +117,7 @@
           <artifactId>javafx-maven-plugin</artifactId>
           <version>0.0.8</version>
           <configuration>
-            <mainClass>br.edu.ifpe.ead.si.mandacarupark.gui.Dashboard
+            <mainClass>com.github.fabriciofx.mandacarupark.gui.Dashboard
             </mainClass>
           </configuration>
         </plugin>
@@ -141,7 +141,7 @@
           <archive>
             <manifest>
               <mainClass>
-                br.edu.ifpe.ead.si.mandacarupark.cli.App
+                com.github.fabriciofx.mandacarupark.cli.App
               </mainClass>
             </manifest>
           </archive>
