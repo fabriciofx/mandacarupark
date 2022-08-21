@@ -27,6 +27,7 @@ import br.edu.ifpe.ead.si.mandacarupark.DataHora;
 import br.edu.ifpe.ead.si.mandacarupark.Placa;
 import br.edu.ifpe.ead.si.mandacarupark.Saida;
 import br.edu.ifpe.ead.si.mandacarupark.Uuid;
+import java.util.Map;
 
 public class SaidaFake implements Saida {
     private final Uuid id;
@@ -49,12 +50,11 @@ public class SaidaFake implements Saida {
     }
 
     @Override
-    public Placa placa() {
-        return this.placa;
-    }
-
-    @Override
-    public DataHora dataHora() {
-        return this.dataHora;
+    public Map<String, String> sobre() {
+        return Map.of(
+            "id", this.id.toString(),
+            "placa", this.placa.toString(),
+            "dataHora", this.dataHora.toString()
+        );
     }
 }

@@ -71,7 +71,7 @@ public class LocacoesFake implements Locacoes {
                         entrada.id(),
                         new Placa(entrada.sobre().get("placa")),
                         new DataHora(entrada.sobre().get("dataHora")),
-                        saida.dataHora(),
+                        new DataHora(saida.sobre().get("dataHora")),
                         pagamento.valor()
                     )
                 );

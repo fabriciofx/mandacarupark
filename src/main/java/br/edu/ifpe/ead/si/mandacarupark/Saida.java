@@ -23,8 +23,9 @@
  */
 package br.edu.ifpe.ead.si.mandacarupark;
 
+import java.util.Map;
+
 public interface Saida {
     Uuid id();
-    Placa placa();
-    DataHora dataHora();
+    Map<String, String> sobre();
 }

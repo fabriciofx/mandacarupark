@@ -69,8 +69,9 @@ public class EntradaSql implements Entrada {
                     "dataHora", dataHora.toString()
                 );
             } else {
-                throw new RuntimeException("Placa inexistente ou inválida!");
-            }
+                throw new RuntimeException(
+                    "Dados sobre a entrada inexistentes ou inválidos!"
+                );            }
             return dados;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
