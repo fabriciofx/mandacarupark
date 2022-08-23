@@ -28,6 +28,7 @@ import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Locacao;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Uuid;
+import java.util.Map;
 
 public class LocacaoFake implements Locacao {
     private final Uuid id;
@@ -51,22 +52,12 @@ public class LocacaoFake implements Locacao {
     }
 
     @Override
-    public Placa placa() {
-        return this.placa;
-    }
-
-    @Override
-    public DataHora entrada() {
-        return this.entrada;
-    }
-
-    @Override
-    public DataHora saida() {
-        return this.saida;
-    }
-
-    @Override
-    public Dinheiro valor() {
-        return this.valor;
+    public Map<String, String> sobre() {
+        return Map.of(
+            "placa", this.placa.toString(),
+            "entrada", this.entrada.toString(),
+            "saida", this.saida.toString(),
+            "valor", this.valor.toString()
+        );
     }
 }

@@ -68,7 +68,8 @@ public class EntradaSql implements Entrada {
             } else {
                 throw new RuntimeException(
                     "Dados sobre a entrada inexistentes ou inválidos!"
-                );            }
+                );
+            }
             return dados;
         } catch (Exception ex) {
             throw new RuntimeException(ex);

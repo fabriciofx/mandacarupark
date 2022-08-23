@@ -32,6 +32,8 @@ import com.github.fabriciofx.mandacarupark.db.Select;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LocacaoSql implements Locacao {
     private final Session session;
@@ -43,98 +45,32 @@ public class LocacaoSql implements Locacao {
     }
 
     @Override
-    public Placa placa() {
+    public Map<String, String> sobre() {
         try (
             final ResultSet rset = new Select(
                 this.session,
                 new Sprintf(
-                    "SELECT placa FROM locacao WHERE id = '%s'",
+                    "SELECT placa, entrada, saida, valor FROM locacao WHERE id = '%s'",
                     this.id
                 )
             ).result()
         ) {
-            final Placa placa;
+            final Map<String, String> dados;
             if (rset.next()) {
-                placa = new Placa(rset.getString(1));
-            } else {
-                throw new RuntimeException("Placa inexistente ou inválida!");
-            }
-            return placa;
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    @Override
-    public DataHora entrada() {
-        try (
-            final ResultSet rset = new Select(
-                this.session,
-                new Sprintf(
-                    "SELECT entrada FROM locacao WHERE id = '%s'",
-                    this.id
-                )
-            ).result()
-        ) {
-            final DataHora dataHora;
-            if (rset.next()) {
-                dataHora = new DataHora(rset.getString(1));
+                final DataHora entrada = new DataHora(rset.getString(2));
+                final DataHora saida = new DataHora(rset.getString(3));
+                dados = Map.of(
+                    "placa", rset.getString(1),
+                    "entrada", entrada.toString(),
+                    "saida", saida.toString(),
+                    "valor", rset.getString(4)
+                );
             } else {
                 throw new RuntimeException(
-                    "Data/Hora inexistente ou inválida!"
+                    "Dados sobre a locação são inexistentes ou inválidos!"
                 );
             }
-            return dataHora;
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    @Override
-    public DataHora saida() {
-        try (
-            final ResultSet rset = new Select(
-                this.session,
-                new Sprintf(
-                    "SELECT saida FROM locacao WHERE id = '%s'",
-                    this.id
-                )
-            ).result()
-        ) {
-            final DataHora dataHora;
-            if (rset.next()) {
-                dataHora = new DataHora(rset.getString(1));
-            } else {
-                throw new RuntimeException(
-                    "Data/Hora inexistente ou inválida!"
-                );
-            }
-            return dataHora;
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    @Override
-    public Dinheiro valor() {
-        try (
-            final ResultSet rset = new Select(
-                this.session,
-                new Sprintf(
-                    "SELECT valor FROM pagamento WHERE id = '%s'",
-                    this.id
-                )
-            ).result()
-        ) {
-            final Dinheiro valor;
-            if (rset.next()) {
-                valor = new Dinheiro(rset.getBigDecimal(1));
-            } else {
-                throw new RuntimeException(
-                    "Valor inexistente ou inválida!"
-                );
-            }
-            return valor;
+            return dados;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

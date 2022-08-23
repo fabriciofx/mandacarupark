@@ -23,9 +23,8 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
+import java.util.Map;
+
 public interface Locacao {
-    Placa placa();
-    DataHora entrada();
-    DataHora saida();
-    Dinheiro valor();
+    Map<String, String> sobre();
 }
