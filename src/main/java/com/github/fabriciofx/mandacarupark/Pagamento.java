@@ -23,8 +23,9 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
+import java.util.Map;
+
 public interface Pagamento {
     Uuid id();
-    DataHora dataHora();
-    Dinheiro valor();
+    Map<String, String> sobre();
 }

@@ -23,14 +23,13 @@
  */
 package com.github.fabriciofx.mandacarupark.sql;
 
-import com.github.fabriciofx.mandacarupark.DataHora;
-import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.db.Select;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
+import java.util.Map;
 
 public class PagamentoSql implements Pagamento {
     private final Session session;
@@ -47,46 +46,26 @@ public class PagamentoSql implements Pagamento {
     }
 
     @Override
-    public DataHora dataHora() {
+    public Map<String, String> sobre() {
         try (
             final ResultSet rset = new Select(
                 this.session,
                 new Sprintf(
-                    "SELECT datahora FROM pagamento WHERE id = '%s'",
+                    "SELECT datahora, valor FROM pagamento WHERE id = '%s'",
                     this.id
                 )
             ).result()
         ) {
-            final DataHora dataHora;
+            final Map<String, String> dados;
             if (rset.next()) {
-                dataHora = new DataHora(rset.getString(1));
-            } else {
-                throw new RuntimeException(
-                    "Data/Hora inexistente ou inválida!"
+                dados = Map.of(
+                    "dataHora", rset.getString(1),
+                    "valor", rset.getBigDecimal(2).toString()
                 );
-            }
-            return dataHora;
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    @Override
-    public Dinheiro valor() {
-        final String sql = String.format(
-            "SELECT valor FROM pagamento WHERE id = '%s'",
-            this.id
-        );
-        try (final ResultSet rset = new Select(this.session, sql).result()) {
-            final Dinheiro valor;
-            if (rset.next()) {
-                valor = new Dinheiro(rset.getBigDecimal(1));
             } else {
-                throw new RuntimeException(
-                    "Valor inexistente ou inválida!"
-                );
+                throw new RuntimeException("Dados inexistentes ou inválidos!");
             }
-            return valor;
+            return dados;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

@@ -24,6 +24,7 @@
 package com.github.fabriciofx.mandacarupark.fake;
 
 import com.github.fabriciofx.mandacarupark.DataHora;
+import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Locacao;
@@ -72,7 +73,7 @@ public class LocacoesFake implements Locacoes {
                         new Placa(entrada.sobre().get("placa")),
                         new DataHora(entrada.sobre().get("dataHora")),
                         new DataHora(saida.sobre().get("dataHora")),
-                        pagamento.valor()
+                        new Dinheiro(pagamento.sobre().get("valor"))
                     )
                 );
             }

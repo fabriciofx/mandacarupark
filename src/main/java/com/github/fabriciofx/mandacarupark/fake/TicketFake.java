@@ -80,7 +80,7 @@ public class TicketFake implements Ticket {
     @Override
     public Dinheiro valor() {
         final Pagamento pagamento = this.pagamentos.procura(this.id);
-        return pagamento.valor();
+        return new Dinheiro(pagamento.sobre().get("valor"));
     }
 
     @Override

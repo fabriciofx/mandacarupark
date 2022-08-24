@@ -27,6 +27,7 @@ import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Uuid;
+import java.util.Map;
 
 public class PagamentoFake implements Pagamento {
     private final Uuid id;
@@ -49,12 +50,10 @@ public class PagamentoFake implements Pagamento {
     }
 
     @Override
-    public DataHora dataHora() {
-        return this.dataHora;
-    }
-
-    @Override
-    public Dinheiro valor() {
-        return this.valor;
+    public Map<String, String> sobre() {
+        return Map.of(
+            "dataHora", this.dataHora.toString(),
+            "valor", this.valor.quantia().toString()
+        );
     }
 }
