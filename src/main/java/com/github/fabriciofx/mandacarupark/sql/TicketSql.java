@@ -32,6 +32,7 @@ import com.github.fabriciofx.mandacarupark.db.Select;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
+import java.util.Map;
 
 public class TicketSql implements Ticket {
     private final Session session;
@@ -57,41 +58,6 @@ public class TicketSql implements Ticket {
     }
 
     @Override
-    public Placa placa() {
-        return this.placa;
-    }
-
-    @Override
-    public DataHora dataHora() {
-        return this.dataHora;
-    }
-
-    @Override
-    public Dinheiro valor() {
-        try (
-            final ResultSet rset = new Select(
-                this.session,
-                new Sprintf(
-                    "SELECT valor FROM pagamento WHERE id = '%s'",
-                    this.id
-                )
-            ).result()
-        ) {
-            final Dinheiro valor;
-            if (rset.next()) {
-                valor = new Dinheiro(rset.getBigDecimal(1));
-            } else {
-                throw new RuntimeException(
-                    "Valor inexistente ou inválida!"
-                );
-            }
-            return valor;
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    @Override
     public boolean validado() {
         try (
             final ResultSet rset = new Select(
@@ -111,6 +77,33 @@ public class TicketSql implements Ticket {
                 );
             }
             return quantidade != 0;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    @Override
+    public Map<String, String> sobre() {
+        try (
+            final ResultSet rset = new Select(
+                this.session,
+                new Sprintf(
+                    "SELECT valor FROM pagamento WHERE id = '%s'",
+                    this.id
+                )
+            ).result()
+        ) {
+            final String valor;
+            if (rset.next()) {
+                valor = rset.getBigDecimal(1).toString();
+            } else {
+                valor = "0.00";
+            }
+            return Map.of(
+                "placa", this.placa.toString(),
+                "dataHora", this.dataHora.toString(),
+                "valor", valor
+            );
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

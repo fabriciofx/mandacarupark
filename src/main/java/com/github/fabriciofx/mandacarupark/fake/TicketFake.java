@@ -30,6 +30,7 @@ import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.Uuid;
+import java.util.Map;
 
 public class TicketFake implements Ticket {
     private final Pagamentos pagamentos;
@@ -68,22 +69,6 @@ public class TicketFake implements Ticket {
     }
 
     @Override
-    public Placa placa() {
-        return this.placa;
-    }
-
-    @Override
-    public DataHora dataHora() {
-        return this.dataHora;
-    }
-
-    @Override
-    public Dinheiro valor() {
-        final Pagamento pagamento = this.pagamentos.procura(this.id);
-        return new Dinheiro(pagamento.sobre().get("valor"));
-    }
-
-    @Override
     public boolean validado() {
         boolean result = false;
         final Pagamento pagamento = this.pagamentos.procura(this.id);
@@ -91,5 +76,21 @@ public class TicketFake implements Ticket {
             result = true;
         }
         return result;
+    }
+
+    @Override
+    public Map<String, String> sobre() {
+        final Pagamento pagamento = this.pagamentos.procura(this.id);
+        final String valor;
+        if (pagamento == null) {
+            valor = "0.00";
+        } else {
+            valor = pagamento.sobre().get("valor");
+        }
+        return Map.of(
+            "placa", this.placa.toString(),
+            "dataHora", this.dataHora.toString(),
+            "valor", valor
+        );
     }
 }

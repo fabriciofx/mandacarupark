@@ -113,7 +113,10 @@ public class TestEstacionamentoSql {
                 new DataHora(dateTime.plusMinutes(70))
             );
             Assert.assertTrue(ticketValidado.validado());
-            Assert.assertEquals(ticketValidado.valor(), new Dinheiro("5.00"));
+            Assert.assertEquals(
+                new Dinheiro(ticketValidado.sobre().get("valor")),
+                new Dinheiro("5.00")
+            );
         }
     }
 
@@ -154,7 +157,10 @@ public class TestEstacionamentoSql {
                 new DataHora(dateTime.plusMinutes(25))
             );
             Assert.assertTrue(ticketValidado.validado());
-            Assert.assertEquals(ticketValidado.valor(), new Dinheiro("0.00"));
+            Assert.assertEquals(
+                new Dinheiro(ticketValidado.sobre().get("valor")),
+                new Dinheiro("0.00")
+            );
         }
     }
 
@@ -197,7 +203,10 @@ public class TestEstacionamentoSql {
                 new DataHora(dateTime.plusMinutes(70))
             );
             Assert.assertTrue(ticketValidado.validado());
-            Assert.assertEquals(ticketValidado.valor(), new Dinheiro("0.00"));
+            Assert.assertEquals(
+                new Dinheiro(ticketValidado.sobre().get("valor")),
+                new Dinheiro("0.00")
+            );
         }
     }
 

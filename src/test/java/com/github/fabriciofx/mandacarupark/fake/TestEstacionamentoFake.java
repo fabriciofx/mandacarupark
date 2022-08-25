@@ -90,7 +90,10 @@ public class TestEstacionamentoFake {
             new DataHora(dateTime.plusMinutes(70))
         );
         Assert.assertTrue(ticketValidado.validado());
-        Assert.assertEquals(ticketValidado.valor(), new Dinheiro("5.00"));
+        Assert.assertEquals(
+            new Dinheiro(ticketValidado.sobre().get("valor")),
+            new Dinheiro("5.00")
+        );
     }
 
     @Test
@@ -118,7 +121,10 @@ public class TestEstacionamentoFake {
             new DataHora(dateTime.plusMinutes(25))
         );
         Assert.assertTrue(ticketValidado.validado());
-        Assert.assertEquals(ticketValidado.valor(), new Dinheiro("0.00"));
+        Assert.assertEquals(
+            new Dinheiro(ticketValidado.sobre().get("valor")),
+            new Dinheiro("0.00")
+        );
     }
 
     @Test
@@ -146,7 +152,10 @@ public class TestEstacionamentoFake {
             new DataHora(dateTime.plusMinutes(70))
         );
         Assert.assertTrue(ticketValidado.validado());
-        Assert.assertEquals(ticketValidado.valor(), new Dinheiro("0.00"));
+        Assert.assertEquals(
+            new Dinheiro(ticketValidado.sobre().get("valor")),
+            new Dinheiro("0.00")
+        );
     }
 
     @Test()
@@ -213,9 +222,9 @@ public class TestEstacionamentoFake {
         }
         Assert.assertTrue(
             sb.toString().contains("placa=XYZ9876") &&
-            sb.toString().contains("dataHora=2022-08-02T11:12") &&
+            sb.toString().contains("dataHora=2022-08-02 11:12") &&
             sb.toString().contains("placa=ABC1234") &&
-            sb.toString().contains("dataHora=2022-08-02T10:30")
+            sb.toString().contains("dataHora=2022-08-02 10:30")
         );
     }
 }

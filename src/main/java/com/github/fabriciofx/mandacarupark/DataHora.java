@@ -39,6 +39,7 @@ public final class DataHora {
             LocalDateTime.parse(
                 dataHora,
                 new DateTimeFormatterBuilder()
+                    .parseCaseInsensitive()
                     .appendOptional(
                         DateTimeFormatter.ofPattern(
                             "uuuu-MM-dd HH:mm:ss.SSSSSSSSS"
@@ -81,6 +82,10 @@ public final class DataHora {
                         )
                     ).appendOptional(
                         DateTimeFormatter.ofPattern(
+                            "uuuu-MM-dd HH:mm"
+                        )
+                    ).appendOptional(
+                        DateTimeFormatter.ofPattern(
                             "dd/MM/uuuu HH:mm:ss"
                         )
                     ).toFormatter()
@@ -111,6 +116,6 @@ public final class DataHora {
     }
 
     public String toString() {
-        return this.dateTime.toString();
+        return this.dateTime.toString().replaceAll("T", " ");
     }
 }

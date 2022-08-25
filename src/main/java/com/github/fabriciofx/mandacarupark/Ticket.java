@@ -23,6 +23,8 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
+import java.util.Map;
+
 /**
  * Ticket do estacionamento.
  *
@@ -36,26 +38,14 @@ public interface Ticket {
     Uuid id();
 
     /**
-     * Placa do veículo do ticket.
-     * @return A placa do veículo
-     */
-    Placa placa();
-
-    /**
-     * A data e hora que o ticket foi emitido.
-     * @return A data e hora
-     */
-    DataHora dataHora();
-
-    /**
-     * O valor da locação em reais.
-     * @return O valor da locação em reais.
-     */
-    Dinheiro valor();
-
-    /**
      * Verifica se o ticket foi pago, isto é, validado.
      * @return Verdadeiro se o ticket foi pago, falso caso contrário.
      */
     boolean validado();
+
+    /**
+     * Obtém os dados do ticket.
+     * @return Os dados do ticket.
+     */
+    Map<String, String> sobre();
 }

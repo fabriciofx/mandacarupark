@@ -33,7 +33,7 @@ public final class TestDataHora {
         final DataHora dataHora = new DataHora(
             LocalDateTime.of(2022, 8, 14, 7, 49, 20)
         );
-        Assert.assertEquals("2022-08-14T07:49:20", dataHora.toString());
+        Assert.assertEquals("2022-08-14 07:49:20", dataHora.toString());
     }
 
     @Test
@@ -70,5 +70,14 @@ public final class TestDataHora {
         );
         Assert.assertEquals("14/08/2022", dataHora.data());
         Assert.assertEquals("07:49:20", dataHora.hora());
+    }
+
+    @Test
+    public void parseEuMesmo() {
+        final DataHora dataHora = new DataHora(
+            LocalDateTime.of(2022, 8, 14, 7, 49, 20)
+        );
+        final DataHora parsed = new DataHora(dataHora.toString());
+        Assert.assertEquals("2022-08-14 07:49:20", dataHora.toString());
     }
 }
