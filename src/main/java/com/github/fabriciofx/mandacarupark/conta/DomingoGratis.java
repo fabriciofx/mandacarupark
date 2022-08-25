@@ -26,17 +26,17 @@ package com.github.fabriciofx.mandacarupark.conta;
 import com.github.fabriciofx.mandacarupark.Conta;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
+import com.github.fabriciofx.mandacarupark.Periodo;
 import java.time.DayOfWeek;
 
 public class DomingoGratis implements Conta {
     @Override
-    public boolean avalie(DataHora entrada, DataHora saida) {
-        return entrada.dateTime().getDayOfWeek() == DayOfWeek.SUNDAY &&
-            saida.dateTime().getDayOfWeek() == DayOfWeek.SUNDAY;
+    public boolean avalie(final Periodo periodo) {
+        return periodo.diaDaSemana(DayOfWeek.SUNDAY);
     }
 
     @Override
-    public Dinheiro valor(DataHora entrada, DataHora saida) {
+    public Dinheiro valor(final Periodo periodo) {
         return new Dinheiro("0.00");
     }
 }

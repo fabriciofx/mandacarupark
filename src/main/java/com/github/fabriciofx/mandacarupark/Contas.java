@@ -23,26 +23,27 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
+import com.github.fabriciofx.mandacarupark.conta.Cortesia;
 import java.util.Arrays;
 import java.util.List;
 
 public class Contas {
     private final List<Conta> items;
 
-    public Contas(Conta... items) {
+    public Contas(final Conta... items) {
         this(Arrays.asList(items));
     }
 
-    public Contas(List<Conta> items) {
+    public Contas(final List<Conta> items) {
         this.items = items;
     }
 
-    public Conta conta(DataHora entrada, DataHora saida) {
+    public Conta conta(final Periodo periodo) {
         for (final Conta item : this.items) {
-            if (item.avalie(entrada, saida)) {
+            if (item.avalie(periodo)) {
                 return item;
             }
         }
-        return null;
+        return new Cortesia();
     }
 }

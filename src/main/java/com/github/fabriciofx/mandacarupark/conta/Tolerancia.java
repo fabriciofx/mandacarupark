@@ -35,21 +35,21 @@ public class Tolerancia implements Conta {
         this(30);
     }
 
-    public Tolerancia(int minutos) {
+    public Tolerancia(final int minutos) {
         this.minutos = minutos;
     }
 
     @Override
-    public boolean avalie(DataHora entrada, DataHora saida) {
+    public boolean avalie(final Periodo periodo) {
         boolean resultado = false;
-        if (new Periodo(entrada, saida).minutos() <= this.minutos) {
+        if (periodo.minutos() <= this.minutos) {
             resultado = true;
         }
         return resultado;
     }
 
     @Override
-    public Dinheiro valor(DataHora entrada, DataHora saida) {
+    public Dinheiro valor(final Periodo periodo) {
         return new Dinheiro("0.00");
     }
 }

@@ -26,6 +26,7 @@ package com.github.fabriciofx.mandacarupark.conta;
 import com.github.fabriciofx.mandacarupark.Conta;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
+import com.github.fabriciofx.mandacarupark.Periodo;
 
 public class ValorFixo implements Conta {
     private final Dinheiro valor;
@@ -39,15 +40,12 @@ public class ValorFixo implements Conta {
     }
 
     @Override
-    public boolean avalie(DataHora entrada, DataHora saida) {
+    public boolean avalie(final Periodo periodo) {
         return true;
     }
 
     @Override
-    public Dinheiro valor(
-        final DataHora entrada,
-        final DataHora saida
-    ) {
+    public Dinheiro valor(final Periodo periodo) {
         return this.valor;
     }
 }

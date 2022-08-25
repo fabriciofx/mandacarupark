@@ -30,6 +30,7 @@ import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
+import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
@@ -75,13 +76,11 @@ public class EstacionamentoFake implements Estacionamento {
 
     @Override
     public Ticket pagamento(final Ticket ticket, final DataHora dataHora) {
-        final Dinheiro valor = this.contas.conta(
-            new DataHora(ticket.sobre().get("dataHora")),
-            dataHora
-        ).valor(
+        final Periodo periodo = new Periodo(
             new DataHora(ticket.sobre().get("dataHora")),
             dataHora
         );
+        final Dinheiro valor = this.contas.conta(periodo).valor(periodo);
         this.pagamentos.pagamento(ticket, dataHora, valor);
         return new TicketFake(
             this.pagamentos,

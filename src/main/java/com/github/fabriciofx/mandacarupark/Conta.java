@@ -24,6 +24,6 @@
 package com.github.fabriciofx.mandacarupark;
 
 public interface Conta {
-    boolean avalie(DataHora entrada, DataHora saida);
-    Dinheiro valor(DataHora entrada, DataHora saida);
+    boolean avalie(Periodo periodo);
+    Dinheiro valor(Periodo periodo);
 }

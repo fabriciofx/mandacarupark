@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
+import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -69,6 +70,11 @@ public final class Periodo {
             "yyyy-MM-dd HH:mm:ss"
         );
         return this.termino.format(formato);
+    }
+
+    public boolean diaDaSemana(final DayOfWeek dia) {
+        return this.inicio.getDayOfWeek() == dia &&
+            this.termino.getDayOfWeek() == dia;
     }
 
     private void inicioAntesTermino(
