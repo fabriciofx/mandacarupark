@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.fake;
 
+import com.github.fabriciofx.mandacarupark.Data;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Locacao;
@@ -52,12 +53,12 @@ public class LocacaoFake implements Locacao {
     }
 
     @Override
-    public Map<String, String> sobre() {
-        return Map.of(
-            "placa", this.placa.toString(),
-            "entrada", this.entrada.toString(),
-            "saida", this.saida.toString(),
-            "valor", this.valor.toString()
+    public Data sobre() {
+        return new Data(
+            "placa", this.placa,
+            "entrada", this.entrada,
+            "saida", this.saida,
+            "valor", this.valor
         );
     }
 }

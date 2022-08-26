@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.sql;
 
+import com.github.fabriciofx.mandacarupark.Data;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Locacao;
@@ -45,7 +46,7 @@ public class LocacaoSql implements Locacao {
     }
 
     @Override
-    public Map<String, String> sobre() {
+    public Data sobre() {
         try (
             final ResultSet rset = new Select(
                 this.session,
@@ -55,22 +56,25 @@ public class LocacaoSql implements Locacao {
                 )
             ).result()
         ) {
-            final Map<String, String> dados;
+            final Placa placa;
+            final DataHora entrada, saida;
+            final Dinheiro valor;
             if (rset.next()) {
-                final DataHora entrada = new DataHora(rset.getString(2));
-                final DataHora saida = new DataHora(rset.getString(3));
-                dados = Map.of(
-                    "placa", rset.getString(1),
-                    "entrada", entrada.toString(),
-                    "saida", saida.toString(),
-                    "valor", rset.getString(4)
-                );
+                placa = new Placa(rset.getString(1));
+                entrada = new DataHora(rset.getString(2));
+                saida = new DataHora(rset.getString(3));
+                valor = new Dinheiro(rset.getString(4));
             } else {
                 throw new RuntimeException(
                     "Dados sobre a locação são inexistentes ou inválidos!"
                 );
             }
-            return dados;
+            return new Data(
+                "placa", placa,
+                "entrada", entrada,
+                "saida", saida,
+                "valor", valor
+            );
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

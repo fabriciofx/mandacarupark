@@ -23,8 +23,6 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
-import java.util.Map;
-
 public interface Locacao {
-    Map<String, String> sobre();
+    Data sobre();
 }
