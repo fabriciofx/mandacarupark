@@ -47,5 +47,5 @@ public interface Ticket {
      * Obtém os dados do ticket.
      * @return Os dados do ticket.
      */
-    Map<String, String> sobre();
+    Data sobre();
 }

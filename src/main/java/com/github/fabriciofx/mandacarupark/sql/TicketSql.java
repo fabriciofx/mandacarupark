@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.sql;
 
+import com.github.fabriciofx.mandacarupark.Data;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Placa;
@@ -83,7 +84,7 @@ public class TicketSql implements Ticket {
     }
 
     @Override
-    public Map<String, String> sobre() {
+    public Data sobre() {
         try (
             final ResultSet rset = new Select(
                 this.session,
@@ -93,15 +94,15 @@ public class TicketSql implements Ticket {
                 )
             ).result()
         ) {
-            final String valor;
+            final Dinheiro valor;
             if (rset.next()) {
-                valor = rset.getBigDecimal(1).toString();
+                valor = new Dinheiro(rset.getBigDecimal(1));
             } else {
-                valor = "0.00";
+                valor = new Dinheiro("0.00");
             }
-            return Map.of(
-                "placa", this.placa.toString(),
-                "dataHora", this.dataHora.toString(),
+            return new Data(
+                "placa", this.placa,
+                "dataHora", this.dataHora,
                 "valor", valor
             );
         } catch (Exception ex) {

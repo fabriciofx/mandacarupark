@@ -94,7 +94,7 @@ public class TestEstacionamentoFake {
         );
         Assert.assertTrue(ticketValidado.validado());
         Assert.assertEquals(
-            new Dinheiro(ticketValidado.sobre().get("valor")),
+            ticketValidado.sobre().value("valor"),
             new Dinheiro("5.00")
         );
     }
@@ -125,7 +125,7 @@ public class TestEstacionamentoFake {
         );
         Assert.assertTrue(ticketValidado.validado());
         Assert.assertEquals(
-            new Dinheiro(ticketValidado.sobre().get("valor")),
+            ticketValidado.sobre().value("valor"),
             new Dinheiro("0.00")
         );
     }
@@ -156,7 +156,7 @@ public class TestEstacionamentoFake {
         );
         Assert.assertTrue(ticketValidado.validado());
         Assert.assertEquals(
-            new Dinheiro(ticketValidado.sobre().get("valor")),
+            ticketValidado.sobre().value("valor"),
             new Dinheiro("0.00")
         );
     }
