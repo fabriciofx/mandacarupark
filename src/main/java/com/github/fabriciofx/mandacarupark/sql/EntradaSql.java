@@ -23,8 +23,10 @@
  */
 package com.github.fabriciofx.mandacarupark.sql;
 
+import com.github.fabriciofx.mandacarupark.Data;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
+import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.db.Select;
 import com.github.fabriciofx.mandacarupark.db.Session;
@@ -47,7 +49,7 @@ public class EntradaSql implements Entrada {
     }
 
     @Override
-    public Map<String, String> sobre() {
+    public Data sobre() {
         try (
             final ResultSet rset = new Select(
                 this.session,
@@ -57,20 +59,21 @@ public class EntradaSql implements Entrada {
                 )
             ).result()
         ) {
-            final Map<String, String> dados;
+            final DataHora dataHora;
+            final Placa placa;
             if (rset.next()) {
-                final DataHora dataHora = new DataHora(rset.getString(2));
-                dados = Map.of(
-                    "id", this.id.toString(),
-                    "placa", rset.getString(1),
-                    "dataHora", dataHora.toString()
-                );
+                placa = new Placa(rset.getString(1));
+                dataHora = new DataHora(rset.getString(2));
             } else {
                 throw new RuntimeException(
                     "Dados sobre a entrada inexistentes ou inválidos!"
                 );
             }
-            return dados;
+            return new Data(
+                "id", this.id,
+                "placa", placa,
+                "dataHora", dataHora
+            );
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

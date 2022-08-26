@@ -72,7 +72,10 @@ public class TestEstacionamentoSql {
                 new DataHora(dateTime)
             );
             final Entrada entrada = entradas.procura(ticket.id());
-            Assert.assertEquals(entrada.sobre().get("placa"), "ABC1234");
+            Assert.assertEquals(
+                entrada.sobre().value("placa").toString(),
+                "ABC1234"
+            );
         }
     }
 

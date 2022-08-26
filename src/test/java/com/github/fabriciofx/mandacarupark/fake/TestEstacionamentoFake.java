@@ -62,7 +62,10 @@ public class TestEstacionamentoFake {
         );
         final Ticket ticket = estacionamento.entrada(placa, dataHora);
         final Entrada entrada = entradas.procura(ticket.id());
-        Assert.assertEquals(entrada.sobre().get("placa"), "ABC1234");
+        Assert.assertEquals(
+            entrada.sobre().value("placa").toString(),
+            "ABC1234"
+        );
     }
 
     @Test

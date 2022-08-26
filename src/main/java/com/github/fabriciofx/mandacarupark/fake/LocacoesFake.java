@@ -61,7 +61,7 @@ public class LocacoesFake implements Locacoes {
     public Iterator<Locacao> iterator() {
         final List<Locacao> items = new ArrayList<>();
         for (Entrada entrada : this.entradas) {
-            final DataHora dataHora = new DataHora(entrada.sobre().get("dataHora"));
+            final DataHora dataHora = entrada.sobre().value("dataHora");
             if (this.periodo.contem(dataHora.dateTime())) {
                 final Saida saida = this.saidas.procura(entrada.id());
                 final Pagamento pagamento = this.pagamentos.procura(
@@ -70,8 +70,8 @@ public class LocacoesFake implements Locacoes {
                 items.add(
                     new LocacaoFake(
                         entrada.id(),
-                        new Placa(entrada.sobre().get("placa")),
-                        new DataHora(entrada.sobre().get("dataHora")),
+                        entrada.sobre().value("placa"),
+                        entrada.sobre().value("dataHora"),
                         new DataHora(saida.sobre().get("dataHora")),
                         new Dinheiro(pagamento.sobre().get("valor"))
                     )

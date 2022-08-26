@@ -265,4 +265,14 @@ public class Data {
     public <T> T value(final String key) {
         return (T) (this.items.get(key));
     }
+
+    public Data with(final String key, final Object value) {
+        this.items.put(key, value);
+        return new Data(this.items);
+    }
+
+    @Override
+    public String toString() {
+        return this.items.toString();
+    }
 }

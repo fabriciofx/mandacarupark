@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.fake;
 
+import com.github.fabriciofx.mandacarupark.Data;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Placa;
@@ -50,11 +51,11 @@ public class EntradaFake implements Entrada {
     }
 
     @Override
-    public Map<String, String> sobre() {
-        return Map.of(
-            "id", this.id.toString(),
-            "placa", this.placa.toString(),
-            "dataHora", this.dataHora.toString()
+    public Data sobre() {
+        return new Data(
+            "id", this.id,
+            "placa", this.placa,
+            "dataHora", this.dataHora
         );
     }
 }

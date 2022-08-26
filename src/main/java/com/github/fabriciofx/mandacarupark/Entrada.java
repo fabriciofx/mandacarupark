@@ -27,5 +27,5 @@ import java.util.Map;
 
 public interface Entrada {
     Uuid id();
-    Map<String, String> sobre();
+    Data sobre();
 }
