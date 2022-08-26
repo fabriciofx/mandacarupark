@@ -72,7 +72,7 @@ public class LocacoesFake implements Locacoes {
                         entrada.id(),
                         entrada.sobre().value("placa"),
                         entrada.sobre().value("dataHora"),
-                        new DataHora(saida.sobre().get("dataHora")),
+                        saida.sobre().value("dataHora"),
                         new Dinheiro(pagamento.sobre().get("valor"))
                     )
                 );
