@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.fake;
 
+import com.github.fabriciofx.mandacarupark.Data;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Pagamento;
@@ -50,10 +51,10 @@ public class PagamentoFake implements Pagamento {
     }
 
     @Override
-    public Map<String, String> sobre() {
-        return Map.of(
-            "dataHora", this.dataHora.toString(),
-            "valor", this.valor.quantia().toString()
+    public Data sobre() {
+        return new Data(
+            "dataHora", this.dataHora,
+            "valor", this.valor
         );
     }
 }

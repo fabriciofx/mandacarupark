@@ -27,5 +27,5 @@ import java.util.Map;
 
 public interface Pagamento {
     Uuid id();
-    Map<String, String> sobre();
+    Data sobre();
 }

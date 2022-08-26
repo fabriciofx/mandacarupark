@@ -81,16 +81,16 @@ public class TicketFake implements Ticket {
     @Override
     public Map<String, String> sobre() {
         final Pagamento pagamento = this.pagamentos.procura(this.id);
-        final String valor;
+        final Dinheiro valor;
         if (pagamento == null) {
-            valor = "0.00";
+            valor = new Dinheiro("0.00");
         } else {
-            valor = pagamento.sobre().get("valor");
+            valor = pagamento.sobre().value("valor");
         }
         return Map.of(
             "placa", this.placa.toString(),
             "dataHora", this.dataHora.toString(),
-            "valor", valor
+            "valor", valor.quantia().toString()
         );
     }
 }
