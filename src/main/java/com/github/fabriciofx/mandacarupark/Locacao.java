@@ -24,5 +24,5 @@
 package com.github.fabriciofx.mandacarupark;
 
 public interface Locacao {
-    Data sobre();
+    Dados sobre();
 }

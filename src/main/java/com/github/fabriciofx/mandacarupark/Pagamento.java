@@ -23,9 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
-import java.util.Map;
-
 public interface Pagamento {
     Uuid id();
-    Data sobre();
+    Dados sobre();
 }

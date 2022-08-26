@@ -23,9 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
-import java.util.Map;
-
 public interface Saida {
     Uuid id();
-    Data sobre();
+    Dados sobre();
 }

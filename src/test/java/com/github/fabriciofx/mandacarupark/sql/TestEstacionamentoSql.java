@@ -73,7 +73,7 @@ public class TestEstacionamentoSql {
             );
             final Entrada entrada = entradas.procura(ticket.id());
             Assert.assertEquals(
-                entrada.sobre().value("placa").toString(),
+                entrada.sobre().valor("placa").toString(),
                 "ABC1234"
             );
         }
@@ -117,7 +117,7 @@ public class TestEstacionamentoSql {
             );
             Assert.assertTrue(ticketValidado.validado());
             Assert.assertEquals(
-                ticketValidado.sobre().value("valor"),
+                ticketValidado.sobre().valor("valor"),
                 new Dinheiro("5.00")
             );
         }
@@ -161,7 +161,7 @@ public class TestEstacionamentoSql {
             );
             Assert.assertTrue(ticketValidado.validado());
             Assert.assertEquals(
-                ticketValidado.sobre().value("valor"),
+                ticketValidado.sobre().valor("valor"),
                 new Dinheiro("0.00")
             );
         }
@@ -207,7 +207,7 @@ public class TestEstacionamentoSql {
             );
             Assert.assertTrue(ticketValidado.validado());
             Assert.assertEquals(
-                ticketValidado.sobre().value("valor"),
+                ticketValidado.sobre().valor("valor"),
                 new Dinheiro("0.00")
             );
         }

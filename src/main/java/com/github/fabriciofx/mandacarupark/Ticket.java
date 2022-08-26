@@ -23,8 +23,6 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
-import java.util.Map;
-
 /**
  * Ticket do estacionamento.
  *
@@ -47,5 +45,5 @@ public interface Ticket {
      * Obtém os dados do ticket.
      * @return Os dados do ticket.
      */
-    Data sobre();
+    Dados sobre();
 }

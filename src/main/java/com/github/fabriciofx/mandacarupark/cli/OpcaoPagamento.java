@@ -48,7 +48,7 @@ public class OpcaoPagamento implements Opcao {
             String.format(
                 "Ticket id: %s referente a placa %s %sestá pago!\n",
                 ticketValidado.id(),
-                ticketValidado.sobre().value("placa"),
+                ticketValidado.sobre().valor("placa"),
                 ticketValidado.validado() ? "" : "não "
             )
         );

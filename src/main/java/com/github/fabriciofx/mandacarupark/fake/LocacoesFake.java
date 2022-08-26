@@ -24,7 +24,6 @@
 package com.github.fabriciofx.mandacarupark.fake;
 
 import com.github.fabriciofx.mandacarupark.DataHora;
-import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Locacao;
@@ -32,7 +31,6 @@ import com.github.fabriciofx.mandacarupark.Locacoes;
 import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Periodo;
-import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import java.util.ArrayList;
@@ -61,7 +59,7 @@ public class LocacoesFake implements Locacoes {
     public Iterator<Locacao> iterator() {
         final List<Locacao> items = new ArrayList<>();
         for (Entrada entrada : this.entradas) {
-            final DataHora dataHora = entrada.sobre().value("dataHora");
+            final DataHora dataHora = entrada.sobre().valor("dataHora");
             if (this.periodo.contem(dataHora.dateTime())) {
                 final Saida saida = this.saidas.procura(entrada.id());
                 final Pagamento pagamento = this.pagamentos.procura(
@@ -70,10 +68,10 @@ public class LocacoesFake implements Locacoes {
                 items.add(
                     new LocacaoFake(
                         entrada.id(),
-                        entrada.sobre().value("placa"),
-                        entrada.sobre().value("dataHora"),
-                        saida.sobre().value("dataHora"),
-                        pagamento.sobre().value("valor")
+                        entrada.sobre().valor("placa"),
+                        entrada.sobre().valor("dataHora"),
+                        saida.sobre().valor("dataHora"),
+                        pagamento.sobre().valor("valor")
                     )
                 );
             }

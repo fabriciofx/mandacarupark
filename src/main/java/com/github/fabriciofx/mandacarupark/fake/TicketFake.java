@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.fake;
 
-import com.github.fabriciofx.mandacarupark.Data;
+import com.github.fabriciofx.mandacarupark.Dados;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Pagamento;
@@ -31,7 +31,6 @@ import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.Uuid;
-import java.util.Map;
 
 public class TicketFake implements Ticket {
     private final Pagamentos pagamentos;
@@ -80,15 +79,15 @@ public class TicketFake implements Ticket {
     }
 
     @Override
-    public Data sobre() {
+    public Dados sobre() {
         final Pagamento pagamento = this.pagamentos.procura(this.id);
         final Dinheiro valor;
         if (pagamento == null) {
             valor = new Dinheiro("0.00");
         } else {
-            valor = pagamento.sobre().value("valor");
+            valor = pagamento.sobre().valor("valor");
         }
-        return new Data(
+        return new Dados(
             "placa", this.placa,
             "dataHora", this.dataHora,
             "valor", valor

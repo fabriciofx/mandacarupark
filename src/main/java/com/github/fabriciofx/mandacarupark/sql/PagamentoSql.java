@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.sql;
 
-import com.github.fabriciofx.mandacarupark.Data;
+import com.github.fabriciofx.mandacarupark.Dados;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Pagamento;
@@ -32,7 +32,6 @@ import com.github.fabriciofx.mandacarupark.db.Select;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
-import java.util.Map;
 
 public class PagamentoSql implements Pagamento {
     private final Session session;
@@ -49,7 +48,7 @@ public class PagamentoSql implements Pagamento {
     }
 
     @Override
-    public Data sobre() {
+    public Dados sobre() {
         try (
             final ResultSet rset = new Select(
                 this.session,
@@ -68,7 +67,7 @@ public class PagamentoSql implements Pagamento {
             } else {
                 throw new RuntimeException("Dados inexistentes ou inválidos!");
             }
-            return new Data(
+            return new Dados(
                 "dataHora", dataHora,
                 "valor", valor
             );
