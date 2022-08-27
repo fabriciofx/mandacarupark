@@ -49,7 +49,7 @@
     <developer>
       <id>fabriciofx</id>
       <name>Fabrício Barros Cabral</name>
-      <email>fabricio.cabral@ead.ifpe.edu.br</email>
+      <email>fabriciofx@gmail.com</email>
       <organization>fabriciofx</organization>
       <organizationUrl>https://github.com/fabriciofx</organizationUrl>
       <roles>
@@ -95,6 +95,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.0.0-M7</version>
           <configuration>
             <redirectTestOutputToFile>true</redirectTestOutputToFile>
             <systemPropertyVariables>
@@ -177,29 +178,29 @@
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
-      <version>18.0.1</version>
+      <version>18.0.2</version>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-fxml</artifactId>
-      <version>18.0.1</version>
+      <version>18.0.2</version>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-graphics</artifactId>
-      <version>18.0.1</version>
+      <version>18.0.2</version>
       <classifier>win</classifier>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-graphics</artifactId>
-      <version>18.0.1</version>
+      <version>18.0.2</version>
       <classifier>linux</classifier>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-graphics</artifactId>
-      <version>18.0.1</version>
+      <version>18.0.2</version>
       <classifier>mac</classifier>
     </dependency>
   </dependencies>
@@ -211,7 +212,7 @@
           <plugin>
             <groupId>com.qulice</groupId>
             <artifactId>qulice-maven-plugin</artifactId>
-            <version>0.21.0</version>
+            <version>0.22.0</version>
             <configuration>
               <license>file:${basedir}/LICENSE.txt</license>
               <excludes combine.children="append">
