@@ -29,7 +29,7 @@ public class Combine implements Crc {
     /* Dimension of GF(2) vectors (length of CRC) */
     private final static int GF2_DIM = 64;
     /* Current CRC value. */
-    private long value;
+    private Crc crc;
 
     private static long gf2MatrixTimes(long[] mat, long vec) {
         long sum = 0;
@@ -55,51 +55,56 @@ public class Combine implements Crc {
      * of the first block, summ2 is the CRC-64 of the second block, and len2
      * is the length of the second block.
      */
-    public Combine(Crc64 summ1, Crc64 summ2, long len2) {
-        // degenerate case.
-        if (len2 == 0) {
-            this.value = summ1.value();
-            return;
-        }
-        long[] even = new long[GF2_DIM]; // even-power-of-two zeros operator
-        long[] odd = new long[GF2_DIM]; // odd-power-of-two zeros operator
-        // put operator for one zero bit in odd
-        odd[0] = POLY;      // CRC-64 polynomial
-        long row = 1;
-        for (int num = 1; num < GF2_DIM; num++) {
-            odd[num] = row;
-            row <<= 1;
-        }
-        // put operator for two zero bits in even
-        gf2MatrixSquare(even, odd);
-        // put operator for four zero bits in odd
-        gf2MatrixSquare(odd, even);
-        // apply len2 zeros to crc1 (first square will put the operator for one
-        // zero byte, eight zero bits, in even)
-        long crc1 = summ1.value();
-        long crc2 = summ2.value();
-        do {
-            // apply zeros operator for this bit of len2
-            gf2MatrixSquare(even, odd);
-            if ((len2 & 1) == 1) {
-                crc1 = gf2MatrixTimes(even, crc1);
-            }
-            len2 >>>= 1;
-            // if no more bits set, then done
+    public Combine(Crc64 summ1, Crc64 summ2, long length2) {
+        this.crc = () -> {
+            long value = 0L;
+            long len2 = length2;
+            // degenerate case.
             if (len2 == 0) {
-                break;
+                value = summ1.value();
+                return value;
             }
-            // another iteration of the loop with odd and even swapped
+            long[] even = new long[GF2_DIM]; // even-power-of-two zeros operator
+            long[] odd = new long[GF2_DIM]; // odd-power-of-two zeros operator
+            // put operator for one zero bit in odd
+            odd[0] = POLY;      // CRC-64 polynomial
+            long row = 1;
+            for (int num = 1; num < GF2_DIM; num++) {
+                odd[num] = row;
+                row <<= 1;
+            }
+            // put operator for two zero bits in even
+            gf2MatrixSquare(even, odd);
+            // put operator for four zero bits in odd
             gf2MatrixSquare(odd, even);
-            if ((len2 & 1) == 1) {
-                crc1 = gf2MatrixTimes(odd, crc1);
-            }
-            len2 >>>= 1;
-            // if no more bits set, then done
-        } while (len2 != 0);
-        // return combined crc.
-        crc1 ^= crc2;
-        this.value = crc1;
+            // apply len2 zeros to crc1 (first square will put the operator for one
+            // zero byte, eight zero bits, in even)
+            long crc1 = summ1.value();
+            long crc2 = summ2.value();
+            do {
+                // apply zeros operator for this bit of len2
+                gf2MatrixSquare(even, odd);
+                if ((len2 & 1) == 1) {
+                    crc1 = gf2MatrixTimes(even, crc1);
+                }
+                len2 >>>= 1;
+                // if no more bits set, then done
+                if (len2 == 0) {
+                    break;
+                }
+                // another iteration of the loop with odd and even swapped
+                gf2MatrixSquare(odd, even);
+                if ((len2 & 1) == 1) {
+                    crc1 = gf2MatrixTimes(odd, crc1);
+                }
+                len2 >>>= 1;
+                // if no more bits set, then done
+            } while (len2 != 0);
+            // return combined crc.
+            crc1 ^= crc2;
+            value = crc1;
+            return value;
+        };
     }
 
     /**
@@ -107,6 +112,6 @@ public class Combine implements Crc {
      **/
     @Override
     public long value() {
-        return this.value;
+        return this.crc.value();
     }
 }

@@ -120,22 +120,19 @@ public final class Crc64 implements Crc {
         0xa707db9acf80c06dL, 0x14299724cc279f02L, 0x5383edcd67c06036L,
         0xe0ada17364673f59L
     };
-    /* ECMA-182 */
-    private final static long POLY = 0xc96c5795d7870f42L;
     /* Current CRC value. */
-    private long value;
+    private Crc crc;
 
     public Crc64() {
         this(0L);
     }
 
     public Crc64(long value) {
-        this.value = value;
+        this.crc = () -> value;
     }
 
-    public Crc64(byte[] bytes, int len) {
-        this.value = 0;
-        update(bytes, len);
+    public Crc64(byte[] bytes, int length) {
+        this.crc = () -> update(0L, bytes, length);
     }
 
     /**
@@ -156,7 +153,7 @@ public final class Crc64 implements Crc {
     public byte[] bytes() {
         byte[] bytes = new byte[8];
         for (int idx = 0; idx < 8; idx++) {
-            bytes[7 - idx] = (byte) (this.value >>> (idx * 8));
+            bytes[7 - idx] = (byte) (this.crc.value() >>> (idx * 8));
         }
         return bytes;
     }
@@ -166,21 +163,21 @@ public final class Crc64 implements Crc {
      **/
     @Override
     public long value() {
-        return this.value;
+        return this.crc.value();
     }
 
     /**
      * Update CRC64 with new byte block.
      **/
-    public void update(byte[] bytes, int len) {
+    public long update(long value, byte[] bytes, int length) {
         int idx = 0;
-        this.value = ~this.value;
-        while (len > 0) {
-            this.value = TABLE[((int) (this.value ^ bytes[idx])) & 0xff]
-                ^ (this.value >>> 8);
+        value = ~value;
+        while (length > 0) {
+            value = TABLE[((int) (value ^ bytes[idx])) & 0xff] ^ (value >>> 8);
             idx++;
-            len--;
+            length--;
         }
-        this.value = ~this.value;
+        value = ~value;
+        return value;
     }
 }
