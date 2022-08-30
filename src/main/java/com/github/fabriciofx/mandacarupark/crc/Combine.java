@@ -29,7 +29,7 @@ public class Combine implements Crc {
     /* Dimension of GF(2) vectors (length of CRC) */
     private final static int GF2_DIM = 64;
     /* Current CRC value. */
-    private Crc crc;
+    private final Crc crc;
 
     private static long gf2MatrixTimes(long[] mat, long vec) {
         long sum = 0;

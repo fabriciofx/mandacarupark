@@ -121,7 +121,7 @@ public final class Crc64 implements Crc {
         0xe0ada17364673f59L
     };
     /* Current CRC value. */
-    private Crc crc;
+    private final Crc crc;
 
     public Crc64() {
         this(0L);
