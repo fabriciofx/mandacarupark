@@ -37,5 +37,6 @@ public class TestBarcode {
         final BufferedImage image = barcode.image();
         final File file = new File("barcode.jpg");
         ImageIO.write(image, "jpg", file);
+        file.delete();
     }
 }
