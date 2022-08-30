@@ -25,10 +25,10 @@ package com.github.fabriciofx.mandacarupark.gui;
 
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
-import com.github.fabriciofx.mandacarupark.db.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.RandomName;
-import com.github.fabriciofx.mandacarupark.db.Server;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
+import com.github.fabriciofx.mandacarupark.db.Server;
+import com.github.fabriciofx.mandacarupark.db.ServerH2;
 import com.github.fabriciofx.mandacarupark.sql.EntradasSql;
 import javafx.application.Application;
 import javafx.collections.FXCollections;

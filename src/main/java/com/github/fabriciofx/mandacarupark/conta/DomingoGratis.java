@@ -24,7 +24,6 @@
 package com.github.fabriciofx.mandacarupark.conta;
 
 import com.github.fabriciofx.mandacarupark.Conta;
-import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Periodo;
 import java.time.DayOfWeek;
