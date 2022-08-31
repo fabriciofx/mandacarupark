@@ -46,7 +46,7 @@ public final class TestBarcode {
 
     @Test
     public void barcodeQr() throws IOException {
-        final Barcode barcode = new QrCode(new Uuid().toString());
+        final Barcode barcode = new BarcodeQrCode(new Uuid().toString());
         final BufferedImage image = barcode.image();
         final Graphics2D g2d = image.createGraphics();
         final RenderingHints rh = new RenderingHints(

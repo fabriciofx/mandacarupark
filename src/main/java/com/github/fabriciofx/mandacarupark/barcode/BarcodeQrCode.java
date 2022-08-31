@@ -27,20 +27,19 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
-import com.google.zxing.oned.EAN13Writer;
 import com.google.zxing.qrcode.QRCodeWriter;
 import java.awt.image.BufferedImage;
 
-public final class QrCode implements Barcode {
+public final class BarcodeQrCode implements Barcode {
     private final String text;
     private final int width;
     private final int height;
 
-    public QrCode(final String text) {
+    public BarcodeQrCode(final String text) {
         this(text, 150, 300);
     }
 
-    public QrCode(final String text, final int width, final int height) {
+    public BarcodeQrCode(final String text, final int width, final int height) {
         this.text = text;
         this.width = width;
         this.height = height;
