@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.cli;
 
-public class Encerrar implements Opcao {
+public final class Encerrar implements Opcao {
     private final Opcao origin;
 
     public Encerrar(final Opcao opcao) {

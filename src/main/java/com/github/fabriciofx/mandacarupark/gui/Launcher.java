@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.gui;
 
-public class Launcher {
+public final class Launcher {
     public static void main(String[] args) {
         Dashboard.main(args);
     }

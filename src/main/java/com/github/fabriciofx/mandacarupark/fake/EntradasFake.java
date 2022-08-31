@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class EntradasFake implements Entradas {
+public final class EntradasFake implements Entradas {
     private final Map<Uuid, Entrada> items;
     private final Pagamentos pagamentos;
 

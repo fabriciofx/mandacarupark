@@ -29,7 +29,7 @@ import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.console.Console;
 
-public class OpcaoEntrada implements Opcao {
+public final class OpcaoEntrada implements Opcao {
     private final String mensagem;
     private final Console console;
     private final Estacionamento estacionamento;

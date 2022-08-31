@@ -40,7 +40,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import java.time.LocalDateTime;
 
-public class TestEstacionamentoFake {
+public final class TestEstacionamentoFake {
     @Test
     public void entrada() {
         final Entradas entradas = new EntradasFake();

@@ -26,7 +26,7 @@ package com.github.fabriciofx.mandacarupark.db;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TestRandomName {
+public final class TestRandomName {
     @Test
     public void nameWith5Chars() {
         final String name = new RandomName().asString();

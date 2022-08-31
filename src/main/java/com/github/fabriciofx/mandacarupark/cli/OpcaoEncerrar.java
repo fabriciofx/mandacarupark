@@ -27,7 +27,7 @@ import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.console.Console;
 
-public class OpcaoEncerrar implements Opcao {
+public final class OpcaoEncerrar implements Opcao {
     private final String mensagem;
     private final Console console;
     private final Entradas entradas;

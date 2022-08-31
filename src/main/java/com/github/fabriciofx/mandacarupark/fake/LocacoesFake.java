@@ -37,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class LocacoesFake implements Locacoes {
+public final class LocacoesFake implements Locacoes {
     private final Entradas entradas;
     private final Saidas saidas;
     private final Pagamentos pagamentos;

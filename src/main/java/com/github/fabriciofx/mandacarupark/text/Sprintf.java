@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.text;
 
-public class Sprintf implements Text {
+public final class Sprintf implements Text {
     private final String format;
     private final Object[] args;
 

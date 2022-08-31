@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.text;
 
-public class TextCached implements Text {
+public final class TextCached implements Text {
     private final String origin;
 
     public TextCached(final Text text) {

@@ -34,7 +34,7 @@ import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 
-public class TicketSql implements Ticket {
+public final class TicketSql implements Ticket {
     private final Session session;
     private final Uuid id;
     private final Placa placa;

@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class SaidasFake implements Saidas {
+public final class SaidasFake implements Saidas {
     private final Map<Uuid, Saida> items;
 
     public SaidasFake() {

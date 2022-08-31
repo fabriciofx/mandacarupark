@@ -33,7 +33,7 @@ import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 
-public class EntradaSql implements Entrada {
+public final class EntradaSql implements Entrada {
     private final Session session;
     private final Uuid id;
 

@@ -28,7 +28,7 @@ import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Periodo;
 import java.time.DayOfWeek;
 
-public class DomingoGratis implements Conta {
+public final class DomingoGratis implements Conta {
     @Override
     public boolean avalie(final Periodo periodo) {
         return periodo.diaDaSemana(DayOfWeek.SUNDAY);

@@ -45,7 +45,7 @@ import com.github.fabriciofx.mandacarupark.sql.EstacionamentoSql;
 import com.github.fabriciofx.mandacarupark.sql.PagamentosSql;
 import com.github.fabriciofx.mandacarupark.sql.SaidasSql;
 
-public class App {
+public final class App {
     public static void main(String[] args) {
         try (
             final Server server = new ServerH2(

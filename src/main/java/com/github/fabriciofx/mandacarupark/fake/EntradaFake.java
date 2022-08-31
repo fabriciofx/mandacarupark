@@ -29,7 +29,7 @@ import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Uuid;
 
-public class EntradaFake implements Entrada {
+public final class EntradaFake implements Entrada {
     private final Uuid id;
     private final Placa placa;
     private final DataHora dataHora;

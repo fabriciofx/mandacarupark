@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class SaidasSql implements Saidas {
+public final class SaidasSql implements Saidas {
     private final Session session;
 
     public SaidasSql(final Session session) {

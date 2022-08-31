@@ -29,7 +29,7 @@ import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Uuid;
 
-public class SaidaFake implements Saida {
+public final class SaidaFake implements Saida {
     private final Uuid id;
     private final Placa placa;
     private final DataHora dataHora;

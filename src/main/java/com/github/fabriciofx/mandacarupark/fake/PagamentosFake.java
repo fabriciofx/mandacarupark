@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class PagamentosFake implements Pagamentos {
+public final class PagamentosFake implements Pagamentos {
     private final Map<Uuid, Pagamento> items;
 
     public PagamentosFake() {

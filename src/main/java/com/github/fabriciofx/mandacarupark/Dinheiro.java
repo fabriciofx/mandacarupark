@@ -29,7 +29,7 @@ import java.util.Currency;
 import java.util.Locale;
 import java.util.Objects;
 
-public class Dinheiro implements Comparable<Dinheiro> {
+public final class Dinheiro implements Comparable<Dinheiro> {
     private final BigDecimal quantia;
     private final Currency moeda;
     private final Locale localizacao;

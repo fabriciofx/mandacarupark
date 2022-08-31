@@ -31,7 +31,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class Select {
+public final class Select {
     private final Session session;
     private final Text query;
 

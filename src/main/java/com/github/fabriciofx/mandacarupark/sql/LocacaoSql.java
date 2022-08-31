@@ -34,7 +34,7 @@ import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 
-public class LocacaoSql implements Locacao {
+public final class LocacaoSql implements Locacao {
     private final Session session;
     private final Uuid id;
 

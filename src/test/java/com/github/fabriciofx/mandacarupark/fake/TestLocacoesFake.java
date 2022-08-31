@@ -40,7 +40,7 @@ import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
 import org.junit.Test;
 import java.time.LocalDateTime;
 
-public class TestLocacoesFake {
+public final class TestLocacoesFake {
     @Test
     public void locacoes() {
         final Entradas entradas = new EntradasFake();

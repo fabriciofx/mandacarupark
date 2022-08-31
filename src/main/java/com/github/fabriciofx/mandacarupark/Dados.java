@@ -26,7 +26,7 @@ package com.github.fabriciofx.mandacarupark;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Dados {
+public final class Dados {
     private final Map<String, Object> itens;
 
     public Dados(
@@ -285,7 +285,7 @@ public class Dados {
         return this.itens.toString();
     }
 
-    private static class MapEntry<K, V> implements Map.Entry<K, V> {
+    private final static class MapEntry<K, V> implements Map.Entry<K, V> {
         private final K key;
         private final V value;
 

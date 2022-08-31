@@ -26,7 +26,7 @@ package com.github.fabriciofx.mandacarupark.db;
 import javax.sql.DataSource;
 import java.sql.Connection;
 
-public class SessionNoAuth implements Session {
+public final class SessionNoAuth implements Session {
     private final DataSource source;
 
     public SessionNoAuth(final DataSource source) {

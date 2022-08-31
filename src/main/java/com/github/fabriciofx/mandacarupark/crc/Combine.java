@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.crc;
 
-public class Combine implements Crc {
+public final class Combine implements Crc {
     /* ECMA-182 */
     private final static long POLY = 0xc96c5795d7870f42L;
     /* Dimension of GF(2) vectors (length of CRC) */

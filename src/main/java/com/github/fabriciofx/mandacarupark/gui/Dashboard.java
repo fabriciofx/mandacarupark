@@ -50,7 +50,7 @@ import javafx.util.StringConverter;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Dashboard extends Application {
+public final class Dashboard extends Application {
     public static void main(String[] args) {
         launch(args);
     }

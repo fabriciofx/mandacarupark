@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class PagamentosSql implements Pagamentos {
+public final class PagamentosSql implements Pagamentos {
     private final Session session;
 
     public PagamentosSql(final Session session) {

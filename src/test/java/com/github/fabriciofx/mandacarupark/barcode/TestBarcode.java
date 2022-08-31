@@ -30,7 +30,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class TestBarcode {
+public final class TestBarcode {
     @Test
     public void barcode() throws IOException {
         final Barcode barcode = new BarcodeEan13("089181452097");

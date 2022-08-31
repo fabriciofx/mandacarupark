@@ -26,7 +26,7 @@ package com.github.fabriciofx.mandacarupark;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TestPlaca {
+public final class TestPlaca {
     @Test
     public void valida() {
         Assert.assertEquals(new Placa("ABC1234").toString(), "ABC1234");

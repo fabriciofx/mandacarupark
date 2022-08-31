@@ -27,7 +27,7 @@ import com.github.fabriciofx.mandacarupark.Conta;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Periodo;
 
-public class ValorFixo implements Conta {
+public final class ValorFixo implements Conta {
     private final Dinheiro valor;
 
     public ValorFixo() {

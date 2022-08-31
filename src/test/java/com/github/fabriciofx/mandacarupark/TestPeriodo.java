@@ -27,7 +27,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import java.time.LocalDateTime;
 
-public class TestPeriodo {
+public final class TestPeriodo {
     @Test
     public void contemAgora() {
         final LocalDateTime agora = LocalDateTime.now();

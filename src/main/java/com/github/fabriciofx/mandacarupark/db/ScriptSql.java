@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
-public class ScriptSql implements Script {
+public final class ScriptSql implements Script {
     private final InputStream input;
 
     public ScriptSql(final String filename) {

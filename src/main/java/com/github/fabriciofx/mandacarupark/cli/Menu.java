@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Menu {
+public final class Menu {
     private final Console console;
     private final String cabecalho;
     private final List<Opcao> opcoes;

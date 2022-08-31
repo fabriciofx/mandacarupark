@@ -36,7 +36,7 @@ import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.db.Session;
 
-public class EstacionamentoSql implements Estacionamento {
+public final class EstacionamentoSql implements Estacionamento {
     private final Session session;
     private final Entradas entradas;
     private final Saidas saidas;

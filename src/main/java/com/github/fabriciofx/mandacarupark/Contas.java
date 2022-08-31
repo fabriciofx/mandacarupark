@@ -27,7 +27,7 @@ import com.github.fabriciofx.mandacarupark.conta.Cortesia;
 import java.util.Arrays;
 import java.util.List;
 
-public class Contas {
+public final class Contas {
     private final List<Conta> items;
 
     public Contas(final Conta... items) {

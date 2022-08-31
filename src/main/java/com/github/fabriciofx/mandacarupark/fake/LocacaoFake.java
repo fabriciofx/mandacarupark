@@ -30,7 +30,7 @@ import com.github.fabriciofx.mandacarupark.Locacao;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Uuid;
 
-public class LocacaoFake implements Locacao {
+public final class LocacaoFake implements Locacao {
     private final Uuid id;
     private final Placa placa;
     private final DataHora entrada;

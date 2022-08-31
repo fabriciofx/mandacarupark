@@ -32,7 +32,7 @@ import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.Uuid;
 
-public class TicketFake implements Ticket {
+public final class TicketFake implements Ticket {
     private final Pagamentos pagamentos;
     private final Uuid id;
     private final Placa placa;

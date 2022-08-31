@@ -27,7 +27,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import java.util.Arrays;
 
-public class TestCombine {
+public final class TestCombine {
     @Test
     public void combineNumeros() {
         final byte[] bytes = "123456789".getBytes();

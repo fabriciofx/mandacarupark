@@ -34,7 +34,7 @@ import java.sql.SQLFeatureNotSupportedException;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-public class DataSourceH2Mem implements DataSource {
+public final class DataSourceH2Mem implements DataSource {
     private final Text url;
     private final Driver driver;
 

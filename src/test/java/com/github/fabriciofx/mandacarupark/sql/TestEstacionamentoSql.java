@@ -43,7 +43,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import java.time.LocalDateTime;
 
-public class TestEstacionamentoSql {
+public final class TestEstacionamentoSql {
     @Test
     public void entrada() throws Exception {
         try (

@@ -33,7 +33,7 @@ import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 
-public class SaidaSql implements Saida {
+public final class SaidaSql implements Saida {
     private final Session session;
     private final Uuid id;
 

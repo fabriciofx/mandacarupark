@@ -7,7 +7,7 @@ import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.console.Console;
 
-public class OpcaoPagamento implements Opcao {
+public final class OpcaoPagamento implements Opcao {
     private final String mensagem;
     private final Console console;
     private final Estacionamento estacionamento;

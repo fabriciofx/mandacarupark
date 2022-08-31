@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.console;
 
-public class Consoles {
+public final class Consoles {
     private final Console unix;
     private final Console windows;
 

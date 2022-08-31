@@ -26,7 +26,7 @@ package com.github.fabriciofx.mandacarupark.crc;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TestCrc64 {
+public final class TestCrc64 {
     @Test
     public void numeros() {
         final byte[] bytes = "123456789".getBytes();

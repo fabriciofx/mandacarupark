@@ -29,7 +29,7 @@ import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Uuid;
 
-public class PagamentoFake implements Pagamento {
+public final class PagamentoFake implements Pagamento {
     private final Uuid id;
     private final DataHora dataHora;
     private final Dinheiro valor;

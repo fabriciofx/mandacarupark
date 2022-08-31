@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class LocacoesSql implements Locacoes {
+public final class LocacoesSql implements Locacoes {
     private final Session session;
     private final Periodo periodo;
 

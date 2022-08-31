@@ -4,7 +4,7 @@ import com.github.fabriciofx.mandacarupark.Conta;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Periodo;
 
-public class Cortesia implements Conta {
+public final class Cortesia implements Conta {
     @Override
     public boolean avalie(final Periodo periodo) {
         return true;

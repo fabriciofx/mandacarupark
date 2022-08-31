@@ -27,7 +27,7 @@ import com.github.fabriciofx.mandacarupark.text.Text;
 import com.github.fabriciofx.mandacarupark.text.TextCached;
 import java.util.Random;
 
-public class RandomName implements Text {
+public final class RandomName implements Text {
     private final Text name;
 
     public RandomName() {

@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class EntradasSql implements Entradas {
+public final class EntradasSql implements Entradas {
     private final Session session;
 
     public EntradasSql(final Session session) {

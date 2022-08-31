@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 /**
  * Verifica se uma determinada placa é válida.
  */
-public class Placa {
+public final class Placa {
     private static final Pattern PADRAO = Pattern.compile(
         "^[A-Z]{3}[0-9][0-9A-Z][0-9]{2}"
     );

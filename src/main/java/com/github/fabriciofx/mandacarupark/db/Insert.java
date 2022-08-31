@@ -27,7 +27,7 @@ import com.github.fabriciofx.mandacarupark.text.Text;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-public class Insert {
+public final class Insert {
     private final Session session;
     private final Text query;
 

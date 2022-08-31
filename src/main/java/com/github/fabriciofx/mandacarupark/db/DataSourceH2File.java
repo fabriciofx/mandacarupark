@@ -32,7 +32,7 @@ import java.sql.SQLFeatureNotSupportedException;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-public class DataSourceH2File implements DataSource {
+public final class DataSourceH2File implements DataSource {
     private final String url;
     private final Driver driver;
 

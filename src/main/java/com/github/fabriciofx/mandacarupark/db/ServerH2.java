@@ -26,7 +26,7 @@ package com.github.fabriciofx.mandacarupark.db;
 import com.github.fabriciofx.mandacarupark.text.Text;
 import java.io.IOException;
 
-public class ServerH2 implements Server {
+public final class ServerH2 implements Server {
     private final Session session;
     private final ScriptSql script;
 

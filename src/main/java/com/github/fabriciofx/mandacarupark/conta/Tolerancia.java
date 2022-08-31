@@ -27,7 +27,7 @@ import com.github.fabriciofx.mandacarupark.Conta;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Periodo;
 
-public class Tolerancia implements Conta {
+public final class Tolerancia implements Conta {
     private final int minutos;
 
     public Tolerancia() {
