@@ -31,16 +31,16 @@ import java.util.Map;
 
 public class Menu {
     private final Console console;
-    private final String header;
+    private final String cabecalho;
     private final List<Opcao> opcoes;
 
     public Menu(
         final Console console,
-        final String header,
+        final String cabecalho,
         final Opcao... opcoes
     ) {
         this.console = console;
-        this.header = header;
+        this.cabecalho = cabecalho;
         this.opcoes = Arrays.asList(opcoes);
     }
 
@@ -49,7 +49,7 @@ public class Menu {
         this.opcoes.forEach(opcao -> escolhas.put(opcao.numero(), opcao));
         this.console.clear();
         while (true) {
-            this.console.write(this.header + "\n");
+            this.console.write(this.cabecalho + "\n");
             this.opcoes.forEach(opcao -> opcao.mensagem());
             this.console.write("\nOpção: ");
             int opcao = Integer.parseInt(console.read());
