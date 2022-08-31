@@ -26,6 +26,10 @@ package com.github.fabriciofx.mandacarupark.barcode;
 import com.github.fabriciofx.mandacarupark.Uuid;
 import org.junit.Test;
 import javax.imageio.ImageIO;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Font;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -44,8 +48,18 @@ public final class TestBarcode {
     public void barcodeQr() throws IOException {
         final Barcode barcode = new QrCode(new Uuid().toString());
         final BufferedImage image = barcode.image();
-        final File file = new File("barcode-qr.jpg");
-        ImageIO.write(image, "jpg", file);
+        final Graphics2D g2d = image.createGraphics();
+        final RenderingHints rh = new RenderingHints(
+            RenderingHints.KEY_TEXT_ANTIALIASING,
+            RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB
+        );
+        g2d.setRenderingHints(rh);
+        final Font helvetica = new Font("Lucida Sans Unicode", Font.PLAIN, 13);
+        g2d.setColor(Color.black);
+        g2d.setFont(helvetica);
+        g2d.drawString("Hello World", 50, 50);
+        final File file = new File("barcode-qr.png");
+        ImageIO.write(image, "png", file);
         file.delete();
     }
 }

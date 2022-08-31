@@ -37,7 +37,7 @@ public final class QrCode implements Barcode {
     private final int height;
 
     public QrCode(final String text) {
-        this(text, 300, 150);
+        this(text, 150, 300);
     }
 
     public QrCode(final String text, final int width, final int height) {
