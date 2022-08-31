@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.barcode;
 
 import java.awt.image.BufferedImage;
 

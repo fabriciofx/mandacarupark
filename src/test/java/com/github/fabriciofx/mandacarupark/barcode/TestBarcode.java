@@ -23,7 +23,6 @@
  */
 package com.github.fabriciofx.mandacarupark.barcode;
 
-import com.github.fabriciofx.mandacarupark.Barcode;
 import org.junit.Test;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
