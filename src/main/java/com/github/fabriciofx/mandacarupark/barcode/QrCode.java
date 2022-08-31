@@ -23,29 +23,48 @@
  */
 package com.github.fabriciofx.mandacarupark.barcode;
 
-import com.github.fabriciofx.mandacarupark.Uuid;
-import org.junit.Test;
-import javax.imageio.ImageIO;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.oned.EAN13Writer;
+import com.google.zxing.qrcode.QRCodeWriter;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-public final class TestBarcode {
-    @Test
-    public void barcodeEan13() throws IOException {
-        final Barcode barcode = new BarcodeEan13("089181452097");
-        final BufferedImage image = barcode.image();
-        final File file = new File("barcode-ean13.jpg");
-        ImageIO.write(image, "jpg", file);
-        file.delete();
+public final class QrCode implements Barcode {
+    private final String text;
+    private final int width;
+    private final int height;
+
+    public QrCode(final String text) {
+        this(text, 300, 150);
     }
 
-    @Test
-    public void barcodeQr() throws IOException {
-        final Barcode barcode = new QrCode(new Uuid().toString());
-        final BufferedImage image = barcode.image();
-        final File file = new File("barcode-qr.jpg");
-        ImageIO.write(image, "jpg", file);
-        file.delete();
+    public QrCode(final String text, final int width, final int height) {
+        this.text = text;
+        this.width = width;
+        this.height = height;
+    }
+
+    @Override
+    public BufferedImage image() {
+        final QRCodeWriter writer = new QRCodeWriter();
+        final BitMatrix bitMatrix;
+        try {
+            bitMatrix = writer.encode(
+                this.text,
+                BarcodeFormat.QR_CODE,
+                this.width,
+                this.height
+            );
+        } catch (final WriterException ex) {
+            throw new RuntimeException(ex);
+        }
+        return MatrixToImageWriter.toBufferedImage(bitMatrix);
+    }
+
+    @Override
+    public String text() {
+        return this.text;
     }
 }
