@@ -23,6 +23,8 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
+import com.github.fabriciofx.mandacarupark.dados.Dados;
+
 public interface Entrada {
     Uuid id();
     Dados sobre();

@@ -21,43 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.fake;
+package com.github.fabriciofx.mandacarupark.dados;
 
-import com.github.fabriciofx.mandacarupark.dados.Dados;
-import com.github.fabriciofx.mandacarupark.DataHora;
-import com.github.fabriciofx.mandacarupark.Dinheiro;
-import com.github.fabriciofx.mandacarupark.Locacao;
-import com.github.fabriciofx.mandacarupark.Placa;
-import com.github.fabriciofx.mandacarupark.Uuid;
-
-public final class LocacaoFake implements Locacao {
-    private final Uuid id;
-    private final Placa placa;
-    private final DataHora entrada;
-    private final DataHora saida;
-    private final Dinheiro valor;
-
-    public LocacaoFake(
-        final Uuid id,
-        final Placa placa,
-        final DataHora entrada,
-        final DataHora saida,
-        final Dinheiro valor
-    ) {
-        this.id = id;
-        this.placa = placa;
-        this.entrada = entrada;
-        this.saida = saida;
-        this.valor = valor;
-    }
-
-    @Override
-    public Dados sobre() {
-        return new Dados(
-            "placa", this.placa,
-            "entrada", this.entrada,
-            "saida", this.saida,
-            "valor", this.valor
-        );
-    }
-}
+/**
+ * Dados.
+ *
+ * @since 0.0.1
+ */

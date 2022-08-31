@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.sql;
 
-import com.github.fabriciofx.mandacarupark.Dados;
+import com.github.fabriciofx.mandacarupark.dados.Dados;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Locacao;
