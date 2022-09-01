@@ -50,20 +50,31 @@ public final class Impressora {
             RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB
         );
         g2d.setRenderingHints(rh);
-        final Font helvetica = new Font("Lucida Sans Unicode", Font.PLAIN, 13);
         g2d.setColor(Color.black);
-        g2d.setFont(helvetica);
-        g2d.drawString(
-            new Sprintf("Placa          %s", placa.toString()).asString(),
+        final Font helvetica7 = new Font("Lucida Sans Unicode", Font.PLAIN, 7);
+        g2d.setFont(helvetica7);
+        drawString(
+            g2d,
+            ticket.id().toString(),
+            5,
+            220
+        );
+        final Font helvetica13 = new Font("Lucida Sans Unicode", Font.PLAIN, 13);
+        g2d.setFont(helvetica13);
+        drawString(
+            g2d,
+            new Sprintf("Placa           %s", placa.toString()).asString(),
             10,
             250
         );
-        g2d.drawString(
+        drawString(
+            g2d,
             new Sprintf("Data      %s", dataHora.data()).asString(),
             10,
             263
         );
-        g2d.drawString(
+        drawString(
+            g2d,
             new Sprintf("Hora           %s", dataHora.hora()).asString(),
             10,
             276
@@ -72,6 +83,19 @@ public final class Impressora {
             ImageIO.write(image, "png", arquivo);
         } catch (final IOException ex) {
             throw new RuntimeException(ex);
+        }
+    }
+
+    private void drawString(
+        final Graphics2D g2d,
+        final String text,
+        final int x,
+        final int y
+    ) {
+        int newY = y;
+        for (final String line : text.split("\n")) {
+            g2d.drawString(line, x, newY);
+            newY = newY + g2d.getFontMetrics().getHeight();
         }
     }
 }

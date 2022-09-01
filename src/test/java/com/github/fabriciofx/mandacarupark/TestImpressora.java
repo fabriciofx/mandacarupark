@@ -27,15 +27,19 @@ import com.github.fabriciofx.mandacarupark.fake.PagamentosFake;
 import com.github.fabriciofx.mandacarupark.fake.TicketFake;
 import org.junit.Assert;
 import org.junit.Test;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 
 public class TestImpressora {
     @Test
     public void impresso() throws IOException {
-        final File file = new File("ticket-correto.png");
-        final File correto = new File("ticket-correto.png");
+        final InputStream correto = Thread.currentThread()
+            .getContextClassLoader()
+            .getResourceAsStream("ticket-correto.png");
+        final File file = new File("ticket.png");
         new Impressora().imprima(
             new TicketFake(
                 new PagamentosFake(),
@@ -46,8 +50,21 @@ public class TestImpressora {
             file
         );
         final byte[] atual = Files.readAllBytes(file.toPath());
-        final byte[] esperado = Files.readAllBytes(correto.toPath());
+        final byte[] esperado = toBytes(correto);
         file.delete();
         Assert.assertArrayEquals(esperado, atual);
+    }
+
+    private byte[] toBytes(final InputStream stream) throws IOException {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final byte[] buf = new byte[1024];
+        while (true) {
+            final int read = stream.read(buf);
+            if (read < 0) {
+                break;
+            }
+            baos.write(buf, 0, read);
+        }
+        return baos.toByteArray();
     }
 }
