@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.barcode;
+package com.github.fabriciofx.mandacarupark.code;
 
 import com.github.fabriciofx.mandacarupark.Uuid;
 import org.junit.Test;
@@ -34,20 +34,20 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public final class TestBarcode {
+public final class TestCode {
     @Test
-    public void barcodeEan13() throws IOException {
-        final Barcode barcode = new BarcodeEan13("089181452097");
-        final BufferedImage image = barcode.image();
+    public void codebarEan13() throws IOException {
+        final Code barcode = new CodeBarEan13("089181452097");
+        final BufferedImage image = barcode.imagem();
         final File file = new File("barcode-ean13.jpg");
         ImageIO.write(image, "jpg", file);
         file.delete();
     }
 
     @Test
-    public void barcodeQr() throws IOException {
-        final Barcode barcode = new BarcodeQrCode(new Uuid().toString());
-        final BufferedImage image = barcode.image();
+    public void codeQr() throws IOException {
+        final Code barcode = new CodeQr(new Uuid().toString());
+        final BufferedImage image = barcode.imagem();
         final Graphics2D g2d = image.createGraphics();
         final RenderingHints rh = new RenderingHints(
             RenderingHints.KEY_TEXT_ANTIALIASING,

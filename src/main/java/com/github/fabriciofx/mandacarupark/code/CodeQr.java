@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.barcode;
+package com.github.fabriciofx.mandacarupark.code;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -33,31 +33,31 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Map;
 
-public final class BarcodeQrCode implements Barcode {
-    private final String text;
-    private final int width;
-    private final int height;
+public final class CodeQr implements Code {
+    private final String texto;
+    private final int largura;
+    private final int altura;
 
-    public BarcodeQrCode(final String text) {
-        this(text, 150, 300);
+    public CodeQr(final String texto) {
+        this(texto, 150, 300);
     }
 
-    public BarcodeQrCode(final String text, final int width, final int height) {
-        this.text = text;
-        this.width = width;
-        this.height = height;
+    public CodeQr(final String texto, final int largura, final int altura) {
+        this.texto = texto;
+        this.largura = largura;
+        this.altura = altura;
     }
 
     @Override
-    public BufferedImage image() {
+    public BufferedImage imagem() {
         final QRCodeWriter writer = new QRCodeWriter();
         final BitMatrix bitMatrix;
         try {
             bitMatrix = writer.encode(
-                this.text,
+                this.texto,
                 BarcodeFormat.QR_CODE,
-                this.width,
-                this.height,
+                this.largura,
+                this.altura,
                 Map.of(EncodeHintType.MARGIN, 0)
             );
         } catch (final WriterException ex) {
@@ -67,8 +67,8 @@ public final class BarcodeQrCode implements Barcode {
     }
 
     @Override
-    public String text() {
-        return this.text;
+    public String texto() {
+        return this.texto;
     }
 
     /*

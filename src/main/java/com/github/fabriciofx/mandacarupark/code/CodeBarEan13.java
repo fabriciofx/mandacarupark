@@ -21,46 +21,47 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.imagem;
+package com.github.fabriciofx.mandacarupark.code;
 
-import com.github.fabriciofx.mandacarupark.barcode.BarcodeQrCode;
-import java.awt.Graphics2D;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.oned.EAN13Writer;
 import java.awt.image.BufferedImage;
 
-public final class ImagemQrCode implements Imagem {
-    private final Imagem origin;
+public final class CodeBarEan13 implements Code {
     private final String texto;
-    private final int x;
-    private final int y;
     private final int largura;
     private final int altura;
 
-    public ImagemQrCode(
-        final Imagem imagem,
+    public CodeBarEan13(final String texto) {
+        this(texto, 300, 150);
+    }
+
+    public CodeBarEan13(
         final String texto,
-        final int x,
-        final int y,
         final int largura,
         final int altura
     ) {
-        this.origin = imagem;
         this.texto = texto;
-        this.x = x;
-        this.y = y;
         this.largura = largura;
         this.altura = altura;
     }
 
     @Override
     public BufferedImage imagem() {
-        final BufferedImage imagem = this.origin.imagem();
-        final BufferedImage qrcode = new BarcodeQrCode(
+        final EAN13Writer writer = new EAN13Writer();
+        final BitMatrix bitMatrix = writer.encode(
             this.texto,
+            BarcodeFormat.EAN_13,
             this.largura,
             this.altura
-        ).image();
-        final Graphics2D g2d = (Graphics2D) imagem.getGraphics();
-        g2d.drawImage(qrcode, this.x, this.y, null);
-        return imagem;
+        );
+        return MatrixToImageWriter.toBufferedImage(bitMatrix);
+    }
+
+    @Override
+    public String texto() {
+        return this.texto;
     }
 }

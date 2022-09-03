@@ -21,11 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.barcode;
+package com.github.fabriciofx.mandacarupark.imagem;
 
+import com.github.fabriciofx.mandacarupark.code.CodeQr;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-public interface Barcode {
-    BufferedImage image();
-    String text();
+public final class ImagemCodeQr implements Imagem {
+    private final Imagem origin;
+    private final String texto;
+    private final int x;
+    private final int y;
+    private final int largura;
+    private final int altura;
+
+    public ImagemCodeQr(
+        final Imagem imagem,
+        final String texto,
+        final int x,
+        final int y,
+        final int largura,
+        final int altura
+    ) {
+        this.origin = imagem;
+        this.texto = texto;
+        this.x = x;
+        this.y = y;
+        this.largura = largura;
+        this.altura = altura;
+    }
+
+    @Override
+    public BufferedImage imagem() {
+        final BufferedImage imagem = this.origin.imagem();
+        final BufferedImage qrcode = new CodeQr(
+            this.texto,
+            this.largura,
+            this.altura
+        ).imagem();
+        final Graphics2D g2d = (Graphics2D) imagem.getGraphics();
+        g2d.drawImage(qrcode, this.x, this.y, null);
+        return imagem;
+    }
 }

@@ -21,43 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.barcode;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.oned.EAN13Writer;
-import java.awt.image.BufferedImage;
-
-public final class BarcodeEan13 implements Barcode {
-    private final String text;
-    private final int width;
-    private final int height;
-
-    public BarcodeEan13(final String text) {
-        this(text, 300, 150);
-    }
-
-    public BarcodeEan13(final String text, final int width, final int height) {
-        this.text = text;
-        this.width = width;
-        this.height = height;
-    }
-
-    @Override
-    public BufferedImage image() {
-        final EAN13Writer writer = new EAN13Writer();
-        final BitMatrix bitMatrix = writer.encode(
-            this.text,
-            BarcodeFormat.EAN_13,
-            this.width,
-            this.height
-        );
-        return MatrixToImageWriter.toBufferedImage(bitMatrix);
-    }
-
-    @Override
-    public String text() {
-        return this.text;
-    }
-}
+/**
+ * Barcode.
+ *
+ * @since 0.0.1
+ */
+package com.github.fabriciofx.mandacarupark.code;

@@ -21,9 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.github.fabriciofx.mandacarupark.code;
 
-/**
- * Barcode.
- *
- * @since 0.0.1
- */package com.github.fabriciofx.mandacarupark.barcode;
+import java.awt.image.BufferedImage;
+
+public interface Code {
+    BufferedImage imagem();
+    String texto();
+}

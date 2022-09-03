@@ -89,7 +89,7 @@ public final class TestImagem {
             .getResourceAsStream(filename);
         final File file = new File(filename);
         new ImagemParaArquivo(
-            new ImagemQrCode(
+            new ImagemCodeQr(
                 new ImagemPapel(150, 300),
                 new Uuid("8c878e6f-ee13-4a37-a208-7510c2638944").toString(),
                 0,
@@ -145,7 +145,7 @@ public final class TestImagem {
         );
         new ImagemParaArquivo(
             new ImagemTicket(
-                new ImagemQrCode(
+                new ImagemCodeQr(
                     new ImagemTexto(
                         new ImagemPapel(150, 300),
                         new Font("Lucida Sans Unicode", Font.PLAIN, 13),
