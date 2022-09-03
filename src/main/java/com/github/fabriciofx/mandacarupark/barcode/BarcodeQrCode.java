@@ -24,11 +24,14 @@
 package com.github.fabriciofx.mandacarupark.barcode;
 
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.Map;
 
 public final class BarcodeQrCode implements Barcode {
     private final String text;
@@ -54,16 +57,43 @@ public final class BarcodeQrCode implements Barcode {
                 this.text,
                 BarcodeFormat.QR_CODE,
                 this.width,
-                this.height
+                this.height,
+                Map.of(EncodeHintType.MARGIN, 0)
             );
         } catch (final WriterException ex) {
             throw new RuntimeException(ex);
         }
-        return MatrixToImageWriter.toBufferedImage(bitMatrix);
+        return crop(MatrixToImageWriter.toBufferedImage(bitMatrix));
     }
 
     @Override
     public String text() {
         return this.text;
+    }
+
+    /*
+     * Mesmo com a margem do QRcode configurada para 0, ainda assim há uma
+     * grande margem branca na imagem do QRcode. Assim, é preciso cortar
+     * "crop" a imagem, para diminuir esta margem.
+     */
+    private BufferedImage crop(final BufferedImage image) {
+        // A posição Y vai para 25% (1/4) da largura
+        final int newY = (int) (image.getWidth() * 0.25);
+        // A altura vai para 66% (1/3) da altura anterior
+        final int newHeight = (int) (image.getHeight() * 0.66);
+        final BufferedImage sub = image.getSubimage(
+            0,
+            newY,
+            image.getWidth(),
+            newHeight
+        );
+        final BufferedImage crop = new BufferedImage(
+            sub.getWidth(),
+            sub.getHeight(),
+            BufferedImage.TYPE_INT_RGB
+        );
+        final Graphics2D g2dCrop = crop.createGraphics();
+        g2dCrop.drawImage(sub, 0, 0, null);
+        return crop;
     }
 }
