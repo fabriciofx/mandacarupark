@@ -47,10 +47,10 @@ public final class TestImagem {
             .getContextClassLoader()
             .getResourceAsStream(filename);
         final File file = new File(filename);
-        new ImagemToFile(
+        new ImagemParaArquivo(
             new ImagemPapel(150, 300),
             filename
-        ).save();
+        ).salva();
         final byte[] atual = Files.readAllBytes(file.toPath());
         final byte[] esperado = toBytes(correto);
         file.delete();
@@ -64,7 +64,7 @@ public final class TestImagem {
             .getContextClassLoader()
             .getResourceAsStream(filename);
         final File file = new File(filename);
-        new ImagemToFile(
+        new ImagemParaArquivo(
             new ImagemTexto(
                 new ImagemPapel(150, 300),
                 new Font("Lucida Sans Unicode", Font.PLAIN, 13),
@@ -74,7 +74,7 @@ public final class TestImagem {
                 26
             ),
             filename
-        ).save();
+        ).salva();
         final byte[] atual = Files.readAllBytes(file.toPath());
         final byte[] esperado = toBytes(correto);
         file.delete();
@@ -88,7 +88,7 @@ public final class TestImagem {
             .getContextClassLoader()
             .getResourceAsStream(filename);
         final File file = new File(filename);
-        new ImagemToFile(
+        new ImagemParaArquivo(
             new ImagemQrCode(
                 new ImagemPapel(150, 300),
                 new Uuid("8c878e6f-ee13-4a37-a208-7510c2638944").toString(),
@@ -98,7 +98,7 @@ public final class TestImagem {
                 150
             ),
             filename
-        ).save();
+        ).salva();
         final byte[] atual = Files.readAllBytes(file.toPath());
         final byte[] esperado = toBytes(correto);
         file.delete();
@@ -112,7 +112,7 @@ public final class TestImagem {
             .getContextClassLoader()
             .getResourceAsStream(filename);
         final File file = new File(filename);
-        new ImagemToFile(
+        new ImagemParaArquivo(
             new ImagemTicket(
                 new ImagemPapel(150, 300),
                 new TicketFake(
@@ -123,7 +123,7 @@ public final class TestImagem {
                 )
             ),
             filename
-        ).save();
+        ).salva();
         final byte[] atual = Files.readAllBytes(file.toPath());
         final byte[] esperado = toBytes(correto);
         file.delete();
@@ -143,7 +143,7 @@ public final class TestImagem {
             new Placa("ABC1234"),
             new DataHora("2022-07-21 12:01:15")
         );
-        new ImagemToFile(
+        new ImagemParaArquivo(
             new ImagemTicket(
                 new ImagemQrCode(
                     new ImagemTexto(
@@ -163,7 +163,7 @@ public final class TestImagem {
                 ticket
             ),
             filename
-        ).save();
+        ).salva();
         final byte[] atual = Files.readAllBytes(file.toPath());
         final byte[] esperado = toBytes(correto);
         file.delete();

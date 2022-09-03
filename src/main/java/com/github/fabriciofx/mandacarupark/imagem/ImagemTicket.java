@@ -45,7 +45,11 @@ public final class ImagemTicket implements Imagem {
         final Placa placa = ticket.sobre().valor("placa");
         final DataHora dataHora = ticket.sobre().valor("dataHora");
         final Font helvetica7 = new Font("Lucida Sans Unicode", Font.PLAIN, 7);
-        final Font helvetica13 = new Font("Lucida Sans Unicode", Font.PLAIN, 13);
+        final Font helvetica13 = new Font(
+            "Lucida Sans Unicode",
+            Font.PLAIN,
+            13
+        );
         final BufferedImage imagem = new ImagemTexto(
             this.origin,
             helvetica7,
@@ -63,7 +67,7 @@ public final class ImagemTicket implements Imagem {
             250
         ).imagem();
         final BufferedImage imagem3 = new ImagemTexto(
-            () ->  imagem2,
+            () -> imagem2,
             helvetica13,
             Color.BLACK,
             new Sprintf("Data       %s", dataHora.data()).asString(),
@@ -71,7 +75,7 @@ public final class ImagemTicket implements Imagem {
             263
         ).imagem();
         final BufferedImage imagem4 = new ImagemTexto(
-            () ->  imagem3,
+            () -> imagem3,
             helvetica13,
             Color.BLACK,
             new Sprintf("Hora           %s", dataHora.hora()).asString(),

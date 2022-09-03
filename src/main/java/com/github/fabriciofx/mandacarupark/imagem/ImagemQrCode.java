@@ -32,23 +32,23 @@ public final class ImagemQrCode implements Imagem {
     private final String texto;
     private final int x;
     private final int y;
-    private final int width;
-    private final int height;
+    private final int largura;
+    private final int altura;
 
     public ImagemQrCode(
         final Imagem imagem,
         final String texto,
         final int x,
         final int y,
-        final int width,
-        final int height
+        final int largura,
+        final int altura
     ) {
         this.origin = imagem;
         this.texto = texto;
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.height = height;
+        this.largura = largura;
+        this.altura = altura;
     }
 
     @Override
@@ -56,8 +56,8 @@ public final class ImagemQrCode implements Imagem {
         final BufferedImage imagem = this.origin.imagem();
         final BufferedImage qrcode = new BarcodeQrCode(
             this.texto,
-            this.width,
-            this.height
+            this.largura,
+            this.altura
         ).image();
         final Graphics2D g2d = (Graphics2D) imagem.getGraphics();
         g2d.drawImage(qrcode, this.x, this.y, null);

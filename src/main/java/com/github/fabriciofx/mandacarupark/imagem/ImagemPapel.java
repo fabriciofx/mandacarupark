@@ -29,24 +29,24 @@ import java.awt.image.BufferedImage;
 
 public final class ImagemPapel implements Imagem {
     private final Color cor;
-    private final int width;
-    private final int height;
+    private final int largura;
+    private final int altura;
 
-    public ImagemPapel(final int width, final int height) {
-        this(Color.WHITE, width, height);
+    public ImagemPapel(final int largura, final int altura) {
+        this(Color.WHITE, largura, altura);
     }
 
-    public ImagemPapel(final Color cor, final int width, final int height) {
+    public ImagemPapel(final Color cor, final int largura, final int altura) {
         this.cor = cor;
-        this.width = width;
-        this.height = height;
+        this.largura = largura;
+        this.altura = altura;
     }
 
     @Override
     public BufferedImage imagem() {
         final BufferedImage imagem = new BufferedImage(
-            this.width,
-            this.height,
+            this.largura,
+            this.altura,
             BufferedImage.TYPE_INT_RGB
         );
         final Graphics2D g2d = imagem.createGraphics();

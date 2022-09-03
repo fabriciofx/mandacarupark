@@ -31,7 +31,7 @@ import java.awt.image.BufferedImage;
 
 public final class ImagemTexto implements Imagem {
     private final Imagem origin;
-    private final Font fonte;
+    private final Font tipo;
     private final Color color;
     private final String texto;
     private final int x;
@@ -39,14 +39,14 @@ public final class ImagemTexto implements Imagem {
 
     public ImagemTexto(
         final Imagem imagem,
-        final Font fonte,
+        final Font tipo,
         final Color cor,
         final String texto,
         final int x,
         final int y
     ) {
         this.origin = imagem;
-        this.fonte = fonte;
+        this.tipo = tipo;
         this.color = cor;
         this.texto = texto;
         this.x = x;
@@ -62,7 +62,7 @@ public final class ImagemTexto implements Imagem {
             RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB
         );
         g2d.setRenderingHints(rh);
-        g2d.setFont(this.fonte);
+        g2d.setFont(this.tipo);
         g2d.setColor(this.color);
         drawString(g2d, this.texto, this.x, this.y);
         return imagem;

@@ -27,16 +27,16 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 
-public final class ImagemToFile {
+public final class ImagemParaArquivo {
     private final Imagem origin;
     private final String arquivo;
 
-    public ImagemToFile(final Imagem imagem, final String arquivo) {
+    public ImagemParaArquivo(final Imagem imagem, final String arquivo) {
         this.origin = imagem;
         this.arquivo = arquivo;
     }
 
-    public void save() {
+    public void salva() {
         try {
             ImageIO.write(this.origin.imagem(), "png", new File(this.arquivo));
         } catch (IOException e) {
