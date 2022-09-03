@@ -36,8 +36,12 @@ import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.conta.DomingoGratis;
 import com.github.fabriciofx.mandacarupark.conta.Tolerancia;
 import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
+import com.github.fabriciofx.mandacarupark.imagem.ImagemParaArquivo;
 import org.junit.Assert;
 import org.junit.Test;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 
 public final class TestEstacionamentoFake {
@@ -229,5 +233,26 @@ public final class TestEstacionamentoFake {
             sb.toString().contains("placa=ABC1234") &&
             sb.toString().contains("dataHora=2022-08-02 10:30")
         );
+    }
+
+    @Test
+    public void imagem() throws IOException {
+        final String arquivo = "ticket-arquivo.png";
+        final Estacionamento estacionamento = new EstacionamentoFake(
+            new Contas(
+                new DomingoGratis(),
+                new Tolerancia(),
+                new ValorFixo(new Dinheiro("5.00"))
+            )
+        );
+        final Ticket ticket = estacionamento.entrada(
+            new Placa("ABC1234"),
+            new DataHora(LocalDateTime.of(2022, 8, 2, 10, 30))
+        );
+        new ImagemParaArquivo(
+            ticket.imagem(),
+            arquivo
+        ).salva();
+        Files.deleteIfExists(new File(arquivo).toPath());
     }
 }

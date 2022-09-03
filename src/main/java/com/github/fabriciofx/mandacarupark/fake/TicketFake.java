@@ -31,6 +31,13 @@ import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.Uuid;
+import com.github.fabriciofx.mandacarupark.imagem.Imagem;
+import com.github.fabriciofx.mandacarupark.imagem.ImagemCodeQr;
+import com.github.fabriciofx.mandacarupark.imagem.ImagemPapel;
+import com.github.fabriciofx.mandacarupark.imagem.ImagemTexto;
+import com.github.fabriciofx.mandacarupark.imagem.ImagemTicket;
+import java.awt.Color;
+import java.awt.Font;
 
 public final class TicketFake implements Ticket {
     private final Pagamentos pagamentos;
@@ -91,6 +98,28 @@ public final class TicketFake implements Ticket {
             "placa", this.placa,
             "dataHora", this.dataHora,
             "valor", valor
+        );
+    }
+
+    @Override
+    public Imagem imagem() {
+        return new ImagemTicket(
+            new ImagemCodeQr(
+                new ImagemTexto(
+                    new ImagemPapel(150, 300),
+                    new Font("Lucida Sans Unicode", Font.PLAIN, 13),
+                    Color.BLACK,
+                    "MANDACARUPARK",
+                    12,
+                    26
+                ),
+                this.id.toString(),
+                10,
+                50,
+                125,
+                200
+            ),
+            this
         );
     }
 }

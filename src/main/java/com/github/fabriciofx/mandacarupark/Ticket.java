@@ -24,6 +24,7 @@
 package com.github.fabriciofx.mandacarupark;
 
 import com.github.fabriciofx.mandacarupark.dados.Dados;
+import com.github.fabriciofx.mandacarupark.imagem.Imagem;
 
 /**
  * Ticket do estacionamento.
@@ -48,4 +49,10 @@ public interface Ticket {
      * @return Os dados do ticket.
      */
     Dados sobre();
+
+    /**
+     * Obtém uma imagem do ticket.
+     * @return Uma imagem do ticket.
+     */
+    Imagem imagem();
 }

@@ -31,7 +31,14 @@ import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.db.Select;
 import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.imagem.Imagem;
+import com.github.fabriciofx.mandacarupark.imagem.ImagemCodeQr;
+import com.github.fabriciofx.mandacarupark.imagem.ImagemPapel;
+import com.github.fabriciofx.mandacarupark.imagem.ImagemTexto;
+import com.github.fabriciofx.mandacarupark.imagem.ImagemTicket;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
+import java.awt.Color;
+import java.awt.Font;
 import java.sql.ResultSet;
 
 public final class TicketSql implements Ticket {
@@ -107,5 +114,27 @@ public final class TicketSql implements Ticket {
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    @Override
+    public Imagem imagem() {
+        return new ImagemTicket(
+            new ImagemCodeQr(
+                new ImagemTexto(
+                    new ImagemPapel(150, 300),
+                    new Font("Lucida Sans Unicode", Font.PLAIN, 13),
+                    Color.BLACK,
+                    "MANDACARUPARK",
+                    12,
+                    26
+                ),
+                this.id.toString(),
+                10,
+                50,
+                125,
+                200
+            ),
+            this
+        );
     }
 }
