@@ -29,6 +29,7 @@ import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.fake.PagamentosFake;
 import com.github.fabriciofx.mandacarupark.fake.TicketFake;
+import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import org.junit.Assert;
 import org.junit.Test;
 import java.awt.Color;
@@ -118,7 +119,7 @@ public final class TestImagem {
                 new TicketFake(
                     new PagamentosFake(),
                     new Uuid("8c878e6f-ee13-4a37-a208-7510c2638944"),
-                    new Placa("ABC1234"),
+                    new PlacaOf("ABC1234"),
                     new DataHora("2022-07-21 12:01:15")
                 )
             ),
@@ -140,7 +141,7 @@ public final class TestImagem {
         final Ticket ticket = new TicketFake(
             new PagamentosFake(),
             new Uuid("8c878e6f-ee13-4a37-a208-7510c2638944"),
-            new Placa("ABC1234"),
+            new PlacaOf("ABC1234"),
             new DataHora("2022-07-21 12:01:15")
         );
         new ImagemParaArquivo(

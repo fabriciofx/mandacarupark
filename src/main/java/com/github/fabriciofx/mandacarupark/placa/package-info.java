@@ -21,8 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
 
-public interface Placa {
-    String numero();
-}
+/**
+ * Placa.
+ *
+ * @since 0.0.1
+ */
+package com.github.fabriciofx.mandacarupark.placa;

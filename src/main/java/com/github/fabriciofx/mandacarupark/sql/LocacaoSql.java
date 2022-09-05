@@ -31,6 +31,7 @@ import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.dados.Dados;
 import com.github.fabriciofx.mandacarupark.db.Select;
 import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 
@@ -58,7 +59,7 @@ public final class LocacaoSql implements Locacao {
             final DataHora entrada, saida;
             final Dinheiro valor;
             if (rset.next()) {
-                placa = new Placa(rset.getString(1));
+                placa = new PlacaOf(rset.getString(1));
                 entrada = new DataHora(rset.getString(2));
                 saida = new DataHora(rset.getString(3));
                 valor = new Dinheiro(rset.getString(4));

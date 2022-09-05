@@ -39,6 +39,7 @@ import com.github.fabriciofx.mandacarupark.db.ScriptSql;
 import com.github.fabriciofx.mandacarupark.db.Server;
 import com.github.fabriciofx.mandacarupark.db.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import org.junit.Assert;
 import org.junit.Test;
 import java.time.LocalDateTime;
@@ -65,7 +66,7 @@ public final class TestEstacionamentoSql {
                     new ValorFixo(new Dinheiro("5.00"))
                 )
             );
-            final Placa placa = new Placa("ABC1234");
+            final Placa placa = new PlacaOf("ABC1234");
             final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
             final Ticket ticket = estacionamento.entrada(
                 placa,
@@ -100,7 +101,7 @@ public final class TestEstacionamentoSql {
                     new ValorFixo(new Dinheiro("5.00"))
                 )
             );
-            final Placa placa = new Placa("ABC1234");
+            final Placa placa = new PlacaOf("ABC1234");
             final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
             final Ticket ticket = estacionamento.entrada(
                 placa,
@@ -144,7 +145,7 @@ public final class TestEstacionamentoSql {
                     new ValorFixo(new Dinheiro("5.00"))
                 )
             );
-            final Placa placa = new Placa("ABC1234");
+            final Placa placa = new PlacaOf("ABC1234");
             final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
             final Ticket ticket = estacionamento.entrada(
                 placa,
@@ -188,7 +189,7 @@ public final class TestEstacionamentoSql {
                     new ValorFixo(new Dinheiro("5.00"))
                 )
             );
-            final Placa placa = new Placa("ABC1234");
+            final Placa placa = new PlacaOf("ABC1234");
             final LocalDateTime dateTime = LocalDateTime.of(
                 2022, 7, 31, 10, 30
             );
@@ -237,7 +238,7 @@ public final class TestEstacionamentoSql {
                             new ValorFixo(new Dinheiro("5.00"))
                         )
                     );
-                    final Placa placa = new Placa("ABC1234");
+                    final Placa placa = new PlacaOf("ABC1234");
                     final LocalDateTime agora = LocalDateTime.now();
                     final Ticket ticket = estacionamento.entrada(
                         placa,

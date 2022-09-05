@@ -21,8 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.placa;
 
-public interface Placa {
-    String numero();
+import com.github.fabriciofx.mandacarupark.Placa;
+
+public final class NoNulls implements Placa {
+    private final Placa origin;
+
+    public NoNulls(final Placa placa) {
+        this.origin = placa;
+    }
+
+    @Override
+    public String numero() {
+        if (this.origin == null) {
+            throw new IllegalArgumentException(
+                "NULL ao invés de uma placa válida"
+            );
+        }
+        final String numero = this.origin.numero();
+        if (numero == null) {
+            throw new IllegalStateException(
+                "NULL ao invés de um número de placa válido"
+            );
+        }
+        return numero;
+    }
 }

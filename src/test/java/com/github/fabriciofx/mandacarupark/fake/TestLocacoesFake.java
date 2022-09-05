@@ -38,6 +38,7 @@ import com.github.fabriciofx.mandacarupark.conta.DomingoGratis;
 import com.github.fabriciofx.mandacarupark.conta.Tolerancia;
 import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
 import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
+import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import org.junit.Test;
 import java.time.LocalDateTime;
 
@@ -58,7 +59,7 @@ public final class TestLocacoesFake {
             )
         );
         // Locação 1
-        Placa placa = new Placa("ABC1234");
+        Placa placa = new PlacaOf("ABC1234");
         final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
         Ticket ticket = estacionamento.entrada(placa, new DataHora(dateTime));
         ticket = estacionamento.pagamento(
@@ -71,7 +72,7 @@ public final class TestLocacoesFake {
             new DataHora(dateTime.plusMinutes(70))
         );
         // Locação 2
-        placa = new Placa("DEF5678");
+        placa = new PlacaOf("DEF5678");
         ticket = estacionamento.entrada(
             placa,
             new DataHora(dateTime.plusMinutes(1))
@@ -86,7 +87,7 @@ public final class TestLocacoesFake {
             new DataHora(dateTime.plusMinutes(45))
         );
         // Locação 3
-        placa = new Placa("GHI9012");
+        placa = new PlacaOf("GHI9012");
         ticket = estacionamento.entrada(
             placa,
             new DataHora(dateTime.plusMinutes(2))

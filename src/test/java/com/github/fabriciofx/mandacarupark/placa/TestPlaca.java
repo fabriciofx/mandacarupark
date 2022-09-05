@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.placa;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -29,12 +29,34 @@ import org.junit.Test;
 public final class TestPlaca {
     @Test
     public void valida() {
-        Assert.assertEquals(new Placa("ABC1234").toString(), "ABC1234");
+        Assert.assertEquals(new PlacaOf("ABC1234").numero(), "ABC1234");
     }
 
     @Test
     public void mercosul() {
-        Assert.assertEquals(new Placa("ABC1K34").toString(), "ABC1K34");
+        Assert.assertEquals(new PlacaOf("ABC1K34").numero(), "ABC1K34");
+    }
+
+    @Test
+    public void numeroNoNulls() {
+        Assert.assertThrows(
+            "NULL ao invés de um número de placa válido",
+            IllegalStateException.class,
+            () -> {
+                new NoNulls(new PlacaOf(null)).numero();
+            }
+        );
+    }
+
+    @Test
+    public void placaNoNulls() {
+        Assert.assertThrows(
+            "NULL ao invés de uma placa válida",
+            IllegalArgumentException.class,
+            () -> {
+                new NoNulls(null).numero();
+            }
+        );
     }
 
     @Test
@@ -43,7 +65,7 @@ public final class TestPlaca {
             "Placa: número inválido!",
             RuntimeException.class,
             () -> {
-                new Placa("ABC123J").toString();
+                new Restricao(new PlacaOf("ABC123J")).numero();
             }
         );
     }

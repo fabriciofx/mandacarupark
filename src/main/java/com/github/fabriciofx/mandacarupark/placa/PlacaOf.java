@@ -21,8 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.placa;
 
-public interface Placa {
-    String numero();
+import com.github.fabriciofx.mandacarupark.Placa;
+import java.util.Objects;
+
+public final class PlacaOf implements Placa {
+    private final String numero;
+
+    public PlacaOf(final String numero) {
+        this.numero = numero;
+    }
+
+    @Override
+    public String numero() {
+        return this.numero;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        return this == obj || obj instanceof PlacaOf &&
+            PlacaOf.class.cast(obj).numero.equals(this.numero);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.numero);
+    }
+
+    @Override
+    public String toString() {
+        return this.numero;
+    }
 }
