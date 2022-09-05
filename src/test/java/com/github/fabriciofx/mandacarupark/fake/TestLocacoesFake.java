@@ -37,6 +37,7 @@ import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.conta.DomingoGratis;
 import com.github.fabriciofx.mandacarupark.conta.Tolerancia;
 import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
+import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 import org.junit.Test;
 import java.time.LocalDateTime;
 
@@ -103,7 +104,7 @@ public final class TestLocacoesFake {
             entradas,
             saidas,
             pagamentos,
-            new Periodo(dateTime.minusMinutes(5), dateTime.plusMinutes(80))
+            new PeriodoOf(dateTime.minusMinutes(5), dateTime.plusMinutes(80))
         );
     }
 }

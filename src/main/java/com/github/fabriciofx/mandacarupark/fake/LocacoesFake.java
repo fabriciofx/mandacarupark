@@ -60,7 +60,7 @@ public final class LocacoesFake implements Locacoes {
         final List<Locacao> items = new ArrayList<>();
         for (Entrada entrada : this.entradas) {
             final DataHora dataHora = entrada.sobre().valor("dataHora");
-            if (this.periodo.contem(dataHora.dateTime())) {
+            if (this.periodo.contem(dataHora)) {
                 final Saida saida = this.saidas.procura(entrada.id());
                 final Pagamento pagamento = this.pagamentos.procura(
                     entrada.id()

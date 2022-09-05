@@ -35,6 +35,7 @@ import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 
 public final class EstacionamentoSql implements Estacionamento {
     private final Session session;
@@ -65,7 +66,7 @@ public final class EstacionamentoSql implements Estacionamento {
 
     @Override
     public Ticket pagamento(final Ticket ticket, final DataHora dataHora) {
-        final Periodo periodo = new Periodo(
+        final Periodo periodo = new PeriodoOf(
             ticket.sobre().valor("dataHora"),
             dataHora
         );

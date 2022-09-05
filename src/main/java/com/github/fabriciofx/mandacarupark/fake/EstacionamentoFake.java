@@ -34,6 +34,7 @@ import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
+import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 
 public final class EstacionamentoFake implements Estacionamento {
     private final Entradas entradas;
@@ -76,7 +77,7 @@ public final class EstacionamentoFake implements Estacionamento {
 
     @Override
     public Ticket pagamento(final Ticket ticket, final DataHora dataHora) {
-        final Periodo periodo = new Periodo(
+        final Periodo periodo = new PeriodoOf(
             ticket.sobre().valor("dataHora"),
             dataHora
         );

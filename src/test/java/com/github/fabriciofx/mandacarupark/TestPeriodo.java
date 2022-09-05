@@ -23,22 +23,26 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
+import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
+import com.github.fabriciofx.mandacarupark.periodo.Restricao;
 import org.junit.Assert;
 import org.junit.Test;
-import java.time.LocalDateTime;
 
 public final class TestPeriodo {
     @Test
     public void contemAgora() {
-        final LocalDateTime agora = LocalDateTime.now();
-        Assert.assertTrue(new Periodo(agora, agora).contem(agora));
+        final DataHora agora = new DataHora();
+        Assert.assertTrue(new PeriodoOf(agora, agora).contem(agora));
     }
 
     @Test
     public void contem() {
-        final LocalDateTime agora = LocalDateTime.now();
+        final DataHora agora = new DataHora();
+        final DataHora agoraMais5Minutos = new DataHora(
+            agora.dateTime().plusMinutes(5)
+        );
         Assert.assertTrue(
-            new Periodo(agora, agora.plusMinutes(5)).contem(agora)
+            new PeriodoOf(agora, agoraMais5Minutos).contem(agora)
         );
     }
 
@@ -48,8 +52,13 @@ public final class TestPeriodo {
             "Periodo: o tempo de ínicio não pode ser depois do término",
             RuntimeException.class,
             () -> {
-                final LocalDateTime agora = LocalDateTime.now();
-                new Periodo(agora.plusMinutes(1), agora).minutos();
+                final DataHora agora = new DataHora();
+                final DataHora agoraMais1Minuto = new DataHora(
+                    agora.dateTime().plusMinutes(1)
+                );
+                new Restricao(
+                    new PeriodoOf(agoraMais1Minuto, agora)
+                ).minutos();
             }
         );
     }

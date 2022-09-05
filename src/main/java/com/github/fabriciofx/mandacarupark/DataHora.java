@@ -115,7 +115,11 @@ public final class DataHora {
         return this.dateTime.format(formato);
     }
 
+    @Override
     public String toString() {
-        return this.dateTime.toString().replaceAll("T", " ");
+        final DateTimeFormatter formato = DateTimeFormatter.ofPattern(
+            "yyyy-MM-dd HH:mm:ss"
+        );
+        return this.dateTime.format(formato);
     }
 }

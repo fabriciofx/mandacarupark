@@ -21,14 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.periodo;
 
-import java.time.DayOfWeek;
-
-public interface Periodo {
-    long minutos();
-    boolean contem(DataHora dataHora);
-    DataHora inicio();
-    DataHora termino();
-    boolean diaDaSemana(DayOfWeek dia);
-}
+/**
+ * Período.
+ *
+ * @since 0.0.1
+ */
