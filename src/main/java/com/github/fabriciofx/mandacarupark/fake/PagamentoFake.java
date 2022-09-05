@@ -23,11 +23,11 @@
  */
 package com.github.fabriciofx.mandacarupark.fake;
 
-import com.github.fabriciofx.mandacarupark.dados.Dados;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Uuid;
+import com.github.fabriciofx.mandacarupark.dados.Dados;
 
 public final class PagamentoFake implements Pagamento {
     private final Uuid id;
