@@ -35,7 +35,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 public final class EntradasFake implements Entradas {
-    private final Map<Uuid, Entrada> items;
+    private final Map<Uuid, Entrada> itens;
     private final Pagamentos pagamentos;
 
     public EntradasFake() {
@@ -48,26 +48,26 @@ public final class EntradasFake implements Entradas {
 
     public EntradasFake(
         final Pagamentos pagamentos,
-        final Map<Uuid, Entrada> items
+        final Map<Uuid, Entrada> itens
     ) {
         this.pagamentos = pagamentos;
-        this.items = items;
+        this.itens = itens;
     }
 
     @Override
     public Entrada entrada(final Placa placa, final DataHora dataHora) {
-        final Entrada evento = new EntradaFake(new Uuid(), placa, dataHora);
-        this.items.put(evento.id(), evento);
-        return evento;
+        final Entrada entrada = new EntradaFake(new Uuid(), placa, dataHora);
+        this.itens.put(entrada.id(), entrada);
+        return entrada;
     }
 
     @Override
     public Entrada procura(final Uuid id) {
-        return this.items.get(id);
+        return this.itens.get(id);
     }
 
     @Override
-    public Ticket ticket(Uuid id) {
+    public Ticket ticket(final Uuid id) {
         final Entrada entrada = this.procura(id);
         return new TicketFake(
             this.pagamentos,
@@ -79,6 +79,6 @@ public final class EntradasFake implements Entradas {
 
     @Override
     public Iterator<Entrada> iterator() {
-        return this.items.values().iterator();
+        return this.itens.values().iterator();
     }
 }
