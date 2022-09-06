@@ -21,38 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.ticket.imagem;
 
-import com.github.fabriciofx.mandacarupark.dados.Dados;
-import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
-/**
- * Ticket do estacionamento.
- *
- * @since 0.0.1
- */
-public interface Ticket {
-    /**
-     * Id do ticket.
-     * @return O id do ticket
-     */
-    Uuid id();
+public final class ImagemPapel implements Imagem {
+    private final Color cor;
+    private final int largura;
+    private final int altura;
 
-    /**
-     * Verifica se o ticket foi pago, isto é, validado.
-     * @return Verdadeiro se o ticket foi pago, falso caso contrário.
-     */
-    boolean validado();
+    public ImagemPapel(final int largura, final int altura) {
+        this(Color.WHITE, largura, altura);
+    }
 
-    /**
-     * Obtém os dados do ticket.
-     * @return Os dados do ticket.
-     */
-    Dados sobre();
+    public ImagemPapel(final Color cor, final int largura, final int altura) {
+        this.cor = cor;
+        this.largura = largura;
+        this.altura = altura;
+    }
 
-    /**
-     * Obtém uma imagem do ticket.
-     * @return Uma imagem do ticket.
-     */
-    Imagem imagem();
+    @Override
+    public BufferedImage imagem() {
+        final BufferedImage imagem = new BufferedImage(
+            this.largura,
+            this.altura,
+            BufferedImage.TYPE_INT_RGB
+        );
+        final Graphics2D g2d = imagem.createGraphics();
+        g2d.setPaint(this.cor);
+        g2d.fillRect(0, 0, imagem.getWidth(), imagem.getHeight());
+        return imagem;
+    }
 }

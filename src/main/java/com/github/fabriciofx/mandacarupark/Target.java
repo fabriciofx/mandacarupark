@@ -23,36 +23,6 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
-import com.github.fabriciofx.mandacarupark.dados.Dados;
-import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
-
-/**
- * Ticket do estacionamento.
- *
- * @since 0.0.1
- */
-public interface Ticket {
-    /**
-     * Id do ticket.
-     * @return O id do ticket
-     */
-    Uuid id();
-
-    /**
-     * Verifica se o ticket foi pago, isto é, validado.
-     * @return Verdadeiro se o ticket foi pago, falso caso contrário.
-     */
-    boolean validado();
-
-    /**
-     * Obtém os dados do ticket.
-     * @return Os dados do ticket.
-     */
-    Dados sobre();
-
-    /**
-     * Obtém uma imagem do ticket.
-     * @return Uma imagem do ticket.
-     */
-    Imagem imagem();
+public interface Target<S> {
+    void notifique(S source);
 }

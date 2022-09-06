@@ -21,38 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.ticket.imagem;
 
-import com.github.fabriciofx.mandacarupark.dados.Dados;
-import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 
-/**
- * Ticket do estacionamento.
- *
- * @since 0.0.1
- */
-public interface Ticket {
-    /**
-     * Id do ticket.
-     * @return O id do ticket
-     */
-    Uuid id();
+public final class ImagemParaArquivo {
+    private final Imagem origin;
+    private final String arquivo;
 
-    /**
-     * Verifica se o ticket foi pago, isto é, validado.
-     * @return Verdadeiro se o ticket foi pago, falso caso contrário.
-     */
-    boolean validado();
+    public ImagemParaArquivo(final Imagem imagem, final String arquivo) {
+        this.origin = imagem;
+        this.arquivo = arquivo;
+    }
 
-    /**
-     * Obtém os dados do ticket.
-     * @return Os dados do ticket.
-     */
-    Dados sobre();
-
-    /**
-     * Obtém uma imagem do ticket.
-     * @return Uma imagem do ticket.
-     */
-    Imagem imagem();
+    public void salva() {
+        try {
+            ImageIO.write(this.origin.imagem(), "png", new File(this.arquivo));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -40,10 +40,10 @@ import com.github.fabriciofx.mandacarupark.db.Server;
 import com.github.fabriciofx.mandacarupark.db.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.SessionNoAuth;
-import com.github.fabriciofx.mandacarupark.sql.EntradasSql;
-import com.github.fabriciofx.mandacarupark.sql.EstacionamentoSql;
-import com.github.fabriciofx.mandacarupark.sql.PagamentosSql;
-import com.github.fabriciofx.mandacarupark.sql.SaidasSql;
+import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
+import com.github.fabriciofx.mandacarupark.estacionamento.EstacionamentoSql;
+import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosSql;
+import com.github.fabriciofx.mandacarupark.saidas.SaidasSql;
 
 public final class App {
     public static void main(String[] args) {

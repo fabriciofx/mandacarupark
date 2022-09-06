@@ -21,38 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.ticket.imagem;
 
-import com.github.fabriciofx.mandacarupark.dados.Dados;
-import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
+import com.github.fabriciofx.mandacarupark.code.CodeQr;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
-/**
- * Ticket do estacionamento.
- *
- * @since 0.0.1
- */
-public interface Ticket {
-    /**
-     * Id do ticket.
-     * @return O id do ticket
-     */
-    Uuid id();
+public final class ImagemCodeQr implements Imagem {
+    private final Imagem origin;
+    private final String texto;
+    private final int x;
+    private final int y;
+    private final int largura;
+    private final int altura;
 
-    /**
-     * Verifica se o ticket foi pago, isto é, validado.
-     * @return Verdadeiro se o ticket foi pago, falso caso contrário.
-     */
-    boolean validado();
+    public ImagemCodeQr(
+        final Imagem imagem,
+        final String texto,
+        final int x,
+        final int y,
+        final int largura,
+        final int altura
+    ) {
+        this.origin = imagem;
+        this.texto = texto;
+        this.x = x;
+        this.y = y;
+        this.largura = largura;
+        this.altura = altura;
+    }
 
-    /**
-     * Obtém os dados do ticket.
-     * @return Os dados do ticket.
-     */
-    Dados sobre();
-
-    /**
-     * Obtém uma imagem do ticket.
-     * @return Uma imagem do ticket.
-     */
-    Imagem imagem();
+    @Override
+    public BufferedImage imagem() {
+        final BufferedImage imagem = this.origin.imagem();
+        final BufferedImage qrcode = new CodeQr(
+            this.texto,
+            this.largura,
+            this.altura
+        ).imagem();
+        final Graphics2D g2d = (Graphics2D) imagem.getGraphics();
+        g2d.drawImage(qrcode, this.x, this.y, null);
+        return imagem;
+    }
 }

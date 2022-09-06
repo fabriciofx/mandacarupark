@@ -29,7 +29,7 @@ import com.github.fabriciofx.mandacarupark.db.RandomName;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
 import com.github.fabriciofx.mandacarupark.db.Server;
 import com.github.fabriciofx.mandacarupark.db.ServerH2;
-import com.github.fabriciofx.mandacarupark.sql.EntradasSql;
+import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

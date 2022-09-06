@@ -21,38 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.pagamento;
 
+import com.github.fabriciofx.mandacarupark.DataHora;
+import com.github.fabriciofx.mandacarupark.Dinheiro;
+import com.github.fabriciofx.mandacarupark.Pagamento;
+import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.dados.Dados;
-import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
 
-/**
- * Ticket do estacionamento.
- *
- * @since 0.0.1
- */
-public interface Ticket {
-    /**
-     * Id do ticket.
-     * @return O id do ticket
-     */
-    Uuid id();
+public final class PagamentoFake implements Pagamento {
+    private final Uuid id;
+    private final DataHora dataHora;
+    private final Dinheiro valor;
 
-    /**
-     * Verifica se o ticket foi pago, isto é, validado.
-     * @return Verdadeiro se o ticket foi pago, falso caso contrário.
-     */
-    boolean validado();
+    public PagamentoFake(
+        final Uuid id,
+        final DataHora dataHora,
+        final Dinheiro valor
+    ) {
+        this.id = id;
+        this.dataHora = dataHora;
+        this.valor = valor;
+    }
 
-    /**
-     * Obtém os dados do ticket.
-     * @return Os dados do ticket.
-     */
-    Dados sobre();
+    @Override
+    public Uuid id() {
+        return this.id;
+    }
 
-    /**
-     * Obtém uma imagem do ticket.
-     * @return Uma imagem do ticket.
-     */
-    Imagem imagem();
+    @Override
+    public Dados sobre() {
+        return new Dados(
+            "dataHora", this.dataHora,
+            "valor", this.valor
+        );
+    }
 }

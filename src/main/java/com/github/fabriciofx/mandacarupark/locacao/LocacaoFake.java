@@ -21,38 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.locacao;
 
+import com.github.fabriciofx.mandacarupark.DataHora;
+import com.github.fabriciofx.mandacarupark.Dinheiro;
+import com.github.fabriciofx.mandacarupark.Locacao;
+import com.github.fabriciofx.mandacarupark.Placa;
+import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.dados.Dados;
-import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
 
-/**
- * Ticket do estacionamento.
- *
- * @since 0.0.1
- */
-public interface Ticket {
-    /**
-     * Id do ticket.
-     * @return O id do ticket
-     */
-    Uuid id();
+public final class LocacaoFake implements Locacao {
+    private final Uuid id;
+    private final Placa placa;
+    private final DataHora entrada;
+    private final DataHora saida;
+    private final Dinheiro valor;
 
-    /**
-     * Verifica se o ticket foi pago, isto é, validado.
-     * @return Verdadeiro se o ticket foi pago, falso caso contrário.
-     */
-    boolean validado();
+    public LocacaoFake(
+        final Uuid id,
+        final Placa placa,
+        final DataHora entrada,
+        final DataHora saida,
+        final Dinheiro valor
+    ) {
+        this.id = id;
+        this.placa = placa;
+        this.entrada = entrada;
+        this.saida = saida;
+        this.valor = valor;
+    }
 
-    /**
-     * Obtém os dados do ticket.
-     * @return Os dados do ticket.
-     */
-    Dados sobre();
-
-    /**
-     * Obtém uma imagem do ticket.
-     * @return Uma imagem do ticket.
-     */
-    Imagem imagem();
+    @Override
+    public Dados sobre() {
+        return new Dados(
+            "placa", this.placa,
+            "entrada", this.entrada,
+            "saida", this.saida,
+            "valor", this.valor
+        );
+    }
 }
