@@ -120,8 +120,8 @@ public final class Dashboard extends Application {
             for (final Entrada entrada: entradas){
                 final Map<String, String> linha = new HashMap<>();
                 linha.put("id", entrada.id().toString());
-                linha.put("placa", entrada.sobre().valor("placa").toString());
-                linha.put("dataHora", entrada.sobre().valor("dataHora").toString());
+                linha.put("placa", entrada.sobre().dado("placa").toString());
+                linha.put("dataHora", entrada.sobre().dado("dataHora").toString());
                 linhas.add(linha);
             }
         } catch (Exception e) {

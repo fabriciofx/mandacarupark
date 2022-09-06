@@ -271,7 +271,7 @@ public final class Dados {
         this.itens = itens;
     }
 
-    public <T> T valor(final String chave) {
+    public <T> T dado(final String chave) {
         return (T) (this.itens.get(chave));
     }
 

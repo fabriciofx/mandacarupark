@@ -59,7 +59,7 @@ public final class OpcaoEncerrar implements Opcao {
             this.console.write(
                 String.format(
                     "Entrada: %s\n",
-                    entrada.sobre().valor("placa").toString()
+                    entrada.sobre().dado("placa").toString()
                 )
             );
         }

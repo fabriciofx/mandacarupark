@@ -92,7 +92,7 @@ public final class TicketFake implements Ticket {
         if (pagamento == null) {
             valor = new Dinheiro("0.00");
         } else {
-            valor = pagamento.sobre().valor("valor");
+            valor = pagamento.sobre().dado("valor");
         }
         return new Dados(
             "placa", this.placa,

@@ -95,8 +95,8 @@ public final class EntradasSql implements Entradas {
         return new TicketSql(
             this.session,
             id,
-            entrada.sobre().valor("placa"),
-            entrada.sobre().valor("dataHora")
+            entrada.sobre().dado("placa"),
+            entrada.sobre().dado("dataHora")
         );
     }
 
