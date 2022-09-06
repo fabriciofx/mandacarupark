@@ -36,9 +36,9 @@ import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasFake;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
+import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 import com.github.fabriciofx.mandacarupark.saidas.SaidasFake;
 import com.github.fabriciofx.mandacarupark.ticket.TicketFake;
-import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 
 public final class EstacionamentoFake implements Estacionamento {
     private final Entradas entradas;

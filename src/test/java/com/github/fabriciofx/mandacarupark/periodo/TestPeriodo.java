@@ -24,8 +24,6 @@
 package com.github.fabriciofx.mandacarupark.periodo;
 
 import com.github.fabriciofx.mandacarupark.DataHora;
-import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
-import com.github.fabriciofx.mandacarupark.periodo.Restricao;
 import org.junit.Assert;
 import org.junit.Test;
 
