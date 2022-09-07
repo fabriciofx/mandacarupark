@@ -43,7 +43,7 @@ public final class TestPlaca {
             "NULL ao invés de um número de placa válido",
             IllegalStateException.class,
             () -> {
-                new NoNulls(new PlacaOf(null)).numero();
+                new NoNulls(new PlacaOf(() -> null)).numero();
             }
         );
     }

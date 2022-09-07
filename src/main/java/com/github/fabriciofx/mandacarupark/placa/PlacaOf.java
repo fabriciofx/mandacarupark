@@ -24,33 +24,42 @@
 package com.github.fabriciofx.mandacarupark.placa;
 
 import com.github.fabriciofx.mandacarupark.Placa;
+import com.github.fabriciofx.mandacarupark.text.Text;
 import java.util.Objects;
 
 public final class PlacaOf implements Placa {
-    private final String numero;
+    private final Text numero;
+
+    public PlacaOf() {
+        this(new RandomNumero());
+    }
 
     public PlacaOf(final String numero) {
+        this(() ->  numero);
+    }
+
+    public PlacaOf(final Text numero) {
         this.numero = numero;
     }
 
     @Override
     public String numero() {
-        return this.numero;
+        return this.numero.asString();
     }
 
     @Override
     public boolean equals(final Object obj) {
         return this == obj || obj instanceof PlacaOf &&
-            PlacaOf.class.cast(obj).numero.equals(this.numero);
+            PlacaOf.class.cast(obj).numero().equals(this.numero.asString());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.numero);
+        return Objects.hash(this.numero());
     }
 
     @Override
     public String toString() {
-        return this.numero;
+        return this.numero();
     }
 }
