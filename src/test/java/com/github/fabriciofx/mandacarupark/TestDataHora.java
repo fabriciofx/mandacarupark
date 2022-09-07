@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
+import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import org.junit.Assert;
 import org.junit.Test;
 import java.time.LocalDateTime;
@@ -30,7 +31,7 @@ import java.time.LocalDateTime;
 public final class TestDataHora {
     @Test
     public void asString() {
-        final DataHora dataHora = new DataHora(
+        final DataHora dataHora = new DataHoraOf(
             LocalDateTime.of(2022, 8, 14, 7, 49, 20)
         );
         Assert.assertEquals("2022-08-14 07:49:20", dataHora.toString());
@@ -38,7 +39,7 @@ public final class TestDataHora {
 
     @Test
     public void data() {
-        final DataHora dataHora = new DataHora(
+        final DataHora dataHora = new DataHoraOf(
             LocalDateTime.of(2022, 8, 14, 7, 49, 20)
         );
         Assert.assertEquals("14/08/2022", dataHora.data());
@@ -47,7 +48,7 @@ public final class TestDataHora {
 
     @Test
     public void hora() {
-        final DataHora dataHora = new DataHora(
+        final DataHora dataHora = new DataHoraOf(
             LocalDateTime.of(2022, 8, 14, 7, 49, 20)
         );
         Assert.assertEquals("14/08/2022", dataHora.data());
@@ -56,7 +57,7 @@ public final class TestDataHora {
 
     @Test
     public void parseIso() {
-        final DataHora dataHora = new DataHora(
+        final DataHora dataHora = new DataHoraOf(
             "2022-08-14 07:49:20.5"
         );
         Assert.assertEquals("14/08/2022", dataHora.data());
@@ -65,7 +66,7 @@ public final class TestDataHora {
 
     @Test
     public void parse() {
-        final DataHora dataHora = new DataHora(
+        final DataHora dataHora = new DataHoraOf(
             "14/08/2022 07:49:20"
         );
         Assert.assertEquals("14/08/2022", dataHora.data());
@@ -74,10 +75,10 @@ public final class TestDataHora {
 
     @Test
     public void parseEuMesmo() {
-        final DataHora dataHora = new DataHora(
+        final DataHora dataHora = new DataHoraOf(
             LocalDateTime.of(2022, 8, 14, 7, 49, 20)
         );
-        final DataHora parsed = new DataHora(dataHora.toString());
+        final DataHora parsed = new DataHoraOf(dataHora.toString());
         Assert.assertEquals("2022-08-14 07:49:20", dataHora.toString());
     }
 }

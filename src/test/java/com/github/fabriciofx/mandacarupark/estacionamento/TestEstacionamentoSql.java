@@ -34,6 +34,7 @@ import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.conta.DomingoGratis;
 import com.github.fabriciofx.mandacarupark.conta.Tolerancia;
 import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
+import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.RandomName;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
 import com.github.fabriciofx.mandacarupark.db.Server;
@@ -73,7 +74,7 @@ public final class TestEstacionamentoSql {
             final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
             final Ticket ticket = estacionamento.entrada(
                 placa,
-                new DataHora(dateTime)
+                new DataHoraOf(dateTime)
             );
             final Entrada entrada = entradas.procura(ticket.id());
             Assert.assertEquals(
@@ -108,16 +109,16 @@ public final class TestEstacionamentoSql {
             final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
             final Ticket ticket = estacionamento.entrada(
                 placa,
-                new DataHora(dateTime)
+                new DataHoraOf(dateTime)
             );
             final Ticket ticketValidado = estacionamento.pagamento(
                 ticket,
-                new DataHora(dateTime.plusMinutes(60))
+                new DataHoraOf(dateTime.plusMinutes(60))
             );
             estacionamento.saida(
                 ticketValidado,
                 placa,
-                new DataHora(dateTime.plusMinutes(70))
+                new DataHoraOf(dateTime.plusMinutes(70))
             );
             Assert.assertTrue(ticketValidado.validado());
             Assert.assertEquals(
@@ -152,16 +153,16 @@ public final class TestEstacionamentoSql {
             final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
             final Ticket ticket = estacionamento.entrada(
                 placa,
-                new DataHora(dateTime)
+                new DataHoraOf(dateTime)
             );
             final Ticket ticketValidado = estacionamento.pagamento(
                 ticket,
-                new DataHora(dateTime.plusMinutes(20))
+                new DataHoraOf(dateTime.plusMinutes(20))
             );
             estacionamento.saida(
                 ticketValidado,
                 placa,
-                new DataHora(dateTime.plusMinutes(25))
+                new DataHoraOf(dateTime.plusMinutes(25))
             );
             Assert.assertTrue(ticketValidado.validado());
             Assert.assertEquals(
@@ -198,16 +199,16 @@ public final class TestEstacionamentoSql {
             );
             final Ticket ticket = estacionamento.entrada(
                 placa,
-                new DataHora(dateTime)
+                new DataHoraOf(dateTime)
             );
             final Ticket ticketValidado = estacionamento.pagamento(
                 ticket,
-                new DataHora(dateTime.plusMinutes(60))
+                new DataHoraOf(dateTime.plusMinutes(60))
             );
             estacionamento.saida(
                 ticketValidado,
                 placa,
-                new DataHora(dateTime.plusMinutes(70))
+                new DataHoraOf(dateTime.plusMinutes(70))
             );
             Assert.assertTrue(ticketValidado.validado());
             Assert.assertEquals(
@@ -245,12 +246,12 @@ public final class TestEstacionamentoSql {
                     final LocalDateTime agora = LocalDateTime.now();
                     final Ticket ticket = estacionamento.entrada(
                         placa,
-                        new DataHora(agora)
+                        new DataHoraOf(agora)
                     );
                     estacionamento.saida(
                         ticket,
                         placa,
-                        new DataHora(agora.plusMinutes(70))
+                        new DataHoraOf(agora.plusMinutes(70))
                     );
                     ticket.validado();
                 }

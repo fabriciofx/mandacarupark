@@ -6,6 +6,7 @@ import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.console.Console;
+import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 
 public final class OpcaoPagamento implements Opcao {
     private final String mensagem;
@@ -42,7 +43,7 @@ public final class OpcaoPagamento implements Opcao {
         final Ticket ticket = this.entradas.ticket(id);
         final Ticket ticketValidado = this.estacionamento.pagamento(
             ticket,
-            new DataHora()
+            new DataHoraOf()
         );
         this.console.write(
             String.format(

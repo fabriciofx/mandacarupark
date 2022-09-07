@@ -25,6 +25,7 @@ package com.github.fabriciofx.mandacarupark.periodo;
 
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Periodo;
+import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -40,7 +41,7 @@ public final class PeriodoOf implements Periodo {
         final LocalDateTime inicio,
         final LocalDateTime termino
     ) {
-        this(new DataHora(inicio), new DataHora(termino));
+        this(new DataHoraOf(inicio), new DataHoraOf(termino));
     }
 
     public PeriodoOf(final DataHora inicio, final DataHora termino) {

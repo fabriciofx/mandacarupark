@@ -26,6 +26,7 @@ package com.github.fabriciofx.mandacarupark.ticket.imagem;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.Uuid;
+import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.ticket.TicketFake;
@@ -119,7 +120,7 @@ public final class TestImagem {
                     new PagamentosFake(),
                     new Uuid("8c878e6f-ee13-4a37-a208-7510c2638944"),
                     new PlacaOf("ABC1234"),
-                    new DataHora("2022-07-21 12:01:15")
+                    new DataHoraOf("2022-07-21 12:01:15")
                 )
             ),
             filename
@@ -141,7 +142,7 @@ public final class TestImagem {
             new PagamentosFake(),
             new Uuid("8c878e6f-ee13-4a37-a208-7510c2638944"),
             new PlacaOf("ABC1234"),
-            new DataHora("2022-07-21 12:01:15")
+            new DataHoraOf("2022-07-21 12:01:15")
         );
         new ImagemParaArquivo(
             new ImagemTicket(

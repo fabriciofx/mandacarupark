@@ -28,6 +28,7 @@ import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.dados.Dados;
+import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Select;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
@@ -63,7 +64,7 @@ public final class SaidaSql implements Saida {
             final Placa placa;
             if (rset.next()) {
                 placa = new PlacaOf(rset.getString(1));
-                dataHora = new DataHora(rset.getString(2));
+                dataHora = new DataHoraOf(rset.getString(2));
 
             } else {
                 throw new RuntimeException(

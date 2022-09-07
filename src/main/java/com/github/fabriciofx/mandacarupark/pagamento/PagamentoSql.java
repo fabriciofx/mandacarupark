@@ -28,6 +28,7 @@ import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.dados.Dados;
+import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Select;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
@@ -61,7 +62,7 @@ public final class PagamentoSql implements Pagamento {
             final DataHora dataHora;
             final Dinheiro valor;
             if (rset.next()) {
-                dataHora = new DataHora(rset.getString(1));
+                dataHora = new DataHoraOf(rset.getString(1));
                 valor = new Dinheiro(rset.getBigDecimal(2));
 
             } else {

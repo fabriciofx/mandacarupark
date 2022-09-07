@@ -24,20 +24,21 @@
 package com.github.fabriciofx.mandacarupark.periodo;
 
 import com.github.fabriciofx.mandacarupark.DataHora;
+import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import org.junit.Assert;
 import org.junit.Test;
 
 public final class TestPeriodo {
     @Test
     public void contemAgora() {
-        final DataHora agora = new DataHora();
+        final DataHora agora = new DataHoraOf();
         Assert.assertTrue(new PeriodoOf(agora, agora).contem(agora));
     }
 
     @Test
     public void contem() {
-        final DataHora agora = new DataHora();
-        final DataHora agoraMais5Minutos = new DataHora(
+        final DataHora agora = new DataHoraOf();
+        final DataHora agoraMais5Minutos = new DataHoraOf(
             agora.dateTime().plusMinutes(5)
         );
         Assert.assertTrue(
@@ -51,8 +52,8 @@ public final class TestPeriodo {
             "Periodo: o tempo de ínicio não pode ser depois do término",
             RuntimeException.class,
             () -> {
-                final DataHora agora = new DataHora();
-                final DataHora agoraMais1Minuto = new DataHora(
+                final DataHora agora = new DataHoraOf();
+                final DataHora agoraMais1Minuto = new DataHoraOf(
                     agora.dateTime().plusMinutes(1)
                 );
                 new Restricao(

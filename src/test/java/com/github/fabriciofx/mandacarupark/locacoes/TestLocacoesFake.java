@@ -36,6 +36,7 @@ import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.conta.DomingoGratis;
 import com.github.fabriciofx.mandacarupark.conta.Tolerancia;
 import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
+import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasFake;
 import com.github.fabriciofx.mandacarupark.estacionamento.EstacionamentoFake;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
@@ -64,45 +65,45 @@ public final class TestLocacoesFake {
         // Locação 1
         Placa placa = new PlacaOf("ABC1234");
         final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
-        Ticket ticket = estacionamento.entrada(placa, new DataHora(dateTime));
+        Ticket ticket = estacionamento.entrada(placa, new DataHoraOf(dateTime));
         ticket = estacionamento.pagamento(
             ticket,
-            new DataHora(dateTime.plusMinutes(60))
+            new DataHoraOf(dateTime.plusMinutes(60))
         );
         estacionamento.saida(
             ticket,
             placa,
-            new DataHora(dateTime.plusMinutes(70))
+            new DataHoraOf(dateTime.plusMinutes(70))
         );
         // Locação 2
         placa = new PlacaOf("DEF5678");
         ticket = estacionamento.entrada(
             placa,
-            new DataHora(dateTime.plusMinutes(1))
+            new DataHoraOf(dateTime.plusMinutes(1))
         );
         ticket = estacionamento.pagamento(
             ticket,
-            new DataHora(dateTime.plusMinutes(40))
+            new DataHoraOf(dateTime.plusMinutes(40))
         );
         estacionamento.saida(
             ticket,
             placa,
-            new DataHora(dateTime.plusMinutes(45))
+            new DataHoraOf(dateTime.plusMinutes(45))
         );
         // Locação 3
         placa = new PlacaOf("GHI9012");
         ticket = estacionamento.entrada(
             placa,
-            new DataHora(dateTime.plusMinutes(2))
+            new DataHoraOf(dateTime.plusMinutes(2))
         );
         ticket = estacionamento.pagamento(
             ticket,
-            new DataHora(dateTime.plusMinutes(55))
+            new DataHoraOf(dateTime.plusMinutes(55))
         );
         estacionamento.saida(
             ticket,
             placa,
-            new DataHora(dateTime.plusMinutes(52))
+            new DataHoraOf(dateTime.plusMinutes(52))
         );
         final Locacoes locacoes = new LocacoesFake(
             entradas,
