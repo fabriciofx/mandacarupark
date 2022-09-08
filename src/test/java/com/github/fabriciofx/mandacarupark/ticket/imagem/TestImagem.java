@@ -23,7 +23,6 @@
  */
 package com.github.fabriciofx.mandacarupark.ticket.imagem;
 
-import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
@@ -32,78 +31,63 @@ import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.ticket.TicketFake;
 import org.junit.Assert;
 import org.junit.Test;
+import javax.imageio.ImageIO;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 
 public final class TestImagem {
     @Test
     public void papel() throws IOException {
-        final String filename = "imagem-papel.png";
         final InputStream correto = Thread.currentThread()
             .getContextClassLoader()
-            .getResourceAsStream(filename);
-        final File file = new File(filename);
-        new ImagemParaArquivo(
-            new ImagemPapel(150, 300),
-            filename
-        ).salva();
-        final byte[] atual = Files.readAllBytes(file.toPath());
+            .getResourceAsStream("imagem-papel.png");
+        final Imagem imagem = new ImagemPapel(150, 300);
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(imagem.imagem(), "png", baos);
         final byte[] esperado = toBytes(correto);
-        file.delete();
-        Assert.assertArrayEquals(esperado, atual);
+        Assert.assertArrayEquals(esperado, baos.toByteArray());
     }
 
     @Test
     public void texto() throws IOException {
-        final String filename = "imagem-texto.png";
         final InputStream correto = Thread.currentThread()
             .getContextClassLoader()
-            .getResourceAsStream(filename);
-        final File file = new File(filename);
-        new ImagemParaArquivo(
-            new ImagemTexto(
-                new ImagemPapel(150, 300),
-                new Font("Lucida Sans Unicode", Font.PLAIN, 13),
-                Color.BLACK,
-                "MANDACARUPARK",
-                12,
-                26
-            ),
-            filename
-        ).salva();
-        final byte[] atual = Files.readAllBytes(file.toPath());
+            .getResourceAsStream("imagem-texto.png");
+        final Imagem imagem = new ImagemTexto(
+            new ImagemPapel(150, 300),
+            new Font("Lucida Sans Unicode", Font.PLAIN, 13),
+            Color.BLACK,
+            "MANDACARUPARK",
+            12,
+            26
+        );
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(imagem.imagem(), "png", baos);
         final byte[] esperado = toBytes(correto);
-        file.delete();
-        Assert.assertArrayEquals(esperado, atual);
+        Assert.assertArrayEquals(esperado, baos.toByteArray());
     }
 
     @Test
     public void qrcode() throws IOException {
-        final String filename = "imagem-qrcode.png";
         final InputStream correto = Thread.currentThread()
             .getContextClassLoader()
-            .getResourceAsStream(filename);
-        final File file = new File(filename);
-        new ImagemParaArquivo(
-            new ImagemCodeQr(
-                new ImagemPapel(150, 300),
-                new Uuid("8c878e6f-ee13-4a37-a208-7510c2638944").toString(),
-                0,
-                0,
-                100,
-                150
-            ),
-            filename
-        ).salva();
-        final byte[] atual = Files.readAllBytes(file.toPath());
+            .getResourceAsStream("imagem-qrcode.png");
+        final Imagem imagem = new ImagemCodeQr(
+            new ImagemPapel(150, 300),
+            new Uuid("8c878e6f-ee13-4a37-a208-7510c2638944").toString(),
+            0,
+            0,
+            100,
+            150
+        );
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(imagem.imagem(), "png", baos);
         final byte[] esperado = toBytes(correto);
-        file.delete();
-        Assert.assertArrayEquals(esperado, atual);
+        Assert.assertArrayEquals(esperado, baos.toByteArray());
     }
 
     @Test
@@ -113,22 +97,19 @@ public final class TestImagem {
             .getContextClassLoader()
             .getResourceAsStream(filename);
         final File file = new File(filename);
-        new ImagemParaArquivo(
-            new ImagemTicket(
-                new ImagemPapel(150, 300),
-                new TicketFake(
-                    new PagamentosFake(),
-                    new Uuid("8c878e6f-ee13-4a37-a208-7510c2638944"),
-                    new PlacaOf("ABC1234"),
-                    new DataHoraOf("2022-07-21 12:01:15")
-                )
-            ),
-            filename
-        ).salva();
-        final byte[] atual = Files.readAllBytes(file.toPath());
+        final Imagem imagem = new ImagemTicket(
+            new ImagemPapel(150, 300),
+            new TicketFake(
+                new PagamentosFake(),
+                new Uuid("8c878e6f-ee13-4a37-a208-7510c2638944"),
+                new PlacaOf("ABC1234"),
+                new DataHoraOf("2022-07-21 12:01:15")
+            )
+        );
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(imagem.imagem(), "png", baos);
         final byte[] esperado = toBytes(correto);
-        file.delete();
-        Assert.assertArrayEquals(esperado, atual);
+        Assert.assertArrayEquals(esperado, baos.toByteArray());
     }
 
     @Test
@@ -144,31 +125,28 @@ public final class TestImagem {
             new PlacaOf("ABC1234"),
             new DataHoraOf("2022-07-21 12:01:15")
         );
-        new ImagemParaArquivo(
-            new ImagemTicket(
-                new ImagemCodeQr(
-                    new ImagemTexto(
-                        new ImagemPapel(150, 300),
-                        new Font("Lucida Sans Unicode", Font.PLAIN, 13),
-                        Color.BLACK,
-                        "MANDACARUPARK",
-                        12,
-                        26
-                    ),
-                    ticket.id().toString(),
-                    10,
-                    50,
-                    125,
-                    200
+        final Imagem imagem = new ImagemTicket(
+            new ImagemCodeQr(
+                new ImagemTexto(
+                    new ImagemPapel(150, 300),
+                    new Font("Lucida Sans Unicode", Font.PLAIN, 13),
+                    Color.BLACK,
+                    "MANDACARUPARK",
+                    12,
+                    26
                 ),
-                ticket
+                ticket.id().toString(),
+                10,
+                50,
+                125,
+                200
             ),
-            filename
-        ).salva();
-        final byte[] atual = Files.readAllBytes(file.toPath());
+            ticket
+        );
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(imagem.imagem(), "png", baos);
         final byte[] esperado = toBytes(correto);
-        file.delete();
-        Assert.assertArrayEquals(esperado, atual);
+        Assert.assertArrayEquals(esperado, baos.toByteArray());
     }
 
     private byte[] toBytes(final InputStream stream) throws IOException {
