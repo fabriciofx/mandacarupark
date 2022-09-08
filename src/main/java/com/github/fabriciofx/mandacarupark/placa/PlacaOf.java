@@ -30,10 +30,6 @@ import java.util.Objects;
 public final class PlacaOf implements Placa {
     private final Text numero;
 
-    public PlacaOf() {
-        this(new RandomNumero());
-    }
-
     public PlacaOf(final String numero) {
         this(() ->  numero);
     }

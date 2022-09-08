@@ -23,11 +23,10 @@
  */
 package com.github.fabriciofx.mandacarupark.placa;
 
-import com.github.fabriciofx.mandacarupark.text.Text;
-import com.github.fabriciofx.mandacarupark.text.TextCached;
+import com.github.fabriciofx.mandacarupark.Placa;
 import java.util.Random;
 
-public final class RandomNumero implements Text {
+public final class PlacaRandom implements Placa {
     final static char[] LETRAS = {
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
         'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
@@ -39,27 +38,25 @@ public final class RandomNumero implements Text {
         'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '1', '2',
         '3', '4', '5', '6', '7', '8', '9', '0'
     };
-    private final Text name;
+    private final Placa origin;
 
-    public RandomNumero() {
-        this.name = new TextCached(
-            () -> {
-                final StringBuilder sb = new StringBuilder();
-                final Random rand = new Random();
-                sb.append(this.LETRAS[rand.nextInt(this.LETRAS.length)]);
-                sb.append(this.LETRAS[rand.nextInt(this.LETRAS.length)]);
-                sb.append(this.LETRAS[rand.nextInt(this.LETRAS.length)]);
-                sb.append(this.NUMEROS[rand.nextInt(this.NUMEROS.length)]);
-                sb.append(this.LETRAS_NUMEROS[rand.nextInt(this.LETRAS_NUMEROS.length)]);
-                sb.append(this.NUMEROS[rand.nextInt(this.NUMEROS.length)]);
-                sb.append(this.NUMEROS[rand.nextInt(this.NUMEROS.length)]);
-                return sb.toString();
-            }
-        );
+    public PlacaRandom() {
+        this.origin = () -> {
+            final StringBuilder sb = new StringBuilder();
+            final Random rand = new Random();
+            sb.append(this.LETRAS[rand.nextInt(this.LETRAS.length)]);
+            sb.append(this.LETRAS[rand.nextInt(this.LETRAS.length)]);
+            sb.append(this.LETRAS[rand.nextInt(this.LETRAS.length)]);
+            sb.append(this.NUMEROS[rand.nextInt(this.NUMEROS.length)]);
+            sb.append(this.LETRAS_NUMEROS[rand.nextInt(this.LETRAS_NUMEROS.length)]);
+            sb.append(this.NUMEROS[rand.nextInt(this.NUMEROS.length)]);
+            sb.append(this.NUMEROS[rand.nextInt(this.NUMEROS.length)]);
+            return sb.toString();
+        };
     }
 
     @Override
-    public String asString() {
-        return this.name.asString();
+    public String numero() {
+        return this.origin.numero();
     }
 }

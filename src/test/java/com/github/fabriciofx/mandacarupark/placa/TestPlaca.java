@@ -25,6 +25,7 @@ package com.github.fabriciofx.mandacarupark.placa;
 
 import org.junit.Assert;
 import org.junit.Test;
+import java.util.regex.Pattern;
 
 public final class TestPlaca {
     @Test
@@ -67,6 +68,16 @@ public final class TestPlaca {
             () -> {
                 new Restricao(new PlacaOf("ABC123J")).numero();
             }
+        );
+    }
+
+    @Test
+    public void random() {
+        final Pattern padrao = Pattern.compile(
+            "^[A-Z]{3}[0-9][0-9A-Z][0-9]{2}"
+        );
+        Assert.assertTrue(
+            padrao.matcher(new PlacaRandom().numero()).matches()
         );
     }
 }

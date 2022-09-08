@@ -41,6 +41,7 @@ import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasFake;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
+import com.github.fabriciofx.mandacarupark.placa.PlacaRandom;
 import com.github.fabriciofx.mandacarupark.saidas.SaidasFake;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemParaArquivo;
 import org.junit.Test;
@@ -66,7 +67,7 @@ public final class SimEstacionamento {
             )
         );
         for (int idx = 0; idx < 1000000; idx++) {
-            final Placa placa = new PlacaOf();
+            final Placa placa = new PlacaRandom();
             final DataHora dataHora = new DataHoraRandom(
                 LocalDateTime.of(2022, 8, 2, 8, 0, 0),
                 LocalDateTime.of(2022, 8, 2, 22, 0, 0)
