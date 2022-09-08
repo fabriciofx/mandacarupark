@@ -26,12 +26,13 @@ package com.github.fabriciofx.mandacarupark.conta;
 import com.github.fabriciofx.mandacarupark.Conta;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Periodo;
+import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 
 public final class ValorFixo implements Conta {
     private final Dinheiro valor;
 
     public ValorFixo() {
-        this(new Dinheiro("7.00"));
+        this(new DinheiroOf("7.00"));
     }
 
     public ValorFixo(final Dinheiro valor) {

@@ -40,6 +40,7 @@ import com.github.fabriciofx.mandacarupark.db.ScriptSql;
 import com.github.fabriciofx.mandacarupark.db.Server;
 import com.github.fabriciofx.mandacarupark.db.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosSql;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
@@ -67,7 +68,7 @@ public final class TestEstacionamentoSql {
                 new Contas(
                     new DomingoGratis(),
                     new Tolerancia(),
-                    new ValorFixo(new Dinheiro("5.00"))
+                    new ValorFixo(new DinheiroOf("5.00"))
                 )
             );
             final Placa placa = new PlacaOf("ABC1234");
@@ -102,7 +103,7 @@ public final class TestEstacionamentoSql {
                 new Contas(
                     new DomingoGratis(),
                     new Tolerancia(),
-                    new ValorFixo(new Dinheiro("5.00"))
+                    new ValorFixo(new DinheiroOf("5.00"))
                 )
             );
             final Placa placa = new PlacaOf("ABC1234");
@@ -123,7 +124,7 @@ public final class TestEstacionamentoSql {
             Assert.assertTrue(ticketValidado.validado());
             Assert.assertEquals(
                 ticketValidado.sobre().dado("valor"),
-                new Dinheiro("5.00")
+                new DinheiroOf("5.00")
             );
         }
     }
@@ -146,7 +147,7 @@ public final class TestEstacionamentoSql {
                 new Contas(
                     new DomingoGratis(),
                     new Tolerancia(),
-                    new ValorFixo(new Dinheiro("5.00"))
+                    new ValorFixo(new DinheiroOf("5.00"))
                 )
             );
             final Placa placa = new PlacaOf("ABC1234");
@@ -167,7 +168,7 @@ public final class TestEstacionamentoSql {
             Assert.assertTrue(ticketValidado.validado());
             Assert.assertEquals(
                 ticketValidado.sobre().dado("valor"),
-                new Dinheiro("0.00")
+                new DinheiroOf("0.00")
             );
         }
     }
@@ -190,7 +191,7 @@ public final class TestEstacionamentoSql {
                 new Contas(
                     new DomingoGratis(),
                     new Tolerancia(),
-                    new ValorFixo(new Dinheiro("5.00"))
+                    new ValorFixo(new DinheiroOf("5.00"))
                 )
             );
             final Placa placa = new PlacaOf("ABC1234");
@@ -213,7 +214,7 @@ public final class TestEstacionamentoSql {
             Assert.assertTrue(ticketValidado.validado());
             Assert.assertEquals(
                 ticketValidado.sobre().dado("valor"),
-                new Dinheiro("0.00")
+                new DinheiroOf("0.00")
             );
         }
     }
@@ -239,7 +240,7 @@ public final class TestEstacionamentoSql {
                         new Contas(
                             new DomingoGratis(),
                             new Tolerancia(),
-                            new ValorFixo(new Dinheiro("5.00"))
+                            new ValorFixo(new DinheiroOf("5.00"))
                         )
                     );
                     final Placa placa = new PlacaOf("ABC1234");

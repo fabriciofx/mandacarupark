@@ -40,6 +40,7 @@ import com.github.fabriciofx.mandacarupark.db.Server;
 import com.github.fabriciofx.mandacarupark.db.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.SessionNoAuth;
+import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
 import com.github.fabriciofx.mandacarupark.estacionamento.EstacionamentoSql;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosSql;
@@ -67,7 +68,7 @@ public final class App {
                 new Contas(
                     new DomingoGratis(),
                     new Tolerancia(),
-                    new ValorFixo(new Dinheiro("5.00"))
+                    new ValorFixo(new DinheiroOf("5.00"))
                 )
             );
             final Console console = new Consoles().console();

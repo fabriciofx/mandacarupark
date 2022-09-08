@@ -31,6 +31,7 @@ import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.dados.Dados;
+import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemCodeQr;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemPapel;
@@ -90,7 +91,7 @@ public final class TicketFake implements Ticket {
         final Pagamento pagamento = this.pagamentos.procura(this.id);
         final Dinheiro valor;
         if (pagamento == null) {
-            valor = new Dinheiro("0.00");
+            valor = new DinheiroOf("0.00");
         } else {
             valor = pagamento.sobre().dado("valor");
         }

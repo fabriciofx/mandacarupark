@@ -37,6 +37,7 @@ import com.github.fabriciofx.mandacarupark.conta.DomingoGratis;
 import com.github.fabriciofx.mandacarupark.conta.Tolerancia;
 import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
+import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasFake;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
@@ -62,7 +63,7 @@ public final class TestEstacionamentoFake {
             new Contas(
                 new DomingoGratis(),
                 new Tolerancia(),
-                new ValorFixo(new Dinheiro("5.00"))
+                new ValorFixo(new DinheiroOf("5.00"))
             )
         );
         final Placa placa = new PlacaOf("ABC1234");
@@ -83,7 +84,7 @@ public final class TestEstacionamentoFake {
             new Contas(
                 new DomingoGratis(),
                 new Tolerancia(),
-                new ValorFixo(new Dinheiro("5.00"))
+                new ValorFixo(new DinheiroOf("5.00"))
             )
         );
         final Placa placa = new PlacaOf("ABC1234");
@@ -104,7 +105,7 @@ public final class TestEstacionamentoFake {
         Assert.assertTrue(ticketValidado.validado());
         Assert.assertEquals(
             ticketValidado.sobre().dado("valor"),
-            new Dinheiro("5.00")
+            new DinheiroOf("5.00")
         );
     }
 
@@ -114,7 +115,7 @@ public final class TestEstacionamentoFake {
             new Contas(
                 new DomingoGratis(),
                 new Tolerancia(),
-                new ValorFixo(new Dinheiro("5.00"))
+                new ValorFixo(new DinheiroOf("5.00"))
             )
         );
         final Placa placa = new PlacaOf("ABC1234");
@@ -135,7 +136,7 @@ public final class TestEstacionamentoFake {
         Assert.assertTrue(ticketValidado.validado());
         Assert.assertEquals(
             ticketValidado.sobre().dado("valor"),
-            new Dinheiro("0.00")
+            new DinheiroOf("0.00")
         );
     }
 
@@ -145,7 +146,7 @@ public final class TestEstacionamentoFake {
             new Contas(
                 new DomingoGratis(),
                 new Tolerancia(),
-                new ValorFixo(new Dinheiro("5.00"))
+                new ValorFixo(new DinheiroOf("5.00"))
             )
         );
         final Placa placa = new PlacaOf("ABC1234");
@@ -166,7 +167,7 @@ public final class TestEstacionamentoFake {
         Assert.assertTrue(ticketValidado.validado());
         Assert.assertEquals(
             ticketValidado.sobre().dado("valor"),
-            new Dinheiro("0.00")
+            new DinheiroOf("0.00")
         );
     }
 
@@ -180,7 +181,7 @@ public final class TestEstacionamentoFake {
                     new Contas(
                         new DomingoGratis(),
                         new Tolerancia(),
-                        new ValorFixo(new Dinheiro("5.00"))
+                        new ValorFixo(new DinheiroOf("5.00"))
                     )
                 );
                 Placa placa = new PlacaOf("ABC1234");
@@ -213,7 +214,7 @@ public final class TestEstacionamentoFake {
             new Contas(
                 new DomingoGratis(),
                 new Tolerancia(),
-                new ValorFixo(new Dinheiro("5.00"))
+                new ValorFixo(new DinheiroOf("5.00"))
             )
         );
         estacionamento.entrada(
@@ -247,7 +248,7 @@ public final class TestEstacionamentoFake {
             new Contas(
                 new DomingoGratis(),
                 new Tolerancia(),
-                new ValorFixo(new Dinheiro("5.00"))
+                new ValorFixo(new DinheiroOf("5.00"))
             )
         );
         final Ticket ticket = estacionamento.entrada(

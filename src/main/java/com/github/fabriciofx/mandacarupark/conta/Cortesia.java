@@ -3,6 +3,7 @@ package com.github.fabriciofx.mandacarupark.conta;
 import com.github.fabriciofx.mandacarupark.Conta;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Periodo;
+import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 
 public final class Cortesia implements Conta {
     @Override
@@ -12,6 +13,6 @@ public final class Cortesia implements Conta {
 
     @Override
     public Dinheiro valor(final Periodo periodo) {
-        return new Dinheiro("0.00");
+        return new DinheiroOf("0.00");
     }
 }

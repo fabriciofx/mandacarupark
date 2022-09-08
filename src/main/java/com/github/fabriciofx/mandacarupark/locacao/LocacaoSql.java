@@ -32,6 +32,7 @@ import com.github.fabriciofx.mandacarupark.dados.Dados;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Select;
 import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
@@ -63,7 +64,7 @@ public final class LocacaoSql implements Locacao {
                 placa = new PlacaOf(rset.getString(1));
                 entrada = new DataHoraOf(rset.getString(2));
                 saida = new DataHoraOf(rset.getString(3));
-                valor = new Dinheiro(rset.getString(4));
+                valor = new DinheiroOf(rset.getString(4));
             } else {
                 throw new RuntimeException(
                     "Dados sobre a locação são inexistentes ou inválidos!"

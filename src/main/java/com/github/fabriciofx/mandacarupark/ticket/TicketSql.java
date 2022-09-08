@@ -31,6 +31,7 @@ import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.dados.Dados;
 import com.github.fabriciofx.mandacarupark.db.Select;
 import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemCodeQr;
@@ -102,9 +103,9 @@ public final class TicketSql implements Ticket {
         ) {
             final Dinheiro valor;
             if (rset.next()) {
-                valor = new Dinheiro(rset.getBigDecimal(1));
+                valor = new DinheiroOf(rset.getBigDecimal(1));
             } else {
-                valor = new Dinheiro("0.00");
+                valor = new DinheiroOf("0.00");
             }
             return new Dados(
                 "placa", this.placa,

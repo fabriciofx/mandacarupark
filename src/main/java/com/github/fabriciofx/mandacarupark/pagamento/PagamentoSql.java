@@ -31,6 +31,7 @@ import com.github.fabriciofx.mandacarupark.dados.Dados;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Select;
 import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 
@@ -63,7 +64,7 @@ public final class PagamentoSql implements Pagamento {
             final Dinheiro valor;
             if (rset.next()) {
                 dataHora = new DataHoraOf(rset.getString(1));
-                valor = new Dinheiro(rset.getBigDecimal(2));
+                valor = new DinheiroOf(rset.getBigDecimal(2));
 
             } else {
                 throw new RuntimeException("Dados inexistentes ou inválidos!");

@@ -37,6 +37,7 @@ import com.github.fabriciofx.mandacarupark.conta.Tolerancia;
 import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraRandom;
+import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasFake;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
@@ -61,7 +62,7 @@ public final class SimEstacionamento {
             new Contas(
                 new DomingoGratis(),
                 new Tolerancia(),
-                new ValorFixo(new Dinheiro("5.00"))
+                new ValorFixo(new DinheiroOf("5.00"))
             )
         );
         for (int idx = 0; idx < 1000000; idx++) {
