@@ -25,7 +25,6 @@ package com.github.fabriciofx.mandacarupark.estacionamento;
 
 import com.github.fabriciofx.mandacarupark.Contas;
 import com.github.fabriciofx.mandacarupark.DataHora;
-import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
@@ -40,16 +39,13 @@ import com.github.fabriciofx.mandacarupark.datahora.DataHoraRandom;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasFake;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
-import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.placa.PlacaRandom;
 import com.github.fabriciofx.mandacarupark.saidas.SaidasFake;
-import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemParaArquivo;
 import org.junit.Test;
-import java.io.File;
 import java.time.LocalDateTime;
 import java.util.concurrent.ThreadLocalRandom;
 
-public final class SimEstacionamento {
+public final class SimEstacionamentoFake {
     @Test
     public void simulacao() {
         // 1. Monta-se o ambiente do estacionamento
@@ -66,7 +62,7 @@ public final class SimEstacionamento {
                 new ValorFixo(new DinheiroOf("5.00"))
             )
         );
-        for (int idx = 0; idx < 1000000; idx++) {
+        for (int idx = 0; idx < 100; idx++) {
             final Placa placa = new PlacaRandom();
             final DataHora dataHora = new DataHoraRandom(
                 LocalDateTime.of(2022, 8, 2, 8, 0, 0),
