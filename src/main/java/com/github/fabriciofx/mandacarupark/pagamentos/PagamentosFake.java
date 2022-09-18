@@ -66,6 +66,11 @@ public final class PagamentosFake implements Pagamentos {
     }
 
     @Override
+    public int tamanho() {
+        return this.items.size();
+    }
+
+    @Override
     public Iterator<Pagamento> iterator() {
         return this.items.values().iterator();
     }

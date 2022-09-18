@@ -21,10 +21,4 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
-
-public interface Pagamentos extends Iterable<Pagamento> {
-    Pagamento pagamento(Ticket ticket, DataHora dataHora, Dinheiro valor);
-    Pagamento procura(Uuid id);
-    int tamanho();
-}
+package com.github.fabriciofx.mandacarupark.pagamentos;

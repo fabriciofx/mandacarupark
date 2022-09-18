@@ -66,14 +66,16 @@ public final class PagamentosSql implements Pagamentos {
 
     @Override
     public Pagamento procura(final Uuid id) {
+        return new PagamentoSql(this.session, id);
+    }
+
+    @Override
+    public int tamanho() {
         int quantidade = 0;
         try (
             final ResultSet rset = new Select(
                 this.session,
-                new Sprintf(
-                    "SELECT COUNT(*) FROM pagamento WHERE id = '%s'",
-                    id
-                )
+                "SELECT COUNT(*) FROM pagamento"
             ).result()
         ) {
             if (rset.next()) {
@@ -82,15 +84,7 @@ public final class PagamentosSql implements Pagamentos {
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-        if (quantidade == 0) {
-            throw new RuntimeException(
-                String.format(
-                    "Pagamento com id '%s' não encontrado!",
-                    id
-                )
-            );
-        }
-        return new PagamentoSql(this.session, id);
+        return quantidade;
     }
 
     @Override

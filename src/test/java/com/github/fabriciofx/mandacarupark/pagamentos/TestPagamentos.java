@@ -21,10 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.pagamentos;
 
-public interface Pagamentos extends Iterable<Pagamento> {
-    Pagamento pagamento(Ticket ticket, DataHora dataHora, Dinheiro valor);
-    Pagamento procura(Uuid id);
-    int tamanho();
+import com.github.fabriciofx.mandacarupark.Pagamentos;
+import com.github.fabriciofx.mandacarupark.db.RandomName;
+import com.github.fabriciofx.mandacarupark.db.ScriptSql;
+import com.github.fabriciofx.mandacarupark.db.Server;
+import com.github.fabriciofx.mandacarupark.db.ServerH2;
+import com.github.fabriciofx.mandacarupark.db.Session;
+import org.junit.Assert;
+import org.junit.Test;
+
+public final class TestPagamentos {
+    @Test
+    public void tamanho() throws Exception {
+        try (
+            final Server server = new ServerH2(
+                new RandomName(),
+                new ScriptSql("mandacarupark.sql")
+            ).start()
+        ) {
+            final Session session = server.session();
+            final Pagamentos pagamentos = new PagamentosSql(session);
+            Assert.assertEquals(3, pagamentos.tamanho());
+        }
+    }
 }
