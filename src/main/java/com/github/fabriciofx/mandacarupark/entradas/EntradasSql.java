@@ -110,16 +110,16 @@ public final class EntradasSql implements Entradas {
                 "SELECT * FROM entrada WHERE NOT EXISTS (SELECT FROM saida WHERE entrada.id = saida.id)"
             ).result()
         ) {
-            final List<Entrada> items = new ArrayList<>();
+            final List<Entrada> itens = new ArrayList<>();
             while (rset.next()) {
-                items.add(
+                itens.add(
                     new EntradaSql(
                         this.session,
                         new Uuid(rset.getString(1))
                     )
                 );
             }
-            return items.iterator();
+            return itens.iterator();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

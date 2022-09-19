@@ -94,16 +94,16 @@ public final class PagamentosSql implements Pagamentos {
                 this.session,
                 "SELECT * FROM pagamento"
             ).result()) {
-            final List<Pagamento> items = new ArrayList<>();
+            final List<Pagamento> itens = new ArrayList<>();
             while (rset.next()) {
-                items.add(
+                itens.add(
                     new PagamentoSql(
                         this.session,
                         new Uuid(rset.getString(1))
                     )
                 );
             }
-            return items.iterator();
+            return itens.iterator();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

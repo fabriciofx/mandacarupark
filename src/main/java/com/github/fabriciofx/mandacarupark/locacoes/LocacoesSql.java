@@ -57,16 +57,16 @@ public final class LocacoesSql implements Locacoes {
                 )
             ).result()
         ) {
-            final List<Locacao> items = new ArrayList<>();
+            final List<Locacao> itens = new ArrayList<>();
             while (rset.next()) {
-                items.add(
+                itens.add(
                     new LocacaoSql(
                         this.session,
                         new Uuid(rset.getString(1))
                     )
                 );
             }
-            return items.iterator();
+            return itens.iterator();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

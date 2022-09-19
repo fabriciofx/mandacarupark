@@ -28,18 +28,18 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class Contas {
-    private final List<Conta> items;
+    private final List<Conta> itens;
 
-    public Contas(final Conta... items) {
-        this(Arrays.asList(items));
+    public Contas(final Conta... itens) {
+        this(Arrays.asList(itens));
     }
 
-    public Contas(final List<Conta> items) {
-        this.items = items;
+    public Contas(final List<Conta> itens) {
+        this.itens = itens;
     }
 
     public Conta conta(final Periodo periodo) {
-        for (final Conta item : this.items) {
+        for (final Conta item : this.itens) {
             if (item.avalie(periodo)) {
                 return item;
             }

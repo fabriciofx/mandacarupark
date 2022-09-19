@@ -101,16 +101,16 @@ public final class SaidasSql implements Saidas {
                 "SELECT * FROM saida"
             ).result()
         ) {
-            final List<Saida> items = new ArrayList<>();
+            final List<Saida> itens = new ArrayList<>();
             while (rset.next()) {
-                items.add(
+                itens.add(
                     new SaidaSql(
                         this.session,
                         new Uuid(rset.getString(1))
                     )
                 );
             }
-            return items.iterator();
+            return itens.iterator();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

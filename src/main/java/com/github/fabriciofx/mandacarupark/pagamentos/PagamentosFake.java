@@ -35,14 +35,14 @@ import java.util.Iterator;
 import java.util.Map;
 
 public final class PagamentosFake implements Pagamentos {
-    private final Map<Uuid, Pagamento> items;
+    private final Map<Uuid, Pagamento> itens;
 
     public PagamentosFake() {
         this(new HashMap<>());
     }
 
-    public PagamentosFake(final Map<Uuid, Pagamento> items) {
-        this.items = items;
+    public PagamentosFake(final Map<Uuid, Pagamento> itens) {
+        this.itens = itens;
     }
 
     @Override
@@ -56,22 +56,22 @@ public final class PagamentosFake implements Pagamentos {
             dataHora,
             valor
         );
-        this.items.put(ticket.id(), evento);
+        this.itens.put(ticket.id(), evento);
         return evento;
     }
 
     @Override
     public Pagamento procura(final Uuid id) {
-        return this.items.get(id);
+        return this.itens.get(id);
     }
 
     @Override
     public int tamanho() {
-        return this.items.size();
+        return this.itens.size();
     }
 
     @Override
     public Iterator<Pagamento> iterator() {
-        return this.items.values().iterator();
+        return this.itens.values().iterator();
     }
 }

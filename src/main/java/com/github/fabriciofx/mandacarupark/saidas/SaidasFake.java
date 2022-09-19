@@ -35,14 +35,14 @@ import java.util.Iterator;
 import java.util.Map;
 
 public final class SaidasFake implements Saidas {
-    private final Map<Uuid, Saida> items;
+    private final Map<Uuid, Saida> itens;
 
     public SaidasFake() {
         this(new HashMap<>());
     }
 
-    public SaidasFake(final Map<Uuid, Saida> items) {
-        this.items = items;
+    public SaidasFake(final Map<Uuid, Saida> itens) {
+        this.itens = itens;
     }
 
     @Override
@@ -52,17 +52,17 @@ public final class SaidasFake implements Saidas {
         final DataHora dataHora
     ) {
         final Saida evento = new SaidaFake(ticket.id(), placa, dataHora);
-        this.items.put(evento.id(), evento);
+        this.itens.put(evento.id(), evento);
         return evento;
     }
 
     @Override
     public Saida procura(final Uuid id) {
-        return this.items.get(id);
+        return this.itens.get(id);
     }
 
     @Override
     public Iterator<Saida> iterator() {
-        return this.items.values().iterator();
+        return this.itens.values().iterator();
     }
 }

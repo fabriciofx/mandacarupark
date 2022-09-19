@@ -58,7 +58,7 @@ public final class LocacoesFake implements Locacoes {
 
     @Override
     public Iterator<Locacao> iterator() {
-        final List<Locacao> items = new ArrayList<>();
+        final List<Locacao> itens = new ArrayList<>();
         for (Entrada entrada : this.entradas) {
             final DataHora dataHora = entrada.sobre().dado("dataHora");
             if (this.periodo.contem(dataHora)) {
@@ -66,7 +66,7 @@ public final class LocacoesFake implements Locacoes {
                 final Pagamento pagamento = this.pagamentos.procura(
                     entrada.id()
                 );
-                items.add(
+                itens.add(
                     new LocacaoFake(
                         entrada.id(),
                         entrada.sobre().dado("placa"),
@@ -77,6 +77,6 @@ public final class LocacoesFake implements Locacoes {
                 );
             }
         }
-        return items.iterator();
+        return itens.iterator();
     }
 }
