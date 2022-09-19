@@ -66,19 +66,13 @@ public final class EstacionamentoSql implements Estacionamento {
     }
 
     @Override
-    public Ticket pagamento(final Ticket ticket, final DataHora dataHora) {
+    public void pagamento(final Ticket ticket, final DataHora dataHora) {
         final Periodo periodo = new PeriodoOf(
             ticket.sobre().dado("dataHora"),
             dataHora
         );
         final Dinheiro valor = this.contas.conta(periodo).valor(periodo);
         this.pagamentos.pagamento(ticket, dataHora, valor);
-        return new TicketSql(
-            this.session,
-            ticket.id(),
-            ticket.sobre().dado("placa"),
-            ticket.sobre().dado("dataHora")
-        );
     }
 
     @Override

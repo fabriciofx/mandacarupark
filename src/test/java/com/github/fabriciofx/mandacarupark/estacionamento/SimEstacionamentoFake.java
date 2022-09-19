@@ -76,7 +76,7 @@ public final class SimEstacionamentoFake {
             // 4. Depois de um tempo aletório T + N, o proprietário paga o
             //    estacionamento
             final int N = ThreadLocalRandom.current().nextInt(10, 841);
-            final Ticket ticketValidado = estacionamento.pagamento(
+            estacionamento.pagamento(
                 ticket,
                 new DataHoraOf(dataHora.dateTime().plusMinutes(N))
             );
@@ -84,7 +84,7 @@ public final class SimEstacionamentoFake {
             //    estacionamento
             final int K = ThreadLocalRandom.current().nextInt(N, 841);
             estacionamento.saida(
-                ticketValidado,
+                ticket,
                 placa,
                 new DataHoraOf(dataHora.dateTime().plusMinutes(N + K))
             );

@@ -110,18 +110,18 @@ public final class TestEstacionamentoSql {
                 placa,
                 new DataHoraOf(dateTime)
             );
-            final Ticket ticketValidado = estacionamento.pagamento(
+            estacionamento.pagamento(
                 ticket,
                 new DataHoraOf(dateTime.plusMinutes(60))
             );
             estacionamento.saida(
-                ticketValidado,
+                ticket,
                 placa,
                 new DataHoraOf(dateTime.plusMinutes(70))
             );
-            Assert.assertTrue(ticketValidado.validado());
+            Assert.assertTrue(ticket.validado());
             Assert.assertEquals(
-                ticketValidado.sobre().dado("valor"),
+                ticket.sobre().dado("valor"),
                 new DinheiroOf("5.00")
             );
         }
@@ -154,18 +154,18 @@ public final class TestEstacionamentoSql {
                 placa,
                 new DataHoraOf(dateTime)
             );
-            final Ticket ticketValidado = estacionamento.pagamento(
+            estacionamento.pagamento(
                 ticket,
                 new DataHoraOf(dateTime.plusMinutes(20))
             );
             estacionamento.saida(
-                ticketValidado,
+                ticket,
                 placa,
                 new DataHoraOf(dateTime.plusMinutes(25))
             );
-            Assert.assertTrue(ticketValidado.validado());
+            Assert.assertTrue(ticket.validado());
             Assert.assertEquals(
-                ticketValidado.sobre().dado("valor"),
+                ticket.sobre().dado("valor"),
                 new DinheiroOf("0.00")
             );
         }
@@ -200,18 +200,18 @@ public final class TestEstacionamentoSql {
                 placa,
                 new DataHoraOf(dateTime)
             );
-            final Ticket ticketValidado = estacionamento.pagamento(
+            estacionamento.pagamento(
                 ticket,
                 new DataHoraOf(dateTime.plusMinutes(60))
             );
             estacionamento.saida(
-                ticketValidado,
+                ticket,
                 placa,
                 new DataHoraOf(dateTime.plusMinutes(70))
             );
-            Assert.assertTrue(ticketValidado.validado());
+            Assert.assertTrue(ticket.validado());
             Assert.assertEquals(
-                ticketValidado.sobre().dado("valor"),
+                ticket.sobre().dado("valor"),
                 new DinheiroOf("0.00")
             );
         }

@@ -65,7 +65,7 @@ public final class TestLocacoesFake {
         Placa placa = new PlacaOf("ABC1234");
         final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
         Ticket ticket = estacionamento.entrada(placa, new DataHoraOf(dateTime));
-        ticket = estacionamento.pagamento(
+        estacionamento.pagamento(
             ticket,
             new DataHoraOf(dateTime.plusMinutes(60))
         );
@@ -80,7 +80,7 @@ public final class TestLocacoesFake {
             placa,
             new DataHoraOf(dateTime.plusMinutes(1))
         );
-        ticket = estacionamento.pagamento(
+        estacionamento.pagamento(
             ticket,
             new DataHoraOf(dateTime.plusMinutes(40))
         );
@@ -95,7 +95,7 @@ public final class TestLocacoesFake {
             placa,
             new DataHoraOf(dateTime.plusMinutes(2))
         );
-        ticket = estacionamento.pagamento(
+        estacionamento.pagamento(
             ticket,
             new DataHoraOf(dateTime.plusMinutes(55))
         );

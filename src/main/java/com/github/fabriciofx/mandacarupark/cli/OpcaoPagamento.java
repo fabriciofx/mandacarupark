@@ -40,16 +40,16 @@ public final class OpcaoPagamento implements Opcao {
         this.console.write("  Ticket: ");
         final Uuid id = new Uuid(this.console.read());
         final Ticket ticket = this.entradas.ticket(id);
-        final Ticket ticketValidado = this.estacionamento.pagamento(
+        this.estacionamento.pagamento(
             ticket,
             new DataHoraOf()
         );
         this.console.write(
             String.format(
                 "Ticket id: %s referente a placa %s %sestá pago!\n",
-                ticketValidado.id(),
-                ticketValidado.sobre().dado("placa"),
-                ticketValidado.validado() ? "" : "não "
+                ticket.id(),
+                ticket.sobre().dado("placa"),
+                ticket.validado() ? "" : "não "
             )
         );
     }
