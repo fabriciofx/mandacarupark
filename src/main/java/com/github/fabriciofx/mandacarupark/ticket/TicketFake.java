@@ -39,6 +39,7 @@ import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemTexto;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemTicket;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.List;
 
 public final class TicketFake implements Ticket {
     private final Pagamentos pagamentos;
@@ -78,22 +79,18 @@ public final class TicketFake implements Ticket {
 
     @Override
     public boolean validado() {
-        boolean result = false;
-        final Pagamento pagamento = this.pagamentos.procura(this.id);
-        if (pagamento != null) {
-            result = true;
-        }
-        return result;
+        final List<Pagamento> pagamento = this.pagamentos.procura(this.id);
+        return !pagamento.isEmpty();
     }
 
     @Override
     public Dados sobre() {
-        final Pagamento pagamento = this.pagamentos.procura(this.id);
+        final List<Pagamento> pagamento = this.pagamentos.procura(this.id);
         final Dinheiro valor;
-        if (pagamento == null) {
+        if (pagamento.isEmpty()) {
             valor = new DinheiroOf("0.00");
         } else {
-            valor = pagamento.sobre().dado("valor");
+            valor = pagamento.get(0).sobre().dado("valor");
         }
         return new Dados(
             "placa", this.placa,

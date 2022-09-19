@@ -23,8 +23,10 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
+import java.util.List;
+
 public interface Pagamentos extends Iterable<Pagamento> {
     Pagamento pagamento(Ticket ticket, DataHora dataHora, Dinheiro valor);
-    Pagamento procura(Uuid id);
+    List<Pagamento> procura(Uuid id);
     int tamanho();
 }

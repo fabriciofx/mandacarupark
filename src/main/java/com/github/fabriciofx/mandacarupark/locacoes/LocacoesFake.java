@@ -63,7 +63,7 @@ public final class LocacoesFake implements Locacoes {
             final DataHora dataHora = entrada.sobre().dado("dataHora");
             if (this.periodo.contem(dataHora)) {
                 final Saida saida = this.saidas.procura(entrada.id());
-                final Pagamento pagamento = this.pagamentos.procura(
+                final List<Pagamento> pagamento = this.pagamentos.procura(
                     entrada.id()
                 );
                 itens.add(
@@ -72,7 +72,7 @@ public final class LocacoesFake implements Locacoes {
                         entrada.sobre().dado("placa"),
                         entrada.sobre().dado("dataHora"),
                         saida.sobre().dado("dataHora"),
-                        pagamento.sobre().dado("valor")
+                        pagamento.get(0).sobre().dado("valor")
                     )
                 );
             }

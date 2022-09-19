@@ -36,6 +36,7 @@ import com.github.fabriciofx.mandacarupark.pagamento.PagamentoSql;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -65,8 +66,8 @@ public final class PagamentosSql implements Pagamentos {
     }
 
     @Override
-    public Pagamento procura(final Uuid id) {
-        return new PagamentoSql(this.session, id);
+    public List<Pagamento> procura(final Uuid id) {
+        return Arrays.asList(new PagamentoSql(this.session, id));
     }
 
     @Override
