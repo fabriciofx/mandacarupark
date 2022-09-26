@@ -57,31 +57,31 @@ public class ServerWeb {
     }
 
     private static void handleClient(final Socket client) throws IOException {
-        BufferedReader br =
-            new BufferedReader(new InputStreamReader(client.getInputStream()));
-        StringBuilder requestBuilder = new StringBuilder();
-        String line;
+        final BufferedReader br = new BufferedReader(
+            new InputStreamReader(client.getInputStream())
+        );
+        final StringBuilder requestBuilder = new StringBuilder();
         while (true) {
-            line = br.readLine();
+            final String line = br.readLine();
             if (line.isBlank()) {
                 break;
             }
             requestBuilder.append(line + "\r\n");
         }
-        String request = requestBuilder.toString();
-        String[] requestsLines = request.split("\r\n");
-        String[] requestLine = requestsLines[0].split(" ");
-        String method = requestLine[0];
-        String path = requestLine[1];
-        String version = requestLine[2];
-        String host = requestsLines[1].split(" ")[1];
-        List<String> headers = new ArrayList<>();
-        for (int h = 2; h < requestsLines.length; h++) {
-            String header = requestsLines[h];
+        final String request = requestBuilder.toString();
+        final String[] lines = request.split("\r\n");
+        final String[] parts = lines[0].split(" ");
+        final String method = parts[0];
+        final String path = parts[1];
+        final String version = parts[2];
+        final String host = lines[1].split(" ")[1];
+        final List<String> headers = new ArrayList<>();
+        for (int hdr = 2; hdr < lines.length; hdr++) {
+            String header = lines[hdr];
             headers.add(header);
         }
-        String log = String.format("Client %s, method %s, path %s, " +
-                "version %s, host %s, headers %s",
+        final String log = String.format(
+            "Client %s, method %s, path %s, version %s, host %s, headers %s",
             client.toString(),
             method,
             path,
@@ -90,10 +90,10 @@ public class ServerWeb {
             headers.toString()
         );
         System.out.println(log);
-        Path filePath = getFilePath(path);
+        final Path filePath = getFilePath(path);
         if (Files.exists(filePath)) {
             // file exist
-            String contentType = guessContentType(filePath);
+            final String contentType = guessContentType(filePath);
             sendResponse(
                 client,
                 "200 OK",
@@ -108,12 +108,12 @@ public class ServerWeb {
     }
 
     private static void sendResponse(
-        Socket client,
-        String status,
-        String contentType,
-        byte[] content
+        final Socket client,
+        final String status,
+        final String contentType,
+        final byte[] content
     ) throws IOException {
-        OutputStream out = client.getOutputStream();
+        final OutputStream out = client.getOutputStream();
         out.write(("HTTP/1.1 \r\n" + status).getBytes());
         out.write(("ContentType: " + contentType + "\r\n").getBytes());
         out.write("\r\n".getBytes());
@@ -123,14 +123,18 @@ public class ServerWeb {
         client.close();
     }
 
-    private static Path getFilePath(String path) {
-        if ("/".equals(path)) {
-            path = "/index.html";
+    private static Path getFilePath(final String filename) {
+        final Path path;
+        if ("/".equals(filename)) {
+            path = Paths.get("/tmp/www", "/index.html");
+        } else {
+            path = Paths.get("/tmp/www", filename);
         }
-        return Paths.get("/tmp/www", path);
+        return path;
     }
 
-    private static String guessContentType(Path filePath) throws IOException {
+    private static String guessContentType(final Path filePath)
+        throws IOException {
         return Files.probeContentType(filePath);
     }
 }
