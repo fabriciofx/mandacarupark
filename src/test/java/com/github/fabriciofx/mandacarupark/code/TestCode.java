@@ -23,7 +23,8 @@
  */
 package com.github.fabriciofx.mandacarupark.code;
 
-import com.github.fabriciofx.mandacarupark.Uuid;
+import com.github.fabriciofx.mandacarupark.InputStreamAsBytes;
+import org.junit.Assert;
 import org.junit.Test;
 import javax.imageio.ImageIO;
 import java.awt.Color;
@@ -31,24 +32,33 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 public final class TestCode {
     @Test
-    public void codebarEan13() throws IOException {
+    public void codebarEan13() throws Exception {
+        final InputStream correto = Thread.currentThread()
+            .getContextClassLoader()
+            .getResourceAsStream("barcode-ean13.png");
         final Code barcode = new CodeBarEan13("089181452097");
-        final BufferedImage image = barcode.imagem();
-        final File file = new File("barcode-ean13.jpg");
-        ImageIO.write(image, "jpg", file);
-        file.delete();
+        final BufferedImage imagem = barcode.imagem();
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(imagem, "png", baos);
+        Assert.assertArrayEquals(
+            new InputStreamAsBytes(correto).asBytes(),
+            baos.toByteArray()
+        );
     }
 
     @Test
-    public void codeQr() throws IOException {
-        final Code barcode = new CodeQr(new Uuid().toString());
-        final BufferedImage image = barcode.imagem();
-        final Graphics2D g2d = image.createGraphics();
+    public void codeQr() throws Exception {
+        final InputStream correto = Thread.currentThread()
+            .getContextClassLoader()
+            .getResourceAsStream("barcode-qr.png");
+        final Code barcode = new CodeQr("b41d0e8c-56c2-4be6-a9e3-7afc74e3fa4a");
+        final BufferedImage imagem = barcode.imagem();
+        final Graphics2D g2d = imagem.createGraphics();
         final RenderingHints rh = new RenderingHints(
             RenderingHints.KEY_TEXT_ANTIALIASING,
             RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB
@@ -57,9 +67,12 @@ public final class TestCode {
         final Font helvetica = new Font("Lucida Sans Unicode", Font.PLAIN, 13);
         g2d.setColor(Color.black);
         g2d.setFont(helvetica);
-        g2d.drawString("Hello World", 50, 50);
-        final File file = new File("barcode-qr.png");
-        ImageIO.write(image, "png", file);
-        file.delete();
+        g2d.drawString("Hello World", 20, 20);
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(imagem, "png", baos);
+        Assert.assertArrayEquals(
+            new InputStreamAsBytes(correto).asBytes(),
+            baos.toByteArray()
+        );
     }
 }

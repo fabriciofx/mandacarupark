@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.ticket.imagem;
 
+import com.github.fabriciofx.mandacarupark.InputStreamAsBytes;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
@@ -35,25 +36,25 @@ import javax.imageio.ImageIO;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
 public final class TestImagem {
     @Test
-    public void papel() throws IOException {
+    public void papel() throws Exception {
         final InputStream correto = Thread.currentThread()
             .getContextClassLoader()
             .getResourceAsStream("imagem-papel.png");
         final Imagem imagem = new ImagemPapel(150, 300);
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(imagem.imagem(), "png", baos);
-        final byte[] esperado = toBytes(correto);
-        Assert.assertArrayEquals(esperado, baos.toByteArray());
+        Assert.assertArrayEquals(
+            new InputStreamAsBytes(correto).asBytes(),
+            baos.toByteArray()
+        );
     }
 
     @Test
-    public void texto() throws IOException {
+    public void texto() throws Exception {
         final InputStream correto = Thread.currentThread()
             .getContextClassLoader()
             .getResourceAsStream("imagem-texto.png");
@@ -67,12 +68,14 @@ public final class TestImagem {
         );
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(imagem.imagem(), "png", baos);
-        final byte[] esperado = toBytes(correto);
-        Assert.assertArrayEquals(esperado, baos.toByteArray());
+        Assert.assertArrayEquals(
+            new InputStreamAsBytes(correto).asBytes(),
+            baos.toByteArray()
+        );
     }
 
     @Test
-    public void qrcode() throws IOException {
+    public void qrcode() throws Exception {
         final InputStream correto = Thread.currentThread()
             .getContextClassLoader()
             .getResourceAsStream("imagem-qrcode.png");
@@ -86,17 +89,18 @@ public final class TestImagem {
         );
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(imagem.imagem(), "png", baos);
-        final byte[] esperado = toBytes(correto);
-        Assert.assertArrayEquals(esperado, baos.toByteArray());
+        Assert.assertArrayEquals(
+            new InputStreamAsBytes(correto).asBytes(),
+            baos.toByteArray()
+        );
     }
 
     @Test
-    public void ticket() throws IOException {
+    public void ticket() throws Exception {
         final String filename = "imagem-ticket.png";
         final InputStream correto = Thread.currentThread()
             .getContextClassLoader()
             .getResourceAsStream(filename);
-        final File file = new File(filename);
         final Imagem imagem = new ImagemTicket(
             new ImagemPapel(150, 300),
             new TicketFake(
@@ -108,17 +112,18 @@ public final class TestImagem {
         );
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(imagem.imagem(), "png", baos);
-        final byte[] esperado = toBytes(correto);
-        Assert.assertArrayEquals(esperado, baos.toByteArray());
+        Assert.assertArrayEquals(
+            new InputStreamAsBytes(correto).asBytes(),
+            baos.toByteArray()
+        );
     }
 
     @Test
-    public void completo() throws IOException {
+    public void completo() throws Exception {
         final String filename = "imagem-completo.png";
         final InputStream correto = Thread.currentThread()
             .getContextClassLoader()
             .getResourceAsStream(filename);
-        final File file = new File(filename);
         final Ticket ticket = new TicketFake(
             new PagamentosFake(),
             new Uuid("8c878e6f-ee13-4a37-a208-7510c2638944"),
@@ -145,20 +150,9 @@ public final class TestImagem {
         );
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(imagem.imagem(), "png", baos);
-        final byte[] esperado = toBytes(correto);
-        Assert.assertArrayEquals(esperado, baos.toByteArray());
-    }
-
-    private byte[] toBytes(final InputStream stream) throws IOException {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final byte[] buf = new byte[1024];
-        while (true) {
-            final int read = stream.read(buf);
-            if (read < 0) {
-                break;
-            }
-            baos.write(buf, 0, read);
-        }
-        return baos.toByteArray();
+        Assert.assertArrayEquals(
+            new InputStreamAsBytes(correto).asBytes(),
+            baos.toByteArray()
+        );
     }
 }
