@@ -40,7 +40,7 @@ public final class TestCode {
     public void codebarEan13() throws Exception {
         final InputStream correto = Thread.currentThread()
             .getContextClassLoader()
-            .getResourceAsStream("barcode-ean13.png");
+            .getResourceAsStream("code/barcode-ean13.png");
         final Code barcode = new CodeBarEan13("089181452097");
         final BufferedImage imagem = barcode.imagem();
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -55,7 +55,7 @@ public final class TestCode {
     public void codeQr() throws Exception {
         final InputStream correto = Thread.currentThread()
             .getContextClassLoader()
-            .getResourceAsStream("barcode-qr.png");
+            .getResourceAsStream("code/barcode-qr.png");
         final Code barcode = new CodeQr("b41d0e8c-56c2-4be6-a9e3-7afc74e3fa4a");
         final BufferedImage imagem = barcode.imagem();
         final Graphics2D g2d = imagem.createGraphics();

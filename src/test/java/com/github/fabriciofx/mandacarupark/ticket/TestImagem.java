@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.ticket.imagem;
+package com.github.fabriciofx.mandacarupark.ticket;
 
 import com.github.fabriciofx.mandacarupark.InputStreamAsBytes;
 import com.github.fabriciofx.mandacarupark.Ticket;
@@ -30,6 +30,11 @@ import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.ticket.TicketFake;
+import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
+import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemCodeQr;
+import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemPapel;
+import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemTexto;
+import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemTicket;
 import org.junit.Assert;
 import org.junit.Test;
 import javax.imageio.ImageIO;
@@ -43,7 +48,7 @@ public final class TestImagem {
     public void papel() throws Exception {
         final InputStream correto = Thread.currentThread()
             .getContextClassLoader()
-            .getResourceAsStream("imagem-papel.png");
+            .getResourceAsStream("imagem/imagem-papel.png");
         final Imagem imagem = new ImagemPapel(150, 300);
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(imagem.imagem(), "png", baos);
@@ -57,7 +62,7 @@ public final class TestImagem {
     public void texto() throws Exception {
         final InputStream correto = Thread.currentThread()
             .getContextClassLoader()
-            .getResourceAsStream("imagem-texto.png");
+            .getResourceAsStream("imagem/imagem-texto.png");
         final Imagem imagem = new ImagemTexto(
             new ImagemPapel(150, 300),
             new Font("Lucida Sans Unicode", Font.PLAIN, 13),
@@ -78,7 +83,7 @@ public final class TestImagem {
     public void qrcode() throws Exception {
         final InputStream correto = Thread.currentThread()
             .getContextClassLoader()
-            .getResourceAsStream("imagem-qrcode.png");
+            .getResourceAsStream("imagem/imagem-qrcode.png");
         final Imagem imagem = new ImagemCodeQr(
             new ImagemPapel(150, 300),
             new Uuid("8c878e6f-ee13-4a37-a208-7510c2638944").toString(),
@@ -97,10 +102,9 @@ public final class TestImagem {
 
     @Test
     public void ticket() throws Exception {
-        final String filename = "imagem-ticket.png";
         final InputStream correto = Thread.currentThread()
             .getContextClassLoader()
-            .getResourceAsStream(filename);
+            .getResourceAsStream("imagem/imagem-ticket.png");
         final Imagem imagem = new ImagemTicket(
             new ImagemPapel(150, 300),
             new TicketFake(
@@ -120,10 +124,9 @@ public final class TestImagem {
 
     @Test
     public void completo() throws Exception {
-        final String filename = "imagem-completo.png";
         final InputStream correto = Thread.currentThread()
             .getContextClassLoader()
-            .getResourceAsStream(filename);
+            .getResourceAsStream("imagem/imagem-completo.png");
         final Ticket ticket = new TicketFake(
             new PagamentosFake(),
             new Uuid("8c878e6f-ee13-4a37-a208-7510c2638944"),
