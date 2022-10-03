@@ -24,6 +24,9 @@
 package com.github.fabriciofx.mandacarupark.placa;
 
 import com.github.fabriciofx.mandacarupark.Placa;
+import com.github.fabriciofx.mandacarupark.text.Text;
+import com.github.fabriciofx.mandacarupark.text.TextCached;
+import java.util.Objects;
 import java.util.Random;
 
 public final class PlacaRandom implements Placa {
@@ -31,32 +34,79 @@ public final class PlacaRandom implements Placa {
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
         'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
     };
-    final static char[] NUMEROS =
-        {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
+    final static char[] NUMEROS = {
+        '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'
+    };
     final static char[] LETRAS_NUMEROS = {
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
         'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '1', '2',
         '3', '4', '5', '6', '7', '8', '9', '0'
     };
-    private final Placa origin;
+    private final Text text;
 
     public PlacaRandom() {
-        this.origin = () -> {
-            final StringBuilder sb = new StringBuilder();
-            final Random rand = new Random();
-            sb.append(this.LETRAS[rand.nextInt(this.LETRAS.length)]);
-            sb.append(this.LETRAS[rand.nextInt(this.LETRAS.length)]);
-            sb.append(this.LETRAS[rand.nextInt(this.LETRAS.length)]);
-            sb.append(this.NUMEROS[rand.nextInt(this.NUMEROS.length)]);
-            sb.append(this.LETRAS_NUMEROS[rand.nextInt(this.LETRAS_NUMEROS.length)]);
-            sb.append(this.NUMEROS[rand.nextInt(this.NUMEROS.length)]);
-            sb.append(this.NUMEROS[rand.nextInt(this.NUMEROS.length)]);
-            return sb.toString();
-        };
+        this.text = new TextCached(
+            () -> {
+                final StringBuilder sb = new StringBuilder();
+                final Random rand = new Random();
+                sb.append(
+                    PlacaRandom.LETRAS[
+                        rand.nextInt(PlacaRandom.LETRAS.length)
+                    ]
+                );
+                sb.append(
+                    PlacaRandom.LETRAS[
+                        rand.nextInt(PlacaRandom.LETRAS.length)
+                    ]
+                );
+                sb.append(
+                    PlacaRandom.LETRAS[
+                        rand.nextInt(PlacaRandom.LETRAS.length)
+                    ]
+                );
+                sb.append(
+                    PlacaRandom.NUMEROS[
+                        rand.nextInt(PlacaRandom.NUMEROS.length)
+                    ]
+                );
+                sb.append(
+                    PlacaRandom.LETRAS_NUMEROS[
+                        rand.nextInt(PlacaRandom.LETRAS_NUMEROS.length)
+                    ]
+                );
+                sb.append(
+                    PlacaRandom.NUMEROS[
+                        rand.nextInt(PlacaRandom.NUMEROS.length)
+                    ]
+                );
+                sb.append(
+                    PlacaRandom.NUMEROS[
+                        rand.nextInt(PlacaRandom.NUMEROS.length)
+                    ]
+                );
+                return sb.toString();
+            }
+        );
     }
 
     @Override
     public String numero() {
-        return this.origin.numero();
+        return this.text.asString();
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        return this == obj || (obj instanceof Placa &&
+            Placa.class.cast(obj).numero().equals(this.numero()));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.numero());
+    }
+
+    @Override
+    public String toString() {
+        return this.numero();
     }
 }

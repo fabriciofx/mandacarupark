@@ -48,8 +48,8 @@ public final class Restricao implements Placa {
 
     @Override
     public boolean equals(final Object obj) {
-        return this == obj || obj instanceof PlacaOf &&
-            Restricao.class.cast(obj).numero().equals(this.numero());
+        return this == obj || (obj instanceof Placa &&
+            Placa.class.cast(obj).numero().equals(this.numero()));
     }
 
     @Override

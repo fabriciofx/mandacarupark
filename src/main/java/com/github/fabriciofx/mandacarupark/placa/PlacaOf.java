@@ -45,8 +45,8 @@ public final class PlacaOf implements Placa {
 
     @Override
     public boolean equals(final Object obj) {
-        return this == obj || obj instanceof PlacaOf &&
-            PlacaOf.class.cast(obj).numero().equals(this.numero.asString());
+        return this == obj || (obj instanceof Placa &&
+            Placa.class.cast(obj).numero().equals(this.numero()));
     }
 
     @Override

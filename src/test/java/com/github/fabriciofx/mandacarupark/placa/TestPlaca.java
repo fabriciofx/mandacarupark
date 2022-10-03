@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.placa;
 
+import com.github.fabriciofx.mandacarupark.Placa;
 import org.junit.Assert;
 import org.junit.Test;
 import java.util.regex.Pattern;
@@ -79,5 +80,25 @@ public final class TestPlaca {
         Assert.assertTrue(
             padrao.matcher(new PlacaRandom().numero()).matches()
         );
+    }
+
+    @Test
+    public void equals() {
+        Assert.assertTrue(
+            new PlacaOf("ABC1234").equals(new PlacaOf("ABC1234"))
+        );
+    }
+
+    @Test
+    public void equalsRestricao() {
+        Assert.assertTrue(
+            new Restricao(new PlacaOf("ABC1234")).equals(new PlacaOf("ABC1234"))
+        );
+    }
+
+    @Test
+    public void equalsRandom() {
+        final Placa random = new PlacaRandom();
+        Assert.assertTrue(random.equals(new PlacaOf(random.numero())));
     }
 }
