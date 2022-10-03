@@ -23,9 +23,12 @@
  */
 package com.github.fabriciofx.mandacarupark.web;
 
-public class App {
+import com.github.fabriciofx.mandacarupark.Server;
+
+public final class App {
     public static void main(String[] args) throws Exception {
-        final ServerWeb server = new ServerWeb();
-        server.start();
+        try (final Server server = new ServerWeb()) {
+            server.start();
+        }
     }
 }

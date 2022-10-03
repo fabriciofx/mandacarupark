@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.web;
 
+import com.github.fabriciofx.mandacarupark.Server;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -35,7 +36,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServerWeb {
+public final class ServerWeb implements Server {
     private final int port;
 
     public ServerWeb() {
@@ -46,6 +47,7 @@ public class ServerWeb {
         this.port = port;
     }
 
+    @Override
     public void start() throws Exception {
         try (final ServerSocket socket = new ServerSocket(this.port)) {
             while (true) {
@@ -53,6 +55,19 @@ public class ServerWeb {
                     handleClient(client);
                 }
             }
+        }
+    }
+
+    @Override
+    public void stop() throws Exception {
+    }
+
+    @Override
+    public void close() throws IOException {
+        try {
+            this.stop();
+        } catch (final Exception ex) {
+            throw new RuntimeException(ex);
         }
     }
 
