@@ -60,16 +60,15 @@ public class ServerWeb {
         final BufferedReader br = new BufferedReader(
             new InputStreamReader(client.getInputStream())
         );
-        final StringBuilder requestBuilder = new StringBuilder();
+        final StringBuilder request = new StringBuilder();
         while (true) {
             final String line = br.readLine();
             if (line.isBlank()) {
                 break;
             }
-            requestBuilder.append(line + "\r\n");
+            request.append(line + "\r\n");
         }
-        final String request = requestBuilder.toString();
-        final String[] lines = request.split("\r\n");
+        final String[] lines = request.toString().split("\r\n");
         final String[] parts = lines[0].split(" ");
         final String method = parts[0];
         final String path = parts[1];
@@ -77,7 +76,7 @@ public class ServerWeb {
         final String host = lines[1].split(" ")[1];
         final List<String> headers = new ArrayList<>();
         for (int hdr = 2; hdr < lines.length; hdr++) {
-            String header = lines[hdr];
+            final String header = lines[hdr];
             headers.add(header);
         }
         final String log = String.format(
