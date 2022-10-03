@@ -23,25 +23,34 @@
  */
 package com.github.fabriciofx.mandacarupark.pagamentos;
 
+import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
+import com.github.fabriciofx.mandacarupark.db.DataSourceH2Mem;
 import com.github.fabriciofx.mandacarupark.db.RandomName;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
-import com.github.fabriciofx.mandacarupark.db.Server;
+import com.github.fabriciofx.mandacarupark.Server;
 import com.github.fabriciofx.mandacarupark.db.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.db.SessionNoAuth;
+import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
 import org.junit.Assert;
 import org.junit.Test;
 
 public final class TestPagamentos {
     @Test
     public void tamanho() throws Exception {
+        final Session session = new SessionNoAuth(
+            new DataSourceH2Mem(
+                new RandomName()
+            )
+        );
         try (
             final Server server = new ServerH2(
-                new RandomName(),
+                session,
                 new ScriptSql("mandacarupark.sql")
-            ).start()
+            )
         ) {
-            final Session session = server.session();
+            server.start();
             final Pagamentos pagamentos = new PagamentosSql(session);
             Assert.assertEquals(3, pagamentos.tamanho());
         }

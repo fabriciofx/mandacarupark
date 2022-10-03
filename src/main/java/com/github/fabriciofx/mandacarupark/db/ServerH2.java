@@ -23,21 +23,12 @@
  */
 package com.github.fabriciofx.mandacarupark.db;
 
-import com.github.fabriciofx.mandacarupark.text.Text;
+import com.github.fabriciofx.mandacarupark.Server;
 import java.io.IOException;
 
 public final class ServerH2 implements Server {
     private final Session session;
     private final ScriptSql script;
-
-    public ServerH2(final Text dbname, final ScriptSql scrpt) {
-        this(
-            new SessionNoAuth(
-                new DataSourceH2Mem(dbname)
-            ),
-            scrpt
-        );
-    }
 
     public ServerH2(final Session session, final ScriptSql scrpt) {
         this.session = session;
@@ -45,19 +36,13 @@ public final class ServerH2 implements Server {
     }
 
     @Override
-    public Server start() throws Exception {
-        this.script.run(this.session());
-        return this;
+    public void start() throws Exception {
+        this.script.run(this.session);
     }
 
     @Override
     public void stop() throws Exception {
         new Insert(this.session, "SHUTDOWN").execute();
-    }
-
-    @Override
-    public Session session() {
-        return this.session;
     }
 
     @Override

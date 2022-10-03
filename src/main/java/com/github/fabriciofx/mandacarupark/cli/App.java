@@ -28,6 +28,7 @@ import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Saidas;
+import com.github.fabriciofx.mandacarupark.Server;
 import com.github.fabriciofx.mandacarupark.console.Console;
 import com.github.fabriciofx.mandacarupark.console.Consoles;
 import com.github.fabriciofx.mandacarupark.conta.DomingoGratis;
@@ -35,7 +36,6 @@ import com.github.fabriciofx.mandacarupark.conta.Tolerancia;
 import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
 import com.github.fabriciofx.mandacarupark.db.DataSourceH2File;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
-import com.github.fabriciofx.mandacarupark.db.Server;
 import com.github.fabriciofx.mandacarupark.db.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.SessionNoAuth;
@@ -47,15 +47,16 @@ import com.github.fabriciofx.mandacarupark.saidas.SaidasSql;
 
 public final class App {
     public static void main(String[] args) {
+        final Session session = new SessionNoAuth(
+            new DataSourceH2File("mandacarupark")
+        );
         try (
             final Server server = new ServerH2(
-                new SessionNoAuth(
-                    new DataSourceH2File("mandacarupark")
-                ),
+                session,
                 new ScriptSql("mandacarupark.sql")
-            ).start()
+            )
         ) {
-            final Session session = server.session();
+            server.start();
             final Entradas entradas = new EntradasSql(session);
             final Saidas saidas = new SaidasSql(session);
             final Pagamentos pagamentos = new PagamentosSql(session);

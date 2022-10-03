@@ -21,14 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.db;
+package com.github.fabriciofx.mandacarupark;
 
 import java.io.IOException;
 
 public interface Server extends AutoCloseable {
-    Server start() throws Exception;
+    void start() throws Exception;
     void stop() throws Exception;
-    Session session();
     @Override
     void close() throws IOException;
 }

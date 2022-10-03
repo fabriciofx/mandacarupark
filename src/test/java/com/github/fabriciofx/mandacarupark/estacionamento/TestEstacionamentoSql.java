@@ -28,16 +28,18 @@ import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Placa;
+import com.github.fabriciofx.mandacarupark.Server;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.conta.DomingoGratis;
 import com.github.fabriciofx.mandacarupark.conta.Tolerancia;
 import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
+import com.github.fabriciofx.mandacarupark.db.DataSourceH2Mem;
 import com.github.fabriciofx.mandacarupark.db.RandomName;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
-import com.github.fabriciofx.mandacarupark.db.Server;
 import com.github.fabriciofx.mandacarupark.db.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.db.SessionNoAuth;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosSql;
@@ -50,13 +52,18 @@ import java.time.LocalDateTime;
 public final class TestEstacionamentoSql {
     @Test
     public void entrada() throws Exception {
+        final Session session = new SessionNoAuth(
+            new DataSourceH2Mem(
+                new RandomName()
+            )
+        );
         try (
             final Server server = new ServerH2(
-                new RandomName(),
+                session,
                 new ScriptSql("mandacarupark.sql")
-            ).start()
+            )
         ) {
-            final Session session = server.session();
+            server.start();
             final Entradas entradas = new EntradasSql(session);
             final Estacionamento estacionamento = new EstacionamentoSql(
                 session,
@@ -85,13 +92,18 @@ public final class TestEstacionamentoSql {
 
     @Test
     public void locacao() throws Exception {
+        final Session session = new SessionNoAuth(
+            new DataSourceH2Mem(
+                new RandomName()
+            )
+        );
         try (
             final Server server = new ServerH2(
-                new RandomName(),
+                session,
                 new ScriptSql("mandacarupark.sql")
-            ).start()
+            )
         ) {
-            final Session session = server.session();
+            server.start();
             final Entradas entradas = new EntradasSql(session);
             final Estacionamento estacionamento = new EstacionamentoSql(
                 session,
@@ -129,13 +141,18 @@ public final class TestEstacionamentoSql {
 
     @Test
     public void tolerancia() throws Exception {
+        final Session session = new SessionNoAuth(
+            new DataSourceH2Mem(
+                new RandomName()
+            )
+        );
         try (
             final Server server = new ServerH2(
-                new RandomName(),
+                session,
                 new ScriptSql("mandacarupark.sql")
-            ).start()
+            )
         ) {
-            final Session session = server.session();
+            server.start();
             final Entradas entradas = new EntradasSql(session);
             final Estacionamento estacionamento = new EstacionamentoSql(
                 session,
@@ -173,13 +190,18 @@ public final class TestEstacionamentoSql {
 
     @Test
     public void domingoGratis() throws Exception {
+        final Session session = new SessionNoAuth(
+            new DataSourceH2Mem(
+                new RandomName()
+            )
+        );
         try (
             final Server server = new ServerH2(
-                new RandomName(),
+                session,
                 new ScriptSql("mandacarupark.sql")
-            ).start()
+            )
         ) {
-            final Session session = server.session();
+            server.start();
             final Entradas entradas = new EntradasSql(session);
             final Estacionamento estacionamento = new EstacionamentoSql(
                 session,
@@ -223,13 +245,18 @@ public final class TestEstacionamentoSql {
             "Ticket não validado!",
             RuntimeException.class,
             () -> {
+                final Session session = new SessionNoAuth(
+                    new DataSourceH2Mem(
+                        new RandomName()
+                    )
+                );
                 try (
                     final Server server = new ServerH2(
-                        new RandomName(),
+                        session,
                         new ScriptSql("mandacarupark.sql")
-                    ).start()
+                    )
                 ) {
-                    final Session session = server.session();
+                    server.start();
                     final Estacionamento estacionamento = new EstacionamentoSql(
                         session,
                         new EntradasSql(session),

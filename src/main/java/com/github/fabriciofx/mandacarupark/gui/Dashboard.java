@@ -25,10 +25,13 @@ package com.github.fabriciofx.mandacarupark.gui;
 
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
+import com.github.fabriciofx.mandacarupark.db.DataSourceH2Mem;
 import com.github.fabriciofx.mandacarupark.db.RandomName;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
-import com.github.fabriciofx.mandacarupark.db.Server;
+import com.github.fabriciofx.mandacarupark.Server;
 import com.github.fabriciofx.mandacarupark.db.ServerH2;
+import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.db.SessionNoAuth;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -110,18 +113,33 @@ public final class Dashboard extends Application {
 
     private ObservableList<Map> generateDataInMap() {
         final ObservableList<Map> linhas = FXCollections.observableArrayList();
+        final Session session = new SessionNoAuth(
+            new DataSourceH2Mem(
+                new RandomName()
+            )
+        );
         try (
             final Server server = new ServerH2(
-                new RandomName(),
+                session,
                 new ScriptSql("mandacarupark.sql")
-            ).start()
+            )
         ) {
-            final Entradas entradas = new EntradasSql(server.session());
+            server.start();
+            final Entradas entradas = new EntradasSql(session);
             for (final Entrada entrada: entradas){
                 final Map<String, String> linha = new HashMap<>();
-                linha.put("id", entrada.id().toString());
-                linha.put("placa", entrada.sobre().dado("placa").toString());
-                linha.put("dataHora", entrada.sobre().dado("dataHora").toString());
+                linha.put(
+                    "id",
+                    entrada.id().toString()
+                );
+                linha.put(
+                    "placa",
+                    entrada.sobre().dado("placa").toString()
+                );
+                linha.put(
+                    "dataHora",
+                    entrada.sobre().dado("dataHora").toString()
+                );
                 linhas.add(linha);
             }
         } catch (Exception e) {
