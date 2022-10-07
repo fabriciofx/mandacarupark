@@ -188,19 +188,19 @@
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-graphics</artifactId>
-      <version>18.0.2</version>
+      <version>19</version>
       <classifier>win</classifier>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-graphics</artifactId>
-      <version>18.0.2</version>
+      <version>19</version>
       <classifier>linux</classifier>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-graphics</artifactId>
-      <version>18.0.2</version>
+      <version>19</version>
       <classifier>mac</classifier>
     </dependency>
   </dependencies>
