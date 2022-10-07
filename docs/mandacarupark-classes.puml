@@ -1,0 +1,86 @@
+@startuml
+
+left to right direction
+skinparam classAttributeIconSize 0
+hide empty members
+
+interface Conta
+class Contas
+interface DataHora
+interface Dinheiro
+interface Entrada
+interface Entradas
+interface Estacionamento
+interface Locacao
+interface Locacoes
+interface Pagamento
+interface Pagamentos
+interface Periodo
+interface Placa
+interface Saida
+interface Saidas
+interface Ticket
+
+Conta <|.. Cortesia
+Conta <|.. DomingoGratis
+Conta <|.. Tolerancia
+Conta <|.. ValorFixo
+
+Contas --> Conta
+
+Entrada <|.. EntradaSql
+Entrada <|.. EntradaFake
+
+Entradas <|.. EntradasFake
+Entradas <|.. EntradasSql
+
+Saida <|.. SaidaSql
+Saida <|.. SaidaFake
+
+Saidas <|..  SaidasFake
+Saidas <|.. SaidasSql
+
+Locacao <|.. LocacaoSql
+Locacao <|.. LocacaoFake
+
+Estacionamento <|.. EstacionamentoSql
+Estacionamento <|.. EstacionamentoFake
+
+Locacoes <|.. LocacoesFake 
+Locacoes <|.. LocacoesSql
+
+Pagamento <|.. PagamentoFake
+Pagamento <|.. PagamentoSql
+
+Ticket <|.. TicketSql
+Ticket <|.. TicketFake
+
+EstacionamentoSql --> Entradas
+EstacionamentoSql --> Saidas
+EstacionamentoSql --> Pagamentos
+EstacionamentoSql --> Contas
+
+EstacionamentoFake --> Entradas
+EstacionamentoFake --> Saidas
+EstacionamentoFake --> Pagamentos
+EstacionamentoFake --> Contas
+
+LocacaoFake --> Placa
+LocacaoFake --> DataHora
+LocacaoFake --> Dinheiro
+
+EntradaFake --> Placa
+EntradaFake --> DataHora
+
+EntradasFake --> Pagamentos
+
+TicketFake --> Pagamentos
+TicketFake --> Placa
+TicketFake --> DataHora
+
+TicketSql --> Placa
+TicketSql --> DataHora
+
+ValorFixo --> Dinheiro
+
+@enduml
