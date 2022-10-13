@@ -23,11 +23,12 @@
  */
 package com.github.fabriciofx.mandacarupark.saida;
 
+import com.github.fabriciofx.mandacarupark.Dados;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Uuid;
-import com.github.fabriciofx.mandacarupark.dados.Dados;
+import com.github.fabriciofx.mandacarupark.dados.DadosMap;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Select;
 import com.github.fabriciofx.mandacarupark.db.Session;
@@ -71,7 +72,7 @@ public final class SaidaSql implements Saida {
                     "Dados sobre a saída inexistentes ou inválidos!"
                 );
             }
-            return new Dados(
+            return new DadosMap(
                 "id", this.id,
                 "placa", placa,
                 "dataHora", dataHora

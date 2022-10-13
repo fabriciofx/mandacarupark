@@ -23,11 +23,12 @@
  */
 package com.github.fabriciofx.mandacarupark.entrada;
 
+import com.github.fabriciofx.mandacarupark.Dados;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Uuid;
-import com.github.fabriciofx.mandacarupark.dados.Dados;
+import com.github.fabriciofx.mandacarupark.dados.DadosMap;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Select;
 import com.github.fabriciofx.mandacarupark.db.Session;
@@ -70,7 +71,7 @@ public final class EntradaSql implements Entrada {
                     "Dados sobre a entrada inexistentes ou inválidos!"
                 );
             }
-            return new Dados(
+            return new DadosMap(
                 "id", this.id,
                 "placa", placa,
                 "dataHora", dataHora

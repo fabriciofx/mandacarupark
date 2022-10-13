@@ -23,12 +23,13 @@
  */
 package com.github.fabriciofx.mandacarupark.ticket;
 
+import com.github.fabriciofx.mandacarupark.Dados;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.Uuid;
-import com.github.fabriciofx.mandacarupark.dados.Dados;
+import com.github.fabriciofx.mandacarupark.dados.DadosMap;
 import com.github.fabriciofx.mandacarupark.db.Select;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
@@ -107,7 +108,7 @@ public final class TicketSql implements Ticket {
             } else {
                 valor = new DinheiroOf("0.00");
             }
-            return new Dados(
+            return new DadosMap(
                 "placa", this.placa,
                 "dataHora", this.dataHora,
                 "valor", valor

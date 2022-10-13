@@ -23,13 +23,14 @@
  */
 package com.github.fabriciofx.mandacarupark.dados;
 
+import com.github.fabriciofx.mandacarupark.Dados;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class Dados {
+public final class DadosMap implements Dados {
     private final Map<String, Object> itens;
 
-    public Dados(
+    public DadosMap(
         final String chave1,
         final Object valor1,
         final String chave2,
@@ -52,7 +53,7 @@ public final class Dados {
         final Object valor10
     ) {
         this(
-            Dados.of(
+            DadosMap.of(
                 new MapEntry<>(chave1, valor1),
                 new MapEntry<>(chave2, valor2),
                 new MapEntry<>(chave3, valor3),
@@ -67,7 +68,7 @@ public final class Dados {
         );
     }
 
-    public Dados(
+    public DadosMap(
         final String chave1,
         final Object valor1,
         final String chave2,
@@ -88,7 +89,7 @@ public final class Dados {
         final Object valor9
     ) {
         this(
-            Dados.of(
+            DadosMap.of(
                 new MapEntry<>(chave1, valor1),
                 new MapEntry<>(chave2, valor2),
                 new MapEntry<>(chave3, valor3),
@@ -102,7 +103,7 @@ public final class Dados {
         );
     }
 
-    public Dados(
+    public DadosMap(
         final String chave1,
         final Object valor1,
         final String chave2,
@@ -121,7 +122,7 @@ public final class Dados {
         final Object valor8
     ) {
         this(
-            Dados.of(
+            DadosMap.of(
                 new MapEntry<>(chave1, valor1),
                 new MapEntry<>(chave2, valor2),
                 new MapEntry<>(chave3, valor3),
@@ -134,7 +135,7 @@ public final class Dados {
         );
     }
 
-    public Dados(
+    public DadosMap(
         final String chave1,
         final Object valor1,
         final String chave2,
@@ -151,7 +152,7 @@ public final class Dados {
         final Object valor7
     ) {
         this(
-            Dados.of(
+            DadosMap.of(
                 new MapEntry<>(chave1, valor1),
                 new MapEntry<>(chave2, valor2),
                 new MapEntry<>(chave3, valor3),
@@ -163,7 +164,7 @@ public final class Dados {
         );
     }
 
-    public Dados(
+    public DadosMap(
         final String chave1,
         final Object valor1,
         final String chave2,
@@ -178,7 +179,7 @@ public final class Dados {
         final Object valor6
     ) {
         this(
-            Dados.of(
+            DadosMap.of(
                 new MapEntry<>(chave1, valor1),
                 new MapEntry<>(chave2, valor2),
                 new MapEntry<>(chave3, valor3),
@@ -189,7 +190,7 @@ public final class Dados {
         );
     }
 
-    public Dados(
+    public DadosMap(
         final String chave1,
         final Object valor1,
         final String chave2,
@@ -202,7 +203,7 @@ public final class Dados {
         final Object valor5
     ) {
         this(
-            Dados.of(
+            DadosMap.of(
                 new MapEntry<>(chave1, valor1),
                 new MapEntry<>(chave2, valor2),
                 new MapEntry<>(chave3, valor3),
@@ -212,7 +213,7 @@ public final class Dados {
         );
     }
 
-    public Dados(
+    public DadosMap(
         final String chave1,
         final Object valor1,
         final String chave2,
@@ -223,7 +224,7 @@ public final class Dados {
         final Object valor4
     ) {
         this(
-            Dados.of(
+            DadosMap.of(
                 new MapEntry<>(chave1, valor1),
                 new MapEntry<>(chave2, valor2),
                 new MapEntry<>(chave3, valor3),
@@ -232,7 +233,7 @@ public final class Dados {
         );
     }
 
-    public Dados(
+    public DadosMap(
         final String chave1,
         final Object valor1,
         final String chave2,
@@ -241,7 +242,7 @@ public final class Dados {
         final Object valor3
     ) {
         this(
-            Dados.of(
+            DadosMap.of(
                 new MapEntry<>(chave1, valor1),
                 new MapEntry<>(chave2, valor2),
                 new MapEntry<>(chave3, valor3)
@@ -249,35 +250,37 @@ public final class Dados {
         );
     }
 
-    public Dados(
+    public DadosMap(
         final String chave1,
         final Object valor1,
         final String chave2,
         final Object valor2
     ) {
         this(
-            Dados.of(
+            DadosMap.of(
                 new MapEntry<>(chave1, valor1),
                 new MapEntry<>(chave2, valor2)
             )
         );
     }
 
-    public Dados(final String chave1, final Object valor1) {
-        this(Dados.of(new MapEntry<>(chave1, valor1)));
+    public DadosMap(final String chave1, final Object valor1) {
+        this(DadosMap.of(new MapEntry<>(chave1, valor1)));
     }
 
-    public Dados(final Map<String, Object> itens) {
+    public DadosMap(final Map<String, Object> itens) {
         this.itens = itens;
     }
 
+    @Override
     public <T> T dado(final String chave) {
         return (T) (this.itens.get(chave));
     }
 
-    public Dados com(final String chave, final Object valor) {
+    @Override
+    public DadosMap com(final String chave, final Object valor) {
         this.itens.put(chave, valor);
-        return new Dados(this.itens);
+        return new DadosMap(this.itens);
     }
 
     @Override

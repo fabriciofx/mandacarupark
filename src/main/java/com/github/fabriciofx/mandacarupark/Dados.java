@@ -23,7 +23,8 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
-public interface Saida {
-    Uuid id();
-    Dados sobre();
+public interface Dados {
+    <T> T dado(final String chave);
+
+    Dados com(final String chave, final Object valor);
 }

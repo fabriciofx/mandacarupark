@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.ticket;
 
+import com.github.fabriciofx.mandacarupark.Dados;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Pagamento;
@@ -30,7 +31,7 @@ import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.Uuid;
-import com.github.fabriciofx.mandacarupark.dados.Dados;
+import com.github.fabriciofx.mandacarupark.dados.DadosMap;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemCodeQr;
@@ -92,7 +93,7 @@ public final class TicketFake implements Ticket {
         } else {
             valor = pagamento.get(0).sobre().dado("valor");
         }
-        return new Dados(
+        return new DadosMap(
             "placa", this.placa,
             "dataHora", this.dataHora,
             "valor", valor

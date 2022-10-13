@@ -23,11 +23,12 @@
  */
 package com.github.fabriciofx.mandacarupark.entrada;
 
+import com.github.fabriciofx.mandacarupark.Dados;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Uuid;
-import com.github.fabriciofx.mandacarupark.dados.Dados;
+import com.github.fabriciofx.mandacarupark.dados.DadosMap;
 
 public final class EntradaFake implements Entrada {
     private final Uuid id;
@@ -51,7 +52,7 @@ public final class EntradaFake implements Entrada {
 
     @Override
     public Dados sobre() {
-        return new Dados(
+        return new DadosMap(
             "id", this.id,
             "placa", this.placa,
             "dataHora", this.dataHora
