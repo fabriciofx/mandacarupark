@@ -58,7 +58,7 @@ public final class Select {
                     return crs;
                 }
             }
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
     }

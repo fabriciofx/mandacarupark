@@ -80,7 +80,7 @@ public final class SaidasSql implements Saidas {
             if (rset.next()) {
                 quantidade = rset.getInt(1);
             }
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
         if (quantidade == 0) {
@@ -112,7 +112,7 @@ public final class SaidasSql implements Saidas {
                 );
             }
             return itens.iterator();
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
     }

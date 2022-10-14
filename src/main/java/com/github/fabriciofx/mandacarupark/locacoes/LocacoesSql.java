@@ -67,7 +67,7 @@ public final class LocacoesSql implements Locacoes {
                 );
             }
             return itens.iterator();
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
     }

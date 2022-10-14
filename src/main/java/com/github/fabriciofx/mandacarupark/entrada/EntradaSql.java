@@ -76,7 +76,7 @@ public final class EntradaSql implements Entrada {
                 "placa", placa,
                 "dataHora", dataHora
             );
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
     }

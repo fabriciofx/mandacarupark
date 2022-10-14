@@ -77,7 +77,7 @@ public final class LocacaoSql implements Locacao {
                 "saida", saida,
                 "valor", valor
             );
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
     }

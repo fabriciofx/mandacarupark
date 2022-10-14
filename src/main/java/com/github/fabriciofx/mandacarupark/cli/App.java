@@ -100,7 +100,7 @@ public final class App {
                     )
                 )
             ).run();
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
     }

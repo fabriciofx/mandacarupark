@@ -49,7 +49,7 @@ public final class Insert {
             ) {
                 return stmt.execute();
             }
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
     }

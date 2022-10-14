@@ -86,7 +86,7 @@ public final class TicketSql implements Ticket {
                 );
             }
             return quantidade != 0;
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
     }
@@ -113,7 +113,7 @@ public final class TicketSql implements Ticket {
                 "dataHora", this.dataHora,
                 "valor", valor
             );
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
     }

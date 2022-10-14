@@ -39,8 +39,8 @@ public final class ImagemParaArquivo {
     public void salva() {
         try {
             ImageIO.write(this.origin.imagem(), "png", new File(this.arquivo));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (final IOException ex) {
+            throw new RuntimeException(ex);
         }
     }
 }

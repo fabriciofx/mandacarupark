@@ -83,7 +83,7 @@ public final class PagamentosSql implements Pagamentos {
             if (rset.next()) {
                 quantidade = rset.getInt(1);
             }
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
         return quantidade;
@@ -106,7 +106,7 @@ public final class PagamentosSql implements Pagamentos {
                 );
             }
             return itens.iterator();
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
     }

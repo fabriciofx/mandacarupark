@@ -78,7 +78,7 @@ public final class EntradasSql implements Entradas {
             if (rset.next()) {
                 quantidade = rset.getInt(1);
             }
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
         if (quantidade == 0) {
@@ -121,7 +121,7 @@ public final class EntradasSql implements Entradas {
                 );
             }
             return itens.iterator();
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
     }

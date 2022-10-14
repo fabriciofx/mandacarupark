@@ -49,7 +49,7 @@ public final class ServerH2 implements Server {
     public void close() throws IOException {
         try {
             this.stop();
-        } catch(Exception ex) {
+        } catch(final Exception ex) {
             throw new IOException(ex);
         }
     }

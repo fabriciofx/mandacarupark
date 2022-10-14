@@ -142,8 +142,8 @@ public final class Dashboard extends Application {
                 );
                 linhas.add(linha);
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (final Exception ex) {
+            throw new RuntimeException(ex);
         }
         return linhas;
     }

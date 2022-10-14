@@ -66,7 +66,6 @@ public final class PagamentoSql implements Pagamento {
             if (rset.next()) {
                 dataHora = new DataHoraOf(rset.getString(1));
                 valor = new DinheiroOf(rset.getBigDecimal(2));
-
             } else {
                 throw new RuntimeException("Dados inexistentes ou inválidos!");
             }
@@ -74,7 +73,7 @@ public final class PagamentoSql implements Pagamento {
                 "dataHora", dataHora,
                 "valor", valor
             );
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
     }
