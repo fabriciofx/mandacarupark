@@ -26,9 +26,9 @@ package com.github.fabriciofx.mandacarupark.locacao;
 import com.github.fabriciofx.mandacarupark.Data;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
+import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Locacao;
 import com.github.fabriciofx.mandacarupark.Placa;
-import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Select;
@@ -40,9 +40,9 @@ import java.sql.ResultSet;
 
 public final class LocacaoSql implements Locacao {
     private final Session session;
-    private final Uuid id;
+    private final Id id;
 
-    public LocacaoSql(final Session session, final Uuid id) {
+    public LocacaoSql(final Session session, final Id id) {
         this.session = session;
         this.id = id;
     }

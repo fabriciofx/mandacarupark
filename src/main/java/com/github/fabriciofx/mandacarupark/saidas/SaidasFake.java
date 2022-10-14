@@ -24,24 +24,24 @@
 package com.github.fabriciofx.mandacarupark.saidas;
 
 import com.github.fabriciofx.mandacarupark.DataHora;
+import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.saida.SaidaFake;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 public final class SaidasFake implements Saidas {
-    private final Map<Uuid, Saida> itens;
+    private final Map<Id, Saida> itens;
 
     public SaidasFake() {
         this(new HashMap<>());
     }
 
-    public SaidasFake(final Map<Uuid, Saida> itens) {
+    public SaidasFake(final Map<Id, Saida> itens) {
         this.itens = itens;
     }
 
@@ -57,7 +57,7 @@ public final class SaidasFake implements Saidas {
     }
 
     @Override
-    public Saida procura(final Uuid id) {
+    public Saida procura(final Id id) {
         return this.itens.get(id);
     }
 

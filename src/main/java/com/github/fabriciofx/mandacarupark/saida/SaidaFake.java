@@ -25,18 +25,18 @@ package com.github.fabriciofx.mandacarupark.saida;
 
 import com.github.fabriciofx.mandacarupark.Data;
 import com.github.fabriciofx.mandacarupark.DataHora;
+import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saida;
-import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
 
 public final class SaidaFake implements Saida {
-    private final Uuid id;
+    private final Id id;
     private final Placa placa;
     private final DataHora dataHora;
 
     public SaidaFake(
-        final Uuid id,
+        final Id id,
         final Placa placa,
         final DataHora dataHora
     ) {
@@ -46,7 +46,7 @@ public final class SaidaFake implements Saida {
     }
 
     @Override
-    public Uuid id() {
+    public Id id() {
         return this.id;
     }
 

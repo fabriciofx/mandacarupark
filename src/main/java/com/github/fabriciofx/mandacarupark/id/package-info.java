@@ -21,57 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
-
-import java.util.Objects;
-import java.util.UUID;
 
 /**
- * Uuid.
- *
- * <p>There is no thread-safety guarantee.
+ * Id.
  *
  * @since 0.0.1
  */
-public final class Uuid implements Comparable<Uuid> {
-    /**
-     * O uuid.
-     */
-    private final String numero;
-
-    /**
-     * Ctor.
-     */
-    public Uuid() {
-        this(UUID.randomUUID().toString());
-    }
-
-    /**
-     * Ctor.
-     * @param numero Um número uuid.
-     */
-    public Uuid(final String numero) {
-        this.numero = numero;
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-        return this == obj || obj instanceof Uuid
-            && Uuid.class.cast(obj).numero.equals(this.numero);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.numero);
-    }
-
-    @Override
-    public String toString() {
-        return this.numero;
-    }
-
-    @Override
-    public int compareTo(final Uuid uuid) {
-        return this.numero.compareTo(uuid.numero);
-    }
-}
+package com.github.fabriciofx.mandacarupark.id;

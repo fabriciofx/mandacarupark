@@ -25,13 +25,14 @@ package com.github.fabriciofx.mandacarupark.pagamentos;
 
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
+import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.db.Insert;
 import com.github.fabriciofx.mandacarupark.db.Select;
 import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.pagamento.PagamentoSql;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
@@ -66,7 +67,7 @@ public final class PagamentosSql implements Pagamentos {
     }
 
     @Override
-    public List<Pagamento> procura(final Uuid id) {
+    public List<Pagamento> procura(final Id id) {
         return Arrays.asList(new PagamentoSql(this.session, id));
     }
 

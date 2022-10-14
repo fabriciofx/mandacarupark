@@ -35,7 +35,7 @@ public interface Ticket {
      * Id do ticket.
      * @return O id do ticket
      */
-    Uuid id();
+    Id id();
 
     /**
      * Verifica se o ticket foi pago, isto é, validado.

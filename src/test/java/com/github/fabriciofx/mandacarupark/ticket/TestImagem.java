@@ -25,11 +25,10 @@ package com.github.fabriciofx.mandacarupark.ticket;
 
 import com.github.fabriciofx.mandacarupark.InputStreamAsBytes;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
+import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
-import com.github.fabriciofx.mandacarupark.ticket.TicketFake;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemCodeQr;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemPapel;

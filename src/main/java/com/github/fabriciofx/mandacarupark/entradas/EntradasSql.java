@@ -26,13 +26,14 @@ package com.github.fabriciofx.mandacarupark.entradas;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
+import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.db.Insert;
 import com.github.fabriciofx.mandacarupark.db.Select;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaSql;
+import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import com.github.fabriciofx.mandacarupark.ticket.TicketSql;
 import java.sql.ResultSet;
@@ -63,7 +64,7 @@ public final class EntradasSql implements Entradas {
     }
 
     @Override
-    public Entrada procura(final Uuid id) {
+    public Entrada procura(final Id id) {
         int quantidade = 0;
         try (
             final ResultSet rset = new Select(
@@ -92,7 +93,7 @@ public final class EntradasSql implements Entradas {
     }
 
     @Override
-    public Ticket ticket(Uuid id) {
+    public Ticket ticket(Id id) {
         final Entrada entrada = this.procura(id);
         return new TicketSql(
             this.session,

@@ -26,17 +26,17 @@ package com.github.fabriciofx.mandacarupark.pagamento;
 import com.github.fabriciofx.mandacarupark.Data;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
+import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Pagamento;
-import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
 
 public final class PagamentoFake implements Pagamento {
-    private final Uuid id;
+    private final Id id;
     private final DataHora dataHora;
     private final Dinheiro valor;
 
     public PagamentoFake(
-        final Uuid id,
+        final Id id,
         final DataHora dataHora,
         final Dinheiro valor
     ) {
@@ -46,7 +46,7 @@ public final class PagamentoFake implements Pagamento {
     }
 
     @Override
-    public Uuid id() {
+    public Id id() {
         return this.id;
     }
 

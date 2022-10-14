@@ -21,50 +21,63 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.entradas;
+package com.github.fabriciofx.mandacarupark.id;
 
-import com.github.fabriciofx.mandacarupark.DataHora;
-import com.github.fabriciofx.mandacarupark.Entrada;
-import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Placa;
-import com.github.fabriciofx.mandacarupark.Target;
-import com.github.fabriciofx.mandacarupark.Ticket;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
-public final class EntradasSource implements Entradas {
-    private final Entradas origin;
-    private final List<Target<Entrada>> targets;
+/**
+ * Uuid.
+ *
+ * <p>There is no thread-safety guarantee.
+ *
+ * @since 0.0.1
+ */
+public final class Uuid implements Id, Comparable<Uuid> {
+    /**
+     * O uuid.
+     */
+    private final String numero;
 
-    public EntradasSource(
-        final Entradas entradas,
-        final Target<Entrada>... targets
-    ) {
-        this.origin = entradas;
-        this.targets = Arrays.asList(targets);
+    /**
+     * Ctor.
+     */
+    public Uuid() {
+        this(UUID.randomUUID().toString());
+    }
+
+    /**
+     * Ctor.
+     * @param numero Um número uuid.
+     */
+    public Uuid(final String numero) {
+        this.numero = numero;
     }
 
     @Override
-    public Entrada entrada(Placa placa, DataHora dataHora) {
-        final Entrada entrada = this.origin.entrada(placa, dataHora);
-        this.targets.forEach(target -> target.notifique(entrada));
-        return entrada;
+    public String numero() {
+        return this.numero;
     }
 
     @Override
-    public Entrada procura(Id id) {
-        return this.origin.procura(id);
+    public boolean equals(final Object obj) {
+        return this == obj || obj instanceof Uuid
+            && Uuid.class.cast(obj).numero.equals(this.numero);
     }
 
     @Override
-    public Ticket ticket(Id id) {
-        return this.origin.ticket(id);
+    public int hashCode() {
+        return Objects.hash(this.numero);
     }
 
     @Override
-    public Iterator<Entrada> iterator() {
-        return this.origin.iterator();
+    public String toString() {
+        return this.numero;
+    }
+
+    @Override
+    public int compareTo(final Uuid uuid) {
+        return this.numero.compareTo(uuid.numero);
     }
 }

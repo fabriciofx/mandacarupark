@@ -26,13 +26,14 @@ package com.github.fabriciofx.mandacarupark.ticket;
 import com.github.fabriciofx.mandacarupark.Data;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
+import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
+import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemCodeQr;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemPapel;
@@ -44,7 +45,7 @@ import java.util.List;
 
 public final class TicketFake implements Ticket {
     private final Pagamentos pagamentos;
-    private final Uuid id;
+    private final Id id;
     private final Placa placa;
     private final DataHora dataHora;
 
@@ -63,7 +64,7 @@ public final class TicketFake implements Ticket {
 
     public TicketFake(
         final Pagamentos pagamentos,
-        final Uuid id,
+        final Id id,
         final Placa placa,
         final DataHora dataHora
     ) {
@@ -74,7 +75,7 @@ public final class TicketFake implements Ticket {
     }
 
     @Override
-    public Uuid id() {
+    public Id id() {
         return this.id;
     }
 

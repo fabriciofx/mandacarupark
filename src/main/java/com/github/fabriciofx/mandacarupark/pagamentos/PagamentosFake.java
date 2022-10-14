@@ -25,10 +25,10 @@ package com.github.fabriciofx.mandacarupark.pagamentos;
 
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
+import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.pagamento.PagamentoFake;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,13 +37,13 @@ import java.util.List;
 import java.util.Map;
 
 public final class PagamentosFake implements Pagamentos {
-    private final Map<Uuid, Pagamento> itens;
+    private final Map<Id, Pagamento> itens;
 
     public PagamentosFake() {
         this(new HashMap<>());
     }
 
-    public PagamentosFake(final Map<Uuid, Pagamento> itens) {
+    public PagamentosFake(final Map<Id, Pagamento> itens) {
         this.itens = itens;
     }
 
@@ -63,7 +63,7 @@ public final class PagamentosFake implements Pagamentos {
     }
 
     @Override
-    public List<Pagamento> procura(final Uuid id) {
+    public List<Pagamento> procura(final Id id) {
         final List<Pagamento> list = new ArrayList<>(0);
         if (this.itens.containsKey(id)) {
             list.add(this.itens.get(id));

@@ -26,8 +26,8 @@ package com.github.fabriciofx.mandacarupark.entrada;
 import com.github.fabriciofx.mandacarupark.Data;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
+import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Placa;
-import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Select;
@@ -38,15 +38,15 @@ import java.sql.ResultSet;
 
 public final class EntradaSql implements Entrada {
     private final Session session;
-    private final Uuid id;
+    private final Id id;
 
-    public EntradaSql(final Session session, final Uuid id) {
+    public EntradaSql(final Session session, final Id id) {
         this.session = session;
         this.id = id;
     }
 
     @Override
-    public Uuid id() {
+    public Id id() {
         return this.id;
     }
 

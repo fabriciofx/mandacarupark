@@ -26,11 +26,12 @@ package com.github.fabriciofx.mandacarupark.entradas;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
+import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaFake;
+import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
 import com.github.fabriciofx.mandacarupark.ticket.TicketFake;
 import java.util.HashMap;
@@ -38,7 +39,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 public final class EntradasFake implements Entradas {
-    private final Map<Uuid, Entrada> itens;
+    private final Map<Id, Entrada> itens;
     private final Pagamentos pagamentos;
 
     public EntradasFake() {
@@ -51,7 +52,7 @@ public final class EntradasFake implements Entradas {
 
     public EntradasFake(
         final Pagamentos pagamentos,
-        final Map<Uuid, Entrada> itens
+        final Map<Id, Entrada> itens
     ) {
         this.pagamentos = pagamentos;
         this.itens = itens;
@@ -65,12 +66,12 @@ public final class EntradasFake implements Entradas {
     }
 
     @Override
-    public Entrada procura(final Uuid id) {
+    public Entrada procura(final Id id) {
         return this.itens.get(id);
     }
 
     @Override
-    public Ticket ticket(final Uuid id) {
+    public Ticket ticket(final Id id) {
         final Entrada entrada = this.procura(id);
         return new TicketFake(
             this.pagamentos,

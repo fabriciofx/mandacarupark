@@ -26,20 +26,20 @@ package com.github.fabriciofx.mandacarupark.locacao;
 import com.github.fabriciofx.mandacarupark.Data;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
+import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Locacao;
 import com.github.fabriciofx.mandacarupark.Placa;
-import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
 
 public final class LocacaoFake implements Locacao {
-    private final Uuid id;
+    private final Id id;
     private final Placa placa;
     private final DataHora entrada;
     private final DataHora saida;
     private final Dinheiro valor;
 
     public LocacaoFake(
-        final Uuid id,
+        final Id id,
         final Placa placa,
         final DataHora entrada,
         final DataHora saida,

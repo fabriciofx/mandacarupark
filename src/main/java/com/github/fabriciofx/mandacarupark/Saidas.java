@@ -25,5 +25,5 @@ package com.github.fabriciofx.mandacarupark;
 
 public interface Saidas extends Iterable<Saida> {
     Saida saida(Ticket ticket, Placa placa, DataHora dataHora);
-    Saida procura(Uuid id);
+    Saida procura(Id id);
 }

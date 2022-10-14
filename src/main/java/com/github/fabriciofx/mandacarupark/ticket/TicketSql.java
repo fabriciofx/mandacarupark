@@ -26,9 +26,9 @@ package com.github.fabriciofx.mandacarupark.ticket;
 import com.github.fabriciofx.mandacarupark.Data;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
+import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
 import com.github.fabriciofx.mandacarupark.db.Select;
 import com.github.fabriciofx.mandacarupark.db.Session;
@@ -45,13 +45,13 @@ import java.sql.ResultSet;
 
 public final class TicketSql implements Ticket {
     private final Session session;
-    private final Uuid id;
+    private final Id id;
     private final Placa placa;
     private final DataHora dataHora;
 
     public TicketSql(
         final Session session,
-        final Uuid id,
+        final Id id,
         final Placa placa,
         final DataHora dataHora
     ) {
@@ -62,7 +62,7 @@ public final class TicketSql implements Ticket {
     }
 
     @Override
-    public Uuid id() {
+    public Id id() {
         return this.id;
     }
 

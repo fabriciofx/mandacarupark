@@ -24,14 +24,15 @@
 package com.github.fabriciofx.mandacarupark.saidas;
 
 import com.github.fabriciofx.mandacarupark.DataHora;
+import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.Uuid;
 import com.github.fabriciofx.mandacarupark.db.Insert;
 import com.github.fabriciofx.mandacarupark.db.Select;
 import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.saida.SaidaSql;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
@@ -65,7 +66,7 @@ public final class SaidasSql implements Saidas {
     }
 
     @Override
-    public Saida procura(final Uuid id) {
+    public Saida procura(final Id id) {
         int quantidade = 0;
         try (
             final ResultSet rset = new Select(
