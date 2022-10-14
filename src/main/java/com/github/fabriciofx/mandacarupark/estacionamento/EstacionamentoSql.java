@@ -34,6 +34,7 @@ import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
+import com.github.fabriciofx.mandacarupark.conta.Cortesia;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 import com.github.fabriciofx.mandacarupark.ticket.TicketSql;
@@ -71,7 +72,8 @@ public final class EstacionamentoSql implements Estacionamento {
             ticket.sobre().get("dataHora"),
             dataHora
         );
-        final Dinheiro valor = this.contas.conta(periodo).valor(periodo);
+        final Dinheiro valor = this.contas.conta(periodo, new Cortesia())
+            .valor(periodo);
         this.pagamentos.pagamento(ticket, dataHora, valor);
     }
 

@@ -23,7 +23,6 @@
  */
 package com.github.fabriciofx.mandacarupark.cli;
 
-import com.github.fabriciofx.mandacarupark.Contas;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
@@ -34,6 +33,7 @@ import com.github.fabriciofx.mandacarupark.console.Consoles;
 import com.github.fabriciofx.mandacarupark.conta.DomingoGratis;
 import com.github.fabriciofx.mandacarupark.conta.Tolerancia;
 import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
+import com.github.fabriciofx.mandacarupark.contas.ContasOf;
 import com.github.fabriciofx.mandacarupark.db.DataSourceH2File;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
 import com.github.fabriciofx.mandacarupark.db.ServerH2;
@@ -65,7 +65,7 @@ public final class App {
                 entradas,
                 saidas,
                 pagamentos,
-                new Contas(
+                new ContasOf(
                     new DomingoGratis(),
                     new Tolerancia(),
                     new ValorFixo(new DinheiroOf("5.00"))

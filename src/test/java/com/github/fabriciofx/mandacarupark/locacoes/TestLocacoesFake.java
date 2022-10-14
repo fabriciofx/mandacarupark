@@ -23,7 +23,6 @@
  */
 package com.github.fabriciofx.mandacarupark.locacoes;
 
-import com.github.fabriciofx.mandacarupark.Contas;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Locacoes;
@@ -34,6 +33,7 @@ import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.conta.DomingoGratis;
 import com.github.fabriciofx.mandacarupark.conta.Tolerancia;
 import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
+import com.github.fabriciofx.mandacarupark.contas.ContasOf;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasFake;
@@ -55,7 +55,7 @@ public final class TestLocacoesFake {
             entradas,
             saidas,
             pagamentos,
-            new Contas(
+            new ContasOf(
                 new DomingoGratis(),
                 new Tolerancia(),
                 new ValorFixo(new DinheiroOf("5.00"))

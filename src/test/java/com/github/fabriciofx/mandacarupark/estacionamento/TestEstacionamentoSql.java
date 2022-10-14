@@ -23,7 +23,6 @@
  */
 package com.github.fabriciofx.mandacarupark.estacionamento;
 
-import com.github.fabriciofx.mandacarupark.Contas;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
@@ -33,6 +32,7 @@ import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.conta.DomingoGratis;
 import com.github.fabriciofx.mandacarupark.conta.Tolerancia;
 import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
+import com.github.fabriciofx.mandacarupark.contas.ContasOf;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.DataSourceH2Mem;
 import com.github.fabriciofx.mandacarupark.db.RandomName;
@@ -70,7 +70,7 @@ public final class TestEstacionamentoSql {
                 entradas,
                 new SaidasSql(session),
                 new PagamentosSql(session),
-                new Contas(
+                new ContasOf(
                     new DomingoGratis(),
                     new Tolerancia(),
                     new ValorFixo(new DinheiroOf("5.00"))
@@ -110,7 +110,7 @@ public final class TestEstacionamentoSql {
                 entradas,
                 new SaidasSql(session),
                 new PagamentosSql(session),
-                new Contas(
+                new ContasOf(
                     new DomingoGratis(),
                     new Tolerancia(),
                     new ValorFixo(new DinheiroOf("5.00"))
@@ -159,7 +159,7 @@ public final class TestEstacionamentoSql {
                 entradas,
                 new SaidasSql(session),
                 new PagamentosSql(session),
-                new Contas(
+                new ContasOf(
                     new DomingoGratis(),
                     new Tolerancia(),
                     new ValorFixo(new DinheiroOf("5.00"))
@@ -208,7 +208,7 @@ public final class TestEstacionamentoSql {
                 entradas,
                 new SaidasSql(session),
                 new PagamentosSql(session),
-                new Contas(
+                new ContasOf(
                     new DomingoGratis(),
                     new Tolerancia(),
                     new ValorFixo(new DinheiroOf("5.00"))
@@ -262,7 +262,7 @@ public final class TestEstacionamentoSql {
                         new EntradasSql(session),
                         new SaidasSql(session),
                         new PagamentosSql(session),
-                        new Contas(
+                        new ContasOf(
                             new DomingoGratis(),
                             new Tolerancia(),
                             new ValorFixo(new DinheiroOf("5.00"))

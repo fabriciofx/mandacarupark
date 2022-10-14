@@ -21,8 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.contas;
 
-public interface Contas {
-    Conta conta(Periodo periodo, Conta def);
+import com.github.fabriciofx.mandacarupark.Conta;
+import com.github.fabriciofx.mandacarupark.Contas;
+import com.github.fabriciofx.mandacarupark.Periodo;
+import java.util.Arrays;
+import java.util.List;
+
+public final class ContasOf implements Contas {
+    private final List<Conta> itens;
+
+    public ContasOf(final Conta... itens) {
+        this(Arrays.asList(itens));
+    }
+
+    public ContasOf(final List<Conta> itens) {
+        this.itens = itens;
+    }
+
+    @Override
+    public Conta conta(final Periodo periodo, final Conta def) {
+        for (final Conta item : this.itens) {
+            if (item.avalie(periodo)) {
+                return item;
+            }
+        }
+        return def;
+    }
 }
