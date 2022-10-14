@@ -51,19 +51,6 @@ public final class TicketFake implements Ticket {
 
     public TicketFake(
         final Pagamentos pagamentos,
-        final Placa placa,
-        final DataHora dataHora
-    ) {
-        this(
-            pagamentos,
-            new Uuid(),
-            placa,
-            dataHora
-        );
-    }
-
-    public TicketFake(
-        final Pagamentos pagamentos,
         final Id id,
         final Placa placa,
         final DataHora dataHora
