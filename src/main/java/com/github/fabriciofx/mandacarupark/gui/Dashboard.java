@@ -134,11 +134,11 @@ public final class Dashboard extends Application {
                 );
                 linha.put(
                     "placa",
-                    entrada.sobre().dado("placa").toString()
+                    entrada.sobre().get("placa").toString()
                 );
                 linha.put(
                     "dataHora",
-                    entrada.sobre().dado("dataHora").toString()
+                    entrada.sobre().get("dataHora").toString()
                 );
                 linhas.add(linha);
             }

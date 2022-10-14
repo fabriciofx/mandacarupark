@@ -25,5 +25,5 @@ package com.github.fabriciofx.mandacarupark;
 
 public interface Pagamento {
     Uuid id();
-    Dados sobre();
+    Data sobre();
 }

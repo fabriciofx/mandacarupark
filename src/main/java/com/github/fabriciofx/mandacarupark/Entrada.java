@@ -25,5 +25,5 @@ package com.github.fabriciofx.mandacarupark;
 
 public interface Entrada {
     Uuid id();
-    Dados sobre();
+    Data sobre();
 }

@@ -23,8 +23,8 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
-public interface Dados {
-    <T> T dado(final String chave);
+public interface Data {
+    <T> T get(final String query);
 
-    Dados com(final String chave, final Object valor);
+    Data with(final String key, final Object value);
 }

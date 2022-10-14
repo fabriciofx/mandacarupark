@@ -47,7 +47,7 @@ public interface Ticket {
      * Obtém os dados do ticket.
      * @return Os dados do ticket.
      */
-    Dados sobre();
+    Data sobre();
 
     /**
      * Obtém uma imagem do ticket.

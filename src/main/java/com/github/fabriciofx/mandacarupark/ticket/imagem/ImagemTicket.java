@@ -42,8 +42,8 @@ public final class ImagemTicket implements Imagem {
 
     @Override
     public BufferedImage imagem() {
-        final Placa placa = ticket.sobre().dado("placa");
-        final DataHora dataHora = ticket.sobre().dado("dataHora");
+        final Placa placa = ticket.sobre().get("placa");
+        final DataHora dataHora = ticket.sobre().get("dataHora");
         final Font helvetica7 = new Font("Lucida Sans Unicode", Font.PLAIN, 7);
         final Font helvetica13 = new Font(
             "Lucida Sans Unicode",

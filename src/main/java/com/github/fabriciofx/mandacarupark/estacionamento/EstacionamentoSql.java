@@ -68,7 +68,7 @@ public final class EstacionamentoSql implements Estacionamento {
     @Override
     public void pagamento(final Ticket ticket, final DataHora dataHora) {
         final Periodo periodo = new PeriodoOf(
-            ticket.sobre().dado("dataHora"),
+            ticket.sobre().get("dataHora"),
             dataHora
         );
         final Dinheiro valor = this.contas.conta(periodo).valor(periodo);
@@ -84,7 +84,7 @@ public final class EstacionamentoSql implements Estacionamento {
         if (!ticket.validado()) {
             throw new RuntimeException("Ticket não validado!");
         }
-        if (!ticket.sobre().dado("placa").equals(placa)) {
+        if (!ticket.sobre().get("placa").equals(placa)) {
             throw new RuntimeException("Ticket não confere com a placa!");
         }
         this.saidas.saida(ticket, placa, dataHora);

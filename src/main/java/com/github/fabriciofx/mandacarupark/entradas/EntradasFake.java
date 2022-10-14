@@ -75,8 +75,8 @@ public final class EntradasFake implements Entradas {
         return new TicketFake(
             this.pagamentos,
             id,
-            entrada.sobre().dado("placa"),
-            entrada.sobre().dado("dataHora")
+            entrada.sobre().get("placa"),
+            entrada.sobre().get("dataHora")
         );
     }
 
