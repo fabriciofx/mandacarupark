@@ -24,6 +24,7 @@
 package com.github.fabriciofx.mandacarupark.db;
 
 import com.github.fabriciofx.mandacarupark.Server;
+import com.github.fabriciofx.mandacarupark.db.stmt.Insert;
 import java.io.IOException;
 
 public final class ServerH2 implements Server {

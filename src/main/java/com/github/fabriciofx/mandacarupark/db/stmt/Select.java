@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.db;
+package com.github.fabriciofx.mandacarupark.db.stmt;
 
+import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.text.Text;
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetFactory;

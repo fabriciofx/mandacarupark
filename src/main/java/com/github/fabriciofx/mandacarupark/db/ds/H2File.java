@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.db;
+package com.github.fabriciofx.mandacarupark.db.ds;
 
 import javax.sql.DataSource;
 import java.io.PrintWriter;
@@ -32,15 +32,15 @@ import java.sql.SQLFeatureNotSupportedException;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-public final class DataSourceH2File implements DataSource {
+public final class H2File implements DataSource {
     private final String url;
     private final Driver driver;
 
-    public DataSourceH2File(final String dbname) {
+    public H2File(final String dbname) {
         this(new org.h2.Driver(), dbname);
     }
 
-    public DataSourceH2File(final Driver drvr, final String dbname) {
+    public H2File(final Driver drvr, final String dbname) {
         this.driver = drvr;
         this.url = String.format("jdbc:h2:./%s", dbname);
     }

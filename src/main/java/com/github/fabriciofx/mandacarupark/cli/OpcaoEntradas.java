@@ -4,8 +4,6 @@ import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.console.Console;
 import com.github.fabriciofx.mandacarupark.text.TextTable;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public class OpcaoEntradas implements Opcao {
     private final String mensagem;

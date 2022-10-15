@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.db;
+package com.github.fabriciofx.mandacarupark.db.ds;
 
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import com.github.fabriciofx.mandacarupark.text.Text;
@@ -34,19 +34,19 @@ import java.sql.SQLFeatureNotSupportedException;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-public final class DataSourceH2Mem implements DataSource {
+public final class H2Memory implements DataSource {
     private final Text url;
     private final Driver driver;
 
-    public DataSourceH2Mem(final String dbname) {
+    public H2Memory(final String dbname) {
         this(() -> dbname);
     }
 
-    public DataSourceH2Mem(final Text dbname) {
+    public H2Memory(final Text dbname) {
         this(new org.h2.Driver(), dbname);
     }
 
-    public DataSourceH2Mem(final Driver drvr, final Text dbname) {
+    public H2Memory(final Driver drvr, final Text dbname) {
         this.driver = drvr;
         this.url = new Sprintf(
             "jdbc:h2:mem:%s;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT " +

@@ -21,20 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.db;
 
-import javax.sql.DataSource;
-import java.sql.Connection;
-
-public final class SessionNoAuth implements Session {
-    private final DataSource source;
-
-    public SessionNoAuth(final DataSource source) {
-        this.source = source;
-    }
-
-    @Override
-    public Connection connection() throws Exception {
-        return this.source.getConnection();
-    }
-}
+/**
+ * Database Datasources.
+ *
+ * @since 0.0.1
+ */
+package com.github.fabriciofx.mandacarupark.db.ds;

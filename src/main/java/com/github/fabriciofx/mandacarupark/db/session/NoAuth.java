@@ -21,36 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.pagamentos;
+package com.github.fabriciofx.mandacarupark.db.session;
 
-import com.github.fabriciofx.mandacarupark.Pagamentos;
-import com.github.fabriciofx.mandacarupark.Server;
-import com.github.fabriciofx.mandacarupark.db.RandomName;
-import com.github.fabriciofx.mandacarupark.db.ScriptSql;
-import com.github.fabriciofx.mandacarupark.db.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
-import com.github.fabriciofx.mandacarupark.db.ds.H2Memory;
-import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
-import org.junit.Assert;
-import org.junit.Test;
+import javax.sql.DataSource;
+import java.sql.Connection;
 
-public final class TestPagamentos {
-    @Test
-    public void tamanho() throws Exception {
-        final Session session = new NoAuth(
-            new H2Memory(
-                new RandomName()
-            )
-        );
-        try (
-            final Server server = new ServerH2(
-                session,
-                new ScriptSql("mandacarupark.sql")
-            )
-        ) {
-            server.start();
-            final Pagamentos pagamentos = new PagamentosSql(session);
-            Assert.assertEquals(3, pagamentos.tamanho());
-        }
+public final class NoAuth implements Session {
+    private final DataSource source;
+
+    public NoAuth(final DataSource source) {
+        this.source = source;
+    }
+
+    @Override
+    public Connection connection() throws Exception {
+        return this.source.getConnection();
     }
 }

@@ -34,11 +34,11 @@ import com.github.fabriciofx.mandacarupark.conta.DomingoGratis;
 import com.github.fabriciofx.mandacarupark.conta.Tolerancia;
 import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
 import com.github.fabriciofx.mandacarupark.contas.ContasOf;
-import com.github.fabriciofx.mandacarupark.db.DataSourceH2File;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
 import com.github.fabriciofx.mandacarupark.db.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
-import com.github.fabriciofx.mandacarupark.db.SessionNoAuth;
+import com.github.fabriciofx.mandacarupark.db.ds.H2File;
+import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
 import com.github.fabriciofx.mandacarupark.estacionamento.EstacionamentoSql;
@@ -47,9 +47,7 @@ import com.github.fabriciofx.mandacarupark.saidas.SaidasSql;
 
 public final class App {
     public static void main(String[] args) {
-        final Session session = new SessionNoAuth(
-            new DataSourceH2File("mandacarupark")
-        );
+        final Session session = new NoAuth(new H2File("mandacarupark"));
         try (
             final Server server = new ServerH2(
                 session,

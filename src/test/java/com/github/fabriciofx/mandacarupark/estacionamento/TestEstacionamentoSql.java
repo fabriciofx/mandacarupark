@@ -34,12 +34,12 @@ import com.github.fabriciofx.mandacarupark.conta.Tolerancia;
 import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
 import com.github.fabriciofx.mandacarupark.contas.ContasOf;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
-import com.github.fabriciofx.mandacarupark.db.DataSourceH2Mem;
 import com.github.fabriciofx.mandacarupark.db.RandomName;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
 import com.github.fabriciofx.mandacarupark.db.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
-import com.github.fabriciofx.mandacarupark.db.SessionNoAuth;
+import com.github.fabriciofx.mandacarupark.db.ds.H2Memory;
+import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosSql;
@@ -52,8 +52,8 @@ import java.time.LocalDateTime;
 public final class TestEstacionamentoSql {
     @Test
     public void entrada() throws Exception {
-        final Session session = new SessionNoAuth(
-            new DataSourceH2Mem(
+        final Session session = new NoAuth(
+            new H2Memory(
                 new RandomName()
             )
         );
@@ -92,8 +92,8 @@ public final class TestEstacionamentoSql {
 
     @Test
     public void locacao() throws Exception {
-        final Session session = new SessionNoAuth(
-            new DataSourceH2Mem(
+        final Session session = new NoAuth(
+            new H2Memory(
                 new RandomName()
             )
         );
@@ -141,8 +141,8 @@ public final class TestEstacionamentoSql {
 
     @Test
     public void tolerancia() throws Exception {
-        final Session session = new SessionNoAuth(
-            new DataSourceH2Mem(
+        final Session session = new NoAuth(
+            new H2Memory(
                 new RandomName()
             )
         );
@@ -190,8 +190,8 @@ public final class TestEstacionamentoSql {
 
     @Test
     public void domingoGratis() throws Exception {
-        final Session session = new SessionNoAuth(
-            new DataSourceH2Mem(
+        final Session session = new NoAuth(
+            new H2Memory(
                 new RandomName()
             )
         );
@@ -245,8 +245,8 @@ public final class TestEstacionamentoSql {
             "Ticket não validado!",
             RuntimeException.class,
             () -> {
-                final Session session = new SessionNoAuth(
-                    new DataSourceH2Mem(
+                final Session session = new NoAuth(
+                    new H2Memory(
                         new RandomName()
                     )
                 );

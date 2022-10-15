@@ -21,36 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.db;
 
-import com.github.fabriciofx.mandacarupark.text.Text;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-
-public final class Insert {
-    private final Session session;
-    private final Text query;
-
-    public Insert(final Session session, final String query) {
-        this(session, () -> query);
-    }
-
-    public Insert(final Session session, final Text query) {
-        this.session = session;
-        this.query = query;
-    }
-
-    public boolean execute() {
-        try (final Connection conn = this.session.connection()) {
-            try (
-                final PreparedStatement stmt = conn.prepareStatement(
-                    this.query.asString()
-                )
-            ) {
-                return stmt.execute();
-            }
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-}
+/**
+ * Database Sessions.
+ *
+ * @since 0.0.1
+ */
+package com.github.fabriciofx.mandacarupark.db.session;
