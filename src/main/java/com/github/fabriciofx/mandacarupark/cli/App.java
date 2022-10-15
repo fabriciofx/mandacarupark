@@ -92,11 +92,15 @@ public final class App {
                     estacionamento,
                     entradas
                 ),
+                new OpcaoEntradas(
+                    "4 - Entradas",
+                    console,
+                    entradas
+                ),
                 new Encerrar(
                     new OpcaoEncerrar(
                         "9 - Encerrar",
-                        console,
-                        entradas
+                        console
                     )
                 )
             ).run();

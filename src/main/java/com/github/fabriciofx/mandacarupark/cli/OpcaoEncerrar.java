@@ -23,23 +23,15 @@
  */
 package com.github.fabriciofx.mandacarupark.cli;
 
-import com.github.fabriciofx.mandacarupark.Entrada;
-import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.console.Console;
 
 public final class OpcaoEncerrar implements Opcao {
     private final String mensagem;
     private final Console console;
-    private final Entradas entradas;
 
-    public OpcaoEncerrar(
-        final String mensagem,
-        final Console console,
-        final Entradas entradas
-    ) {
+    public OpcaoEncerrar(final String mensagem, final Console console) {
         this.mensagem = mensagem;
         this.console = console;
-        this.entradas = entradas;
     }
 
     @Override
@@ -55,13 +47,5 @@ public final class OpcaoEncerrar implements Opcao {
     @Override
     public void run() {
         this.console.clear();
-        for (final Entrada entrada : this.entradas) {
-            this.console.write(
-                String.format(
-                    "Entrada: %s\n",
-                    entrada.sobre().get("placa").toString()
-                )
-            );
-        }
     }
 }
