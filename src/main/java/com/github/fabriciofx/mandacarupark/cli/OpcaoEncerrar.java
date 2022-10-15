@@ -47,5 +47,6 @@ public final class OpcaoEncerrar implements Opcao {
     @Override
     public void run() {
         this.console.clear();
+        System.exit(0);
     }
 }

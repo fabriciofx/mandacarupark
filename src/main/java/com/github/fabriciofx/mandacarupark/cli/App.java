@@ -97,11 +97,9 @@ public final class App {
                     console,
                     entradas
                 ),
-                new Encerrar(
-                    new OpcaoEncerrar(
-                        "9 - Encerrar",
-                        console
-                    )
+                new OpcaoEncerrar(
+                    "9 - Encerrar",
+                    console
                 )
             ).run();
         } catch (final Exception ex) {
