@@ -113,11 +113,7 @@ public final class Dashboard extends Application {
 
     private ObservableList<Map> generateDataInMap() {
         final ObservableList<Map> linhas = FXCollections.observableArrayList();
-        final Session session = new NoAuth(
-            new H2Memory(
-                new RandomName()
-            )
-        );
+        final Session session = new NoAuth(new H2Memory(new RandomName()));
         try (
             final Server server = new ServerH2(
                 session,
@@ -126,7 +122,7 @@ public final class Dashboard extends Application {
         ) {
             server.start();
             final Entradas entradas = new EntradasSql(session);
-            for (final Entrada entrada: entradas){
+            for (final Entrada entrada: entradas) {
                 final Map<String, String> linha = new HashMap<>();
                 linha.put(
                     "id",
