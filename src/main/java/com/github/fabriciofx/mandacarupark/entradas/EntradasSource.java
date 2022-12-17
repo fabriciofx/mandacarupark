@@ -29,7 +29,6 @@ import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Target;
-import com.github.fabriciofx.mandacarupark.Ticket;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;

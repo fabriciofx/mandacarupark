@@ -33,7 +33,6 @@ import com.github.fabriciofx.mandacarupark.locacao.LocacaoSql;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public final class LocacoesSql implements Locacoes {

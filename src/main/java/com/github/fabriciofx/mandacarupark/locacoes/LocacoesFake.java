@@ -36,7 +36,6 @@ import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.locacao.LocacaoFake;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public final class LocacoesFake implements Locacoes {
