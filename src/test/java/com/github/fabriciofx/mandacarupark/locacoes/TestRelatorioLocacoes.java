@@ -73,6 +73,7 @@ public class TestRelatorioLocacoes {
                             new EntradasFake(
                                 pagamentos,
                                 new EntradaFake(
+                                    pagamentos,
                                     new Uuid(
                                         "d589e997-c61d-47b3-90cf-c5ba23c8b427"
                                     ),
@@ -82,6 +83,7 @@ public class TestRelatorioLocacoes {
                                     )
                                 ),
                                 new EntradaFake(
+                                    pagamentos,
                                     new Uuid(
                                         "e90107c4-f792-4569-abb3-353605f01716"
                                     ),
@@ -91,6 +93,7 @@ public class TestRelatorioLocacoes {
                                     )
                                 ),
                                 new EntradaFake(
+                                    pagamentos,
                                     new Uuid(
                                         "15e32c1b-55ef-4cc6-a9bf-28da74d2309a"
                                     ),

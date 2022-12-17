@@ -39,7 +39,7 @@ public final class OpcaoPagamento implements Opcao {
     public void run() {
         this.console.write("  Ticket: ");
         final Uuid id = new Uuid(this.console.read());
-        final Ticket ticket = this.entradas.ticket(id);
+        final Ticket ticket = this.entradas.procura(id).ticket();
         this.estacionamento.pagamento(
             ticket,
             new DataHoraOf()

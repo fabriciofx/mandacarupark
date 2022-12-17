@@ -66,9 +66,9 @@ public final class OpcaoSaida implements Opcao {
         this.console.write(" Placa: ");
         final Placa placa = new Restricao(new PlacaOf(this.console.read()));
         this.console.write("Ticket: ");
-        final Ticket ticket = this.entradas.ticket(
+        final Ticket ticket = this.entradas.procura(
             new Uuid(this.console.read())
-        );
+        ).ticket();
         this.estacionamento.saida(ticket, placa, new DataHoraOf());
     }
 }

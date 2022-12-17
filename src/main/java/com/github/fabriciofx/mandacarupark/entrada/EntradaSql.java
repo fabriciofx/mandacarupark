@@ -28,12 +28,14 @@ import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Placa;
+import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
+import com.github.fabriciofx.mandacarupark.ticket.TicketSql;
 import java.sql.ResultSet;
 
 public final class EntradaSql implements Entrada {
@@ -48,6 +50,16 @@ public final class EntradaSql implements Entrada {
     @Override
     public Id id() {
         return this.id;
+    }
+
+    @Override
+    public Ticket ticket() {
+        return new TicketSql(
+            this.session,
+            this.id,
+            this.sobre().get("placa"),
+            this.sobre().get("dataHora")
+        );
     }
 
     @Override

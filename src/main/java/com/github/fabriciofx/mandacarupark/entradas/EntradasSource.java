@@ -59,11 +59,6 @@ public final class EntradasSource implements Entradas {
     }
 
     @Override
-    public Ticket ticket(Id id) {
-        return this.origin.ticket(id);
-    }
-
-    @Override
     public Iterator<Entrada> iterator() {
         return this.origin.iterator();
     }

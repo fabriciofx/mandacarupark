@@ -29,11 +29,9 @@ import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Placa;
-import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaFake;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
-import com.github.fabriciofx.mandacarupark.ticket.TicketFake;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -71,7 +69,12 @@ public final class EntradasFake implements Entradas {
 
     @Override
     public Entrada entrada(final Placa placa, final DataHora dataHora) {
-        final Entrada entrada = new EntradaFake(new Uuid(), placa, dataHora);
+        final Entrada entrada = new EntradaFake(
+            this.pagamentos,
+            new Uuid(),
+            placa,
+            dataHora
+        );
         this.itens.put(entrada.id(), entrada);
         return entrada;
     }
@@ -79,17 +82,6 @@ public final class EntradasFake implements Entradas {
     @Override
     public Entrada procura(final Id id) {
         return this.itens.get(id);
-    }
-
-    @Override
-    public Ticket ticket(final Id id) {
-        final Entrada entrada = this.procura(id);
-        return new TicketFake(
-            this.pagamentos,
-            id,
-            entrada.sobre().get("placa"),
-            entrada.sobre().get("dataHora")
-        );
     }
 
     @Override

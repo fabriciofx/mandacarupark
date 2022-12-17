@@ -93,17 +93,6 @@ public final class EntradasSql implements Entradas {
     }
 
     @Override
-    public Ticket ticket(Id id) {
-        final Entrada entrada = this.procura(id);
-        return new TicketSql(
-            this.session,
-            id,
-            entrada.sobre().get("placa"),
-            entrada.sobre().get("dataHora")
-        );
-    }
-
-    @Override
     public Iterator<Entrada> iterator() {
         try (
             final ResultSet rset = new Select(
