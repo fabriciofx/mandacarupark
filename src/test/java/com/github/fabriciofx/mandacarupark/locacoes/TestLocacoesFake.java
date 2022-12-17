@@ -36,8 +36,10 @@ import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
 import com.github.fabriciofx.mandacarupark.contas.ContasOf;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
+import com.github.fabriciofx.mandacarupark.entrada.EntradaFake;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasFake;
 import com.github.fabriciofx.mandacarupark.estacionamento.EstacionamentoFake;
+import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
 import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
@@ -104,11 +106,11 @@ public final class TestLocacoesFake {
             placa,
             new DataHoraOf(dateTime.plusMinutes(52))
         );
-        final Locacoes locacoes = new LocacoesFake(
-            entradas,
-            saidas,
-            pagamentos,
-            new PeriodoOf(dateTime.minusMinutes(5), dateTime.plusMinutes(80))
-        );
+//        final Locacoes locacoes = new LocacoesFake(
+//            entradas,
+//            saidas,
+//            pagamentos,
+//            new PeriodoOf(dateTime.minusMinutes(5), dateTime.plusMinutes(80))
+//        );
     }
 }

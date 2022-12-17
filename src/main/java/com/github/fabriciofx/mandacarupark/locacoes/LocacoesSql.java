@@ -46,7 +46,7 @@ public final class LocacoesSql implements Locacoes {
     }
 
     @Override
-    public Iterator<Locacao> iterator() {
+    public Iterable<Locacao> locacoes(Periodo periodo) {
         try (
             final ResultSet rset = new Select(
                 this.session,
@@ -66,7 +66,7 @@ public final class LocacoesSql implements Locacoes {
                     )
                 );
             }
-            return itens.iterator();
+            return itens;
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }

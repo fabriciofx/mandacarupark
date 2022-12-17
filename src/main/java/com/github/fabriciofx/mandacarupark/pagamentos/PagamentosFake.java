@@ -39,6 +39,13 @@ import java.util.Map;
 public final class PagamentosFake implements Pagamentos {
     private final Map<Id, Pagamento> itens;
 
+    public PagamentosFake(final Pagamento... pagamentos) {
+        this.itens = new HashMap<>();
+        for (final Pagamento pagamento : pagamentos) {
+            this.itens.put(pagamento.id(), pagamento);
+        }
+    }
+
     public PagamentosFake() {
         this(new HashMap<>());
     }

@@ -52,6 +52,17 @@ public final class EntradasFake implements Entradas {
 
     public EntradasFake(
         final Pagamentos pagamentos,
+        final Entrada... entradas
+    ) {
+        this.pagamentos = pagamentos;
+        this.itens = new HashMap<>();
+        for (final Entrada entrada : entradas) {
+            this.itens.put(entrada.id(), entrada);
+        }
+    }
+
+    public EntradasFake(
+        final Pagamentos pagamentos,
         final Map<Id, Entrada> itens
     ) {
         this.pagamentos = pagamentos;

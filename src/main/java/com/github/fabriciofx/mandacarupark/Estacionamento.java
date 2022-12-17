@@ -23,8 +23,11 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
+import com.github.fabriciofx.mandacarupark.data.DataMap;
+
 public interface Estacionamento {
     Ticket entrada(Placa placa, DataHora dataHora);
     void pagamento(Ticket ticket, DataHora dataHora);
     void saida(Ticket ticket, Placa placa, DataHora dataHora);
+    DataMap sobre();
 }

@@ -35,6 +35,7 @@ import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.conta.Cortesia;
+import com.github.fabriciofx.mandacarupark.data.DataMap;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasFake;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
 import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
@@ -104,5 +105,15 @@ public final class EstacionamentoFake implements Estacionamento {
             throw new RuntimeException("Ticket não confere com a placa!");
         }
         this.saidas.saida(ticket, placa, dataHora);
+    }
+
+    @Override
+    public DataMap sobre() {
+        return new DataMap(
+            "entradas", this.entradas,
+            "saidas", this.saidas,
+            "pagamentos", this.pagamentos,
+            "contas", this.contas
+        );
     }
 }

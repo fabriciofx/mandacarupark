@@ -26,6 +26,7 @@ package com.github.fabriciofx.mandacarupark.locacoes;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
+import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Locacao;
 import com.github.fabriciofx.mandacarupark.Locacoes;
 import com.github.fabriciofx.mandacarupark.Pagamento;
@@ -42,26 +43,31 @@ public final class LocacoesFake implements Locacoes {
     private final Entradas entradas;
     private final Saidas saidas;
     private final Pagamentos pagamentos;
-    private final Periodo periodo;
+
+    public LocacoesFake(final Estacionamento estacionamento) {
+        this(
+            estacionamento.sobre().get("entradas"),
+            estacionamento.sobre().get("saidas"),
+            estacionamento.sobre().get("pagamentos")
+        );
+    }
 
     public LocacoesFake(
         final Entradas entradas,
         final Saidas saidas,
-        final Pagamentos pagamentos,
-        final Periodo periodo
+        final Pagamentos pagamentos
     ) {
         this.entradas = entradas;
         this.saidas = saidas;
         this.pagamentos = pagamentos;
-        this.periodo = periodo;
     }
 
     @Override
-    public Iterator<Locacao> iterator() {
+    public Iterable<Locacao> locacoes(final Periodo periodo) {
         final List<Locacao> itens = new ArrayList<>();
         for (Entrada entrada : this.entradas) {
             final DataHora dataHora = entrada.sobre().get("dataHora");
-            if (this.periodo.contem(dataHora)) {
+            if (periodo.contem(dataHora)) {
                 final Saida saida = this.saidas.procura(entrada.id());
                 final List<Pagamento> pagamento = this.pagamentos.procura(
                     entrada.id()
@@ -77,6 +83,6 @@ public final class LocacoesFake implements Locacoes {
                 );
             }
         }
-        return itens.iterator();
+        return itens;
     }
 }

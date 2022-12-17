@@ -37,6 +37,13 @@ import java.util.Map;
 public final class SaidasFake implements Saidas {
     private final Map<Id, Saida> itens;
 
+    public SaidasFake(final Saida... saidas) {
+        this.itens = new HashMap<>();
+        for (final Saida saida : saidas) {
+            this.itens.put(saida.id(), saida);
+        }
+    }
+
     public SaidasFake() {
         this(new HashMap<>());
     }

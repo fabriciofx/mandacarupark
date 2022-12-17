@@ -23,5 +23,6 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
-public interface Locacoes extends Iterable<Locacao> {
+public interface Locacoes {
+    Iterable<Locacao> locacoes(Periodo periodo);
 }

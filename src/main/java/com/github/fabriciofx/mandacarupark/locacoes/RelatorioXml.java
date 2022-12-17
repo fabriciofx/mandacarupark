@@ -26,6 +26,7 @@ package com.github.fabriciofx.mandacarupark.locacoes;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Locacao;
 import com.github.fabriciofx.mandacarupark.Locacoes;
+import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.Relatorio;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import org.xembly.Directives;
@@ -33,16 +34,18 @@ import org.xembly.Xembler;
 
 public class RelatorioXml implements Relatorio {
     private final Locacoes locacoes;
+    private final Periodo periodo;
 
-    public RelatorioXml(final Locacoes locacoes) {
+    public RelatorioXml(final Locacoes locacoes, final Periodo periodo) {
         this.locacoes = locacoes;
+        this.periodo = periodo;
     }
 
     @Override
     public String conteudo() throws Exception {
         final Directives directives = new Directives().add("locacoes");
         Dinheiro total = new DinheiroOf("0.00");
-        for (final Locacao locacao : this.locacoes) {
+        for (final Locacao locacao : this.locacoes.locacoes(this.periodo)) {
             final Dinheiro valor = locacao.sobre().get("valor");
             total = new DinheiroOf(total.quantia().add(valor.quantia()));
             directives.add("locacao")
