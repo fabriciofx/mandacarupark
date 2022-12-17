@@ -31,12 +31,12 @@ import java.util.regex.Pattern;
 public final class TestPlaca {
     @Test
     public void valida() {
-        Assert.assertEquals(new PlacaOf("ABC1234").numero(), "ABC1234");
+        Assert.assertEquals("ABC1234", new PlacaOf("ABC1234").numero());
     }
 
     @Test
     public void mercosul() {
-        Assert.assertEquals(new PlacaOf("ABC1K34").numero(), "ABC1K34");
+        Assert.assertEquals("ABC1K34", new PlacaOf("ABC1K34").numero());
     }
 
     @Test

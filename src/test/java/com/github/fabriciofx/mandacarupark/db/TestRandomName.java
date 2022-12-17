@@ -30,6 +30,6 @@ public final class TestRandomName {
     @Test
     public void nameWith5Chars() {
         final String name = new RandomName().asString();
-        Assert.assertEquals(name.length(), 5);
+        Assert.assertEquals(5, name.length());
     }
 }

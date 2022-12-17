@@ -68,8 +68,8 @@ public final class TestEstacionamentoFake {
         final Ticket ticket = estacionamento.entrada(placa, dataHora);
         final Entrada entrada = entradas.procura(ticket.id());
         Assert.assertEquals(
-            entrada.sobre().get("placa").toString(),
-            "ABC1234"
+            "ABC1234",
+            entrada.sobre().get("placa").toString()
         );
     }
 
@@ -99,8 +99,8 @@ public final class TestEstacionamentoFake {
         );
         Assert.assertTrue(ticket.validado());
         Assert.assertEquals(
-            ticket.sobre().get("valor"),
-            new DinheiroOf("5.00")
+            new DinheiroOf("5.00"),
+            ticket.sobre().get("valor")
         );
     }
 
@@ -130,8 +130,8 @@ public final class TestEstacionamentoFake {
         );
         Assert.assertTrue(ticket.validado());
         Assert.assertEquals(
-            ticket.sobre().get("valor"),
-            new DinheiroOf("0.00")
+            new DinheiroOf("0.00"),
+            ticket.sobre().get("valor")
         );
     }
 
@@ -161,8 +161,8 @@ public final class TestEstacionamentoFake {
         );
         Assert.assertTrue(ticket.validado());
         Assert.assertEquals(
-            ticket.sobre().get("valor"),
-            new DinheiroOf("0.00")
+            new DinheiroOf("0.00"),
+            ticket.sobre().get("valor")
         );
     }
 
