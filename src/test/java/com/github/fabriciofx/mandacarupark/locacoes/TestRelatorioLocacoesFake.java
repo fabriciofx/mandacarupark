@@ -45,7 +45,7 @@ import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import java.time.LocalDateTime;
 
-public class TestRelatorioLocacoes {
+public class TestRelatorioLocacoesFake {
     @Test
     public void relatorio() throws Exception {
         final Pagamentos pagamentos = new PagamentosFake(

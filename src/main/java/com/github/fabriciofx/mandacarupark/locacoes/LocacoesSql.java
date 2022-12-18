@@ -37,22 +37,20 @@ import java.util.List;
 
 public final class LocacoesSql implements Locacoes {
     private final Session session;
-    private final Periodo periodo;
 
-    public LocacoesSql(final Session session, final Periodo periodo) {
+    public LocacoesSql(final Session session) {
         this.session = session;
-        this.periodo = periodo;
     }
 
     @Override
-    public Iterable<Locacao> locacoes(Periodo periodo) {
+    public Iterable<Locacao> locacoes(final Periodo periodo) {
         try (
             final ResultSet rset = new Select(
                 this.session,
                 new Sprintf(
                     "SELECT * FROM locacao WHERE entrada >= '%s' AND saida <= '%s'",
-                    this.periodo.inicio(),
-                    this.periodo.termino()
+                    periodo.inicio(),
+                    periodo.termino()
                 )
             ).result()
         ) {
