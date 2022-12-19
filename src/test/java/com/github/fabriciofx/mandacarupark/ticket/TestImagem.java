@@ -62,9 +62,14 @@ public final class TestImagem {
         final InputStream correto = Thread.currentThread()
             .getContextClassLoader()
             .getResourceAsStream("imagem/imagem-texto.png");
+        final InputStream font = Thread.currentThread()
+            .getContextClassLoader()
+            .getResourceAsStream("font/roboto-bold.ttf");
+        final Font roboto = Font.createFont(Font.TRUETYPE_FONT, font)
+            .deriveFont(13f);
         final Imagem imagem = new ImagemTexto(
             new ImagemPapel(150, 300),
-            new Font("Lucida Sans Unicode", Font.PLAIN, 13),
+            roboto,
             Color.BLACK,
             "MANDACARUPARK",
             12,
@@ -123,6 +128,11 @@ public final class TestImagem {
 
     @Test
     public void completo() throws Exception {
+        final InputStream font = Thread.currentThread()
+            .getContextClassLoader()
+            .getResourceAsStream("font/roboto-bold.ttf");
+        final Font roboto13 = Font.createFont(Font.TRUETYPE_FONT, font)
+            .deriveFont(13f);
         final InputStream correto = Thread.currentThread()
             .getContextClassLoader()
             .getResourceAsStream("imagem/imagem-completo.png");
@@ -136,7 +146,7 @@ public final class TestImagem {
             new ImagemCodeQr(
                 new ImagemTexto(
                     new ImagemPapel(150, 300),
-                    new Font("Lucida Sans Unicode", Font.PLAIN, 13),
+                    roboto13,
                     Color.BLACK,
                     "MANDACARUPARK",
                     12,

@@ -29,7 +29,10 @@ import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
 public final class ImagemTicket implements Imagem {
     private final Imagem origin;
@@ -44,15 +47,27 @@ public final class ImagemTicket implements Imagem {
     public BufferedImage imagem() {
         final Placa placa = ticket.sobre().get("placa");
         final DataHora dataHora = ticket.sobre().get("dataHora");
-        final Font helvetica7 = new Font("Lucida Sans Unicode", Font.PLAIN, 7);
-        final Font helvetica13 = new Font(
-            "Lucida Sans Unicode",
-            Font.PLAIN,
-            13
-        );
+        final InputStream font7 = Thread.currentThread()
+            .getContextClassLoader()
+            .getResourceAsStream("font/roboto-bold.ttf");
+        final InputStream font13 = Thread.currentThread()
+            .getContextClassLoader()
+            .getResourceAsStream("font/roboto-bold.ttf");
+        final Font roboto7;
+        final Font roboto13;
+        try {
+            roboto7 = Font.createFont(Font.TRUETYPE_FONT, font7)
+                .deriveFont(7f);
+            roboto13 = Font.createFont(Font.TRUETYPE_FONT, font13)
+                .deriveFont(13f);
+        } catch (final FontFormatException ex) {
+            throw new RuntimeException(ex);
+        } catch (final IOException ex) {
+            throw new RuntimeException(ex);
+        }
         final BufferedImage imagem = new ImagemTexto(
             this.origin,
-            helvetica7,
+            roboto7,
             Color.BLACK,
             this.ticket.id().toString(),
             5,
@@ -60,7 +75,7 @@ public final class ImagemTicket implements Imagem {
         ).imagem();
         final BufferedImage imagem2 = new ImagemTexto(
             () -> imagem,
-            helvetica13,
+            roboto13,
             Color.BLACK,
             new Sprintf("Placa           %s", placa.toString()).asString(),
             10,
@@ -68,7 +83,7 @@ public final class ImagemTicket implements Imagem {
         ).imagem();
         final BufferedImage imagem3 = new ImagemTexto(
             () -> imagem2,
-            helvetica13,
+            roboto13,
             Color.BLACK,
             new Sprintf("Data       %s", dataHora.data()).asString(),
             10,
@@ -76,7 +91,7 @@ public final class ImagemTicket implements Imagem {
         ).imagem();
         final BufferedImage imagem4 = new ImagemTexto(
             () -> imagem3,
-            helvetica13,
+            roboto13,
             Color.BLACK,
             new Sprintf("Hora           %s", dataHora.hora()).asString(),
             10,
