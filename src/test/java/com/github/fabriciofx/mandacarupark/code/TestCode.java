@@ -64,9 +64,13 @@ public final class TestCode {
             RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB
         );
         g2d.setRenderingHints(rh);
-        final Font helvetica = new Font("Lucida Sans Unicode", Font.PLAIN, 13);
+        final InputStream font = Thread.currentThread()
+            .getContextClassLoader()
+            .getResourceAsStream("font/roboto-bold.ttf");
+        final Font roboto13 = Font.createFont(Font.TRUETYPE_FONT, font)
+            .deriveFont(13f);
         g2d.setColor(Color.black);
-        g2d.setFont(helvetica);
+        g2d.setFont(roboto13);
         g2d.drawString("Hello World", 20, 20);
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(imagem, "png", baos);
