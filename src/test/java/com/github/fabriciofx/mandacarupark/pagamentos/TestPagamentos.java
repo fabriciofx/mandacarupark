@@ -50,7 +50,7 @@ public final class TestPagamentos {
         ) {
             server.start();
             final Pagamentos pagamentos = new PagamentosSql(session);
-            Assert.assertEquals(3, pagamentos.tamanho());
+            Assert.assertEquals(3, pagamentos.quantidade());
         }
     }
 }

@@ -79,7 +79,7 @@ public final class PagamentosFake implements Pagamentos {
     }
 
     @Override
-    public int tamanho() {
+    public int quantidade() {
         return this.itens.size();
     }
 

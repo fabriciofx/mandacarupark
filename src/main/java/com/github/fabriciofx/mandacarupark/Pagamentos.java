@@ -28,5 +28,5 @@ import java.util.List;
 public interface Pagamentos extends Iterable<Pagamento> {
     Pagamento pagamento(Ticket ticket, DataHora dataHora, Dinheiro valor);
     List<Pagamento> procura(Id id);
-    int tamanho();
+    int quantidade();
 }

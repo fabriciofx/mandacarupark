@@ -72,7 +72,7 @@ public final class PagamentosSql implements Pagamentos {
     }
 
     @Override
-    public int tamanho() {
+    public int quantidade() {
         int quantidade = 0;
         try (
             final ResultSet rset = new Select(
