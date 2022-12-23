@@ -23,12 +23,9 @@
  */
 package com.github.fabriciofx.mandacarupark.cli;
 
-import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Server;
 import com.github.fabriciofx.mandacarupark.console.ConsoleUnix;
-import com.github.fabriciofx.mandacarupark.console.ConsoleWindows;
-import com.github.fabriciofx.mandacarupark.console.Consoles;
 import com.github.fabriciofx.mandacarupark.conta.DomingoGratis;
 import com.github.fabriciofx.mandacarupark.conta.Tolerancia;
 import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
@@ -36,7 +33,6 @@ import com.github.fabriciofx.mandacarupark.contas.ContasOf;
 import com.github.fabriciofx.mandacarupark.db.RandomName;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
 import com.github.fabriciofx.mandacarupark.db.ServerH2;
-import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.ds.H2Memory;
 import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
@@ -53,41 +49,36 @@ import java.util.regex.Pattern;
 public class TestOpcaoEntrada {
     @Test
     public void entrada() throws Exception {
-        final Session session = new NoAuth(
-            new H2Memory(
-                new RandomName()
-            )
-        );
         try (
             final Server server = new ServerH2(
-                session,
+                new NoAuth(
+                    new H2Memory(
+                        new RandomName()
+                    )
+                ),
                 new ScriptSql("mandacarupark.sql")
             )
         ) {
             server.start();
             final Pagamentos pagamentos = new PagamentosFake();
-            final Estacionamento estacionamento = new EstacionamentoFake(
-                new EntradasFake(pagamentos),
-                new SaidasFake(),
-                pagamentos,
-                new ContasOf(
-                    new DomingoGratis(),
-                    new Tolerancia(),
-                    new ValorFixo(new DinheiroOf("5.00"))
-                )
-            );
-            final byte[] buffer = "ABC1234\n\r".getBytes();
-            final ByteArrayInputStream input = new ByteArrayInputStream(buffer);
             final ByteArrayOutputStream output = new ByteArrayOutputStream();
-            final Opcao opcao = new OpcaoEntrada(
+            new OpcaoEntrada(
                 "1 - Entrada",
-                new Consoles(
-                    new ConsoleUnix(input, output),
-                    new ConsoleWindows(input, output)
-                ).console(),
-                estacionamento
-            );
-            opcao.run();
+                new ConsoleUnix(
+                    new ByteArrayInputStream("ABC1234\n\r".getBytes()),
+                    output
+                ),
+                new EstacionamentoFake(
+                    new EntradasFake(pagamentos),
+                    new SaidasFake(),
+                    pagamentos,
+                    new ContasOf(
+                        new DomingoGratis(),
+                        new Tolerancia(),
+                        new ValorFixo(new DinheiroOf("5.00"))
+                    )
+                )
+            ).run();
             Assert.assertTrue(
                 Pattern.compile(
                     "Placa: Ticket id: [0-9a-f]{8}\\b-[0-9a-f]{4}\\b-[0-9a-f" +
