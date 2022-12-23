@@ -72,7 +72,7 @@ public final class TicketFake implements Ticket {
     }
 
     @Override
-    public Data sobre() {
+    public Dinheiro valor() {
         final List<Pagamento> pagamento = this.pagamentos.procura(this.id);
         final Dinheiro valor;
         if (pagamento.isEmpty()) {
@@ -80,10 +80,14 @@ public final class TicketFake implements Ticket {
         } else {
             valor = pagamento.get(0).sobre().get("valor");
         }
+        return valor;
+    }
+
+    @Override
+    public Data sobre() {
         return new DataMap(
             "placa", this.placa,
-            "dataHora", this.dataHora,
-            "valor", valor
+            "dataHora", this.dataHora
         );
     }
 

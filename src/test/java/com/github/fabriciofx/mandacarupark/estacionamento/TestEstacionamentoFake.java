@@ -100,7 +100,7 @@ public final class TestEstacionamentoFake {
         Assert.assertTrue(ticket.validado());
         Assert.assertEquals(
             new DinheiroOf("5.00"),
-            ticket.sobre().get("valor")
+            ticket.valor()
         );
     }
 
@@ -131,7 +131,7 @@ public final class TestEstacionamentoFake {
         Assert.assertTrue(ticket.validado());
         Assert.assertEquals(
             new DinheiroOf("0.00"),
-            ticket.sobre().get("valor")
+            ticket.valor()
         );
     }
 
@@ -162,7 +162,7 @@ public final class TestEstacionamentoFake {
         Assert.assertTrue(ticket.validado());
         Assert.assertEquals(
             new DinheiroOf("0.00"),
-            ticket.sobre().get("valor")
+            ticket.valor()
         );
     }
 

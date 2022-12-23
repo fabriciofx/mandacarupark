@@ -44,6 +44,12 @@ public interface Ticket {
     boolean validado();
 
     /**
+     * Calcula o valor da locação a ser paga.
+     * @return Retorna o valor em reais da locação a ser paga
+     */
+    Dinheiro valor();
+
+    /**
      * Obtém os dados do ticket.
      * @return Os dados do ticket.
      */

@@ -92,7 +92,7 @@ public final class TicketSql implements Ticket {
     }
 
     @Override
-    public Data sobre() {
+    public Dinheiro valor() {
         try (
             final ResultSet rset = new Select(
                 this.session,
@@ -108,14 +108,18 @@ public final class TicketSql implements Ticket {
             } else {
                 valor = new DinheiroOf("0.00");
             }
-            return new DataMap(
-                "placa", this.placa,
-                "dataHora", this.dataHora,
-                "valor", valor
-            );
+            return valor;
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    @Override
+    public Data sobre() {
+        return new DataMap(
+            "placa", this.placa,
+            "dataHora", this.dataHora
+        );
     }
 
     @Override

@@ -134,7 +134,7 @@ public final class TestEstacionamentoSql {
             Assert.assertTrue(ticket.validado());
             Assert.assertEquals(
                 new DinheiroOf("5.00"),
-                ticket.sobre().get("valor")
+                ticket.valor()
             );
         }
     }
@@ -183,7 +183,7 @@ public final class TestEstacionamentoSql {
             Assert.assertTrue(ticket.validado());
             Assert.assertEquals(
                 new DinheiroOf("0.00"),
-                ticket.sobre().get("valor")
+                ticket.valor()
             );
         }
     }
@@ -234,13 +234,13 @@ public final class TestEstacionamentoSql {
             Assert.assertTrue(ticket.validado());
             Assert.assertEquals(
                 new DinheiroOf("0.00"),
-                ticket.sobre().get("valor")
+                ticket.valor()
             );
         }
     }
 
     @Test()
-    public void sairSemValidarTicket() throws Exception {
+    public void sairSemValidarTicket() {
         Assert.assertThrows(
             "Ticket não validado!",
             RuntimeException.class,
