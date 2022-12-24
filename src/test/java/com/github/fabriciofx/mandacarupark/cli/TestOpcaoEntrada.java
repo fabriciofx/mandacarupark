@@ -23,19 +23,14 @@
  */
 package com.github.fabriciofx.mandacarupark.cli;
 
-import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Server;
 import com.github.fabriciofx.mandacarupark.console.ConsoleUnix;
-import com.github.fabriciofx.mandacarupark.conta.DomingoGratis;
-import com.github.fabriciofx.mandacarupark.conta.Tolerancia;
-import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
-import com.github.fabriciofx.mandacarupark.contas.ContasOf;
+import com.github.fabriciofx.mandacarupark.contas.ContasFake;
 import com.github.fabriciofx.mandacarupark.db.RandomName;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
 import com.github.fabriciofx.mandacarupark.db.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.ds.H2Memory;
 import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
-import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasFake;
 import com.github.fabriciofx.mandacarupark.estacionamento.EstacionamentoFake;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
@@ -60,7 +55,6 @@ public class TestOpcaoEntrada {
             )
         ) {
             server.start();
-            final Pagamentos pagamentos = new PagamentosFake();
             final ByteArrayOutputStream output = new ByteArrayOutputStream();
             new OpcaoEntrada(
                 "1 - Entrada",
@@ -69,14 +63,13 @@ public class TestOpcaoEntrada {
                     output
                 ),
                 new EstacionamentoFake(
-                    new EntradasFake(pagamentos),
+                    new EntradasFake(
+                        new PagamentosFake(),
+                        new ContasFake()
+                    ),
                     new SaidasFake(),
-                    pagamentos,
-                    new ContasOf(
-                        new DomingoGratis(),
-                        new Tolerancia(),
-                        new ValorFixo(new DinheiroOf("5.00"))
-                    )
+                    new PagamentosFake(),
+                    new ContasFake()
                 )
             ).run();
             Assert.assertTrue(

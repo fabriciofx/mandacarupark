@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.entradas;
 
+import com.github.fabriciofx.mandacarupark.Contas;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
@@ -31,7 +32,6 @@ import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaFake;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
-import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -39,20 +39,19 @@ import java.util.Map;
 public final class EntradasFake implements Entradas {
     private final Map<Id, Entrada> itens;
     private final Pagamentos pagamentos;
+    private final Contas contas;
 
-    public EntradasFake() {
-        this(new PagamentosFake());
-    }
-
-    public EntradasFake(final Pagamentos pagamentos) {
-        this(pagamentos, new HashMap<>());
+    public EntradasFake(final Pagamentos pagamentos, final Contas contas) {
+        this(pagamentos, contas, new HashMap<>());
     }
 
     public EntradasFake(
         final Pagamentos pagamentos,
+        final Contas contas,
         final Entrada... entradas
     ) {
         this.pagamentos = pagamentos;
+        this.contas = contas;
         this.itens = new HashMap<>();
         for (final Entrada entrada : entradas) {
             this.itens.put(entrada.id(), entrada);
@@ -61,9 +60,11 @@ public final class EntradasFake implements Entradas {
 
     public EntradasFake(
         final Pagamentos pagamentos,
+        final Contas contas,
         final Map<Id, Entrada> itens
     ) {
         this.pagamentos = pagamentos;
+        this.contas = contas;
         this.itens = itens;
     }
 
@@ -71,6 +72,7 @@ public final class EntradasFake implements Entradas {
     public Entrada entrada(final Placa placa, final DataHora dataHora) {
         final Entrada entrada = new EntradaFake(
             this.pagamentos,
+            this.contas,
             new Uuid(),
             placa,
             dataHora

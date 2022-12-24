@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.locacoes;
 
+import com.github.fabriciofx.mandacarupark.Contas;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
@@ -46,18 +47,19 @@ import java.time.LocalDateTime;
 public final class TestLocacoesFake {
     @Test
     public void locacoes() {
-        final Entradas entradas = new EntradasFake();
-        final Saidas saidas = new SaidasFake();
+        final Contas contas = new ContasOf(
+            new DomingoGratis(),
+            new Tolerancia(),
+            new ValorFixo(new DinheiroOf("5.00"))
+        );
         final Pagamentos pagamentos = new PagamentosFake();
+        final Entradas entradas = new EntradasFake(pagamentos, contas);
+        final Saidas saidas = new SaidasFake();
         final Estacionamento estacionamento = new EstacionamentoFake(
             entradas,
             saidas,
             pagamentos,
-            new ContasOf(
-                new DomingoGratis(),
-                new Tolerancia(),
-                new ValorFixo(new DinheiroOf("5.00"))
-            )
+            contas
         );
         // Locação 1
         Placa placa = new PlacaOf("ABC1234");

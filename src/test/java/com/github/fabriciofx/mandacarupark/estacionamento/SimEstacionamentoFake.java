@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.estacionamento;
 
+import com.github.fabriciofx.mandacarupark.Contas;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
@@ -49,18 +50,19 @@ public final class SimEstacionamentoFake {
     @Test
     public void simulacao() {
         // 1. Monta-se o ambiente do estacionamento
-        final Entradas entradas = new EntradasFake();
-        final Saidas saidas = new SaidasFake();
+        final Contas contas = new ContasOf(
+            new DomingoGratis(),
+            new Tolerancia(),
+            new ValorFixo(new DinheiroOf("5.00"))
+        );
         final Pagamentos pagamentos = new PagamentosFake();
+        final Entradas entradas = new EntradasFake(pagamentos, contas);
+        final Saidas saidas = new SaidasFake();
         final Estacionamento estacionamento = new EstacionamentoFake(
             entradas,
             saidas,
             pagamentos,
-            new ContasOf(
-                new DomingoGratis(),
-                new Tolerancia(),
-                new ValorFixo(new DinheiroOf("5.00"))
-            )
+            contas
         );
         for (int idx = 0; idx < 100; idx++) {
             final Placa placa = new PlacaRandom();

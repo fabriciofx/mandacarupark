@@ -25,21 +25,14 @@ package com.github.fabriciofx.mandacarupark.estacionamento;
 
 import com.github.fabriciofx.mandacarupark.Contas;
 import com.github.fabriciofx.mandacarupark.DataHora;
-import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
-import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.conta.Cortesia;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
-import com.github.fabriciofx.mandacarupark.entradas.EntradasFake;
-import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
-import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
-import com.github.fabriciofx.mandacarupark.saidas.SaidasFake;
 import com.github.fabriciofx.mandacarupark.ticket.TicketFake;
 
 public final class EstacionamentoFake implements Estacionamento {
@@ -47,15 +40,6 @@ public final class EstacionamentoFake implements Estacionamento {
     private final Saidas saidas;
     private final Pagamentos pagamentos;
     private final Contas contas;
-
-    public EstacionamentoFake(final Contas contas) {
-        this(
-            new EntradasFake(),
-            new SaidasFake(),
-            new PagamentosFake(),
-            contas
-        );
-    }
 
     public EstacionamentoFake(
         final Entradas entradas,
@@ -74,6 +58,7 @@ public final class EstacionamentoFake implements Estacionamento {
         final Entrada entrada = entradas.entrada(placa, dataHora);
         final Ticket ticket = new TicketFake(
             this.pagamentos,
+            this.contas,
             entrada.id(),
             placa,
             dataHora
@@ -83,13 +68,7 @@ public final class EstacionamentoFake implements Estacionamento {
 
     @Override
     public void pagamento(final Ticket ticket, final DataHora dataHora) {
-        final Periodo periodo = new PeriodoOf(
-            ticket.sobre().get("dataHora"),
-            dataHora
-        );
-        final Dinheiro valor = this.contas.conta(periodo, new Cortesia())
-            .valor(periodo);
-        this.pagamentos.pagamento(ticket, dataHora, valor);
+        this.pagamentos.pagamento(ticket, dataHora, ticket.valor(dataHora));
     }
 
     @Override

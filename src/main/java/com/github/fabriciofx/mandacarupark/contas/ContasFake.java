@@ -21,43 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.contas;
 
-import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
+import com.github.fabriciofx.mandacarupark.Conta;
+import com.github.fabriciofx.mandacarupark.Contas;
+import com.github.fabriciofx.mandacarupark.Periodo;
+import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
+import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 
-/**
- * Ticket do estacionamento.
- *
- * @since 0.0.1
- */
-public interface Ticket {
-    /**
-     * Id do ticket.
-     * @return O id do ticket
-     */
-    Id id();
+public class ContasFake implements Contas {
+    private final Conta conta;
 
-    /**
-     * Verifica se o ticket foi pago, isto é, validado.
-     * @return Verdadeiro se o ticket foi pago, falso caso contrário.
-     */
-    boolean validado();
+    public ContasFake() {
+        this(new ValorFixo(new DinheiroOf("5.00")));
+    }
 
-    /**
-     * Calcula o valor da locação a ser paga.
-     * @return Retorna o valor em reais da locação a ser paga
-     */
-    Dinheiro valor(DataHora termino);
+    public ContasFake(final Conta conta) {
+        this.conta = conta;
+    }
 
-    /**
-     * Obtém os dados do ticket.
-     * @return Os dados do ticket.
-     */
-    Data sobre();
-
-    /**
-     * Obtém uma imagem do ticket.
-     * @return Uma imagem do ticket.
-     */
-    Imagem imagem();
+    @Override
+    public Conta conta(final Periodo periodo, final Conta def) {
+        return null;
+    }
 }

@@ -92,7 +92,7 @@ public final class TicketSql implements Ticket {
     }
 
     @Override
-    public Dinheiro valor() {
+    public Dinheiro valor(final DataHora termino) {
         try (
             final ResultSet rset = new Select(
                 this.session,

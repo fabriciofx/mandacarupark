@@ -24,10 +24,7 @@
 package com.github.fabriciofx.mandacarupark.locacoes;
 
 import com.github.fabriciofx.mandacarupark.Pagamentos;
-import com.github.fabriciofx.mandacarupark.conta.DomingoGratis;
-import com.github.fabriciofx.mandacarupark.conta.Tolerancia;
-import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
-import com.github.fabriciofx.mandacarupark.contas.ContasOf;
+import com.github.fabriciofx.mandacarupark.contas.ContasFake;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaFake;
@@ -72,8 +69,10 @@ public class TestRelatorioLocacoesFake {
                         new EstacionamentoFake(
                             new EntradasFake(
                                 pagamentos,
+                                new ContasFake(),
                                 new EntradaFake(
                                     pagamentos,
+                                    new ContasFake(),
                                     new Uuid(
                                         "d589e997-c61d-47b3-90cf-c5ba23c8b427"
                                     ),
@@ -84,6 +83,7 @@ public class TestRelatorioLocacoesFake {
                                 ),
                                 new EntradaFake(
                                     pagamentos,
+                                    new ContasFake(),
                                     new Uuid(
                                         "e90107c4-f792-4569-abb3-353605f01716"
                                     ),
@@ -94,6 +94,7 @@ public class TestRelatorioLocacoesFake {
                                 ),
                                 new EntradaFake(
                                     pagamentos,
+                                    new ContasFake(),
                                     new Uuid(
                                         "15e32c1b-55ef-4cc6-a9bf-28da74d2309a"
                                     ),
@@ -133,11 +134,7 @@ public class TestRelatorioLocacoesFake {
                                 )
                             ),
                             pagamentos,
-                            new ContasOf(
-                                new DomingoGratis(),
-                                new Tolerancia(),
-                                new ValorFixo(new DinheiroOf("5.00"))
-                            )
+                            new ContasFake()
                         )
                     ),
                     new PeriodoOf(
