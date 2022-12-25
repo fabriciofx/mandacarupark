@@ -23,28 +23,25 @@
  */
 package com.github.fabriciofx.mandacarupark.estacionamento;
 
-import com.github.fabriciofx.mandacarupark.Regras;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Placa;
+import com.github.fabriciofx.mandacarupark.Regras;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.regra.DomingoGratis;
-import com.github.fabriciofx.mandacarupark.regra.Tolerancia;
-import com.github.fabriciofx.mandacarupark.regra.ValorFixo;
-import com.github.fabriciofx.mandacarupark.regra.ValorVariavel;
-import com.github.fabriciofx.mandacarupark.regras.RegrasFake;
-import com.github.fabriciofx.mandacarupark.regras.RegrasOf;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasFake;
-import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
+import com.github.fabriciofx.mandacarupark.regra.DomingoGratis;
+import com.github.fabriciofx.mandacarupark.regra.Tolerancia;
+import com.github.fabriciofx.mandacarupark.regra.ValorFixo;
+import com.github.fabriciofx.mandacarupark.regras.RegrasFake;
+import com.github.fabriciofx.mandacarupark.regras.RegrasOf;
 import com.github.fabriciofx.mandacarupark.saidas.SaidasFake;
-import com.github.fabriciofx.mandacarupark.ticket.TicketFake;
 import org.junit.Assert;
 import org.junit.Test;
 import java.time.LocalDateTime;
@@ -110,82 +107,6 @@ public final class TestEstacionamentoFake {
         Assert.assertEquals(
             new DinheiroOf("5.00"),
             ticket.valor(new DataHoraOf())
-        );
-    }
-
-    @Test
-    public void tolerancia() {
-        final Regras regras = new RegrasOf(
-            new DomingoGratis(),
-            new Tolerancia(),
-            new ValorFixo(new DinheiroOf("5.00"))
-        );
-        final Pagamentos pagamentos = new PagamentosFake();
-        final Entradas entradas = new EntradasFake(pagamentos, regras);
-        final Saidas saidas = new SaidasFake();
-        final Estacionamento estacionamento = new EstacionamentoFake(
-            entradas,
-            saidas,
-            pagamentos,
-            regras
-        );
-        final Placa placa = new PlacaOf("ABC1234");
-        final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
-        final Ticket ticket = estacionamento.entrada(
-            placa,
-            new DataHoraOf(dateTime)
-        );
-        estacionamento.pagamento(
-            ticket,
-            new DataHoraOf(dateTime.plusMinutes(20))
-        );
-        estacionamento.saida(
-            ticket,
-            placa,
-            new DataHoraOf(dateTime.plusMinutes(25))
-        );
-        Assert.assertTrue(ticket.validado());
-        Assert.assertEquals(
-            new DinheiroOf("0.00"),
-            ticket.valor(new DataHoraOf(dateTime.plusMinutes(20)))
-        );
-    }
-
-    @Test
-    public void domingoGratis() {
-        final Regras regras = new RegrasOf(
-            new DomingoGratis(),
-            new Tolerancia(),
-            new ValorFixo(new DinheiroOf("5.00"))
-        );
-        final Pagamentos pagamentos = new PagamentosFake();
-        final Entradas entradas = new EntradasFake(pagamentos, regras);
-        final Saidas saidas = new SaidasFake();
-        final Estacionamento estacionamento = new EstacionamentoFake(
-            entradas,
-            saidas,
-            pagamentos,
-            regras
-        );
-        final Placa placa = new PlacaOf("ABC1234");
-        final LocalDateTime dateTime = LocalDateTime.of(2022, 7, 31, 10, 30);
-        final Ticket ticket = estacionamento.entrada(
-            placa,
-            new DataHoraOf(dateTime)
-        );
-        estacionamento.pagamento(
-            ticket,
-            new DataHoraOf(dateTime.plusMinutes(60))
-        );
-        estacionamento.saida(
-            ticket,
-            placa,
-            new DataHoraOf(dateTime.plusMinutes(70))
-        );
-        Assert.assertTrue(ticket.validado());
-        Assert.assertEquals(
-            new DinheiroOf("0.00"),
-            ticket.valor(new DataHoraOf(dateTime.plusMinutes(60)))
         );
     }
 
@@ -266,65 +187,4 @@ public final class TestEstacionamentoFake {
             sb.toString().contains("dataHora=2022-08-02 10:30")
         );
     }
-
-    @Test
-    public void valorVariavelTempoExato() {
-        final Ticket ticket = new TicketFake(
-            new PagamentosFake(),
-            new RegrasFake(
-                new ValorVariavel(
-                    new DinheiroOf("6.00"),
-                    new DinheiroOf("4.00")
-                )
-            ),
-            new Uuid(),
-            new PlacaOf("ABC1234"),
-            new DataHoraOf("24/12/2022 12:45:20")
-        );
-        Assert.assertEquals(
-            new DinheiroOf("6.00"),
-            ticket.valor(new DataHoraOf("24/12/2022 16:45:20"))
-        );
-    }
-
-    @Test
-    public void valorVariavelComUmMinutoExcedente() {
-        final Ticket ticket = new TicketFake(
-            new PagamentosFake(),
-            new RegrasFake(
-                new ValorVariavel(
-                    new DinheiroOf("6.00"),
-                    new DinheiroOf("4.00")
-                )
-            ),
-            new Uuid(),
-            new PlacaOf("ABC1234"),
-            new DataHoraOf("24/12/2022 12:45:20")
-        );
-        Assert.assertEquals(
-            new DinheiroOf("10.00"),
-            ticket.valor(new DataHoraOf("24/12/2022 16:46:20"))
-        );
-    }
-
-    @Test
-    public void valorVariavelComUmaHoraEUmMinutoExcedente() {
-        final Ticket ticket = new TicketFake(
-            new PagamentosFake(),
-            new RegrasFake(
-                new ValorVariavel(
-                    new DinheiroOf("6.00"),
-                    new DinheiroOf("4.00")
-                )
-            ),
-            new Uuid(),
-            new PlacaOf("ABC1234"),
-            new DataHoraOf("24/12/2022 12:45:20")
-        );
-        Assert.assertEquals(
-            new DinheiroOf("14.00"),
-            ticket.valor(new DataHoraOf("24/12/2022 17:46:20"))
-        );
-    }
-
 }
