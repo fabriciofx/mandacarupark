@@ -34,14 +34,17 @@ import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.conta.DomingoGratis;
 import com.github.fabriciofx.mandacarupark.conta.Tolerancia;
 import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
+import com.github.fabriciofx.mandacarupark.conta.ValorVariavel;
 import com.github.fabriciofx.mandacarupark.contas.ContasFake;
 import com.github.fabriciofx.mandacarupark.contas.ContasOf;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasFake;
+import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.saidas.SaidasFake;
+import com.github.fabriciofx.mandacarupark.ticket.TicketFake;
 import org.junit.Assert;
 import org.junit.Test;
 import java.time.LocalDateTime;
@@ -263,4 +266,65 @@ public final class TestEstacionamentoFake {
             sb.toString().contains("dataHora=2022-08-02 10:30")
         );
     }
+
+    @Test
+    public void valorVariavelTempoExato() {
+        final Ticket ticket = new TicketFake(
+            new PagamentosFake(),
+            new ContasFake(
+                new ValorVariavel(
+                    new DinheiroOf("6.00"),
+                    new DinheiroOf("4.00")
+                )
+            ),
+            new Uuid(),
+            new PlacaOf("ABC1234"),
+            new DataHoraOf("24/12/2022 12:45:20")
+        );
+        Assert.assertEquals(
+            new DinheiroOf("6.00"),
+            ticket.valor(new DataHoraOf("24/12/2022 16:45:20"))
+        );
+    }
+
+    @Test
+    public void valorVariavelComUmMinutoExcedente() {
+        final Ticket ticket = new TicketFake(
+            new PagamentosFake(),
+            new ContasFake(
+                new ValorVariavel(
+                    new DinheiroOf("6.00"),
+                    new DinheiroOf("4.00")
+                )
+            ),
+            new Uuid(),
+            new PlacaOf("ABC1234"),
+            new DataHoraOf("24/12/2022 12:45:20")
+        );
+        Assert.assertEquals(
+            new DinheiroOf("10.00"),
+            ticket.valor(new DataHoraOf("24/12/2022 16:46:20"))
+        );
+    }
+
+    @Test
+    public void valorVariavelComUmaHoraEUmMinutoExcedente() {
+        final Ticket ticket = new TicketFake(
+            new PagamentosFake(),
+            new ContasFake(
+                new ValorVariavel(
+                    new DinheiroOf("6.00"),
+                    new DinheiroOf("4.00")
+                )
+            ),
+            new Uuid(),
+            new PlacaOf("ABC1234"),
+            new DataHoraOf("24/12/2022 12:45:20")
+        );
+        Assert.assertEquals(
+            new DinheiroOf("14.00"),
+            ticket.valor(new DataHoraOf("24/12/2022 17:46:20"))
+        );
+    }
+
 }

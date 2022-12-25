@@ -21,27 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.contas;
+package com.github.fabriciofx.mandacarupark.conta;
 
 import com.github.fabriciofx.mandacarupark.Conta;
-import com.github.fabriciofx.mandacarupark.Contas;
+import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Periodo;
-import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
+import java.math.BigDecimal;
 
-public class ContasFake implements Contas {
-    private final Conta conta;
+public final class ValorVariavel implements Conta {
+    private final Dinheiro quatroHoras;
+    private final Dinheiro horaAdicional;
 
-    public ContasFake() {
-        this(new ValorFixo(new DinheiroOf("5.00")));
-    }
-
-    public ContasFake(final Conta conta) {
-        this.conta = conta;
+    public ValorVariavel(
+        final Dinheiro quatroHoras,
+        final Dinheiro horaAdicional
+    ) {
+        this.quatroHoras = quatroHoras;
+        this.horaAdicional = horaAdicional;
     }
 
     @Override
-    public Conta conta(final Periodo periodo, final Conta def) {
-        return this.conta;
+    public boolean avalie(final Periodo periodo) {
+        return true;
+    }
+
+    @Override
+    public Dinheiro valor(final Periodo periodo) {
+        long tempo = periodo.minutos() - 240;
+        long horas = 4;
+        while (tempo > 0) {
+            tempo = tempo - 60;
+            horas++;
+        }
+        final BigDecimal excedente = new BigDecimal(horas - 4);
+        return new DinheiroOf(
+            this.horaAdicional
+                .quantia()
+                .multiply(excedente)
+                .add(this.quatroHoras.quantia())
+        );
     }
 }
