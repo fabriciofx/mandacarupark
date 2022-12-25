@@ -21,8 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.regra;
 
-public interface Contas {
-    Conta conta(Periodo periodo, Conta def);
+import com.github.fabriciofx.mandacarupark.Regra;
+import com.github.fabriciofx.mandacarupark.Dinheiro;
+import com.github.fabriciofx.mandacarupark.Periodo;
+import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
+
+public final class Tolerancia implements Regra {
+    private final int minutos;
+
+    public Tolerancia() {
+        this(30);
+    }
+
+    public Tolerancia(final int minutos) {
+        this.minutos = minutos;
+    }
+
+    @Override
+    public boolean avalie(final Periodo periodo) {
+        boolean resultado = false;
+        if (periodo.minutos() <= this.minutos) {
+            resultado = true;
+        }
+        return resultado;
+    }
+
+    @Override
+    public Dinheiro valor(final Periodo periodo) {
+        return new DinheiroOf("0.00");
+    }
 }

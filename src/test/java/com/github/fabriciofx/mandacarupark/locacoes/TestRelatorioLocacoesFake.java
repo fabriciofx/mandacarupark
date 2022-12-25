@@ -24,7 +24,7 @@
 package com.github.fabriciofx.mandacarupark.locacoes;
 
 import com.github.fabriciofx.mandacarupark.Pagamentos;
-import com.github.fabriciofx.mandacarupark.contas.ContasFake;
+import com.github.fabriciofx.mandacarupark.regras.RegrasFake;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaFake;
@@ -69,10 +69,10 @@ public class TestRelatorioLocacoesFake {
                         new EstacionamentoFake(
                             new EntradasFake(
                                 pagamentos,
-                                new ContasFake(),
+                                new RegrasFake(),
                                 new EntradaFake(
                                     pagamentos,
-                                    new ContasFake(),
+                                    new RegrasFake(),
                                     new Uuid(
                                         "d589e997-c61d-47b3-90cf-c5ba23c8b427"
                                     ),
@@ -83,7 +83,7 @@ public class TestRelatorioLocacoesFake {
                                 ),
                                 new EntradaFake(
                                     pagamentos,
-                                    new ContasFake(),
+                                    new RegrasFake(),
                                     new Uuid(
                                         "e90107c4-f792-4569-abb3-353605f01716"
                                     ),
@@ -94,7 +94,7 @@ public class TestRelatorioLocacoesFake {
                                 ),
                                 new EntradaFake(
                                     pagamentos,
-                                    new ContasFake(),
+                                    new RegrasFake(),
                                     new Uuid(
                                         "15e32c1b-55ef-4cc6-a9bf-28da74d2309a"
                                     ),
@@ -134,7 +134,7 @@ public class TestRelatorioLocacoesFake {
                                 )
                             ),
                             pagamentos,
-                            new ContasFake()
+                            new RegrasFake()
                         )
                     ),
                     new PeriodoOf(

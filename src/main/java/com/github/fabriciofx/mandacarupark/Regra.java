@@ -21,22 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.conta;
+package com.github.fabriciofx.mandacarupark;
 
-import com.github.fabriciofx.mandacarupark.Conta;
-import com.github.fabriciofx.mandacarupark.Dinheiro;
-import com.github.fabriciofx.mandacarupark.Periodo;
-import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
-import java.time.DayOfWeek;
-
-public final class DomingoGratis implements Conta {
-    @Override
-    public boolean avalie(final Periodo periodo) {
-        return periodo.diaDaSemana(DayOfWeek.SUNDAY);
-    }
-
-    @Override
-    public Dinheiro valor(final Periodo periodo) {
-        return new DinheiroOf("0.00");
-    }
+public interface Regra {
+    boolean avalie(Periodo periodo);
+    Dinheiro valor(Periodo periodo);
 }

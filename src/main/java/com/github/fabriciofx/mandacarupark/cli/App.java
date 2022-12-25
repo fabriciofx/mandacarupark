@@ -30,10 +30,10 @@ import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Server;
 import com.github.fabriciofx.mandacarupark.console.Console;
 import com.github.fabriciofx.mandacarupark.console.Consoles;
-import com.github.fabriciofx.mandacarupark.conta.DomingoGratis;
-import com.github.fabriciofx.mandacarupark.conta.Tolerancia;
-import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
-import com.github.fabriciofx.mandacarupark.contas.ContasOf;
+import com.github.fabriciofx.mandacarupark.regra.DomingoGratis;
+import com.github.fabriciofx.mandacarupark.regra.Tolerancia;
+import com.github.fabriciofx.mandacarupark.regra.ValorFixo;
+import com.github.fabriciofx.mandacarupark.regras.RegrasOf;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
 import com.github.fabriciofx.mandacarupark.db.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
@@ -63,7 +63,7 @@ public final class App {
                 entradas,
                 saidas,
                 pagamentos,
-                new ContasOf(
+                new RegrasOf(
                     new DomingoGratis(),
                     new Tolerancia(),
                     new ValorFixo(new DinheiroOf("5.00"))

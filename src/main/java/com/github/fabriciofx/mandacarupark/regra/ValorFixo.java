@@ -21,9 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.regra;
 
-public interface Conta {
-    boolean avalie(Periodo periodo);
-    Dinheiro valor(Periodo periodo);
+import com.github.fabriciofx.mandacarupark.Regra;
+import com.github.fabriciofx.mandacarupark.Dinheiro;
+import com.github.fabriciofx.mandacarupark.Periodo;
+import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
+
+public final class ValorFixo implements Regra {
+    private final Dinheiro valor;
+
+    public ValorFixo() {
+        this(new DinheiroOf("7.00"));
+    }
+
+    public ValorFixo(final Dinheiro valor) {
+        this.valor = valor;
+    }
+
+    @Override
+    public boolean avalie(final Periodo periodo) {
+        return true;
+    }
+
+    @Override
+    public Dinheiro valor(final Periodo periodo) {
+        return this.valor;
+    }
 }

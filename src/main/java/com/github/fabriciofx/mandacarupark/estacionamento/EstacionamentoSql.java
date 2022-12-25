@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.estacionamento;
 
-import com.github.fabriciofx.mandacarupark.Contas;
+import com.github.fabriciofx.mandacarupark.Regras;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Entrada;
@@ -34,7 +34,7 @@ import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.conta.Cortesia;
+import com.github.fabriciofx.mandacarupark.regra.Cortesia;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
@@ -45,20 +45,20 @@ public final class EstacionamentoSql implements Estacionamento {
     private final Entradas entradas;
     private final Saidas saidas;
     private final Pagamentos pagamentos;
-    private final Contas contas;
+    private final Regras regras;
 
     public EstacionamentoSql(
         final Session session,
         final Entradas entradas,
         final Saidas saidas,
         final Pagamentos pagamentos,
-        final Contas contas
+        final Regras regras
     ) {
         this.session = session;
         this.entradas = entradas;
         this.saidas = saidas;
         this.pagamentos = pagamentos;
-        this.contas = contas;
+        this.regras = regras;
     }
 
     @Override
@@ -73,7 +73,7 @@ public final class EstacionamentoSql implements Estacionamento {
             ticket.sobre().get("dataHora"),
             dataHora
         );
-        final Dinheiro valor = this.contas.conta(periodo, new Cortesia())
+        final Dinheiro valor = this.regras.regra(periodo, new Cortesia())
             .valor(periodo);
         this.pagamentos.pagamento(ticket, dataHora, valor);
     }
@@ -99,7 +99,7 @@ public final class EstacionamentoSql implements Estacionamento {
             "entradas", this.entradas,
             "saidas", this.saidas,
             "pagamentos", this.pagamentos,
-            "contas", this.contas
+            "regras", this.regras
         );
     }
 }

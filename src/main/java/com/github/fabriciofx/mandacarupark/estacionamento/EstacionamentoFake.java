@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.estacionamento;
 
-import com.github.fabriciofx.mandacarupark.Contas;
+import com.github.fabriciofx.mandacarupark.Regras;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
@@ -39,18 +39,18 @@ public final class EstacionamentoFake implements Estacionamento {
     private final Entradas entradas;
     private final Saidas saidas;
     private final Pagamentos pagamentos;
-    private final Contas contas;
+    private final Regras regras;
 
     public EstacionamentoFake(
         final Entradas entradas,
         final Saidas saidas,
         final Pagamentos pagamentos,
-        final Contas contas
+        final Regras regras
     ) {
         this.entradas = entradas;
         this.saidas = saidas;
         this.pagamentos = pagamentos;
-        this.contas = contas;
+        this.regras = regras;
     }
 
     @Override
@@ -58,7 +58,7 @@ public final class EstacionamentoFake implements Estacionamento {
         final Entrada entrada = entradas.entrada(placa, dataHora);
         final Ticket ticket = new TicketFake(
             this.pagamentos,
-            this.contas,
+            this.regras,
             entrada.id(),
             placa,
             dataHora
@@ -92,7 +92,7 @@ public final class EstacionamentoFake implements Estacionamento {
             "entradas", this.entradas,
             "saidas", this.saidas,
             "pagamentos", this.pagamentos,
-            "contas", this.contas
+            "regras", this.regras
         );
     }
 }

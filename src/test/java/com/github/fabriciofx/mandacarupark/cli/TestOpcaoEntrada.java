@@ -25,7 +25,7 @@ package com.github.fabriciofx.mandacarupark.cli;
 
 import com.github.fabriciofx.mandacarupark.Server;
 import com.github.fabriciofx.mandacarupark.console.ConsoleUnix;
-import com.github.fabriciofx.mandacarupark.contas.ContasFake;
+import com.github.fabriciofx.mandacarupark.regras.RegrasFake;
 import com.github.fabriciofx.mandacarupark.db.RandomName;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
 import com.github.fabriciofx.mandacarupark.db.ServerH2;
@@ -65,11 +65,11 @@ public class TestOpcaoEntrada {
                 new EstacionamentoFake(
                     new EntradasFake(
                         new PagamentosFake(),
-                        new ContasFake()
+                        new RegrasFake()
                     ),
                     new SaidasFake(),
                     new PagamentosFake(),
-                    new ContasFake()
+                    new RegrasFake()
                 )
             ).run();
             Assert.assertTrue(

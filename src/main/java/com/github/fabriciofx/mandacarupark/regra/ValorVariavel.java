@@ -21,15 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.conta;
+package com.github.fabriciofx.mandacarupark.regra;
 
-import com.github.fabriciofx.mandacarupark.Conta;
+import com.github.fabriciofx.mandacarupark.Regra;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import java.math.BigDecimal;
 
-public final class ValorVariavel implements Conta {
+public final class ValorVariavel implements Regra {
     private final Dinheiro quatroHoras;
     private final Dinheiro horaAdicional;
 

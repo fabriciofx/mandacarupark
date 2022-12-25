@@ -21,31 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.conta;
+package com.github.fabriciofx.mandacarupark.regra;
 
-import com.github.fabriciofx.mandacarupark.Conta;
+import com.github.fabriciofx.mandacarupark.Regra;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
+import java.time.DayOfWeek;
 
-public final class Tolerancia implements Conta {
-    private final int minutos;
-
-    public Tolerancia() {
-        this(30);
-    }
-
-    public Tolerancia(final int minutos) {
-        this.minutos = minutos;
-    }
-
+public final class DomingoGratis implements Regra {
     @Override
     public boolean avalie(final Periodo periodo) {
-        boolean resultado = false;
-        if (periodo.minutos() <= this.minutos) {
-            resultado = true;
-        }
-        return resultado;
+        return periodo.diaDaSemana(DayOfWeek.SUNDAY);
     }
 
     @Override

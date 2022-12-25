@@ -21,32 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.contas;
+package com.github.fabriciofx.mandacarupark.regras;
 
-import com.github.fabriciofx.mandacarupark.Conta;
-import com.github.fabriciofx.mandacarupark.Contas;
+import com.github.fabriciofx.mandacarupark.Regra;
+import com.github.fabriciofx.mandacarupark.Regras;
 import com.github.fabriciofx.mandacarupark.Periodo;
-import java.util.Arrays;
-import java.util.List;
+import com.github.fabriciofx.mandacarupark.regra.ValorFixo;
+import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 
-public final class ContasOf implements Contas {
-    private final List<Conta> itens;
+public class RegrasFake implements Regras {
+    private final Regra regra;
 
-    public ContasOf(final Conta... itens) {
-        this(Arrays.asList(itens));
+    public RegrasFake() {
+        this(new ValorFixo(new DinheiroOf("5.00")));
     }
 
-    public ContasOf(final List<Conta> itens) {
-        this.itens = itens;
+    public RegrasFake(final Regra regra) {
+        this.regra = regra;
     }
 
     @Override
-    public Conta conta(final Periodo periodo, final Conta def) {
-        for (final Conta item : this.itens) {
-            if (item.avalie(periodo)) {
-                return item;
-            }
-        }
-        return def;
+    public Regra regra(final Periodo periodo, final Regra def) {
+        return this.regra;
     }
 }

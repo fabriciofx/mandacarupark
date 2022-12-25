@@ -23,17 +23,17 @@
  */
 package com.github.fabriciofx.mandacarupark.locacoes;
 
-import com.github.fabriciofx.mandacarupark.Contas;
+import com.github.fabriciofx.mandacarupark.Regras;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.conta.DomingoGratis;
-import com.github.fabriciofx.mandacarupark.conta.Tolerancia;
-import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
-import com.github.fabriciofx.mandacarupark.contas.ContasOf;
+import com.github.fabriciofx.mandacarupark.regra.DomingoGratis;
+import com.github.fabriciofx.mandacarupark.regra.Tolerancia;
+import com.github.fabriciofx.mandacarupark.regra.ValorFixo;
+import com.github.fabriciofx.mandacarupark.regras.RegrasOf;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasFake;
@@ -47,19 +47,19 @@ import java.time.LocalDateTime;
 public final class TestLocacoesFake {
     @Test
     public void locacoes() {
-        final Contas contas = new ContasOf(
+        final Regras regras = new RegrasOf(
             new DomingoGratis(),
             new Tolerancia(),
             new ValorFixo(new DinheiroOf("5.00"))
         );
         final Pagamentos pagamentos = new PagamentosFake();
-        final Entradas entradas = new EntradasFake(pagamentos, contas);
+        final Entradas entradas = new EntradasFake(pagamentos, regras);
         final Saidas saidas = new SaidasFake();
         final Estacionamento estacionamento = new EstacionamentoFake(
             entradas,
             saidas,
             pagamentos,
-            contas
+            regras
         );
         // Locação 1
         Placa placa = new PlacaOf("ABC1234");

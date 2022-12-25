@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.estacionamento;
 
-import com.github.fabriciofx.mandacarupark.Contas;
+import com.github.fabriciofx.mandacarupark.Regras;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
@@ -31,12 +31,12 @@ import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.conta.DomingoGratis;
-import com.github.fabriciofx.mandacarupark.conta.Tolerancia;
-import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
-import com.github.fabriciofx.mandacarupark.conta.ValorVariavel;
-import com.github.fabriciofx.mandacarupark.contas.ContasFake;
-import com.github.fabriciofx.mandacarupark.contas.ContasOf;
+import com.github.fabriciofx.mandacarupark.regra.DomingoGratis;
+import com.github.fabriciofx.mandacarupark.regra.Tolerancia;
+import com.github.fabriciofx.mandacarupark.regra.ValorFixo;
+import com.github.fabriciofx.mandacarupark.regra.ValorVariavel;
+import com.github.fabriciofx.mandacarupark.regras.RegrasFake;
+import com.github.fabriciofx.mandacarupark.regras.RegrasOf;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasFake;
@@ -54,13 +54,13 @@ public final class TestEstacionamentoFake {
     public void entrada() {
         final Entradas entradas = new EntradasFake(
             new PagamentosFake(),
-            new ContasFake()
+            new RegrasFake()
         );
         final Estacionamento estacionamento = new EstacionamentoFake(
             entradas,
             new SaidasFake(),
             new PagamentosFake(),
-            new ContasFake()
+            new RegrasFake()
         );
         final Ticket ticket = estacionamento.entrada(
             new PlacaOf("ABC1234"),
@@ -77,19 +77,19 @@ public final class TestEstacionamentoFake {
 
     @Test
     public void locacao() {
-        final Contas contas = new ContasOf(
+        final Regras regras = new RegrasOf(
             new DomingoGratis(),
             new Tolerancia(),
             new ValorFixo(new DinheiroOf("5.00"))
         );
         final Pagamentos pagamentos = new PagamentosFake();
-        final Entradas entradas = new EntradasFake(pagamentos, contas);
+        final Entradas entradas = new EntradasFake(pagamentos, regras);
         final Saidas saidas = new SaidasFake();
         final Estacionamento estacionamento = new EstacionamentoFake(
             entradas,
             saidas,
             pagamentos,
-            contas
+            regras
         );
         final Placa placa = new PlacaOf("ABC1234");
         final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
@@ -115,19 +115,19 @@ public final class TestEstacionamentoFake {
 
     @Test
     public void tolerancia() {
-        final Contas contas = new ContasOf(
+        final Regras regras = new RegrasOf(
             new DomingoGratis(),
             new Tolerancia(),
             new ValorFixo(new DinheiroOf("5.00"))
         );
         final Pagamentos pagamentos = new PagamentosFake();
-        final Entradas entradas = new EntradasFake(pagamentos, contas);
+        final Entradas entradas = new EntradasFake(pagamentos, regras);
         final Saidas saidas = new SaidasFake();
         final Estacionamento estacionamento = new EstacionamentoFake(
             entradas,
             saidas,
             pagamentos,
-            contas
+            regras
         );
         final Placa placa = new PlacaOf("ABC1234");
         final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
@@ -153,19 +153,19 @@ public final class TestEstacionamentoFake {
 
     @Test
     public void domingoGratis() {
-        final Contas contas = new ContasOf(
+        final Regras regras = new RegrasOf(
             new DomingoGratis(),
             new Tolerancia(),
             new ValorFixo(new DinheiroOf("5.00"))
         );
         final Pagamentos pagamentos = new PagamentosFake();
-        final Entradas entradas = new EntradasFake(pagamentos, contas);
+        final Entradas entradas = new EntradasFake(pagamentos, regras);
         final Saidas saidas = new SaidasFake();
         final Estacionamento estacionamento = new EstacionamentoFake(
             entradas,
             saidas,
             pagamentos,
-            contas
+            regras
         );
         final Placa placa = new PlacaOf("ABC1234");
         final LocalDateTime dateTime = LocalDateTime.of(2022, 7, 31, 10, 30);
@@ -195,19 +195,19 @@ public final class TestEstacionamentoFake {
             "Ticket não validado!",
             RuntimeException.class,
             () -> {
-                final Contas contas = new ContasOf(
+                final Regras regras = new RegrasOf(
                     new DomingoGratis(),
                     new Tolerancia(),
                     new ValorFixo(new DinheiroOf("5.00"))
                 );
                 final Pagamentos pagamentos = new PagamentosFake();
-                final Entradas entradas = new EntradasFake(pagamentos, contas);
+                final Entradas entradas = new EntradasFake(pagamentos, regras);
                 final Saidas saidas = new SaidasFake();
                 final Estacionamento estacionamento = new EstacionamentoFake(
                     entradas,
                     saidas,
                     pagamentos,
-                    contas
+                    regras
                 );
                 Placa placa = new PlacaOf("ABC1234");
                 final LocalDateTime dateTime = LocalDateTime.of(
@@ -229,19 +229,19 @@ public final class TestEstacionamentoFake {
 
     @Test
     public void sobreEntradas() {
-        final Contas contas = new ContasOf(
+        final Regras regras = new RegrasOf(
             new DomingoGratis(),
             new Tolerancia(),
             new ValorFixo(new DinheiroOf("5.00"))
         );
         final Pagamentos pagamentos = new PagamentosFake();
-        final Entradas entradas = new EntradasFake(pagamentos, contas);
+        final Entradas entradas = new EntradasFake(pagamentos, regras);
         final Saidas saidas = new SaidasFake();
         final Estacionamento estacionamento = new EstacionamentoFake(
             entradas,
             saidas,
             pagamentos,
-            contas
+            regras
         );
         estacionamento.entrada(
             new PlacaOf("ABC1234"),
@@ -271,7 +271,7 @@ public final class TestEstacionamentoFake {
     public void valorVariavelTempoExato() {
         final Ticket ticket = new TicketFake(
             new PagamentosFake(),
-            new ContasFake(
+            new RegrasFake(
                 new ValorVariavel(
                     new DinheiroOf("6.00"),
                     new DinheiroOf("4.00")
@@ -291,7 +291,7 @@ public final class TestEstacionamentoFake {
     public void valorVariavelComUmMinutoExcedente() {
         final Ticket ticket = new TicketFake(
             new PagamentosFake(),
-            new ContasFake(
+            new RegrasFake(
                 new ValorVariavel(
                     new DinheiroOf("6.00"),
                     new DinheiroOf("4.00")
@@ -311,7 +311,7 @@ public final class TestEstacionamentoFake {
     public void valorVariavelComUmaHoraEUmMinutoExcedente() {
         final Ticket ticket = new TicketFake(
             new PagamentosFake(),
-            new ContasFake(
+            new RegrasFake(
                 new ValorVariavel(
                     new DinheiroOf("6.00"),
                     new DinheiroOf("4.00")

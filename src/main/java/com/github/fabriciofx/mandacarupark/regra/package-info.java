@@ -23,8 +23,8 @@
  */
 
 /**
- * Contas.
+ * Conta.
  *
  * @since 0.0.1
  */
-package com.github.fabriciofx.mandacarupark.contas;
+package com.github.fabriciofx.mandacarupark.regra;

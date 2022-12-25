@@ -21,27 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.contas;
+package com.github.fabriciofx.mandacarupark;
 
-import com.github.fabriciofx.mandacarupark.Conta;
-import com.github.fabriciofx.mandacarupark.Contas;
-import com.github.fabriciofx.mandacarupark.Periodo;
-import com.github.fabriciofx.mandacarupark.conta.ValorFixo;
-import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
-
-public class ContasFake implements Contas {
-    private final Conta conta;
-
-    public ContasFake() {
-        this(new ValorFixo(new DinheiroOf("5.00")));
-    }
-
-    public ContasFake(final Conta conta) {
-        this.conta = conta;
-    }
-
-    @Override
-    public Conta conta(final Periodo periodo, final Conta def) {
-        return this.conta;
-    }
+public interface Regras {
+    Regra regra(Periodo periodo, Regra def);
 }
