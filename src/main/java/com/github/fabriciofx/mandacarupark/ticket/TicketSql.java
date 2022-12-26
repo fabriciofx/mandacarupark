@@ -39,6 +39,9 @@ import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemTexto;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemTicket;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.ResultSet;
 
 public final class TicketSql implements Ticket {
@@ -99,11 +102,23 @@ public final class TicketSql implements Ticket {
 
     @Override
     public Imagem imagem() {
+        final InputStream font = Thread.currentThread()
+            .getContextClassLoader()
+            .getResourceAsStream("font/roboto-bold.ttf");
+        final Font roboto13;
+        try {
+            roboto13 = Font.createFont(Font.TRUETYPE_FONT, font)
+                .deriveFont(13f);
+        } catch (final FontFormatException ex) {
+            throw new RuntimeException(ex);
+        } catch (final IOException ex) {
+            throw new RuntimeException(ex);
+        }
         return new ImagemTicket(
             new ImagemCodeQr(
                 new ImagemTexto(
                     new ImagemPapel(150, 300),
-                    new Font("Lucida Sans Unicode", Font.PLAIN, 13),
+                    roboto13,
                     Color.BLACK,
                     "MANDACARUPARK",
                     12,
