@@ -23,6 +23,8 @@
  */
 package com.github.fabriciofx.mandacarupark.estacionamento;
 
+import com.github.fabriciofx.mandacarupark.Dinheiro;
+import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.Regras;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
@@ -33,6 +35,8 @@ import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
+import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
+import com.github.fabriciofx.mandacarupark.regra.Cortesia;
 import com.github.fabriciofx.mandacarupark.ticket.TicketFake;
 
 public final class EstacionamentoFake implements Estacionamento {
@@ -58,7 +62,6 @@ public final class EstacionamentoFake implements Estacionamento {
         final Entrada entrada = entradas.entrada(placa, dataHora);
         final Ticket ticket = new TicketFake(
             this.pagamentos,
-            this.regras,
             entrada.id(),
             placa,
             dataHora
@@ -67,8 +70,18 @@ public final class EstacionamentoFake implements Estacionamento {
     }
 
     @Override
+    public Dinheiro valor(final Ticket ticket, final DataHora termino) {
+        final Periodo periodo = new PeriodoOf(
+            ticket.sobre().get("dataHora"),
+            termino
+        );
+        return this.regras.regra(periodo, new Cortesia()).valor(periodo);
+    }
+
+    @Override
     public void pagamento(final Ticket ticket, final DataHora dataHora) {
-        this.pagamentos.pagamento(ticket, dataHora, ticket.valor(dataHora));
+        final Dinheiro valor = this.valor(ticket, dataHora);
+        this.pagamentos.pagamento(ticket, dataHora, valor);
     }
 
     @Override

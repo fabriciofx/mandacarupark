@@ -23,7 +23,6 @@
  */
 package com.github.fabriciofx.mandacarupark.entrada;
 
-import com.github.fabriciofx.mandacarupark.Regras;
 import com.github.fabriciofx.mandacarupark.Data;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
@@ -36,20 +35,17 @@ import com.github.fabriciofx.mandacarupark.ticket.TicketFake;
 
 public final class EntradaFake implements Entrada {
     private final Pagamentos pagamentos;
-    private final Regras regras;
     private final Id id;
     private final Placa placa;
     private final DataHora dataHora;
 
     public EntradaFake(
         final Pagamentos pagamentos,
-        final Regras regras,
         final Id id,
         final Placa placa,
         final DataHora dataHora
     ) {
         this.pagamentos = pagamentos;
-        this.regras = regras;
         this.id = id;
         this.placa = placa;
         this.dataHora = dataHora;
@@ -64,7 +60,6 @@ public final class EntradaFake implements Entrada {
     public Ticket ticket() {
         return new TicketFake(
             this.pagamentos,
-            this.regras,
             this.id,
             this.placa,
             this.dataHora

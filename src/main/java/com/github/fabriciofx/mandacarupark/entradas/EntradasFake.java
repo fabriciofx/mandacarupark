@@ -39,19 +39,16 @@ import java.util.Map;
 public final class EntradasFake implements Entradas {
     private final Map<Id, Entrada> itens;
     private final Pagamentos pagamentos;
-    private final Regras regras;
 
-    public EntradasFake(final Pagamentos pagamentos, final Regras regras) {
-        this(pagamentos, regras, new HashMap<>());
+    public EntradasFake(final Pagamentos pagamentos) {
+        this(pagamentos, new HashMap<>());
     }
 
     public EntradasFake(
         final Pagamentos pagamentos,
-        final Regras regras,
         final Entrada... entradas
     ) {
         this.pagamentos = pagamentos;
-        this.regras = regras;
         this.itens = new HashMap<>();
         for (final Entrada entrada : entradas) {
             this.itens.put(entrada.id(), entrada);
@@ -60,11 +57,9 @@ public final class EntradasFake implements Entradas {
 
     public EntradasFake(
         final Pagamentos pagamentos,
-        final Regras regras,
         final Map<Id, Entrada> itens
     ) {
         this.pagamentos = pagamentos;
-        this.regras = regras;
         this.itens = itens;
     }
 
@@ -72,7 +67,6 @@ public final class EntradasFake implements Entradas {
     public Entrada entrada(final Placa placa, final DataHora dataHora) {
         final Entrada entrada = new EntradaFake(
             this.pagamentos,
-            this.regras,
             new Uuid(),
             placa,
             dataHora

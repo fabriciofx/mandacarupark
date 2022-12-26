@@ -56,7 +56,7 @@ public final class SimEstacionamentoFake {
             new ValorFixo(new DinheiroOf("5.00"))
         );
         final Pagamentos pagamentos = new PagamentosFake();
-        final Entradas entradas = new EntradasFake(pagamentos, regras);
+        final Entradas entradas = new EntradasFake(pagamentos);
         final Saidas saidas = new SaidasFake();
         final Estacionamento estacionamento = new EstacionamentoFake(
             entradas,

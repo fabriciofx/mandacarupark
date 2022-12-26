@@ -54,7 +54,7 @@ public class TestRegra {
             new ValorFixo(new DinheiroOf("5.00"))
         );
         final Pagamentos pagamentos = new PagamentosFake();
-        final Entradas entradas = new EntradasFake(pagamentos, regras);
+        final Entradas entradas = new EntradasFake(pagamentos);
         final Saidas saidas = new SaidasFake();
         final Estacionamento estacionamento = new EstacionamentoFake(
             entradas,
@@ -80,7 +80,10 @@ public class TestRegra {
         Assert.assertTrue(ticket.validado());
         Assert.assertEquals(
             new DinheiroOf("0.00"),
-            ticket.valor(new DataHoraOf(dateTime.plusMinutes(20)))
+            estacionamento.valor(
+                ticket,
+                new DataHoraOf(dateTime.plusMinutes(20))
+            )
         );
     }
 
@@ -92,7 +95,7 @@ public class TestRegra {
             new ValorFixo(new DinheiroOf("5.00"))
         );
         final Pagamentos pagamentos = new PagamentosFake();
-        final Entradas entradas = new EntradasFake(pagamentos, regras);
+        final Entradas entradas = new EntradasFake(pagamentos);
         final Saidas saidas = new SaidasFake();
         final Estacionamento estacionamento = new EstacionamentoFake(
             entradas,
@@ -118,67 +121,88 @@ public class TestRegra {
         Assert.assertTrue(ticket.validado());
         Assert.assertEquals(
             new DinheiroOf("0.00"),
-            ticket.valor(new DataHoraOf(dateTime.plusMinutes(60)))
+            estacionamento.valor(
+                ticket,
+                new DataHoraOf(dateTime.plusMinutes(60))
+            )
         );
     }
 
     @Test
     public void valorVariavelTempoExato() {
-        final Ticket ticket = new TicketFake(
-            new PagamentosFake(),
+        final Pagamentos pagamentos = new PagamentosFake();
+        final Estacionamento estacionamento = new EstacionamentoFake(
+            new EntradasFake(pagamentos),
+            new SaidasFake(),
+            pagamentos,
             new RegrasFake(
                 new ValorVariavel(
                     new DinheiroOf("6.00"),
                     new DinheiroOf("4.00")
                 )
-            ),
+            )
+        );
+        final Ticket ticket = new TicketFake(
+            new PagamentosFake(),
             new Uuid(),
             new PlacaOf("ABC1234"),
             new DataHoraOf("24/12/2022 12:45:20")
         );
         Assert.assertEquals(
             new DinheiroOf("6.00"),
-            ticket.valor(new DataHoraOf("24/12/2022 16:45:20"))
+            estacionamento.valor(ticket, new DataHoraOf("24/12/2022 16:45:20"))
         );
     }
 
     @Test
     public void valorVariavelComUmMinutoExcedente() {
-        final Ticket ticket = new TicketFake(
-            new PagamentosFake(),
+        final Pagamentos pagamentos = new PagamentosFake();
+        final Estacionamento estacionamento = new EstacionamentoFake(
+            new EntradasFake(pagamentos),
+            new SaidasFake(),
+            pagamentos,
             new RegrasFake(
                 new ValorVariavel(
                     new DinheiroOf("6.00"),
                     new DinheiroOf("4.00")
                 )
-            ),
+            )
+        );
+        final Ticket ticket = new TicketFake(
+            new PagamentosFake(),
             new Uuid(),
             new PlacaOf("ABC1234"),
             new DataHoraOf("24/12/2022 12:45:20")
         );
         Assert.assertEquals(
             new DinheiroOf("10.00"),
-            ticket.valor(new DataHoraOf("24/12/2022 16:46:20"))
+            estacionamento.valor(ticket, new DataHoraOf("24/12/2022 16:46:20"))
         );
     }
 
     @Test
     public void valorVariavelComUmaHoraEUmMinutoExcedente() {
-        final Ticket ticket = new TicketFake(
-            new PagamentosFake(),
+        final Pagamentos pagamentos = new PagamentosFake();
+        final Estacionamento estacionamento = new EstacionamentoFake(
+            new EntradasFake(pagamentos),
+            new SaidasFake(),
+            pagamentos,
             new RegrasFake(
                 new ValorVariavel(
                     new DinheiroOf("6.00"),
                     new DinheiroOf("4.00")
                 )
-            ),
+            )
+        );
+        final Ticket ticket = new TicketFake(
+            new PagamentosFake(),
             new Uuid(),
             new PlacaOf("ABC1234"),
             new DataHoraOf("24/12/2022 12:45:20")
         );
         Assert.assertEquals(
             new DinheiroOf("14.00"),
-            ticket.valor(new DataHoraOf("24/12/2022 17:46:20"))
+            estacionamento.valor(ticket, new DataHoraOf("24/12/2022 17:46:20"))
         );
     }
 }

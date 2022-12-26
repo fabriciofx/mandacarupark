@@ -64,8 +64,7 @@ public class TestOpcaoEntrada {
                 ),
                 new EstacionamentoFake(
                     new EntradasFake(
-                        new PagamentosFake(),
-                        new RegrasFake()
+                        new PagamentosFake()
                     ),
                     new SaidasFake(),
                     new PagamentosFake(),

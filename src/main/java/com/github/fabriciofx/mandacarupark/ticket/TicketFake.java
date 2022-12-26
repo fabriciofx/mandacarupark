@@ -23,19 +23,14 @@
  */
 package com.github.fabriciofx.mandacarupark.ticket;
 
-import com.github.fabriciofx.mandacarupark.Regras;
 import com.github.fabriciofx.mandacarupark.Data;
 import com.github.fabriciofx.mandacarupark.DataHora;
-import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
-import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.regra.Cortesia;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
-import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemCodeQr;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemPapel;
@@ -47,20 +42,17 @@ import java.util.List;
 
 public final class TicketFake implements Ticket {
     private final Pagamentos pagamentos;
-    private final Regras regras;
     private final Id id;
     private final Placa placa;
     private final DataHora dataHora;
 
     public TicketFake(
         final Pagamentos pagamentos,
-        final Regras regras,
         final Id id,
         final Placa placa,
         final DataHora dataHora
     ) {
         this.pagamentos = pagamentos;
-        this.regras = regras;
         this.id = id;
         this.placa = placa;
         this.dataHora = dataHora;
@@ -75,12 +67,6 @@ public final class TicketFake implements Ticket {
     public boolean validado() {
         final List<Pagamento> pagamento = this.pagamentos.procura(this.id);
         return !pagamento.isEmpty();
-    }
-
-    @Override
-    public Dinheiro valor(final DataHora termino) {
-        final Periodo periodo = new PeriodoOf(this.dataHora, termino);
-        return this.regras.regra(periodo, new Cortesia()).valor(periodo);
     }
 
     @Override

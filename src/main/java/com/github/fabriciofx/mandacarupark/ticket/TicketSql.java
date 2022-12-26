@@ -25,14 +25,12 @@ package com.github.fabriciofx.mandacarupark.ticket;
 
 import com.github.fabriciofx.mandacarupark.Data;
 import com.github.fabriciofx.mandacarupark.DataHora;
-import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
-import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemCodeQr;
@@ -86,29 +84,6 @@ public final class TicketSql implements Ticket {
                 );
             }
             return quantidade != 0;
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    @Override
-    public Dinheiro valor(final DataHora termino) {
-        try (
-            final ResultSet rset = new Select(
-                this.session,
-                new Sprintf(
-                    "SELECT valor FROM pagamento WHERE id = '%s'",
-                    this.id
-                )
-            ).result()
-        ) {
-            final Dinheiro valor;
-            if (rset.next()) {
-                valor = new DinheiroOf(rset.getBigDecimal(1));
-            } else {
-                valor = new DinheiroOf("0.00");
-            }
-            return valor;
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
