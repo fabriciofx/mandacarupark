@@ -128,11 +128,6 @@ public final class TestImagem {
 
     @Test
     public void completo() throws Exception {
-        final InputStream font = Thread.currentThread()
-            .getContextClassLoader()
-            .getResourceAsStream("font/roboto-bold.ttf");
-        final Font roboto13 = Font.createFont(Font.TRUETYPE_FONT, font)
-            .deriveFont(13f);
         final InputStream correto = Thread.currentThread()
             .getContextClassLoader()
             .getResourceAsStream("imagem/imagem-completo.png");
@@ -142,26 +137,8 @@ public final class TestImagem {
             new PlacaOf("ABC1234"),
             new DataHoraOf("2022-07-21 12:01:15")
         );
-        final Imagem imagem = new ImagemTicket(
-            new ImagemCodeQr(
-                new ImagemTexto(
-                    new ImagemPapel(150, 300),
-                    roboto13,
-                    Color.BLACK,
-                    "MANDACARUPARK",
-                    12,
-                    26
-                ),
-                ticket.id().toString(),
-                10,
-                50,
-                125,
-                200
-            ),
-            ticket
-        );
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write(imagem.imagem(), "png", baos);
+        ImageIO.write(ticket.imagem().imagem(), "png", baos);
         Assert.assertArrayEquals(
             new InputStreamAsBytes(correto).asBytes(),
             baos.toByteArray()
