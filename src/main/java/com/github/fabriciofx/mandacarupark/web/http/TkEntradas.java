@@ -39,45 +39,13 @@ import org.takes.rs.RsHtml;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 public final class TkEntradas implements Take {
     @Override
     public Response act(final Request req) throws IOException {
-        final StringBuilder sb = new StringBuilder();
-        sb.append(
-"""
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="/css/tacit-css-1.5.5.min.css" media="screen">
-    <title>DesktopWeb</title>
-  </head>
-  <body>
-    <section>
-      <header>
-        <nav>
-          <button onclick="location.href='http://localhost:8080/entradas'">
-            Entradas
-            </button>
-          <button onclick="location.href='http://localhost:8080/saidas'">
-            Saídas
-            </button>
-          <button onclick="location.href='http://localhost:8080/pagamentos'">
-            Pagamentos
-            </button>
-        </nav>
-      </header>
-      <article>
-        <table>
-            <thead>
-                <td>Id</td>
-                <td>Placa</td>
-                <td>Data/Hora</td>
-            </thead>
-            <tbody>
-""");
         final Session session = new NoAuth(new H2File("mandacarupark"));
+        String content;
         try (
             final Server server = new ServerH2(
                 session,
@@ -85,36 +53,38 @@ public final class TkEntradas implements Take {
             )
         ) {
             server.start();
+            final InputStream input = TkEntradas.class.getClassLoader()
+                .getResourceAsStream("webapp/entradas.tpl");
+            content = new String(input.readAllBytes(), StandardCharsets.UTF_8);
             final Entradas entradas = new EntradasSql(session);
+            final StringBuilder sb = new StringBuilder();
             for (final Entrada entrada : entradas) {
+                sb.append("<tr>\n");
                 sb.append(
                     String.format(
-                        """
-                        <tr>
-                            <td>%s</td>
-                            <td>%s</td>
-                            <td>%s</td>
-                        </tr>
-                        """,
-                        entrada.id().toString(),
-                        entrada.sobre().get("placa").toString(),
-                        entrada.sobre().get("dataHora").toString()
+                        "<td>%s</td>\n",
+                        entrada.id().toString()
                     )
                 );
+                sb.append(
+                    String.format(
+                        "<td>%s</td>\n",
+                        entrada.sobre().get("placa").toString()
+                    )
+                );
+                sb.append(
+                    String.format(
+                    "<td>%s</td>\n",
+                    entrada.sobre().get("dataHora").toString()
+                    )
+                );
+                sb.append("</tr>\n");
             }
+            content = content.replaceAll("\\$\\{entradas}", sb.toString());
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
-        sb.append(
-"""
-            </tbody>
-        </table>
-      </article>
-    </section>
-  </body>
-</html>
-""");
-        final InputStream body = new ByteArrayInputStream(sb.toString().getBytes());
+        final InputStream body = new ByteArrayInputStream(content.getBytes());
         return new RsHtml(body);
     }
 }
