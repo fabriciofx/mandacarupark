@@ -42,6 +42,7 @@ public final class TkRoutes extends TkWrap {
                     )
                 ),
                 new FkRegex("/", new TkIndex()),
+                new FkRegex("/entradas", new TkEntradas()),
                 new FkRegex("/form", new TkForm()),
                 new FkRegex("/(?<path>[^/]+)", new TkPage())
             )
