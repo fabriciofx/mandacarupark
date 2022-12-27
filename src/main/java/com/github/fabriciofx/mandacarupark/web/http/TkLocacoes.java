@@ -30,6 +30,7 @@ import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.locacoes.LocacoesSql;
 import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
+import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -61,32 +62,16 @@ public final class TkLocacoes implements Take {
             new DataHoraOf("31/12/2022 19:12:00")
         );
         for (final Locacao locacao : locacoes.locacoes(periodo)) {
-            sb.append("<tr>\n");
             sb.append(
-                String.format(
-                    "<td>%s</td>\n",
-                    locacao.sobre().get("placa").toString()
-                )
+                new Sprintf(
+                    "<tr>\n<td>%s</td>\n<td>%s</td>\n<td>%s</td>\n<td>%s</td>\n</tr>\n",
+                    locacao.sobre().get("placa").toString(),
+                    locacao.sobre().get("entrada").toString(),
+                    locacao.sobre().get("saida").toString(),
+                    locacao.sobre().get("valor").toString()
+                        .replaceAll("R\\$ ", "")
+                ).asString()
             );
-            sb.append(
-                String.format(
-                    "<td>%s</td>\n",
-                    locacao.sobre().get("entrada").toString()
-                )
-            );
-            sb.append(
-                String.format(
-                    "<td>%s</td>\n",
-                    locacao.sobre().get("saida").toString()
-                )
-            );
-            sb.append(
-                String.format(
-                    "<td>%s</td>\n",
-                    locacao.sobre().get("valor").toString().replaceAll("R\\$ ", "")
-                )
-            );
-            sb.append("</tr>\n");
         }
         content = content.replaceAll("\\$\\{locacoes}", sb.toString());
         final InputStream body = new ByteArrayInputStream(content.getBytes());

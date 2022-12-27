@@ -27,6 +27,7 @@ import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosSql;
+import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -54,26 +55,14 @@ public final class TkPagamentos implements Take {
         final Pagamentos pagamentos = new PagamentosSql(session);
         final StringBuilder sb = new StringBuilder();
         for (final Pagamento pagamento : pagamentos) {
-            sb.append("<tr>\n");
             sb.append(
-                String.format(
-                    "<td>%s</td>\n",
-                    pagamento.id().toString()
-                )
-            );
-            sb.append(
-                String.format(
-                    "<td>%s</td>\n",
-                    pagamento.sobre().get("dataHora").toString()
-                )
-            );
-            sb.append(
-                String.format(
-                    "<td>%s</td>\n",
+                new Sprintf(
+                    "<tr>\n<td>%s</td>\n<td>%s</td>\n<td>%s</td>\n</tr>\n",
+                    pagamento.id().toString(),
+                    pagamento.sobre().get("dataHora").toString(),
                     pagamento.sobre().get("valor").toString()
-                )
+                ).asString()
             );
-            sb.append("</tr>\n");
         }
         // FIXME: quando há '$' no lado a substituir, dá problema
         final String pgs = sb.toString().replaceAll("R\\$ ", "");

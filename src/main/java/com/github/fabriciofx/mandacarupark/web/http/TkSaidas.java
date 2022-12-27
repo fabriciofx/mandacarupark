@@ -27,6 +27,7 @@ import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.saidas.SaidasSql;
+import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -54,26 +55,14 @@ public final class TkSaidas implements Take {
         final Saidas saidas = new SaidasSql(session);
         final StringBuilder sb = new StringBuilder();
         for (final Saida saida : saidas) {
-            sb.append("<tr>\n");
             sb.append(
-                String.format(
-                    "<td>%s</td>\n",
-                    saida.id().toString()
-                )
-            );
-            sb.append(
-                String.format(
-                    "<td>%s</td>\n",
-                    saida.sobre().get("placa").toString()
-                )
-            );
-            sb.append(
-                String.format(
-                    "<td>%s</td>\n",
+                new Sprintf(
+                    "<tr>\n<td>%s</td>\n<td>%s</td>\n<td>%s</td>\n</tr>\n",
+                    saida.id().toString(),
+                    saida.sobre().get("placa").toString(),
                     saida.sobre().get("dataHora").toString()
-                )
+                ).asString()
             );
-            sb.append("</tr>\n");
         }
         content = content.replaceAll("\\$\\{entradas}", sb.toString());
         final InputStream body = new ByteArrayInputStream(content.getBytes());
