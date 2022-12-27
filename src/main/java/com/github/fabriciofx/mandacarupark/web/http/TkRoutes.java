@@ -21,31 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.web;
+package com.github.fabriciofx.mandacarupark.web.http;
 
-import com.github.fabriciofx.mandacarupark.Server;
-import com.github.fabriciofx.mandacarupark.web.browser.Browsers;
-import com.github.fabriciofx.mandacarupark.web.server.WebServer;
-import com.github.fabriciofx.mandacarupark.web.server.WebServerProcess;
-import java.net.URI;
-import java.util.concurrent.CountDownLatch;
+import org.takes.facets.fork.FkRegex;
+import org.takes.facets.fork.TkFork;
+import org.takes.tk.TkClasspath;
+import org.takes.tk.TkWithType;
+import org.takes.tk.TkWrap;
 
-public final class App {
-    public static void main(String[] args) {
-        final String host = "localhost";
-        final int port = 8080;
-        final CountDownLatch cdl = new CountDownLatch(1);
-        try {
-            final Server server = new WebServer(
-                cdl,
-                new WebServerProcess(port)
-            );
-            server.start();
-            // TODO: remove temporal coupling between server and browser
-            final Browser browser = new Browsers(cdl).browser();
-            browser.open(new URI(String.format("http://%s:%d", host, port)));
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
-        }
+public final class TkRoutes extends TkWrap {
+    public TkRoutes() {
+        super(
+            new TkFork(
+                new FkRegex("/robots.txt", ""),
+                new FkRegex(
+                    "/css/.+\\.css",
+                    new TkWithType(
+                        new TkClasspath("/webapp"),
+                        "text/css"
+                    )
+                ),
+                new FkRegex("/", new TkIndex()),
+                new FkRegex("/form", new TkForm()),
+                new FkRegex("/(?<path>[^/]+)", new TkPage())
+            )
+        );
     }
 }
+

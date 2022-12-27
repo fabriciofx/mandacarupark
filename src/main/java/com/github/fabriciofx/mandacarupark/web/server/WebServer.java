@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (C) 2022 Fabrício Barros Cabral
+ * Copyright (C) 2016-2022 Fabrício Barros Cabral
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,10 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.web;
+package com.github.fabriciofx.mandacarupark.web.server;
 
-import java.io.InputStream;
+import com.github.fabriciofx.mandacarupark.Server;
+import java.io.IOException;
+import java.util.concurrent.CountDownLatch;
 
-public interface Input {
-    InputStream stream();
+public final class WebServer implements Server {
+    private final CountDownLatch cdl;
+    private final WebServerProcess process;
+
+    public WebServer(final CountDownLatch cdl, final WebServerProcess process) {
+        this.cdl = cdl;
+        this.process = process;
+    }
+
+    @Override
+    public void start() throws Exception {
+        this.process.start();
+        this.cdl.countDown();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        this.process.interrupt();
+    }
+
+    @Override
+    public void close() throws IOException {
+        try {
+            this.stop();
+        } catch (final Exception ex) {
+            throw new IOException(ex);
+        }
+    }
 }

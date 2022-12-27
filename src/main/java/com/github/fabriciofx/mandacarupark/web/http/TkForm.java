@@ -21,31 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.web;
+package com.github.fabriciofx.mandacarupark.web.http;
 
-import com.github.fabriciofx.mandacarupark.Server;
-import com.github.fabriciofx.mandacarupark.web.browser.Browsers;
-import com.github.fabriciofx.mandacarupark.web.server.WebServer;
-import com.github.fabriciofx.mandacarupark.web.server.WebServerProcess;
-import java.net.URI;
-import java.util.concurrent.CountDownLatch;
+import org.takes.Request;
+import org.takes.Response;
+import org.takes.Take;
+import org.takes.facets.flash.RsFlash;
+import org.takes.facets.forward.RsForward;
+import org.takes.rq.form.RqFormBase;
+import java.io.IOException;
 
-public final class App {
-    public static void main(String[] args) {
-        final String host = "localhost";
-        final int port = 8080;
-        final CountDownLatch cdl = new CountDownLatch(1);
-        try {
-            final Server server = new WebServer(
-                cdl,
-                new WebServerProcess(port)
-            );
-            server.start();
-            // TODO: remove temporal coupling between server and browser
-            final Browser browser = new Browsers(cdl).browser();
-            browser.open(new URI(String.format("http://%s:%d", host, port)));
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
+public final class TkForm implements Take {
+    @Override
+    public Response act(final Request req) throws IOException {
+        final Iterable<String> names = new RqFormBase(req).param("name");
+        for (final String name : names) {
+            System.out.println("Name: " + name);
         }
+        return new RsForward(
+            new RsFlash("Thanks for answering!"),
+            "/"
+        );
     }
 }

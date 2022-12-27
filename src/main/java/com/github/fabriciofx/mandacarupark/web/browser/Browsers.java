@@ -21,31 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.web;
+package com.github.fabriciofx.mandacarupark.web.browser;
 
-import com.github.fabriciofx.mandacarupark.Server;
-import com.github.fabriciofx.mandacarupark.web.browser.Browsers;
-import com.github.fabriciofx.mandacarupark.web.server.WebServer;
-import com.github.fabriciofx.mandacarupark.web.server.WebServerProcess;
-import java.net.URI;
+import com.github.fabriciofx.mandacarupark.web.Browser;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-public final class App {
-    public static void main(String[] args) {
-        final String host = "localhost";
-        final int port = 8080;
-        final CountDownLatch cdl = new CountDownLatch(1);
-        try {
-            final Server server = new WebServer(
-                cdl,
-                new WebServerProcess(port)
-            );
-            server.start();
-            // TODO: remove temporal coupling between server and browser
-            final Browser browser = new Browsers(cdl).browser();
-            browser.open(new URI(String.format("http://%s:%d", host, port)));
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
+public final class Browsers {
+    private final List<Browser> browsers;
+
+    public Browsers(final CountDownLatch cdl) {
+        this(
+            new Sync(cdl, new WindowsBrowser()),
+            new Sync(cdl, new LinuxBrowser()),
+            new Sync(cdl, new MacOsBrowser()),
+            new Sync(cdl, new Win32Browser())
+        );
+    }
+
+    public Browsers(final Browser... browser) {
+        this(Arrays.asList(browser));
+    }
+
+    public Browsers(final List<Browser> browser) {
+        this.browsers = browser;
+    }
+
+    public Browser browser() {
+        final String name = System.getProperty("os.name", "linux");
+        for (final Browser browser : this.browsers) {
+            if (browser.match(name)) {
+                return browser;
+            }
         }
+        throw new IllegalArgumentException("invalid operating system");
     }
 }

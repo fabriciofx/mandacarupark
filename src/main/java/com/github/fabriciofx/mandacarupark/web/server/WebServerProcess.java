@@ -21,31 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.web;
+package com.github.fabriciofx.mandacarupark.web.server;
 
-import com.github.fabriciofx.mandacarupark.Server;
-import com.github.fabriciofx.mandacarupark.web.browser.Browsers;
-import com.github.fabriciofx.mandacarupark.web.server.WebServer;
-import com.github.fabriciofx.mandacarupark.web.server.WebServerProcess;
-import java.net.URI;
-import java.util.concurrent.CountDownLatch;
+import com.github.fabriciofx.mandacarupark.web.http.TkRoutes;
+import org.takes.http.Exit;
+import org.takes.http.FtBasic;
+import java.io.IOException;
 
-public final class App {
-    public static void main(String[] args) {
-        final String host = "localhost";
-        final int port = 8080;
-        final CountDownLatch cdl = new CountDownLatch(1);
+public final class WebServerProcess extends Thread {
+    private final int port;
+
+    public WebServerProcess(final int port) {
+        this.port = port;
+    }
+
+    @Override
+    public void run() {
         try {
-            final Server server = new WebServer(
-                cdl,
-                new WebServerProcess(port)
+            new FtBasic(
+                new TkRoutes(),
+                this.port
+            ).start(
+                Exit.NEVER
             );
-            server.start();
-            // TODO: remove temporal coupling between server and browser
-            final Browser browser = new Browsers(cdl).browser();
-            browser.open(new URI(String.format("http://%s:%d", host, port)));
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
+        } catch (final IOException ex) {
+            throw new IllegalArgumentException(ex);
         }
     }
 }

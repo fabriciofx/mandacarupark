@@ -21,31 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.web;
+package com.github.fabriciofx.mandacarupark.web.http;
 
-import com.github.fabriciofx.mandacarupark.Server;
-import com.github.fabriciofx.mandacarupark.web.browser.Browsers;
-import com.github.fabriciofx.mandacarupark.web.server.WebServer;
-import com.github.fabriciofx.mandacarupark.web.server.WebServerProcess;
-import java.net.URI;
-import java.util.concurrent.CountDownLatch;
+import org.takes.Response;
+import org.takes.facets.fork.RqRegex;
+import org.takes.facets.fork.TkRegex;
+import org.takes.rs.RsHtml;
+import java.io.IOException;
 
-public final class App {
-    public static void main(String[] args) {
-        final String host = "localhost";
-        final int port = 8080;
-        final CountDownLatch cdl = new CountDownLatch(1);
-        try {
-            final Server server = new WebServer(
-                cdl,
-                new WebServerProcess(port)
-            );
-            server.start();
-            // TODO: remove temporal coupling between server and browser
-            final Browser browser = new Browsers(cdl).browser();
-            browser.open(new URI(String.format("http://%s:%d", host, port)));
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
-        }
+public final class TkPage implements TkRegex {
+    @Override
+    public Response act(final RqRegex req) throws IOException {
+        return new RsHtml(
+            TkPage.class.getClassLoader()
+                .getResourceAsStream(
+                    String.format(
+                        "webapp/%s",
+                        req.matcher().group("path")
+                    )
+                )
+        );
     }
 }

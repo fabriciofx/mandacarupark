@@ -21,31 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.web;
+package com.github.fabriciofx.mandacarupark.web.browser;
 
-import com.github.fabriciofx.mandacarupark.Server;
-import com.github.fabriciofx.mandacarupark.web.browser.Browsers;
-import com.github.fabriciofx.mandacarupark.web.server.WebServer;
-import com.github.fabriciofx.mandacarupark.web.server.WebServerProcess;
+import com.github.fabriciofx.mandacarupark.web.Browser;
+import com.github.fabriciofx.mandacarupark.web.command.Wait;
+import java.io.IOException;
 import java.net.URI;
-import java.util.concurrent.CountDownLatch;
 
-public final class App {
-    public static void main(String[] args) {
-        final String host = "localhost";
-        final int port = 8080;
-        final CountDownLatch cdl = new CountDownLatch(1);
-        try {
-            final Server server = new WebServer(
-                cdl,
-                new WebServerProcess(port)
-            );
-            server.start();
-            // TODO: remove temporal coupling between server and browser
-            final Browser browser = new Browsers(cdl).browser();
-            browser.open(new URI(String.format("http://%s:%d", host, port)));
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
-        }
+public final class MacOsBrowser implements Browser {
+    @Override
+    public boolean match(final String name) {
+        return name.toLowerCase().contains("mac") ||
+            name.toLowerCase().contains("darwin");
+    }
+
+    @Override
+    public void open(final URI uri) throws IOException {
+        new Wait(
+            String.format(
+                "open %s",
+                uri.toURL().toString()
+            )
+        ).exec();
     }
 }

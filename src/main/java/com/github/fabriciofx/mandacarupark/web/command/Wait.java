@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (C) 2022 Fabrício Barros Cabral
+ * Copyright (C) 2016-2022 Fabrício Barros Cabral
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.web;
+package com.github.fabriciofx.mandacarupark.web.command;
 
-public interface Wire {
-    Input send(Input input);
+import java.io.IOException;
+
+public final class Wait {
+    private final String command;
+
+    public Wait(final String command) {
+        this.command = command;
+    }
+
+    public void exec() throws IOException {
+        final Process process = Runtime.getRuntime().exec(this.command);
+        try {
+            process.waitFor();
+        } catch (final InterruptedException ex) {
+            throw new IOException(ex);
+        }
+    }
 }
