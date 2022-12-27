@@ -42,7 +42,7 @@ public final class TkRoutes extends TkWrap {
                         "text/css"
                     )
                 ),
-                new FkRegex("/", new TkIndex()),
+                new FkRegex("/", new TkEntradas(session)),
                 new FkRegex("/entradas", new TkEntradas(session)),
                 new FkRegex("/saidas", new TkSaidas(session)),
                 new FkRegex("/pagamentos", new TkPagamentos(session)),
