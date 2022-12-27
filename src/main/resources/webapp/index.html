@@ -9,6 +9,9 @@
     <section>
       <header>
         <nav>
+          <button onclick="location.href='http://localhost:8080/entrada.html'">
+            Entrada
+          </button>
           <button onclick="location.href='http://localhost:8080/entradas'">
             Entradas
           </button>
