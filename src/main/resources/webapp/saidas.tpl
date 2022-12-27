@@ -22,14 +22,14 @@
       </header>
       <article>
         <table>
-            <thead>
-                <td>Id</td>
-                <td>Placa</td>
-                <td>Data/Hora</td>
-            </thead>
-            <tbody>
-                ${saidas}
-            </tbody>
+          <thead>
+            <td>Id</td>
+            <td>Placa</td>
+            <td>Data/Hora</td>
+          </thead>
+          <tbody>
+            ${saidas}
+          </tbody>
         </table>
       </article>
     </section>
