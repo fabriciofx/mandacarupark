@@ -32,12 +32,13 @@
       <article>
         <table>
           <thead>
-            <td>Id</td>
             <td>Placa</td>
-            <td>Data/Hora</td>
+            <td>Entrada</td>
+            <td>Saída</td>
+            <td>Valor</td>
           </thead>
           <tbody>
-            ${saidas}
+            ${locacoes}
           </tbody>
         </table>
       </article>

@@ -64,8 +64,16 @@ public final class LocacaoSql implements Locacao {
             if (rset.next()) {
                 placa = new PlacaOf(rset.getString(1));
                 entrada = new DataHoraOf(rset.getString(2));
-                saida = new DataHoraOf(rset.getString(3));
-                valor = new DinheiroOf(rset.getString(4));
+                if (rset.getString(3) != null) {
+                    saida = new DataHoraOf(rset.getString(3));
+                } else {
+                    saida = new DataHoraOf();
+                }
+                if (rset.getString(4) != null) {
+                    valor = new DinheiroOf(rset.getString(4));
+                } else {
+                    valor = new DinheiroOf("0.00");
+                }
             } else {
                 throw new RuntimeException(
                     "Dados sobre a locação são inexistentes ou inválidos!"

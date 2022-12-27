@@ -24,6 +24,9 @@
           <button onclick="location.href='http://localhost:8080/pagamentos'">
             Pagamentos
           </button>
+          <button onclick="location.href='http://localhost:8080/locacoes'">
+            Locações
+          </button>
         </nav>
       </header>
       <article>
