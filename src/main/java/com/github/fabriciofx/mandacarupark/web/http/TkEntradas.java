@@ -25,12 +25,7 @@ package com.github.fabriciofx.mandacarupark.web.http;
 
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
-import com.github.fabriciofx.mandacarupark.Server;
-import com.github.fabriciofx.mandacarupark.db.ScriptSql;
-import com.github.fabriciofx.mandacarupark.db.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
-import com.github.fabriciofx.mandacarupark.db.ds.H2File;
-import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
 import org.takes.Request;
 import org.takes.Response;
@@ -42,48 +37,45 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 public final class TkEntradas implements Take {
+    private final Session session;
+
+    public TkEntradas(final Session session) {
+        this.session = session;
+    }
+
     @Override
     public Response act(final Request req) throws IOException {
-        final Session session = new NoAuth(new H2File("mandacarupark"));
-        String content;
-        try (
-            final Server server = new ServerH2(
-                session,
-                new ScriptSql("mandacarupark.sql")
-            )
-        ) {
-            server.start();
-            final InputStream input = TkEntradas.class.getClassLoader()
-                .getResourceAsStream("webapp/entradas.tpl");
-            content = new String(input.readAllBytes(), StandardCharsets.UTF_8);
-            final Entradas entradas = new EntradasSql(session);
-            final StringBuilder sb = new StringBuilder();
-            for (final Entrada entrada : entradas) {
-                sb.append("<tr>\n");
-                sb.append(
-                    String.format(
-                        "<td>%s</td>\n",
-                        entrada.id().toString()
-                    )
-                );
-                sb.append(
-                    String.format(
-                        "<td>%s</td>\n",
-                        entrada.sobre().get("placa").toString()
-                    )
-                );
-                sb.append(
-                    String.format(
+        final InputStream input = TkEntradas.class.getClassLoader()
+            .getResourceAsStream("webapp/entradas.tpl");
+        String content = new String(
+            input.readAllBytes(),
+            StandardCharsets.UTF_8
+        );
+        final Entradas entradas = new EntradasSql(session);
+        final StringBuilder sb = new StringBuilder();
+        for (final Entrada entrada : entradas) {
+            sb.append("<tr>\n");
+            sb.append(
+                String.format(
+                    "<td>%s</td>\n",
+                    entrada.id().toString()
+                )
+            );
+            sb.append(
+                String.format(
+                    "<td>%s</td>\n",
+                    entrada.sobre().get("placa").toString()
+                )
+            );
+            sb.append(
+                String.format(
                     "<td>%s</td>\n",
                     entrada.sobre().get("dataHora").toString()
-                    )
-                );
-                sb.append("</tr>\n");
-            }
-            content = content.replaceAll("\\$\\{entradas}", sb.toString());
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
+                )
+            );
+            sb.append("</tr>\n");
         }
+        content = content.replaceAll("\\$\\{entradas}", sb.toString());
         final InputStream body = new ByteArrayInputStream(content.getBytes());
         return new RsHtml(body);
     }

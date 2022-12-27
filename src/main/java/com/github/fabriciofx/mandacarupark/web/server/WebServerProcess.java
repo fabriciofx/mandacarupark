@@ -23,10 +23,15 @@
  */
 package com.github.fabriciofx.mandacarupark.web.server;
 
+import com.github.fabriciofx.mandacarupark.Server;
+import com.github.fabriciofx.mandacarupark.db.ScriptSql;
+import com.github.fabriciofx.mandacarupark.db.ServerH2;
+import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.db.ds.H2File;
+import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.web.http.TkRoutes;
 import org.takes.http.Exit;
 import org.takes.http.FtBasic;
-import java.io.IOException;
 
 public final class WebServerProcess extends Thread {
     private final int port;
@@ -37,15 +42,22 @@ public final class WebServerProcess extends Thread {
 
     @Override
     public void run() {
-        try {
+        final Session session = new NoAuth(new H2File("mandacarupark"));
+        try (
+            final Server server = new ServerH2(
+                session,
+                new ScriptSql("mandacarupark.sql")
+            )
+        ) {
+            server.start();
             new FtBasic(
-                new TkRoutes(),
+                new TkRoutes(session),
                 this.port
             ).start(
                 Exit.NEVER
             );
-        } catch (final IOException ex) {
-            throw new IllegalArgumentException(ex);
+        } catch (final Exception ex) {
+            throw new RuntimeException(ex);
         }
     }
 }

@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.web.http;
 
+import com.github.fabriciofx.mandacarupark.db.Session;
 import org.takes.facets.fork.FkRegex;
 import org.takes.facets.fork.TkFork;
 import org.takes.tk.TkClasspath;
@@ -30,7 +31,7 @@ import org.takes.tk.TkWithType;
 import org.takes.tk.TkWrap;
 
 public final class TkRoutes extends TkWrap {
-    public TkRoutes() {
+    public TkRoutes(final Session session) {
         super(
             new TkFork(
                 new FkRegex("/robots.txt", ""),
@@ -42,7 +43,7 @@ public final class TkRoutes extends TkWrap {
                     )
                 ),
                 new FkRegex("/", new TkIndex()),
-                new FkRegex("/entradas", new TkEntradas()),
+                new FkRegex("/entradas", new TkEntradas(session)),
                 new FkRegex("/form", new TkForm()),
                 new FkRegex("/(?<path>[^/]+)", new TkPage())
             )
