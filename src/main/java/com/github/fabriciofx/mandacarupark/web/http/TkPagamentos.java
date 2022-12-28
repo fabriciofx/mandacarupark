@@ -61,12 +61,11 @@ public final class TkPagamentos implements Take {
                     pagamento.id().toString(),
                     pagamento.sobre().get("dataHora").toString(),
                     pagamento.sobre().get("valor").toString()
+                        .replaceAll("R\\$ ", "")
                 ).asString()
             );
         }
-        // FIXME: quando há '$' no lado a substituir, dá problema
-        final String pgs = sb.toString().replaceAll("R\\$ ", "");
-        content = content.replaceAll("\\$\\{pagamentos}", pgs);
+        content = content.replaceAll("\\$\\{pagamentos}", sb.toString());
         final InputStream body = new ByteArrayInputStream(content.getBytes());
         return new RsHtml(body);
     }
