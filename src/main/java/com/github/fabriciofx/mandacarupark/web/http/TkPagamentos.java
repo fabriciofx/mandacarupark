@@ -36,6 +36,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Matcher;
 
 public final class TkPagamentos implements Take {
     private final Session session;
@@ -61,11 +62,13 @@ public final class TkPagamentos implements Take {
                     pagamento.id().toString(),
                     pagamento.sobre().get("dataHora").toString(),
                     pagamento.sobre().get("valor").toString()
-                        .replaceAll("R\\$ ", "")
                 ).asString()
             );
         }
-        content = content.replaceAll("\\$\\{pagamentos}", sb.toString());
+        content = content.replaceAll(
+            "\\$\\{pagamentos}",
+            Matcher.quoteReplacement(sb.toString())
+        );
         final InputStream body = new ByteArrayInputStream(content.getBytes());
         return new RsHtml(body);
     }

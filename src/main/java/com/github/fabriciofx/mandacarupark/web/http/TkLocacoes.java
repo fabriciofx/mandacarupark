@@ -39,6 +39,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Matcher;
 
 public final class TkLocacoes implements Take {
     private final Session session;
@@ -69,11 +70,13 @@ public final class TkLocacoes implements Take {
                     locacao.sobre().get("entrada").toString(),
                     locacao.sobre().get("saida").toString(),
                     locacao.sobre().get("valor").toString()
-                        .replaceAll("R\\$ ", "")
                 ).asString()
             );
         }
-        content = content.replaceAll("\\$\\{locacoes}", sb.toString());
+        content = content.replaceAll(
+            "\\$\\{locacoes}",
+            Matcher.quoteReplacement(sb.toString())
+        );
         final InputStream body = new ByteArrayInputStream(content.getBytes());
         return new RsHtml(body);
     }
