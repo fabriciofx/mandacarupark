@@ -36,37 +36,41 @@ import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
-import org.junit.Assert;
+import com.jcabi.matchers.XhtmlMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 public final class TestEntrada {
     @Test
     public void printFake() {
         final String html = "<html><body><table><thead><td>Id</td>" +
-            "<td>Placa</td><td>Data/Hora</td></thead><tbody><td>${e.id}</td>" +
-            "<td>${e.placa}</td><td>${e.dataHora}</td></tbody></body></html>";
+            "<td>Placa</td><td>Data/Hora</td></thead><tbody>" +
+            "<td>${e.id}</td><td>${e.placa}</td><td>${e.dataHora}</td>" +
+            "</tbody></table></body></html>";
         final Entrada entrada = new EntradaFake(
             new PagamentosFake(),
-            new Uuid("8d48d242-7500-4235-ae7a-d30378e544f2"),
+            new Uuid("8c878e6f-ee13-4a37-a208-7510c2638944"),
             new PlacaOf("ABC1234"),
-            new DataHoraOf("29/12/2022 22:54:19")
+            new DataHoraOf("2022-07-21 12:01:15")
         );
-        Assert.assertEquals(
-            "<html><body><table><thead><td>Id</td><td>Placa</td>" +
-                "<td>Data/Hora</td></thead><tbody>" +
-                "<td>8d48d242-7500-4235-ae7a-d30378e544f2</td>" +
-                "<td>ABC1234</td>" +
-                "<td>2022-12-29 22:54:19</td>" +
-                "</tbody></body></html>",
-            entrada.print(new Page(html), "e")
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                entrada.print(new Page(html), "e")
+            ),
+            XhtmlMatchers.hasXPaths(
+                "/html/body/table/tbody/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",
+                "/html/body/table/tbody/td[text()='ABC1234']",
+                "/html/body/table/tbody/td[text()='2022-07-21 12:01:15']"
+            )
         );
     }
 
     @Test
     public void printSql() throws Exception {
         final String html = "<html><body><table><thead><td>Id</td>" +
-            "<td>Placa</td><td>Data/Hora</td></thead><tbody><td>${e.id}</td>" +
-            "<td>${e.placa}</td><td>${e.dataHora}</td></tbody></body></html>";
+            "<td>Placa</td><td>Data/Hora</td></thead><tbody>" +
+            "<td>${e.id}</td><td>${e.placa}</td><td>${e.dataHora}</td>" +
+            "</tbody></table></body></html>";
         final Session session = new NoAuth(
             new H2Memory(
                 new RandomName()
@@ -83,14 +87,15 @@ public final class TestEntrada {
                 session,
                 new Uuid("8c878e6f-ee13-4a37-a208-7510c2638944")
             );
-            Assert.assertEquals(
-                "<html><body><table><thead><td>Id</td><td>Placa</td>" +
-                    "<td>Data/Hora</td></thead><tbody>" +
-                    "<td>8c878e6f-ee13-4a37-a208-7510c2638944</td>" +
-                    "<td>ABC1234</td>" +
-                    "<td>2022-07-21 12:01:15</td>" +
-                    "</tbody></body></html>",
-                entrada.print(new Page(html), "e")
+            MatcherAssert.assertThat(
+                XhtmlMatchers.xhtml(
+                    entrada.print(new Page(html), "e")
+                ),
+                XhtmlMatchers.hasXPaths(
+                    "/html/body/table/tbody/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",
+                    "/html/body/table/tbody/td[text()='ABC1234']",
+                    "/html/body/table/tbody/td[text()='2022-07-21 12:01:15']"
+                )
             );
         }
     }
