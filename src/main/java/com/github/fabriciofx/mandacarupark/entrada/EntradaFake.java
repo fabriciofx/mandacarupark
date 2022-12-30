@@ -28,6 +28,7 @@ import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
+import com.github.fabriciofx.mandacarupark.Page;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
@@ -73,5 +74,14 @@ public final class EntradaFake implements Entrada {
             "placa", this.placa,
             "dataHora", this.dataHora
         );
+    }
+
+    @Override
+    public String print(final Page page, final String prefix) {
+        return page
+            .with(prefix + ".id", this.id)
+            .with(prefix + ".placa", this.placa)
+            .with(prefix + ".dataHora", this.dataHora)
+            .asString();
     }
 }

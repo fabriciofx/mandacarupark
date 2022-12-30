@@ -21,11 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
 
-public interface Entrada {
-    Id id();
-    Ticket ticket();
-    Data sobre();
-    String print(Page page, String prefix);
-}
+/**
+ * Teste de Estrada.
+ *
+ * @since 0.0.1
+ */
+package com.github.fabriciofx.mandacarupark.entrada;
