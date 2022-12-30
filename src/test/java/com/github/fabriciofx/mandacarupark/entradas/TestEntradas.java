@@ -25,7 +25,14 @@ package com.github.fabriciofx.mandacarupark.entradas;
 
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Page;
+import com.github.fabriciofx.mandacarupark.Server;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
+import com.github.fabriciofx.mandacarupark.db.RandomName;
+import com.github.fabriciofx.mandacarupark.db.ScriptSql;
+import com.github.fabriciofx.mandacarupark.db.ServerH2;
+import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.db.ds.H2Memory;
+import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaFake;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
@@ -81,5 +88,46 @@ public final class TestEntradas {
                 "/html/body/table/tbody/tr/td[text()='2022-07-21 12:06:51']"
             )
         );
+    }
+
+    @Test
+    public void printSql() throws Exception {
+        final String html = "<html><body><table><thead>" +
+            "<td>Id</td><td>Placa</td><td>Data/Hora</td>" +
+            "</thead><tbody>" +
+            "<tr><td>${e0.id}</td><td>${e0.placa}</td><td>${e0.dataHora}</td></tr>" +
+            "<tr><td>${e1.id}</td><td>${e1.placa}</td><td>${e1.dataHora}</td></tr>" +
+            "<tr><td>${e2.id}</td><td>${e2.placa}</td><td>${e2.dataHora}</td></tr>" +
+            "</tbody></table></body></html>";
+        final Session session = new NoAuth(
+            new H2Memory(
+                new RandomName()
+            )
+        );
+        try (
+            final Server server = new ServerH2(
+                session,
+                new ScriptSql("mandacarupark.sql")
+            )
+        ) {
+            server.start();
+            final Entradas entradas = new EntradasSql(session);
+            MatcherAssert.assertThat(
+                XhtmlMatchers.xhtml(
+                    entradas.print(new Page(html), "e")
+                ),
+                XhtmlMatchers.hasXPaths(
+                    "/html/body/table/tbody/tr/td[text()='00eb2ff4-ac01-4fbe-bf08-b9f75c7216d8']",
+                    "/html/body/table/tbody/tr/td[text()='NPT5913']",
+                    "/html/body/table/tbody/tr/td[text()='2022-10-02 22:48:57']",
+                    "/html/body/table/tbody/tr/td[text()='1017ec42-f8bf-4f3b-ae48-3791cdca38be']",
+                    "/html/body/table/tbody/tr/td[text()='IOP1234']",
+                    "/html/body/table/tbody/tr/td[text()='2022-10-02 22:54:04']",
+                    "/html/body/table/tbody/tr/td[text()='0382a94e-8e42-4904-818f-e2b9041873af']",
+                    "/html/body/table/tbody/tr/td[text()='FAB1234']",
+                    "/html/body/table/tbody/tr/td[text()='2022-10-02 22:58:23']"
+                )
+            );
+        }
     }
 }

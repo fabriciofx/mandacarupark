@@ -93,7 +93,13 @@ public final class EntradasSql implements Entradas {
 
     @Override
     public String print(final Page page, final String prefix) {
-        return null;
+        Page pg = new Page(page.asString());
+        int idx = 0;
+        for (final Entrada entrada : this) {
+            pg = new Page(entrada.print(pg, prefix + idx));
+            idx++;
+        }
+        return pg.asString();
     }
 
     @Override
