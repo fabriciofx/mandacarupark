@@ -27,6 +27,7 @@ import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Id;
+import com.github.fabriciofx.mandacarupark.Page;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Insert;
@@ -88,6 +89,11 @@ public final class EntradasSql implements Entradas {
             );
         }
         return new EntradaSql(this.session, id);
+    }
+
+    @Override
+    public String print(final Page page, final String prefix) {
+        return null;
     }
 
     @Override

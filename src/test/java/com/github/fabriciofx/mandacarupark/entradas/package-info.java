@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
 
-public interface Entradas extends Iterable<Entrada> {
-    Entrada entrada(Placa placa, DataHora dataHora);
-    Entrada procura(Id id);
-    String print(Page page, String prefix);
-}
+/**
+ * Teste de Estradas.
+ *
+ * @since 0.0.1
+ */
+package com.github.fabriciofx.mandacarupark.entradas;
