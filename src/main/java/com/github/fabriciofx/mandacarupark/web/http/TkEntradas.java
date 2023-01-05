@@ -53,7 +53,7 @@ public final class TkEntradas implements Take {
         );
         final Entradas entradas = new EntradasSql(session);
         final InputStream body = new ByteArrayInputStream(
-            entradas.print(new Page(content), "e").getBytes()
+            entradas.print(new Page(content), "es").getBytes()
         );
         return new RsHtml(body);
     }

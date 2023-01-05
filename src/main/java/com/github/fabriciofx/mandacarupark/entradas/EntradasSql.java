@@ -98,7 +98,11 @@ public final class EntradasSql implements Entradas {
 
     @Override
     public String print(final Page page, final String prefix) {
-        final String regex = "\\$\\{es\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{es\\.end}";
+        final String regex = new Sprintf(
+            "\\$\\{%s\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{%s\\.end}",
+            prefix,
+            prefix
+        ).asString();
         final Pattern find = Pattern.compile(regex);
         final Matcher matcher = find.matcher(page.asString());
         final StringBuilder sb = new StringBuilder();
