@@ -23,11 +23,10 @@
  */
 package com.github.fabriciofx.mandacarupark.web.http;
 
-import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
+import com.github.fabriciofx.mandacarupark.Page;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosSql;
-import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -35,8 +34,6 @@ import org.takes.rs.RsHtml;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.regex.Matcher;
 
 public final class TkPagamentos implements Take {
     private final Session session;
@@ -47,29 +44,18 @@ public final class TkPagamentos implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final InputStream input = TkPagamentos.class.getClassLoader()
-            .getResourceAsStream("webapp/pagamentos.tpl");
-        String content = new String(
-            input.readAllBytes(),
-            StandardCharsets.UTF_8
+        final Page header = new Page(
+            TkPagamentos.class.getClassLoader()
+                .getResourceAsStream("webapp/header.tpl")
         );
+        final Page main = new Page(
+            TkPagamentos.class.getClassLoader()
+                .getResourceAsStream("webapp/pagamentos.tpl")
+        ).with("header", header);
         final Pagamentos pagamentos = new PagamentosSql(session);
-        final StringBuilder sb = new StringBuilder();
-        for (final Pagamento pagamento : pagamentos) {
-            sb.append(
-                new Sprintf(
-                    "<tr>\n<td>%s</td>\n<td>%s</td>\n<td>%s</td>\n</tr>\n",
-                    pagamento.id().toString(),
-                    pagamento.sobre().get("dataHora").toString(),
-                    pagamento.sobre().get("valor").toString()
-                ).asString()
-            );
-        }
-        content = content.replaceAll(
-            "\\$\\{pagamentos}",
-            Matcher.quoteReplacement(sb.toString())
+        final InputStream body = new ByteArrayInputStream(
+            pagamentos.print(main, "ps").getBytes()
         );
-        final InputStream body = new ByteArrayInputStream(content.getBytes());
         return new RsHtml(body);
     }
 }

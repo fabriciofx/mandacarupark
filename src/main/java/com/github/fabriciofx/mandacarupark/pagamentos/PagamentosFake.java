@@ -28,13 +28,17 @@ import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
+import com.github.fabriciofx.mandacarupark.Page;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.pagamento.PagamentoFake;
+import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class PagamentosFake implements Pagamentos {
     private final Map<Id, Pagamento> itens;
@@ -81,6 +85,29 @@ public final class PagamentosFake implements Pagamentos {
     @Override
     public int quantidade() {
         return this.itens.size();
+    }
+
+    @Override
+    public String print(final Page page, final String prefix) {
+        final String regex = new Sprintf(
+            "\\$\\{%s\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{%s\\.end}",
+            prefix,
+            prefix
+        ).asString();
+        final Pattern find = Pattern.compile(regex);
+        final Matcher matcher = find.matcher(page.asString());
+        final StringBuilder sb = new StringBuilder();
+        while (matcher.find()) {
+            for (final Pagamento pagamento : this) {
+                Page pg = new Page(matcher.group(1));
+                pg = new Page(pagamento.print(pg, "p"));
+                sb.append(pg.asString());
+            }
+        }
+        return page.asString().replaceAll(
+            regex,
+            Matcher.quoteReplacement(sb.toString())
+        );
     }
 
     @Override

@@ -28,6 +28,7 @@ import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Pagamento;
+import com.github.fabriciofx.mandacarupark.Page;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Session;
@@ -35,6 +36,7 @@ import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
+import java.util.regex.Matcher;
 
 public final class PagamentoSql implements Pagamento {
     private final Session session;
@@ -73,6 +75,38 @@ public final class PagamentoSql implements Pagamento {
                 "dataHora", dataHora,
                 "valor", valor
             );
+        } catch (final Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    @Override
+    public String print(final Page page, final String prefix) {
+        try (
+            final ResultSet rset = new Select(
+                this.session,
+                new Sprintf(
+                    "SELECT datahora, valor FROM pagamento WHERE id = '%s'",
+                    this.id
+                )
+            ).result()
+        ) {
+            final DataHora dataHora;
+            final Dinheiro valor;
+            if (rset.next()) {
+                dataHora = new DataHoraOf(rset.getString(1));
+                valor = new DinheiroOf(rset.getBigDecimal(2));
+            } else {
+                throw new RuntimeException("Dados inexistentes ou inválidos!");
+            }
+            return page
+                .with(prefix + ".id", this.id)
+                .with(prefix + ".dataHora", dataHora)
+                .with(
+                    prefix + ".valor",
+                    Matcher.quoteReplacement(valor.toString())
+                )
+                .asString();
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }

@@ -7,28 +7,7 @@
   </head>
   <body>
     <section>
-      <header>
-        <nav>
-          <button onclick="location.href='http://localhost:8080/entrada.html'">
-            Entrada
-          </button>
-          <button onclick="location.href='http://localhost:8080/saida.html'">
-            Saída
-          </button>
-          <button onclick="location.href='http://localhost:8080/entradas'">
-            Entradas
-          </button>
-          <button onclick="location.href='http://localhost:8080/saidas'">
-            Saídas
-          </button>
-          <button onclick="location.href='http://localhost:8080/pagamentos'">
-            Pagamentos
-          </button>
-          <button onclick="location.href='http://localhost:8080/locacoes'">
-            Locações
-          </button>
-        </nav>
-      </header>
+      ${header}
       <article>
         <table>
           <thead>
@@ -37,7 +16,13 @@
             <td>Valor</td>
           </thead>
           <tbody>
-            ${pagamentos}
+            ${ps.entry}
+            <tr>
+              <td>${p.id}</td>
+              <td>${p.dataHora}</td>
+              <td>${p.valor}</td>
+            </tr>
+            ${ps.end}
           </tbody>
         </table>
       </article>
