@@ -39,6 +39,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public final class EntradasSql implements Entradas {
     private final Session session;
@@ -93,13 +95,18 @@ public final class EntradasSql implements Entradas {
 
     @Override
     public String print(final Page page, final String prefix) {
-        Page pg = new Page(page.asString());
-        int idx = 0;
-        for (final Entrada entrada : this) {
-            pg = new Page(entrada.print(pg, prefix + idx));
-            idx++;
+        final String regex = "\\$\\{es\\.entry}(\\s.*\\s.*\\s.*\\s.*\\s.*\\s+)\\$\\{es\\.end}";
+        final Pattern find = Pattern.compile(regex);
+        final Matcher matcher = find.matcher(page.asString());
+        final StringBuilder sb = new StringBuilder();
+        while (matcher.find()) {
+            for (final Entrada entrada : this) {
+                Page pg = new Page(matcher.group(1));
+                pg = new Page(entrada.print(pg, "e"));
+                sb.append(pg.asString());
+            }
         }
-        return pg.asString();
+        return page.asString().replaceAll(regex, sb.toString());
     }
 
     @Override
