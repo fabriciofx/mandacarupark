@@ -26,6 +26,7 @@ package com.github.fabriciofx.mandacarupark.saida;
 import com.github.fabriciofx.mandacarupark.Data;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Id;
+import com.github.fabriciofx.mandacarupark.Page;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
@@ -77,6 +78,37 @@ public final class SaidaSql implements Saida {
                 "placa", placa,
                 "dataHora", dataHora
             );
+        } catch (final Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    @Override
+    public String print(final Page page, final String prefix) {
+        try (
+            final ResultSet rset = new Select(
+                this.session,
+                new Sprintf(
+                    "SELECT placa, datahora FROM saida WHERE id = '%s'",
+                    this.id
+                )
+            ).result()
+        ) {
+            final DataHora dataHora;
+            final Placa placa;
+            if (rset.next()) {
+                placa = new PlacaOf(rset.getString(1));
+                dataHora = new DataHoraOf(rset.getString(2));
+
+            } else {
+                throw new RuntimeException(
+                    "Dados sobre a saída inexistentes ou inválidos!"
+                );
+            }
+            return page.with(prefix + ".id", this.id)
+                .with(prefix + ".placa", placa)
+                .with(prefix + ".dataHora", dataHora)
+                .asString();
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }

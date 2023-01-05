@@ -26,6 +26,7 @@ package com.github.fabriciofx.mandacarupark.saida;
 import com.github.fabriciofx.mandacarupark.Data;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Id;
+import com.github.fabriciofx.mandacarupark.Page;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
@@ -57,5 +58,14 @@ public final class SaidaFake implements Saida {
             "placa", this.placa,
             "dataHora", this.dataHora
         );
+    }
+
+    @Override
+    public String print(final Page page, final String prefix) {
+        return page
+            .with(prefix + ".id", this.id)
+            .with(prefix + ".placa", this.placa)
+            .with(prefix + ".dataHora", this.dataHora)
+            .asString();
     }
 }

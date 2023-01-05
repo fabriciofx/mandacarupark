@@ -25,6 +25,7 @@ package com.github.fabriciofx.mandacarupark.saidas;
 
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Id;
+import com.github.fabriciofx.mandacarupark.Page;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Saidas;
@@ -39,6 +40,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class SaidasSql implements Saidas {
     private final Session session;
@@ -92,6 +95,22 @@ public final class SaidasSql implements Saidas {
             );
         }
         return new SaidaSql(this.session, id);
+    }
+
+    @Override
+    public String print(final Page page, final String prefix) {
+        final String regex = "\\$\\{es\\.entry}(\\s.*\\s.*\\s.*\\s.*\\s.*\\s+)\\$\\{es\\.end}";
+        final Pattern find = Pattern.compile(regex);
+        final Matcher matcher = find.matcher(page.asString());
+        final StringBuilder sb = new StringBuilder();
+        while (matcher.find()) {
+            for (final Saida saida : this) {
+                Page pg = new Page(matcher.group(1));
+                pg = new Page(saida.print(pg, "e"));
+                sb.append(pg.asString());
+            }
+        }
+        return page.asString().replaceAll(regex, sb.toString());
     }
 
     @Override

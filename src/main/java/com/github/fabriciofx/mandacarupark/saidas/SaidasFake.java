@@ -25,6 +25,7 @@ package com.github.fabriciofx.mandacarupark.saidas;
 
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Id;
+import com.github.fabriciofx.mandacarupark.Page;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Saidas;
@@ -66,6 +67,17 @@ public final class SaidasFake implements Saidas {
     @Override
     public Saida procura(final Id id) {
         return this.itens.get(id);
+    }
+
+    @Override
+    public String print(final Page page, final String prefix) {
+        Page pg = new Page(page.asString());
+        int idx = 0;
+        for (final Saida saida : this.itens.values()) {
+            pg = new Page(saida.print(pg, prefix + idx));
+            idx++;
+        }
+        return pg.asString();
     }
 
     @Override

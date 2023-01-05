@@ -26,4 +26,5 @@ package com.github.fabriciofx.mandacarupark;
 public interface Saida {
     Id id();
     Data sobre();
+    String print(Page page, String prefix);
 }
