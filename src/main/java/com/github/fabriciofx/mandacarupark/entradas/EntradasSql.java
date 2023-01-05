@@ -50,8 +50,11 @@ public final class EntradasSql implements Entradas {
     }
 
     @Override
-    public Entrada entrada(final Placa placa, final DataHora dataHora) {
-        final Uuid id = new Uuid();
+    public Entrada entrada(
+        final Id id,
+        final Placa placa,
+        final DataHora dataHora
+    ) {
         new Insert(
             this.session,
             new Sprintf(

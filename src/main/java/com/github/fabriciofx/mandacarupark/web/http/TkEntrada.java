@@ -27,6 +27,7 @@ import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
+import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import org.takes.Request;
 import org.takes.Response;
@@ -48,7 +49,7 @@ public final class TkEntrada implements Take {
         final Placa placa = new PlacaOf(
             new RqFormBase(req).param("placa").iterator().next()
         );
-        new EntradasSql(this.session).entrada(placa, new DataHoraOf());
+        new EntradasSql(this.session).entrada(new Uuid(), placa, new DataHoraOf());
         return new RsForward(
             new RsFlash("Thanks for answering!"),
             "/entradas"

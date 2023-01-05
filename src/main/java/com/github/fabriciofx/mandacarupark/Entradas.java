@@ -24,7 +24,7 @@
 package com.github.fabriciofx.mandacarupark;
 
 public interface Entradas extends Iterable<Entrada> {
-    Entrada entrada(Placa placa, DataHora dataHora);
+    Entrada entrada(Id id, Placa placa, DataHora dataHora);
     Entrada procura(Id id);
     String print(Page page, String prefix);
 }

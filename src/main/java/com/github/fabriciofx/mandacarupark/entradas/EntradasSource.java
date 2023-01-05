@@ -47,8 +47,12 @@ public final class EntradasSource implements Entradas {
     }
 
     @Override
-    public Entrada entrada(Placa placa, DataHora dataHora) {
-        final Entrada entrada = this.origin.entrada(placa, dataHora);
+    public Entrada entrada(
+        final Id id,
+        final Placa placa,
+        final DataHora dataHora
+    ) {
+        final Entrada entrada = this.origin.entrada(id, placa, dataHora);
         this.targets.forEach(target -> target.notifique(entrada));
         return entrada;
     }

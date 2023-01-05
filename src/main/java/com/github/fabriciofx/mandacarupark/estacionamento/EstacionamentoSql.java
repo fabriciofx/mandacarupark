@@ -23,7 +23,6 @@
  */
 package com.github.fabriciofx.mandacarupark.estacionamento;
 
-import com.github.fabriciofx.mandacarupark.Regras;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Entrada;
@@ -32,12 +31,14 @@ import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.Placa;
+import com.github.fabriciofx.mandacarupark.Regras;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.regra.Cortesia;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
 import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
+import com.github.fabriciofx.mandacarupark.regra.Cortesia;
 import com.github.fabriciofx.mandacarupark.ticket.TicketSql;
 
 public final class EstacionamentoSql implements Estacionamento {
@@ -63,7 +64,7 @@ public final class EstacionamentoSql implements Estacionamento {
 
     @Override
     public Ticket entrada(final Placa placa, final DataHora dataHora) {
-        final Entrada entrada = this.entradas.entrada(placa, dataHora);
+        final Entrada entrada = this.entradas.entrada(new Uuid(), placa, dataHora);
         return new TicketSql(this.session, entrada.id(), placa, dataHora);
     }
 

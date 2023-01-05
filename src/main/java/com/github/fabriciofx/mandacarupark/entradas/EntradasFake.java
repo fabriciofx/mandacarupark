@@ -31,7 +31,6 @@ import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Page;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaFake;
-import com.github.fabriciofx.mandacarupark.id.Uuid;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -64,10 +63,14 @@ public final class EntradasFake implements Entradas {
     }
 
     @Override
-    public Entrada entrada(final Placa placa, final DataHora dataHora) {
+    public Entrada entrada(
+        final Id id,
+        final Placa placa,
+        final DataHora dataHora
+    ) {
         final Entrada entrada = new EntradaFake(
             this.pagamentos,
-            new Uuid(),
+            id,
             placa,
             dataHora
         );
