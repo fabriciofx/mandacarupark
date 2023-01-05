@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (C) 2022-2023 Fabrício Barros Cabral
+ * Copyright (C) 2022 Fabrício Barros Cabral
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -115,7 +115,7 @@ public final class TestImagem {
                 new PagamentosFake(),
                 new Uuid("8c878e6f-ee13-4a37-a208-7510c2638944"),
                 new PlacaOf("ABC1234"),
-                new DataHoraOf("2022-2023-07-21 12:01:15")
+                new DataHoraOf("2022-07-21 12:01:15")
             )
         );
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -135,7 +135,7 @@ public final class TestImagem {
             new PagamentosFake(),
             new Uuid("8c878e6f-ee13-4a37-a208-7510c2638944"),
             new PlacaOf("ABC1234"),
-            new DataHoraOf("2022-2023-07-21 12:01:15")
+            new DataHoraOf("2022-07-21 12:01:15")
         );
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(ticket.imagem().imagem(), "png", baos);

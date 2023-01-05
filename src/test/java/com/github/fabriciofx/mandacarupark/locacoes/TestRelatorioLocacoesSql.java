@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (C) 2022-2023 Fabrício Barros Cabral
+ * Copyright (C) 2022 Fabrício Barros Cabral
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -58,23 +58,23 @@ public class TestRelatorioLocacoesSql {
                             session
                         ),
                         new PeriodoOf(
-                            LocalDateTime.of(2022-2023, 7, 21, 12, 01),
-                            LocalDateTime.of(2022-2023, 7, 21, 17, 12)
+                            LocalDateTime.of(2022, 7, 21, 12, 01),
+                            LocalDateTime.of(2022, 7, 21, 17, 12)
                         )
                     ).conteudo()
                 ),
                 XhtmlMatchers.hasXPaths(
                     "/locacoes/locacao/placa[text()='ABC1234']",
-                    "/locacoes/locacao/entrada[text()='2022-2023-07-21 12:01:15']",
-                    "/locacoes/locacao/saida[text()='2022-2023-07-21 17:11:12']",
+                    "/locacoes/locacao/entrada[text()='2022-07-21 12:01:15']",
+                    "/locacoes/locacao/saida[text()='2022-07-21 17:11:12']",
                     "/locacoes/locacao/valor[text()='R$ 5,00']",
                     "/locacoes/locacao/placa[text()='DEF5678']",
-                    "/locacoes/locacao/entrada[text()='2022-2023-07-21 12:05:38']",
-                    "/locacoes/locacao/saida[text()='2022-2023-07-21 14:06:31']",
+                    "/locacoes/locacao/entrada[text()='2022-07-21 12:05:38']",
+                    "/locacoes/locacao/saida[text()='2022-07-21 14:06:31']",
                     "/locacoes/locacao/valor[text()='R$ 5,00']",
                     "/locacoes/locacao/placa[text()='GHI9012']",
-                    "/locacoes/locacao/entrada[text()='2022-2023-07-21 12:06:51']",
-                    "/locacoes/locacao/saida[text()='2022-2023-07-21 13:11:23']",
+                    "/locacoes/locacao/entrada[text()='2022-07-21 12:06:51']",
+                    "/locacoes/locacao/saida[text()='2022-07-21 13:11:23']",
                     "/locacoes/locacao/valor[text()='R$ 5,00']",
                     "/locacoes/total[text()='R$ 15,00']"
                 )

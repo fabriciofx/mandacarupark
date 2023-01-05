@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (C) 2022-2023 Fabrício Barros Cabral
+ * Copyright (C) 2022 Fabrício Barros Cabral
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -67,8 +67,8 @@ public final class SimEstacionamentoFake {
         for (int idx = 0; idx < 100; idx++) {
             final Placa placa = new PlacaRandom();
             final DataHora dataHora = new DataHoraRandom(
-                LocalDateTime.of(2022-2023, 8, 2, 8, 0, 0),
-                LocalDateTime.of(2022-2023, 8, 2, 22, 0, 0)
+                LocalDateTime.of(2022, 8, 2, 8, 0, 0),
+                LocalDateTime.of(2022, 8, 2, 22, 0, 0)
             );
             // 2. Um veículo aleatório, de um tempo aleatório T dá entrada no
             //    estacionamento e recebe um ticket

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (C) 2022-2023 Fabrício Barros Cabral
+ * Copyright (C) 2022 Fabrício Barros Cabral
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -61,7 +61,7 @@ public final class TestEstacionamentoFake {
         final Ticket ticket = estacionamento.entrada(
             new PlacaOf("ABC1234"),
             new DataHoraOf(
-                LocalDateTime.of(2022-2023, 8, 2, 10, 30)
+                LocalDateTime.of(2022, 8, 2, 10, 30)
             )
         );
         final Entrada entrada = entradas.procura(ticket.id());
@@ -88,7 +88,7 @@ public final class TestEstacionamentoFake {
             regras
         );
         final Placa placa = new PlacaOf("ABC1234");
-        final LocalDateTime dateTime = LocalDateTime.of(2022-2023, 8, 2, 10, 30);
+        final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
         final Ticket ticket = estacionamento.entrada(
             placa,
             new DataHoraOf(dateTime)
@@ -131,7 +131,7 @@ public final class TestEstacionamentoFake {
                 );
                 Placa placa = new PlacaOf("ABC1234");
                 final LocalDateTime dateTime = LocalDateTime.of(
-                    2022-2023, 8, 2, 10, 30
+                    2022, 8, 2, 10, 30
                 );
                 final Ticket ticket = estacionamento.entrada(
                     placa,
@@ -166,13 +166,13 @@ public final class TestEstacionamentoFake {
         estacionamento.entrada(
             new PlacaOf("ABC1234"),
             new DataHoraOf(
-                LocalDateTime.of(2022-2023, 8, 2, 10, 30)
+                LocalDateTime.of(2022, 8, 2, 10, 30)
             )
         );
         estacionamento.entrada(
             new PlacaOf("XYZ9876"),
             new DataHoraOf(
-                LocalDateTime.of(2022-2023, 8, 2, 11, 12)
+                LocalDateTime.of(2022, 8, 2, 11, 12)
             )
         );
         final StringBuilder sb = new StringBuilder();
@@ -181,9 +181,9 @@ public final class TestEstacionamentoFake {
         }
         Assert.assertTrue(
             sb.toString().contains("placa=XYZ9876") &&
-            sb.toString().contains("dataHora=2022-2023-08-02 11:12") &&
+            sb.toString().contains("dataHora=2022-08-02 11:12") &&
             sb.toString().contains("placa=ABC1234") &&
-            sb.toString().contains("dataHora=2022-2023-08-02 10:30")
+            sb.toString().contains("dataHora=2022-08-02 10:30")
         );
     }
 }

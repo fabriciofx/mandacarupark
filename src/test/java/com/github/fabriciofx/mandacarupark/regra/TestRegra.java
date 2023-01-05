@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (C) 2022-2023 Fabrício Barros Cabral
+ * Copyright (C) 2022 Fabrício Barros Cabral
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -63,7 +63,7 @@ public class TestRegra {
             regras
         );
         final Placa placa = new PlacaOf("ABC1234");
-        final LocalDateTime dateTime = LocalDateTime.of(2022-2023, 8, 2, 10, 30);
+        final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
         final Ticket ticket = estacionamento.entrada(
             placa,
             new DataHoraOf(dateTime)
@@ -104,7 +104,7 @@ public class TestRegra {
             regras
         );
         final Placa placa = new PlacaOf("ABC1234");
-        final LocalDateTime dateTime = LocalDateTime.of(2022-2023, 7, 31, 10, 30);
+        final LocalDateTime dateTime = LocalDateTime.of(2022, 7, 31, 10, 30);
         final Ticket ticket = estacionamento.entrada(
             placa,
             new DataHoraOf(dateTime)
@@ -146,11 +146,11 @@ public class TestRegra {
             new PagamentosFake(),
             new Uuid(),
             new PlacaOf("ABC1234"),
-            new DataHoraOf("24/12/2022-2023 12:45:20")
+            new DataHoraOf("24/12/2022 12:45:20")
         );
         Assert.assertEquals(
             new DinheiroOf("6.00"),
-            estacionamento.valor(ticket, new DataHoraOf("24/12/2022-2023 16:45:20"))
+            estacionamento.valor(ticket, new DataHoraOf("24/12/2022 16:45:20"))
         );
     }
 
@@ -172,11 +172,11 @@ public class TestRegra {
             new PagamentosFake(),
             new Uuid(),
             new PlacaOf("ABC1234"),
-            new DataHoraOf("24/12/2022-2023 12:45:20")
+            new DataHoraOf("24/12/2022 12:45:20")
         );
         Assert.assertEquals(
             new DinheiroOf("10.00"),
-            estacionamento.valor(ticket, new DataHoraOf("24/12/2022-2023 16:46:20"))
+            estacionamento.valor(ticket, new DataHoraOf("24/12/2022 16:46:20"))
         );
     }
 
@@ -198,11 +198,11 @@ public class TestRegra {
             new PagamentosFake(),
             new Uuid(),
             new PlacaOf("ABC1234"),
-            new DataHoraOf("24/12/2022-2023 12:45:20")
+            new DataHoraOf("24/12/2022 12:45:20")
         );
         Assert.assertEquals(
             new DinheiroOf("14.00"),
-            estacionamento.valor(ticket, new DataHoraOf("24/12/2022-2023 17:46:20"))
+            estacionamento.valor(ticket, new DataHoraOf("24/12/2022 17:46:20"))
         );
     }
 }

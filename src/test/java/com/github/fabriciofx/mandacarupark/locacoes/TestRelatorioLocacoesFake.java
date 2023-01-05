@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (C) 2022-2023 Fabrício Barros Cabral
+ * Copyright (C) 2022 Fabrício Barros Cabral
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -48,17 +48,17 @@ public class TestRelatorioLocacoesFake {
         final Pagamentos pagamentos = new PagamentosFake(
             new PagamentoFake(
                 new Uuid("d589e997-c61d-47b3-90cf-c5ba23c8b427"),
-                new DataHoraOf(LocalDateTime.of(2022-2023, 8, 2, 11, 30)),
+                new DataHoraOf(LocalDateTime.of(2022, 8, 2, 11, 30)),
                 new DinheiroOf("5.00")
             ),
             new PagamentoFake(
                 new Uuid("e90107c4-f792-4569-abb3-353605f01716"),
-                new DataHoraOf(LocalDateTime.of(2022-2023, 8, 2, 11, 10)),
+                new DataHoraOf(LocalDateTime.of(2022, 8, 2, 11, 10)),
                 new DinheiroOf("5.00")
             ),
             new PagamentoFake(
                 new Uuid("15e32c1b-55ef-4cc6-a9bf-28da74d2309a"),
-                new DataHoraOf(LocalDateTime.of(2022-2023, 8, 2, 11, 20)),
+                new DataHoraOf(LocalDateTime.of(2022, 8, 2, 11, 20)),
                 new DinheiroOf("5.00")
             )
         );
@@ -76,7 +76,7 @@ public class TestRelatorioLocacoesFake {
                                     ),
                                     new PlacaOf("ABC1234"),
                                     new DataHoraOf(
-                                        LocalDateTime.of(2022-2023, 8, 2, 10, 30)
+                                        LocalDateTime.of(2022, 8, 2, 10, 30)
                                     )
                                 ),
                                 new EntradaFake(
@@ -86,7 +86,7 @@ public class TestRelatorioLocacoesFake {
                                     ),
                                     new PlacaOf("DEF5678"),
                                     new DataHoraOf(
-                                        LocalDateTime.of(2022-2023, 8, 2, 10, 31)
+                                        LocalDateTime.of(2022, 8, 2, 10, 31)
                                     )
                                 ),
                                 new EntradaFake(
@@ -96,7 +96,7 @@ public class TestRelatorioLocacoesFake {
                                     ),
                                     new PlacaOf("GHI9012"),
                                     new DataHoraOf(
-                                        LocalDateTime.of(2022-2023, 8, 2, 10, 32)
+                                        LocalDateTime.of(2022, 8, 2, 10, 32)
                                     )
                                 )
                             ),
@@ -107,7 +107,7 @@ public class TestRelatorioLocacoesFake {
                                     ),
                                     new PlacaOf("ABC1234"),
                                     new DataHoraOf(
-                                        LocalDateTime.of(2022-2023, 8, 2, 11, 40)
+                                        LocalDateTime.of(2022, 8, 2, 11, 40)
                                     )
                                 ),
                                 new SaidaFake(
@@ -116,7 +116,7 @@ public class TestRelatorioLocacoesFake {
                                     ),
                                     new PlacaOf("DEF5678"),
                                     new DataHoraOf(
-                                        LocalDateTime.of(2022-2023, 8, 2, 11, 15)
+                                        LocalDateTime.of(2022, 8, 2, 11, 15)
                                     )
                                 ),
                                 new SaidaFake(
@@ -125,7 +125,7 @@ public class TestRelatorioLocacoesFake {
                                     ),
                                     new PlacaOf("GHI9012"),
                                     new DataHoraOf(
-                                        LocalDateTime.of(2022-2023, 8, 2, 11, 22)
+                                        LocalDateTime.of(2022, 8, 2, 11, 22)
                                     )
                                 )
                             ),
@@ -134,23 +134,23 @@ public class TestRelatorioLocacoesFake {
                         )
                     ),
                     new PeriodoOf(
-                        LocalDateTime.of(2022-2023, 8, 2, 10, 30),
-                        LocalDateTime.of(2022-2023, 8, 2, 11, 40)
+                        LocalDateTime.of(2022, 8, 2, 10, 30),
+                        LocalDateTime.of(2022, 8, 2, 11, 40)
                     )
                 ).conteudo()
             ),
             XhtmlMatchers.hasXPaths(
                 "/locacoes/locacao/placa[text()='ABC1234']",
-                "/locacoes/locacao/entrada[text()='2022-2023-08-02 10:30:00']",
-                "/locacoes/locacao/saida[text()='2022-2023-08-02 11:40:00']",
+                "/locacoes/locacao/entrada[text()='2022-08-02 10:30:00']",
+                "/locacoes/locacao/saida[text()='2022-08-02 11:40:00']",
                 "/locacoes/locacao/valor[text()='R$ 5,00']",
                 "/locacoes/locacao/placa[text()='DEF5678']",
-                "/locacoes/locacao/entrada[text()='2022-2023-08-02 10:31:00']",
-                "/locacoes/locacao/saida[text()='2022-2023-08-02 11:15:00']",
+                "/locacoes/locacao/entrada[text()='2022-08-02 10:31:00']",
+                "/locacoes/locacao/saida[text()='2022-08-02 11:15:00']",
                 "/locacoes/locacao/valor[text()='R$ 5,00']",
                 "/locacoes/locacao/placa[text()='GHI9012']",
-                "/locacoes/locacao/entrada[text()='2022-2023-08-02 10:32:00']",
-                "/locacoes/locacao/saida[text()='2022-2023-08-02 11:22:00']",
+                "/locacoes/locacao/entrada[text()='2022-08-02 10:32:00']",
+                "/locacoes/locacao/saida[text()='2022-08-02 11:22:00']",
                 "/locacoes/locacao/valor[text()='R$ 5,00']",
                 "/locacoes/total[text()='R$ 15,00']"
             )

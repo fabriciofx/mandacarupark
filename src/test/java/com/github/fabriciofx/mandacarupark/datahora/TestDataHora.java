@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (C) 2022-2023 Fabrício Barros Cabral
+ * Copyright (C) 2022 Fabrício Barros Cabral
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,53 +32,53 @@ public final class TestDataHora {
     @Test
     public void asString() {
         final DataHora dataHora = new DataHoraOf(
-            LocalDateTime.of(2022-2023, 8, 14, 7, 49, 20)
+            LocalDateTime.of(2022, 8, 14, 7, 49, 20)
         );
-        Assert.assertEquals("2022-2023-08-14 07:49:20", dataHora.toString());
+        Assert.assertEquals("2022-08-14 07:49:20", dataHora.toString());
     }
 
     @Test
     public void data() {
         final DataHora dataHora = new DataHoraOf(
-            LocalDateTime.of(2022-2023, 8, 14, 7, 49, 20)
+            LocalDateTime.of(2022, 8, 14, 7, 49, 20)
         );
-        Assert.assertEquals("14/08/2022-2023", dataHora.data());
+        Assert.assertEquals("14/08/2022", dataHora.data());
         Assert.assertEquals("07:49:20", dataHora.hora());
     }
 
     @Test
     public void hora() {
         final DataHora dataHora = new DataHoraOf(
-            LocalDateTime.of(2022-2023, 8, 14, 7, 49, 20)
+            LocalDateTime.of(2022, 8, 14, 7, 49, 20)
         );
-        Assert.assertEquals("14/08/2022-2023", dataHora.data());
+        Assert.assertEquals("14/08/2022", dataHora.data());
         Assert.assertEquals("07:49:20", dataHora.hora());
     }
 
     @Test
     public void parseIso() {
         final DataHora dataHora = new DataHoraOf(
-            "2022-2023-08-14 07:49:20.5"
+            "2022-08-14 07:49:20.5"
         );
-        Assert.assertEquals("14/08/2022-2023", dataHora.data());
+        Assert.assertEquals("14/08/2022", dataHora.data());
         Assert.assertEquals("07:49:20", dataHora.hora());
     }
 
     @Test
     public void parse() {
         final DataHora dataHora = new DataHoraOf(
-            "14/08/2022-2023 07:49:20"
+            "14/08/2022 07:49:20"
         );
-        Assert.assertEquals("14/08/2022-2023", dataHora.data());
+        Assert.assertEquals("14/08/2022", dataHora.data());
         Assert.assertEquals("07:49:20", dataHora.hora());
     }
 
     @Test
     public void parseEuMesmo() {
         final DataHora dataHora = new DataHoraOf(
-            LocalDateTime.of(2022-2023, 8, 14, 7, 49, 20)
+            LocalDateTime.of(2022, 8, 14, 7, 49, 20)
         );
         final DataHora parsed = new DataHoraOf(dataHora.toString());
-        Assert.assertEquals("2022-2023-08-14 07:49:20", dataHora.toString());
+        Assert.assertEquals("2022-08-14 07:49:20", dataHora.toString());
     }
 }

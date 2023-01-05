@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (C) 2022-2023 Fabrício Barros Cabral
+ * Copyright (C) 2022 Fabrício Barros Cabral
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -59,8 +59,8 @@ public final class TkLocacoes implements Take {
         final Locacoes locacoes = new LocacoesSql(session);
         final StringBuilder sb = new StringBuilder();
         final Periodo periodo = new PeriodoOf(
-            new DataHoraOf("01/01/2022-2023 08:00:00"),
-            new DataHoraOf("31/12/2022-2023 19:12:00")
+            new DataHoraOf("01/01/2022 08:00:00"),
+            new DataHoraOf("05/01/2023 05:39:00")
         );
         for (final Locacao locacao : locacoes.locacoes(periodo)) {
             sb.append(
