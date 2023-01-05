@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.web.http;
 
+import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Session;
@@ -46,10 +47,15 @@ public final class TkEntrada implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Placa placa = new PlacaOf(
-            new RqFormBase(req).param("placa").iterator().next()
-        );
-        new EntradasSql(this.session).entrada(new Uuid(), placa, new DataHoraOf());
+        final RqFormBase form = new RqFormBase(req);
+        final Placa placa = new PlacaOf(form.param("placa").iterator().next());
+        final Id id;
+        if (!form.param("ticket").iterator().next().equals("")) {
+            id = new Uuid(form.param("ticket").iterator().next());
+        } else {
+            id = new Uuid();
+        }
+        new EntradasSql(this.session).entrada(id, placa, new DataHoraOf());
         return new RsForward(
             new RsFlash("Thanks for answering!"),
             "/entradas"
