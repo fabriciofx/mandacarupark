@@ -24,18 +24,40 @@
 package com.github.fabriciofx.mandacarupark;
 
 import com.github.fabriciofx.mandacarupark.text.Text;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 public final class Page implements Text {
-    private final String content;
+    private final Text content;
+
+    public Page(final InputStream stream) {
+        this(
+            () -> {
+                try {
+                    return new String(
+                        stream.readAllBytes(),
+                        StandardCharsets.UTF_8
+                    );
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        );
+    }
 
     public Page(final String content) {
-        this.content = content;
+        this.content = () -> content;
+    }
+
+    public Page(final Text text) {
+        this.content = text;
     }
 
     public Page with(final String name, final Object data) {
         return new Page(
-            this.content.replaceAll(
-                "\\$\\{" + name +"}",
+            this.content.asString().replaceAll(
+                "\\$\\{" + name + "}",
                 data.toString()
             )
         );
@@ -43,6 +65,11 @@ public final class Page implements Text {
 
     @Override
     public String asString() {
-        return this.content;
+        return this.content.asString();
+    }
+
+    @Override
+    public String toString() {
+        return this.asString();
     }
 }

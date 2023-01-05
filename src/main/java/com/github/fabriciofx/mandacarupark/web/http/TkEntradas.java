@@ -34,7 +34,6 @@ import org.takes.rs.RsHtml;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 
 public final class TkEntradas implements Take {
     private final Session session;
@@ -45,15 +44,17 @@ public final class TkEntradas implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final InputStream input = TkEntradas.class.getClassLoader()
-            .getResourceAsStream("webapp/entradas.tpl");
-        final String content = new String(
-            input.readAllBytes(),
-            StandardCharsets.UTF_8
+        final Page header = new Page(
+            TkEntradas.class.getClassLoader()
+                .getResourceAsStream("webapp/header.tpl")
         );
+        final Page main = new Page(
+            TkEntradas.class.getClassLoader()
+                .getResourceAsStream("webapp/entradas.tpl")
+        ).with("header", header);
         final Entradas entradas = new EntradasSql(session);
         final InputStream body = new ByteArrayInputStream(
-            entradas.print(new Page(content), "es").getBytes()
+            entradas.print(main, "es").getBytes()
         );
         return new RsHtml(body);
     }
