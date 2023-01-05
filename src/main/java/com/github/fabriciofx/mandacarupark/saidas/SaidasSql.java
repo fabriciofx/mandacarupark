@@ -99,14 +99,18 @@ public final class SaidasSql implements Saidas {
 
     @Override
     public String print(final Page page, final String prefix) {
-        final String regex = "\\$\\{es\\.entry}(\\s.*\\s.*\\s.*\\s.*\\s.*\\s+)\\$\\{es\\.end}";
+        final String regex = new Sprintf(
+            "\\$\\{%s\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{%s\\.end}",
+            prefix,
+            prefix
+        ).asString();
         final Pattern find = Pattern.compile(regex);
         final Matcher matcher = find.matcher(page.asString());
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Saida saida : this) {
                 Page pg = new Page(matcher.group(1));
-                pg = new Page(saida.print(pg, "e"));
+                pg = new Page(saida.print(pg, "s"));
                 sb.append(pg.asString());
             }
         }

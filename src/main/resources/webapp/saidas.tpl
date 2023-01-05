@@ -37,13 +37,13 @@
             <td>Data/Hora</td>
           </thead>
           <tbody>
-            ${es.entry}
+            ${ss.entry}
             <tr>
-              <td>${e.id}</td>
-              <td>${e.placa}</td>
-              <td>${e.dataHora}</td>
+              <td>${s.id}</td>
+              <td>${s.placa}</td>
+              <td>${s.dataHora}</td>
             </tr>
-            ${es.end}
+            ${ss.end}
           </tbody>
         </table>
       </article>
