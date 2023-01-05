@@ -51,7 +51,7 @@ public final class TestRegraSql {
                 )
             );
             final Placa placa = new PlacaOf("ABC1234");
-            final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
+            final LocalDateTime dateTime = LocalDateTime.of(2022-2023, 8, 2, 10, 30);
             final Ticket ticket = estacionamento.entrada(
                 placa,
                 new DataHoraOf(dateTime)
@@ -104,7 +104,7 @@ public final class TestRegraSql {
             );
             final Placa placa = new PlacaOf("ABC1234");
             final LocalDateTime dateTime = LocalDateTime.of(
-                2022, 7, 31, 10, 30
+                2022-2023, 7, 31, 10, 30
             );
             final Ticket ticket = estacionamento.entrada(
                 placa,

@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (C) 2022 Fabrício Barros Cabral
+ * Copyright (C) 2022-2023 Fabrício Barros Cabral
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -63,7 +63,7 @@ public final class TestLocacoesFake {
         );
         // Locação 1
         Placa placa = new PlacaOf("ABC1234");
-        final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
+        final LocalDateTime dateTime = LocalDateTime.of(2022-2023, 8, 2, 10, 30);
         Ticket ticket = estacionamento.entrada(placa, new DataHoraOf(dateTime));
         estacionamento.pagamento(
             ticket,
