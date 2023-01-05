@@ -46,11 +46,9 @@ public final class TestEntradas {
     public void printFake() {
         final String html = "<html><body><table><thead>" +
             "<td>Id</td><td>Placa</td><td>Data/Hora</td>" +
-            "</thead><tbody>" +
-            "<tr><td>${e0.id}</td><td>${e0.placa}</td><td>${e0.dataHora}</td></tr>" +
-            "<tr><td>${e1.id}</td><td>${e1.placa}</td><td>${e1.dataHora}</td></tr>" +
-            "<tr><td>${e2.id}</td><td>${e2.placa}</td><td>${e2.dataHora}</td></tr>" +
-            "</tbody></table></body></html>";
+            "</thead><tbody>${es.entry}" +
+            "<tr><td>${e.id}</td><td>${e.placa}</td><td>${e.dataHora}</td></tr>" +
+            "${es.end}</tbody></table></body></html>";
         final Entradas entradas = new EntradasFake(
             new PagamentosFake(),
             new EntradaFake(
