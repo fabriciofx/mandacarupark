@@ -31,9 +31,12 @@ import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.saida.SaidaFake;
+import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class SaidasFake implements Saidas {
     private final Map<Id, Saida> itens;
@@ -71,13 +74,22 @@ public final class SaidasFake implements Saidas {
 
     @Override
     public String print(final Page page, final String prefix) {
-        Page pg = new Page(page.asString());
-        int idx = 0;
-        for (final Saida saida : this.itens.values()) {
-            pg = new Page(saida.print(pg, prefix + idx));
-            idx++;
+        final String regex = new Sprintf(
+            "\\$\\{%s\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{%s\\.end}",
+            prefix,
+            prefix
+        ).asString();
+        final Pattern find = Pattern.compile(regex);
+        final Matcher matcher = find.matcher(page.asString());
+        final StringBuilder sb = new StringBuilder();
+        while (matcher.find()) {
+            for (final Saida saida : this) {
+                Page pg = new Page(matcher.group(1));
+                pg = new Page(saida.print(pg, "s"));
+                sb.append(pg.asString());
+            }
         }
-        return pg.asString();
+        return page.asString().replaceAll(regex, sb.toString());
     }
 
     @Override
