@@ -141,16 +141,16 @@ public class TestRelatorioLocacoesFake {
             ),
             XhtmlMatchers.hasXPaths(
                 "/locacoes/locacao/placa[text()='ABC1234']",
-                "/locacoes/locacao/entrada[text()='2022-08-02 10:30:00']",
-                "/locacoes/locacao/saida[text()='2022-08-02 11:40:00']",
+                "/locacoes/locacao/entrada[text()='02/08/2022 10:30:00']",
+                "/locacoes/locacao/saida[text()='02/08/2022 11:40:00']",
                 "/locacoes/locacao/valor[text()='R$ 5,00']",
                 "/locacoes/locacao/placa[text()='DEF5678']",
-                "/locacoes/locacao/entrada[text()='2022-08-02 10:31:00']",
-                "/locacoes/locacao/saida[text()='2022-08-02 11:15:00']",
+                "/locacoes/locacao/entrada[text()='02/08/2022 10:31:00']",
+                "/locacoes/locacao/saida[text()='02/08/2022 11:15:00']",
                 "/locacoes/locacao/valor[text()='R$ 5,00']",
                 "/locacoes/locacao/placa[text()='GHI9012']",
-                "/locacoes/locacao/entrada[text()='2022-08-02 10:32:00']",
-                "/locacoes/locacao/saida[text()='2022-08-02 11:22:00']",
+                "/locacoes/locacao/entrada[text()='02/08/2022 10:32:00']",
+                "/locacoes/locacao/saida[text()='02/08/2022 11:22:00']",
                 "/locacoes/locacao/valor[text()='R$ 5,00']",
                 "/locacoes/total[text()='R$ 15,00']"
             )

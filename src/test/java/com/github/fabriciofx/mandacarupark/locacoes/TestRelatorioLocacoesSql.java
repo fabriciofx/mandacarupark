@@ -65,16 +65,16 @@ public class TestRelatorioLocacoesSql {
                 ),
                 XhtmlMatchers.hasXPaths(
                     "/locacoes/locacao/placa[text()='ABC1234']",
-                    "/locacoes/locacao/entrada[text()='2022-07-21 12:01:15']",
-                    "/locacoes/locacao/saida[text()='2022-07-21 17:11:12']",
+                    "/locacoes/locacao/entrada[text()='21/07/2022 12:01:15']",
+                    "/locacoes/locacao/saida[text()='21/07/2022 17:11:12']",
                     "/locacoes/locacao/valor[text()='R$ 5,00']",
                     "/locacoes/locacao/placa[text()='DEF5678']",
-                    "/locacoes/locacao/entrada[text()='2022-07-21 12:05:38']",
-                    "/locacoes/locacao/saida[text()='2022-07-21 14:06:31']",
+                    "/locacoes/locacao/entrada[text()='21/07/2022 12:05:38']",
+                    "/locacoes/locacao/saida[text()='21/07/2022 14:06:31']",
                     "/locacoes/locacao/valor[text()='R$ 5,00']",
                     "/locacoes/locacao/placa[text()='GHI9012']",
-                    "/locacoes/locacao/entrada[text()='2022-07-21 12:06:51']",
-                    "/locacoes/locacao/saida[text()='2022-07-21 13:11:23']",
+                    "/locacoes/locacao/entrada[text()='21/07/2022 12:06:51']",
+                    "/locacoes/locacao/saida[text()='21/07/2022 13:11:23']",
                     "/locacoes/locacao/valor[text()='R$ 5,00']",
                     "/locacoes/total[text()='R$ 15,00']"
                 )

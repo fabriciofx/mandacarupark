@@ -52,8 +52,8 @@ public final class LocacoesSql implements Locacoes {
                 this.session,
                 new Sprintf(
                     "SELECT * FROM locacao WHERE entrada >= '%s' AND saida <= '%s'",
-                    this.periodo.inicio(),
-                    this.periodo.termino()
+                    this.periodo.inicio().dateTime(),
+                    this.periodo.termino().dateTime()
                 )
             ).result()
         ) {

@@ -181,9 +181,9 @@ public final class TestEstacionamentoFake {
         }
         Assert.assertTrue(
             sb.toString().contains("placa=XYZ9876") &&
-            sb.toString().contains("dataHora=2022-08-02 11:12") &&
+            sb.toString().contains("dataHora=02/08/2022 11:12") &&
             sb.toString().contains("placa=ABC1234") &&
-            sb.toString().contains("dataHora=2022-08-02 10:30")
+            sb.toString().contains("dataHora=02/08/2022 10:30")
         );
     }
 }

@@ -61,7 +61,7 @@ public final class EntradasSql implements Entradas {
                 "INSERT INTO entrada (id, placa, datahora) VALUES ('%s', '%s', '%s')",
                 id,
                 placa,
-                dataHora
+                dataHora.dateTime()
             )
         ).execute();
         return new EntradaSql(this.session, id);

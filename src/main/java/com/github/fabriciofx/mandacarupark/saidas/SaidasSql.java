@@ -62,7 +62,7 @@ public final class SaidasSql implements Saidas {
                 "INSERT INTO saida (id, placa, datahora) VALUES ('%s', '%s', '%s')",
                 ticket.id(),
                 placa,
-                dataHora
+                dataHora.dateTime()
             )
         ).execute();
         return new SaidaSql(this.session, ticket.id());

@@ -51,7 +51,7 @@ public final class TestEntrada {
             new PagamentosFake(),
             new Uuid("8c878e6f-ee13-4a37-a208-7510c2638944"),
             new PlacaOf("ABC1234"),
-            new DataHoraOf("2022-07-21 12:01:15")
+            new DataHoraOf("21/07/2022 12:01:15")
         );
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
@@ -60,7 +60,7 @@ public final class TestEntrada {
             XhtmlMatchers.hasXPaths(
                 "/html/body/table/tbody/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",
                 "/html/body/table/tbody/td[text()='ABC1234']",
-                "/html/body/table/tbody/td[text()='2022-07-21 12:01:15']"
+                "/html/body/table/tbody/td[text()='21/07/2022 12:01:15']"
             )
         );
     }
@@ -94,7 +94,7 @@ public final class TestEntrada {
                 XhtmlMatchers.hasXPaths(
                     "/html/body/table/tbody/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",
                     "/html/body/table/tbody/td[text()='ABC1234']",
-                    "/html/body/table/tbody/td[text()='2022-07-21 12:01:15']"
+                    "/html/body/table/tbody/td[text()='21/07/2022 12:01:15']"
                 )
             );
         }

@@ -62,7 +62,7 @@ public final class PagamentosSql implements Pagamentos {
             new Sprintf(
                 "INSERT INTO pagamento (id, datahora, valor) VALUES ('%s', '%s', '%s')",
                 ticket.id(),
-                dataHora,
+                dataHora.dateTime(),
                 valor.quantia()
             )
         ).execute();

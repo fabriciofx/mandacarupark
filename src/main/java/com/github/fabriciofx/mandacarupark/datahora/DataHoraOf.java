@@ -122,7 +122,7 @@ public final class DataHoraOf implements DataHora {
     @Override
     public String toString() {
         final DateTimeFormatter formato = DateTimeFormatter.ofPattern(
-            "yyyy-MM-dd HH:mm:ss"
+            "dd/MM/uuuu HH:mm:ss"
         );
         return this.dateTime.format(formato);
     }

@@ -72,13 +72,13 @@ public final class TestSaidas {
             XhtmlMatchers.hasXPaths(
                 "/html/body/table/tbody/tr/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",
                 "/html/body/table/tbody/tr/td[text()='ABC1234']",
-                "/html/body/table/tbody/tr/td[text()='2022-07-21 12:01:15']",
+                "/html/body/table/tbody/tr/td[text()='21/07/2022 12:01:15']",
                 "/html/body/table/tbody/tr/td[text()='07d8e078-5b47-4fb5-9fb4-dd2c80dd8036']",
                 "/html/body/table/tbody/tr/td[text()='DEF5678']",
-                "/html/body/table/tbody/tr/td[text()='2022-07-21 12:05:38']",
+                "/html/body/table/tbody/tr/td[text()='21/07/2022 12:05:38']",
                 "/html/body/table/tbody/tr/td[text()='4c32b3dd-8636-43c0-9786-4804ca2b73f5']",
                 "/html/body/table/tbody/tr/td[text()='GHI9012']",
-                "/html/body/table/tbody/tr/td[text()='2022-07-21 12:06:51']"
+                "/html/body/table/tbody/tr/td[text()='21/07/2022 12:06:51']"
             )
         );
     }
@@ -110,13 +110,13 @@ public final class TestSaidas {
                 XhtmlMatchers.hasXPaths(
                     "/html/body/table/tbody/tr/td[text()='4c32b3dd-8636-43c0-9786-4804ca2b73f5']",
                     "/html/body/table/tbody/tr/td[text()='GHI9012']",
-                    "/html/body/table/tbody/tr/td[text()='2022-07-21 13:11:23']",
+                    "/html/body/table/tbody/tr/td[text()='21/07/2022 13:11:23']",
                     "/html/body/table/tbody/tr/td[text()='07d8e078-5b47-4fb5-9fb4-dd2c80dd8036']",
                     "/html/body/table/tbody/tr/td[text()='DEF5678']",
-                    "/html/body/table/tbody/tr/td[text()='2022-07-21 14:06:31']",
+                    "/html/body/table/tbody/tr/td[text()='21/07/2022 14:06:31']",
                     "/html/body/table/tbody/tr/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",
                     "/html/body/table/tbody/tr/td[text()='ABC1234']",
-                    "/html/body/table/tbody/tr/td[text()='2022-07-21 17:11:12']"
+                    "/html/body/table/tbody/tr/td[text()='21/07/2022 17:11:12']"
                 )
             );
         }
