@@ -25,7 +25,6 @@ package com.github.fabriciofx.mandacarupark.web.http;
 
 import com.github.fabriciofx.mandacarupark.Locacao;
 import com.github.fabriciofx.mandacarupark.Locacoes;
-import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.locacoes.LocacoesSql;
@@ -56,13 +55,15 @@ public final class TkLocacoes implements Take {
             input.readAllBytes(),
             StandardCharsets.UTF_8
         );
-        final Locacoes locacoes = new LocacoesSql(session);
-        final StringBuilder sb = new StringBuilder();
-        final Periodo periodo = new PeriodoOf(
-            new DataHoraOf("01/01/2022 08:00:00"),
-            new DataHoraOf("05/01/2023 05:39:00")
+        final Locacoes locacoes = new LocacoesSql(
+            session,
+            new PeriodoOf(
+                new DataHoraOf("01/01/2022 08:00:00"),
+                new DataHoraOf("05/01/2023 05:39:00")
+            )
         );
-        for (final Locacao locacao : locacoes.locacoes(periodo)) {
+        final StringBuilder sb = new StringBuilder();
+        for (final Locacao locacao : locacoes) {
             sb.append(
                 new Sprintf(
                     "<tr>\n<td>%s</td>\n<td>%s</td>\n<td>%s</td>\n<td>%s</td>\n</tr>\n",

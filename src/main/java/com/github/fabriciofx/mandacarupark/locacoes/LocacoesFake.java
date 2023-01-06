@@ -36,37 +36,45 @@ import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.locacao.LocacaoFake;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public final class LocacoesFake implements Locacoes {
     private final Entradas entradas;
     private final Saidas saidas;
     private final Pagamentos pagamentos;
+    private final Periodo periodo;
 
-    public LocacoesFake(final Estacionamento estacionamento) {
+    public LocacoesFake(
+        final Estacionamento estacionamento,
+        final Periodo periodo
+    ) {
         this(
             estacionamento.sobre().get("entradas"),
             estacionamento.sobre().get("saidas"),
-            estacionamento.sobre().get("pagamentos")
+            estacionamento.sobre().get("pagamentos"),
+            periodo
         );
     }
 
     public LocacoesFake(
         final Entradas entradas,
         final Saidas saidas,
-        final Pagamentos pagamentos
+        final Pagamentos pagamentos,
+        final Periodo periodo
     ) {
         this.entradas = entradas;
         this.saidas = saidas;
         this.pagamentos = pagamentos;
+        this.periodo = periodo;
     }
 
     @Override
-    public Iterable<Locacao> locacoes(final Periodo periodo) {
+    public Iterator<Locacao> iterator() {
         final List<Locacao> itens = new ArrayList<>();
         for (Entrada entrada : this.entradas) {
             final DataHora dataHora = entrada.sobre().get("dataHora");
-            if (periodo.contem(dataHora)) {
+            if (this.periodo.contem(dataHora)) {
                 final Saida saida = this.saidas.procura(entrada.id());
                 final List<Pagamento> pagamento = this.pagamentos.procura(
                     entrada.id()
@@ -82,6 +90,6 @@ public final class LocacoesFake implements Locacoes {
                 );
             }
         }
-        return itens;
+        return itens.iterator();
     }
 }

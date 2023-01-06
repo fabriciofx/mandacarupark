@@ -131,11 +131,11 @@ public class TestRelatorioLocacoesFake {
                             ),
                             pagamentos,
                             new RegrasFake()
+                        ),
+                        new PeriodoOf(
+                            LocalDateTime.of(2022, 8, 2, 10, 30),
+                            LocalDateTime.of(2022, 8, 2, 11, 40)
                         )
-                    ),
-                    new PeriodoOf(
-                        LocalDateTime.of(2022, 8, 2, 10, 30),
-                        LocalDateTime.of(2022, 8, 2, 11, 40)
                     )
                 ).conteudo()
             ),

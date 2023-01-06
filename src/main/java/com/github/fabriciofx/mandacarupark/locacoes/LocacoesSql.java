@@ -33,24 +33,27 @@ import com.github.fabriciofx.mandacarupark.locacao.LocacaoSql;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public final class LocacoesSql implements Locacoes {
     private final Session session;
+    private final Periodo periodo;
 
-    public LocacoesSql(final Session session) {
+    public LocacoesSql(final Session session, final Periodo periodo) {
         this.session = session;
+        this.periodo = periodo;
     }
 
     @Override
-    public Iterable<Locacao> locacoes(final Periodo periodo) {
+    public Iterator<Locacao> iterator() {
         try (
             final ResultSet rset = new Select(
                 this.session,
                 new Sprintf(
                     "SELECT * FROM locacao WHERE entrada >= '%s' AND saida <= '%s'",
-                    periodo.inicio(),
-                    periodo.termino()
+                    this.periodo.inicio(),
+                    this.periodo.termino()
                 )
             ).result()
         ) {
@@ -63,7 +66,7 @@ public final class LocacoesSql implements Locacoes {
                     )
                 );
             }
-            return itens;
+            return itens.iterator();
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
