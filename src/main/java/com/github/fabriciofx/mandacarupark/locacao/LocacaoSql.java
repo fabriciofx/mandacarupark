@@ -28,6 +28,7 @@ import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Locacao;
+import com.github.fabriciofx.mandacarupark.Page;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
@@ -37,6 +38,7 @@ import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
+import java.util.regex.Matcher;
 
 public final class LocacaoSql implements Locacao {
     private final Session session;
@@ -85,6 +87,52 @@ public final class LocacaoSql implements Locacao {
                 "saida", saida,
                 "valor", valor
             );
+        } catch (final Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    @Override
+    public String print(final Page page, final String prefix) {
+        try (
+            final ResultSet rset = new Select(
+                this.session,
+                new Sprintf(
+                    "SELECT placa, entrada, saida, valor FROM locacao WHERE id = '%s'",
+                    this.id
+                )
+            ).result()
+        ) {
+            final Placa placa;
+            final DataHora entrada, saida;
+            final Dinheiro valor;
+            if (rset.next()) {
+                placa = new PlacaOf(rset.getString(1));
+                entrada = new DataHoraOf(rset.getString(2));
+                if (rset.getString(3) != null) {
+                    saida = new DataHoraOf(rset.getString(3));
+                } else {
+                    saida = new DataHoraOf();
+                }
+                if (rset.getString(4) != null) {
+                    valor = new DinheiroOf(rset.getString(4));
+                } else {
+                    valor = new DinheiroOf("0.00");
+                }
+            } else {
+                throw new RuntimeException(
+                    "Dados sobre a locação são inexistentes ou inválidos!"
+                );
+            }
+            return page
+                .with(prefix + ".placa", placa.toString())
+                .with(prefix + ".entrada", entrada.toString())
+                .with(prefix + ".saida", saida.toString())
+                .with(
+                    prefix + ".valor",
+                    Matcher.quoteReplacement(valor.toString())
+                )
+                .asString();
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }

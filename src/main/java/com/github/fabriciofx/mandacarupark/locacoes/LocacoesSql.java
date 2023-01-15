@@ -25,6 +25,7 @@ package com.github.fabriciofx.mandacarupark.locacoes;
 
 import com.github.fabriciofx.mandacarupark.Locacao;
 import com.github.fabriciofx.mandacarupark.Locacoes;
+import com.github.fabriciofx.mandacarupark.Page;
 import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
@@ -35,6 +36,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class LocacoesSql implements Locacoes {
     private final Session session;
@@ -70,5 +73,28 @@ public final class LocacoesSql implements Locacoes {
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    @Override
+    public String print(final Page page, final String prefix) {
+        final String regex = new Sprintf(
+            "\\$\\{%s\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{%s\\.end}",
+            prefix,
+            prefix
+        ).asString();
+        final Pattern find = Pattern.compile(regex);
+        final Matcher matcher = find.matcher(page.asString());
+        final StringBuilder sb = new StringBuilder();
+        while (matcher.find()) {
+            for (final Locacao locacao : this) {
+                Page pg = new Page(matcher.group(1));
+                pg = new Page(locacao.print(pg, "l"));
+                sb.append(pg.asString());
+            }
+        }
+        return page.asString().replaceAll(
+            regex,
+            Matcher.quoteReplacement(sb.toString())
+        );
     }
 }

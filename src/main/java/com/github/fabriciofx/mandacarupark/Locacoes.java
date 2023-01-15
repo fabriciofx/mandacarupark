@@ -24,4 +24,5 @@
 package com.github.fabriciofx.mandacarupark;
 
 public interface Locacoes extends Iterable<Locacao> {
+    String print(Page page, String prefix);
 }
