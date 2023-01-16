@@ -30,12 +30,14 @@ import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Regras;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
+import com.github.fabriciofx.mandacarupark.data.MapEntryOf;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasFake;
 import com.github.fabriciofx.mandacarupark.estacionamento.EstacionamentoFake;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
+import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.regras.RegrasFake;
 import com.github.fabriciofx.mandacarupark.regras.RegrasOf;
@@ -65,6 +67,7 @@ public class TestRegra {
         final Placa placa = new PlacaOf("ABC1234");
         final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
         final Ticket ticket = estacionamento.entrada(
+            new Uuid(),
             placa,
             new DataHoraOf(dateTime)
         );
@@ -106,6 +109,7 @@ public class TestRegra {
         final Placa placa = new PlacaOf("ABC1234");
         final LocalDateTime dateTime = LocalDateTime.of(2022, 7, 31, 10, 30);
         final Ticket ticket = estacionamento.entrada(
+            new Uuid(),
             placa,
             new DataHoraOf(dateTime)
         );
@@ -203,6 +207,54 @@ public class TestRegra {
         Assert.assertEquals(
             new DinheiroOf("14.00"),
             estacionamento.valor(ticket, new DataHoraOf("24/12/2022 17:46:20"))
+        );
+    }
+
+    @Test
+    public void mensalista() {
+        final Pagamentos pagamentos = new PagamentosFake();
+        final Estacionamento estacionamento = new EstacionamentoFake(
+            new EntradasFake(pagamentos),
+            new SaidasFake(),
+            pagamentos,
+            new RegrasOf(
+                new Tolerancia(),
+                new DomingoGratis(),
+                new MensalistaFake(
+                    new DinheiroOf("50.00"),
+                    new MapEntryOf<>(
+                        new Uuid("e4c1f93a-a00d-4ae2-b3f9-2bdc2cbe23e7"),
+                        new PeriodoOf(
+                            new DataHoraOf("01/01/2023 10:00:00"),
+                            new DataHoraOf("31/01/2023 22:00:00")
+                        )
+                    )
+                ),
+                new ValorFixo(new DinheiroOf("8.00"))
+            )
+        );
+        final Placa placa = new PlacaOf("ABC1234");
+        final Ticket ticket = estacionamento.entrada(
+            new Uuid("e4c1f93a-a00d-4ae2-b3f9-2bdc2cbe23e7"),
+            placa,
+            new DataHoraOf("05/01/2023 10:21:36")
+        );
+        estacionamento.pagamento(
+            ticket,
+            new DataHoraOf("05/01/2023 12:27:14")
+        );
+        estacionamento.saida(
+            ticket,
+            placa,
+            new DataHoraOf("05/01/2023 12:35:58")
+        );
+        Assert.assertTrue(ticket.validado());
+        Assert.assertEquals(
+            new DinheiroOf("50.00"),
+            estacionamento.valor(
+                ticket,
+                new DataHoraOf("05/01/2023 12:27:14")
+            )
         );
     }
 }

@@ -47,6 +47,12 @@ public final class Restricao implements Periodo {
     }
 
     @Override
+    public boolean contem(final Periodo periodo) {
+        this.inicioAntesTermino(this.origin);
+        return this.origin.contem(periodo);
+    }
+
+    @Override
     public DataHora inicio() {
         this.inicioAntesTermino(this.origin);
         return this.origin.inicio();

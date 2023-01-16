@@ -28,6 +28,7 @@ import java.time.DayOfWeek;
 public interface Periodo {
     long minutos();
     boolean contem(DataHora dataHora);
+    boolean contem(Periodo periodo);
     DataHora inicio();
     DataHora termino();
     boolean diaDaSemana(DayOfWeek dia);

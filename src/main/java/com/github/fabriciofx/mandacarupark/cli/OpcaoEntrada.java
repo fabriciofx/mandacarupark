@@ -29,6 +29,7 @@ import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.console.Console;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
+import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.placa.Restricao;
 
@@ -63,6 +64,7 @@ public final class OpcaoEntrada implements Opcao {
         final Placa placa = new Restricao(new PlacaOf(this.console.read()));
         final DataHora dataHora = new DataHoraOf();
         final Ticket ticket = this.estacionamento.entrada(
+            new Uuid(),
             placa,
             dataHora
         );

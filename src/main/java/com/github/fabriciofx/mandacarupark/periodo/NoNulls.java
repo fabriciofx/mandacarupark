@@ -60,6 +60,21 @@ public final class NoNulls implements Periodo {
     }
 
     @Override
+    public boolean contem(final Periodo periodo) {
+        if (this.origin == null) {
+            throw new IllegalArgumentException(
+                "NULL ao invés de um período válido"
+            );
+        }
+        if (periodo == null) {
+            throw new IllegalArgumentException(
+                "NULL ao invés de um parâmetro período válido"
+            );
+        }
+        return this.origin.contem(periodo);
+    }
+
+    @Override
     public DataHora inicio() {
         if (this.origin == null) {
             throw new IllegalArgumentException(

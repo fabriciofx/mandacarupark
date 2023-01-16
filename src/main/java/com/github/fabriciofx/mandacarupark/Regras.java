@@ -24,5 +24,5 @@
 package com.github.fabriciofx.mandacarupark;
 
 public interface Regras {
-    Regra regra(Periodo periodo, Regra def);
+    Regra regra(Id id, Periodo periodo, Regra def);
 }

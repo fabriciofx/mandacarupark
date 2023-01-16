@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.regras;
 
+import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Regra;
 import com.github.fabriciofx.mandacarupark.Regras;
 import com.github.fabriciofx.mandacarupark.Periodo;
@@ -41,7 +42,7 @@ public class RegrasFake implements Regras {
     }
 
     @Override
-    public Regra regra(final Periodo periodo, final Regra def) {
+    public Regra regra(final Id id, final Periodo periodo, final Regra def) {
         return this.regra;
     }
 }

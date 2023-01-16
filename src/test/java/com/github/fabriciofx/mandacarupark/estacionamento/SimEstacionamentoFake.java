@@ -31,6 +31,7 @@ import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
+import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.regra.DomingoGratis;
 import com.github.fabriciofx.mandacarupark.regra.Tolerancia;
 import com.github.fabriciofx.mandacarupark.regra.ValorFixo;
@@ -72,7 +73,11 @@ public final class SimEstacionamentoFake {
             );
             // 2. Um veículo aleatório, de um tempo aleatório T dá entrada no
             //    estacionamento e recebe um ticket
-            final Ticket ticket = estacionamento.entrada(placa, dataHora);
+            final Ticket ticket = estacionamento.entrada(
+                new Uuid(),
+                placa,
+                dataHora
+            );
             // 3. O proprietário do veículo guarda o ticket
             //new ImagemParaArquivo(ticket.imagem(), "ticket.png").salva();
             // 4. Depois de um tempo aletório T + N, o proprietário paga o

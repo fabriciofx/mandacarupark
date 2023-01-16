@@ -65,6 +65,16 @@ public final class PeriodoOf implements Periodo {
     }
 
     @Override
+    public boolean contem(final Periodo periodo) {
+        return this.inicio.dateTime().compareTo(
+            periodo.inicio().dateTime()
+        ) <= 0 &&
+            this.termino.dateTime().compareTo(
+                periodo.termino().dateTime()
+            ) >= 0;
+    }
+
+    @Override
     public DataHora inicio() {
         return this.inicio;
     }

@@ -28,6 +28,7 @@ import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
+import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.Placa;
@@ -36,7 +37,6 @@ import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
 import com.github.fabriciofx.mandacarupark.db.Session;
-import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 import com.github.fabriciofx.mandacarupark.regra.Cortesia;
 import com.github.fabriciofx.mandacarupark.ticket.TicketSql;
@@ -63,8 +63,12 @@ public final class EstacionamentoSql implements Estacionamento {
     }
 
     @Override
-    public Ticket entrada(final Placa placa, final DataHora dataHora) {
-        final Entrada entrada = this.entradas.entrada(new Uuid(), placa, dataHora);
+    public Ticket entrada(
+        final Id id,
+        final Placa placa,
+        final DataHora dataHora
+    ) {
+        final Entrada entrada = this.entradas.entrada(id, placa, dataHora);
         return new TicketSql(this.session, entrada.id(), placa, dataHora);
     }
 
@@ -74,7 +78,11 @@ public final class EstacionamentoSql implements Estacionamento {
             ticket.sobre().get("dataHora"),
             termino
         );
-        return this.regras.regra(periodo, new Cortesia()).valor(periodo);
+        return this.regras.regra(
+            ticket.id(),
+            periodo,
+            new Cortesia()
+        ).valor(ticket.id(), periodo);
     }
 
     @Override

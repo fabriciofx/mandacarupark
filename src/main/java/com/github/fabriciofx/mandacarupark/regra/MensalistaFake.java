@@ -23,30 +23,42 @@
  */
 package com.github.fabriciofx.mandacarupark.regra;
 
-import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Regra;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
+import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Periodo;
+import com.github.fabriciofx.mandacarupark.Regra;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
+import java.util.HashMap;
+import java.util.Map;
 
-public final class ValorFixo implements Regra {
+public final class MensalistaFake implements Regra {
+    private final Map<Id, Periodo> mensalistas;
     private final Dinheiro valor;
 
-    public ValorFixo() {
-        this(new DinheiroOf("7.00"));
-    }
-
-    public ValorFixo(final Dinheiro valor) {
+    public MensalistaFake(
+        final Dinheiro valor,
+        final Map.Entry<Id, Periodo>... mensalistas
+    ) {
         this.valor = valor;
+        this.mensalistas = new HashMap<>();
+        for (final Map.Entry<Id, Periodo> mensalista : mensalistas) {
+            this.mensalistas.put(mensalista.getKey(), mensalista.getValue());
+        }
     }
 
     @Override
     public boolean avalie(final Id id, final Periodo periodo) {
-        return true;
+        return this.mensalistas.keySet().contains(id);
     }
 
     @Override
     public Dinheiro valor(final Id id, final Periodo periodo) {
-        return this.valor;
+        final Dinheiro val;
+        if (this.mensalistas.get(id).contem(periodo)) {
+            val = this.valor;
+        } else {
+            val = new DinheiroOf("0.00");
+        }
+        return val;
     }
 }

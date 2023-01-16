@@ -29,6 +29,7 @@ import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Server;
 import com.github.fabriciofx.mandacarupark.Ticket;
+import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.regra.DomingoGratis;
 import com.github.fabriciofx.mandacarupark.regra.Tolerancia;
 import com.github.fabriciofx.mandacarupark.regra.ValorFixo;
@@ -79,6 +80,7 @@ public final class TestEstacionamentoSql {
             final Placa placa = new PlacaOf("ABC1234");
             final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
             final Ticket ticket = estacionamento.entrada(
+                new Uuid(),
                 placa,
                 new DataHoraOf(dateTime)
             );
@@ -119,6 +121,7 @@ public final class TestEstacionamentoSql {
             final Placa placa = new PlacaOf("ABC1234");
             final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
             final Ticket ticket = estacionamento.entrada(
+                new Uuid(),
                 placa,
                 new DataHoraOf(dateTime)
             );
@@ -171,6 +174,7 @@ public final class TestEstacionamentoSql {
                     final Placa placa = new PlacaOf("ABC1234");
                     final LocalDateTime agora = LocalDateTime.now();
                     final Ticket ticket = estacionamento.entrada(
+                        new Uuid(),
                         placa,
                         new DataHoraOf(agora)
                     );

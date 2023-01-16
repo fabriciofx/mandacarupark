@@ -24,6 +24,6 @@
 package com.github.fabriciofx.mandacarupark;
 
 public interface Regra {
-    boolean avalie(Periodo periodo);
-    Dinheiro valor(Periodo periodo);
+    boolean avalie(Id id, Periodo periodo);
+    Dinheiro valor(Id id, Periodo periodo);
 }

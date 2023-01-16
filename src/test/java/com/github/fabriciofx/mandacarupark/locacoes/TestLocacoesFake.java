@@ -23,23 +23,24 @@
  */
 package com.github.fabriciofx.mandacarupark.locacoes;
 
-import com.github.fabriciofx.mandacarupark.Regras;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Placa;
+import com.github.fabriciofx.mandacarupark.Regras;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.regra.DomingoGratis;
-import com.github.fabriciofx.mandacarupark.regra.Tolerancia;
-import com.github.fabriciofx.mandacarupark.regra.ValorFixo;
-import com.github.fabriciofx.mandacarupark.regras.RegrasOf;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasFake;
 import com.github.fabriciofx.mandacarupark.estacionamento.EstacionamentoFake;
+import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
+import com.github.fabriciofx.mandacarupark.regra.DomingoGratis;
+import com.github.fabriciofx.mandacarupark.regra.Tolerancia;
+import com.github.fabriciofx.mandacarupark.regra.ValorFixo;
+import com.github.fabriciofx.mandacarupark.regras.RegrasOf;
 import com.github.fabriciofx.mandacarupark.saidas.SaidasFake;
 import org.junit.Test;
 import java.time.LocalDateTime;
@@ -64,7 +65,11 @@ public final class TestLocacoesFake {
         // Locação 1
         Placa placa = new PlacaOf("ABC1234");
         final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
-        Ticket ticket = estacionamento.entrada(placa, new DataHoraOf(dateTime));
+        Ticket ticket = estacionamento.entrada(
+            new Uuid(),
+            placa,
+            new DataHoraOf(dateTime)
+        );
         estacionamento.pagamento(
             ticket,
             new DataHoraOf(dateTime.plusMinutes(60))
@@ -77,6 +82,7 @@ public final class TestLocacoesFake {
         // Locação 2
         placa = new PlacaOf("DEF5678");
         ticket = estacionamento.entrada(
+            new Uuid(),
             placa,
             new DataHoraOf(dateTime.plusMinutes(1))
         );
@@ -92,6 +98,7 @@ public final class TestLocacoesFake {
         // Locação 3
         placa = new PlacaOf("GHI9012");
         ticket = estacionamento.entrada(
+            new Uuid(),
             placa,
             new DataHoraOf(dateTime.plusMinutes(2))
         );

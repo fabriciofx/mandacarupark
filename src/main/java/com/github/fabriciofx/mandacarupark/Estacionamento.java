@@ -26,7 +26,7 @@ package com.github.fabriciofx.mandacarupark;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
 
 public interface Estacionamento {
-    Ticket entrada(Placa placa, DataHora dataHora);
+    Ticket entrada(Id id, Placa placa, DataHora dataHora);
     Dinheiro valor(Ticket ticket, DataHora termino);
     void pagamento(Ticket ticket, DataHora dataHora);
     void saida(Ticket ticket, Placa placa, DataHora dataHora);

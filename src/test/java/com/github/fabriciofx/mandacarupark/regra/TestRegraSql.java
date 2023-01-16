@@ -15,6 +15,7 @@ import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
 import com.github.fabriciofx.mandacarupark.estacionamento.EstacionamentoSql;
+import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosSql;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.regras.RegrasOf;
@@ -53,6 +54,7 @@ public final class TestRegraSql {
             final Placa placa = new PlacaOf("ABC1234");
             final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
             final Ticket ticket = estacionamento.entrada(
+                new Uuid(),
                 placa,
                 new DataHoraOf(dateTime)
             );
@@ -107,6 +109,7 @@ public final class TestRegraSql {
                 2022, 7, 31, 10, 30
             );
             final Ticket ticket = estacionamento.entrada(
+                new Uuid(),
                 placa,
                 new DataHoraOf(dateTime)
             );
