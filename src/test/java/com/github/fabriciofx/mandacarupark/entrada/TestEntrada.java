@@ -24,7 +24,6 @@
 package com.github.fabriciofx.mandacarupark.entrada;
 
 import com.github.fabriciofx.mandacarupark.Entrada;
-import com.github.fabriciofx.mandacarupark.Page;
 import com.github.fabriciofx.mandacarupark.Server;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.RandomName;
@@ -35,6 +34,7 @@ import com.github.fabriciofx.mandacarupark.db.ds.H2Memory;
 import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
+import com.github.fabriciofx.mandacarupark.page.PageTemplate;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.jcabi.matchers.XhtmlMatchers;
 import org.hamcrest.MatcherAssert;
@@ -55,7 +55,7 @@ public final class TestEntrada {
         );
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                entrada.print(new Page(html), "e")
+                entrada.print(new PageTemplate(html), "e")
             ),
             XhtmlMatchers.hasXPaths(
                 "/html/body/table/tbody/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",
@@ -89,7 +89,7 @@ public final class TestEntrada {
             );
             MatcherAssert.assertThat(
                 XhtmlMatchers.xhtml(
-                    entrada.print(new Page(html), "e")
+                    entrada.print(new PageTemplate(html), "e")
                 ),
                 XhtmlMatchers.hasXPaths(
                     "/html/body/table/tbody/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",

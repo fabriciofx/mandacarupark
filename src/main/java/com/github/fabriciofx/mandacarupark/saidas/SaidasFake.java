@@ -30,6 +30,7 @@ import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
+import com.github.fabriciofx.mandacarupark.page.PageTemplate;
 import com.github.fabriciofx.mandacarupark.saida.SaidaFake;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.util.HashMap;
@@ -84,8 +85,8 @@ public final class SaidasFake implements Saidas {
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Saida saida : this) {
-                Page pg = new Page(matcher.group(1));
-                pg = new Page(saida.print(pg, "s"));
+                Page pg = new PageTemplate(matcher.group(1));
+                pg = new PageTemplate(saida.print(pg, "s"));
                 sb.append(pg.asString());
             }
         }

@@ -28,6 +28,7 @@ import com.github.fabriciofx.mandacarupark.Page;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.locacoes.LocacoesSql;
+import com.github.fabriciofx.mandacarupark.page.PageTemplate;
 import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 import org.takes.Request;
 import org.takes.Response;
@@ -46,11 +47,11 @@ public final class TkLocacoes implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Page header = new Page(
+        final Page header = new PageTemplate(
             TkLocacoes.class.getClassLoader()
                 .getResourceAsStream("webapp/header.tpl")
         );
-        final Page main = new Page(
+        final Page main = new PageTemplate(
             TkLocacoes.class.getClassLoader()
                 .getResourceAsStream("webapp/locacoes.tpl")
         ).with("header", header);

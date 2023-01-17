@@ -31,6 +31,7 @@ import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.locacao.LocacaoSql;
+import com.github.fabriciofx.mandacarupark.page.PageTemplate;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -87,8 +88,8 @@ public final class LocacoesSql implements Locacoes {
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Locacao locacao : this) {
-                Page pg = new Page(matcher.group(1));
-                pg = new Page(locacao.print(pg, "l"));
+                Page pg = new PageTemplate(matcher.group(1));
+                pg = new PageTemplate(locacao.print(pg, "l"));
                 sb.append(pg.asString());
             }
         }

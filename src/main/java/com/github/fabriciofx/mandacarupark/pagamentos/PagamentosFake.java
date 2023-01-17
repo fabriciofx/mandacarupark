@@ -31,6 +31,7 @@ import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Page;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.pagamento.PagamentoFake;
+import com.github.fabriciofx.mandacarupark.page.PageTemplate;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -99,8 +100,8 @@ public final class PagamentosFake implements Pagamentos {
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Pagamento pagamento : this) {
-                Page pg = new Page(matcher.group(1));
-                pg = new Page(pagamento.print(pg, "p"));
+                Page pg = new PageTemplate(matcher.group(1));
+                pg = new PageTemplate(pagamento.print(pg, "p"));
                 sb.append(pg.asString());
             }
         }

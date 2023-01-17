@@ -34,6 +34,7 @@ import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Insert;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
+import com.github.fabriciofx.mandacarupark.page.PageTemplate;
 import com.github.fabriciofx.mandacarupark.saida.SaidaSql;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
@@ -109,8 +110,8 @@ public final class SaidasSql implements Saidas {
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Saida saida : this) {
-                Page pg = new Page(matcher.group(1));
-                pg = new Page(saida.print(pg, "s"));
+                Page pg = new PageTemplate(matcher.group(1));
+                pg = new PageTemplate(saida.print(pg, "s"));
                 sb.append(pg.asString());
             }
         }

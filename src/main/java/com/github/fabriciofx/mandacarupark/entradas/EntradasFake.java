@@ -31,6 +31,7 @@ import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Page;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaFake;
+import com.github.fabriciofx.mandacarupark.page.PageTemplate;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -98,8 +99,8 @@ public final class EntradasFake implements Entradas {
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Entrada entrada : this) {
-                Page pg = new Page(matcher.group(1));
-                pg = new Page(entrada.print(pg, "e"));
+                Page pg = new PageTemplate(matcher.group(1));
+                pg = new PageTemplate(entrada.print(pg, "e"));
                 sb.append(pg.asString());
             }
         }

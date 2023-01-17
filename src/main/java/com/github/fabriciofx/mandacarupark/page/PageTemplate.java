@@ -21,42 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.web.http;
+package com.github.fabriciofx.mandacarupark.page;
 
 import com.github.fabriciofx.mandacarupark.Page;
-import com.github.fabriciofx.mandacarupark.Saidas;
-import com.github.fabriciofx.mandacarupark.db.Session;
-import com.github.fabriciofx.mandacarupark.page.PageTemplate;
-import com.github.fabriciofx.mandacarupark.saidas.SaidasSql;
-import org.takes.Request;
-import org.takes.Response;
-import org.takes.Take;
-import org.takes.rs.RsHtml;
-import java.io.ByteArrayInputStream;
+import com.github.fabriciofx.mandacarupark.text.Text;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
-public final class TkSaidas implements Take {
-    private final Session session;
+public final class PageTemplate implements Page {
+    private final Text content;
 
-    public TkSaidas(final Session session) {
-        this.session = session;
+    public PageTemplate(final InputStream stream) {
+        this(
+            () -> {
+                try {
+                    return new String(
+                        stream.readAllBytes(),
+                        StandardCharsets.UTF_8
+                    );
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        );
+    }
+
+    public PageTemplate(final String content) {
+        this.content = () -> content;
+    }
+
+    public PageTemplate(final Text text) {
+        this.content = text;
+    }
+
+    public Page with(final String key, final Object value) {
+        return new PageTemplate(
+            this.content.asString().replaceAll(
+                "\\$\\{" + key + "}",
+                value.toString()
+            )
+        );
     }
 
     @Override
-    public Response act(final Request req) throws IOException {
-        final Page header = new PageTemplate(
-            TkEntradas.class.getClassLoader()
-                .getResourceAsStream("webapp/header.tpl")
-        );
-        final Page main = new PageTemplate(
-            TkEntradas.class.getClassLoader()
-                .getResourceAsStream("webapp/saidas.tpl")
-        ).with("header", header);
-        final Saidas saidas = new SaidasSql(session);
-        final InputStream body = new ByteArrayInputStream(
-            saidas.print(main, "ss").getBytes()
-        );
-        return new RsHtml(body);
+    public String asString() {
+        return this.content.asString();
+    }
+
+    @Override
+    public String toString() {
+        return this.asString();
     }
 }

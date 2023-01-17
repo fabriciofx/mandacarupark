@@ -34,13 +34,14 @@ import com.github.fabriciofx.mandacarupark.db.stmt.Insert;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaSql;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
+import com.github.fabriciofx.mandacarupark.page.PageTemplate;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class EntradasSql implements Entradas {
     private final Session session;
@@ -108,8 +109,8 @@ public final class EntradasSql implements Entradas {
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Entrada entrada : this) {
-                Page pg = new Page(matcher.group(1));
-                pg = new Page(entrada.print(pg, "e"));
+                Page pg = new PageTemplate(matcher.group(1));
+                pg = new PageTemplate(entrada.print(pg, "e"));
                 sb.append(pg.asString());
             }
         }

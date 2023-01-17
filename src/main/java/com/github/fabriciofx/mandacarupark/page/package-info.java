@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.page;
 
-import com.github.fabriciofx.mandacarupark.text.Text;
-
-public interface Page extends Text {
-    Page with(String key, Object value);
-}
+/**
+ * Page.
+ *
+ * @since 0.0.1
+ */

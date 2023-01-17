@@ -27,6 +27,7 @@ import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Page;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosSql;
+import com.github.fabriciofx.mandacarupark.page.PageTemplate;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -44,11 +45,11 @@ public final class TkPagamentos implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Page header = new Page(
+        final Page header = new PageTemplate(
             TkPagamentos.class.getClassLoader()
                 .getResourceAsStream("webapp/header.tpl")
         );
-        final Page main = new Page(
+        final Page main = new PageTemplate(
             TkPagamentos.class.getClassLoader()
                 .getResourceAsStream("webapp/pagamentos.tpl")
         ).with("header", header);
