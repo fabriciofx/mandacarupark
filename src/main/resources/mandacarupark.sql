@@ -22,6 +22,16 @@ CREATE TABLE IF NOT EXISTS pagamento
   CONSTRAINT pk_pagamento PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS mensalista
+(
+  id UUID NOT NULL,
+  inicio TIMESTAMP NOT NULL,
+  termino TIMESTAMP NOT NULL,
+  pago BOOLEAN NOT NULL,
+  valor DECIMAL(20, 2),
+  CONSTRAINT pk_mensalista PRIMARY KEY (id)
+);
+
 MERGE
   INTO entrada (
   id,
@@ -92,6 +102,22 @@ VALUES (
     '2022-07-21 17:05:56',
     '5.00'
   );
+
+MERGE
+  INTO mensalista (
+  id,
+  inicio,
+  termino,
+  pago,
+  valor
+  )
+VALUES (
+  'e4c1f93a-a00d-4ae2-b3f9-2bdc2cbe23e7',
+  '2023-01-01 10:00:00',
+  '2023-01-31 22:00:00',
+  TRUE,
+  '50.00'
+);
 
 CREATE VIEW IF NOT EXISTS locacao
 AS
