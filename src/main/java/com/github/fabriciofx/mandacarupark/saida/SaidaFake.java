@@ -61,7 +61,7 @@ public final class SaidaFake implements Saida {
     }
 
     @Override
-    public Media<String> print(final Media<String> media) {
+    public Media print(final Media media) {
         return media
             .with("id", this.id)
             .with("placa", this.placa)

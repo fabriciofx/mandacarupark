@@ -95,7 +95,7 @@ public final class EntradaSql implements Entrada {
     }
 
     @Override
-    public Media<String> print(final Media<String> media) {
+    public Media print(final Media media) {
         try (
             final ResultSet rset = new Select(
                 this.session,

@@ -94,20 +94,20 @@ public final class PagamentosSql implements Pagamentos {
     }
 
     @Override
-    public Media<String> print(final Media<String> media) {
+    public Media print(final Media media) {
         final String regex = "\\$\\{ps\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ps\\.end}";
         final Pattern find = Pattern.compile(regex);
-        final Matcher matcher = find.matcher(media.content());
+        final Matcher matcher = find.matcher(new String(media.bytes()));
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Pagamento pagamento : this) {
-                Media<String> page = new Page(matcher.group(1));
+                Media page = new Page(matcher.group(1));
                 page = new Page(pagamento.print(page));
-                sb.append(page.content());
+                sb.append(new String(page.bytes()));
             }
         }
         return new Page(
-            media.content().replaceAll(
+            new String(media.bytes()).replaceAll(
                 regex,
                 Matcher.quoteReplacement(sb.toString())
             )

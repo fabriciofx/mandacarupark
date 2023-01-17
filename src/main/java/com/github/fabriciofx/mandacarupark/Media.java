@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
-public interface Media<T> {
-    Media<T> with(String key, Object value);
-    T content();
+public interface Media {
+    Media with(String key, Object value);
+    byte[] bytes();
 }

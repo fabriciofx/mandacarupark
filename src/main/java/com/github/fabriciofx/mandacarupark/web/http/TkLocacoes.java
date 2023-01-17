@@ -47,11 +47,11 @@ public final class TkLocacoes implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Media<String> header = new Page(
+        final Media header = new Page(
             TkLocacoes.class.getClassLoader()
                 .getResourceAsStream("webapp/header.tpl")
         );
-        final Media<String> main = new Page(
+        final Media main = new Page(
             TkLocacoes.class.getClassLoader()
                 .getResourceAsStream("webapp/locacoes.tpl")
         ).with("header", header);
@@ -63,7 +63,7 @@ public final class TkLocacoes implements Take {
             )
         );
         final InputStream body = new ByteArrayInputStream(
-            locacoes.print(main).content().getBytes()
+            locacoes.print(main).bytes()
         );
         return new RsHtml(body);
     }

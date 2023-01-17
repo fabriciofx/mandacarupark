@@ -64,7 +64,7 @@ public final class LocacaoFake implements Locacao {
     }
 
     @Override
-    public Media<String> print(final Media<String> media) {
+    public Media print(final Media media) {
         return media
             .with("placa", this.placa)
             .with("entrada", this.entrada)

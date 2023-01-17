@@ -98,19 +98,21 @@ public final class EntradasSql implements Entradas {
     }
 
     @Override
-    public Media<String> print(final Media<String> media) {
+    public Media print(final Media media) {
         final String regex = "\\$\\{es\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{es\\.end}";
         final Pattern find = Pattern.compile(regex);
-        final Matcher matcher = find.matcher(media.content());
+        final Matcher matcher = find.matcher(new String(media.bytes()));
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Entrada entrada : this) {
-                Media<String> page = new Page(matcher.group(1));
+                Media page = new Page(matcher.group(1));
                 page = new Page(entrada.print(page));
-                sb.append(page.content());
+                sb.append(new String(page.bytes()));
             }
         }
-        return new Page(media.content().replaceAll(regex, sb.toString()));
+        return new Page(
+            new String(media.bytes()).replaceAll(regex, sb.toString())
+        );
     }
 
     @Override

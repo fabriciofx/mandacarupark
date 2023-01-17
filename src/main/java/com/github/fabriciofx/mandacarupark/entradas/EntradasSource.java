@@ -63,7 +63,7 @@ public final class EntradasSource implements Entradas {
     }
 
     @Override
-    public Media<String> print(final Media<String> media) {
+    public Media print(final Media media) {
         return this.origin.print(media);
     }
 

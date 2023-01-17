@@ -45,17 +45,17 @@ public final class TkPagamentos implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Media<String> header = new Page(
+        final Media header = new Page(
             TkPagamentos.class.getClassLoader()
                 .getResourceAsStream("webapp/header.tpl")
         );
-        final Media<String> main = new Page(
+        final Media main = new Page(
             TkPagamentos.class.getClassLoader()
                 .getResourceAsStream("webapp/pagamentos.tpl")
         ).with("header", header);
         final Pagamentos pagamentos = new PagamentosSql(session);
         final InputStream body = new ByteArrayInputStream(
-            pagamentos.print(main).content().getBytes()
+            pagamentos.print(main).bytes()
         );
         return new RsHtml(body);
     }

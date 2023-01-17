@@ -60,7 +60,7 @@ public final class PagamentoFake implements Pagamento {
     }
 
     @Override
-    public Media<String> print(final Media<String> media) {
+    public Media print(final Media media) {
         return media
             .with("id", this.id)
             .with("dataHora", dataHora)

@@ -26,5 +26,5 @@ package com.github.fabriciofx.mandacarupark;
 public interface Pagamento {
     Id id();
     Data sobre();
-    Media<String> print(Media<String> media);
+    Media print(Media media);
 }

@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-public final class Page implements Media<String> {
+public final class Page implements Media {
     private final Text content;
 
     public Page(final InputStream stream) {
@@ -47,8 +47,12 @@ public final class Page implements Media<String> {
         );
     }
 
-    public Page(final Media<String> media) {
-        this(media.content());
+    public Page(final Media media) {
+        this(media.bytes());
+    }
+
+    public Page(final byte[] bytes) {
+        this(new String(bytes));
     }
 
     public Page(final String content) {
@@ -59,7 +63,7 @@ public final class Page implements Media<String> {
         this.content = text;
     }
 
-    public Media<String> with(final String key, final Object value) {
+    public Media with(final String key, final Object value) {
         return new Page(
             this.content.asString().replaceAll(
                 "\\$\\{" + key + "}",
@@ -69,12 +73,12 @@ public final class Page implements Media<String> {
     }
 
     @Override
-    public String content() {
-        return this.content.asString();
+    public byte[] bytes() {
+        return this.content.asString().getBytes();
     }
 
     @Override
     public String toString() {
-        return this.content();
+        return this.content.asString();
     }
 }

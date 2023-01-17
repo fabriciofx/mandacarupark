@@ -24,5 +24,5 @@
 package com.github.fabriciofx.mandacarupark;
 
 public interface Locacoes extends Iterable<Locacao> {
-    Media<String> print(Media<String> media);
+    Media print(Media media);
 }
