@@ -18,9 +18,9 @@
           <tbody>
             ${ss.entry}
             <tr>
-              <td>${s.id}</td>
-              <td>${s.placa}</td>
-              <td>${s.dataHora}</td>
+              <td>${id}</td>
+              <td>${placa}</td>
+              <td>${dataHora}</td>
             </tr>
             ${ss.end}
           </tbody>

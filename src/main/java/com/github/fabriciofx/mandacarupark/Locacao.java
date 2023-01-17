@@ -25,5 +25,5 @@ package com.github.fabriciofx.mandacarupark;
 
 public interface Locacao {
     Data sobre();
-    String print(Page page, String prefix);
+    Media<String> print(Media<String> media);
 }

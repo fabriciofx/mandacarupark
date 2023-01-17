@@ -28,7 +28,7 @@ import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Locacao;
-import com.github.fabriciofx.mandacarupark.Page;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
@@ -93,7 +93,7 @@ public final class LocacaoSql implements Locacao {
     }
 
     @Override
-    public String print(final Page page, final String prefix) {
+    public Media<String> print(final Media<String> media) {
         try (
             final ResultSet rset = new Select(
                 this.session,
@@ -124,15 +124,11 @@ public final class LocacaoSql implements Locacao {
                     "Dados sobre a locação são inexistentes ou inválidos!"
                 );
             }
-            return page
-                .with(prefix + ".placa", placa.toString())
-                .with(prefix + ".entrada", entrada.toString())
-                .with(prefix + ".saida", saida.toString())
-                .with(
-                    prefix + ".valor",
-                    Matcher.quoteReplacement(valor.toString())
-                )
-                .asString();
+            return media
+                .with("placa", placa.toString())
+                .with("entrada", entrada.toString())
+                .with("saida", saida.toString())
+                .with("valor", Matcher.quoteReplacement(valor.toString()));
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }

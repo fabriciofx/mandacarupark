@@ -27,5 +27,5 @@ public interface Entrada {
     Id id();
     Ticket ticket();
     Data sobre();
-    String print(Page page, String prefix);
+    Media<String> print(Media<String> media);
 }

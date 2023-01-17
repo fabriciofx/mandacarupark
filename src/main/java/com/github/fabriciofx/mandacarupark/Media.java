@@ -21,10 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.page;
+package com.github.fabriciofx.mandacarupark;
 
-/**
- * Page.
- *
- * @since 0.0.1
- */
+public interface Media<T> {
+    Media<T> with(String key, Object value);
+    T content();
+}

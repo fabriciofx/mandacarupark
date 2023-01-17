@@ -33,7 +33,7 @@ import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.ds.H2Memory;
 import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
-import com.github.fabriciofx.mandacarupark.page.PageTemplate;
+import com.github.fabriciofx.mandacarupark.media.Page;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.saida.SaidaFake;
 import com.jcabi.matchers.XhtmlMatchers;
@@ -46,7 +46,7 @@ public final class TestSaidas {
         final String html = "<html><body><table><thead>" +
             "<td>Id</td><td>Placa</td><td>Data/Hora</td>" +
             "</thead><tbody>${ss.entry}" +
-            "<tr><td>${s.id}</td><td>${s.placa}</td><td>${s.dataHora}</td></tr>" +
+            "<tr><td>${id}</td><td>${placa}</td><td>${dataHora}</td></tr>" +
             "${ss.end}</tbody></table></body></html>";
         final Saidas saidas = new SaidasFake(
             new SaidaFake(
@@ -67,7 +67,7 @@ public final class TestSaidas {
         );
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                saidas.print(new PageTemplate(html), "ss")
+                saidas.print(new Page(html))
             ),
             XhtmlMatchers.hasXPaths(
                 "/html/body/table/tbody/tr/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",
@@ -88,7 +88,7 @@ public final class TestSaidas {
         final String html = "<html><body><table><thead>" +
             "<td>Id</td><td>Placa</td><td>Data/Hora</td>" +
             "</thead><tbody>${ss.entry}" +
-            "<tr><td>${s.id}</td><td>${s.placa}</td><td>${s.dataHora}</td></tr>" +
+            "<tr><td>${id}</td><td>${placa}</td><td>${dataHora}</td></tr>" +
             "${ss.end}</tbody></table></body></html>";
         final Session session = new NoAuth(
             new H2Memory(
@@ -105,7 +105,7 @@ public final class TestSaidas {
             final Saidas saidas = new SaidasSql(session);
             MatcherAssert.assertThat(
                 XhtmlMatchers.xhtml(
-                    saidas.print(new PageTemplate(html), "ss")
+                    saidas.print(new Page(html))
                 ),
                 XhtmlMatchers.hasXPaths(
                     "/html/body/table/tbody/tr/td[text()='4c32b3dd-8636-43c0-9786-4804ca2b73f5']",

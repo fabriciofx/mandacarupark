@@ -27,7 +27,7 @@ import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Page;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Target;
 import java.util.Arrays;
@@ -63,8 +63,8 @@ public final class EntradasSource implements Entradas {
     }
 
     @Override
-    public String print(final Page page, final String prefix) {
-        return this.origin.print(page, prefix);
+    public Media<String> print(final Media<String> media) {
+        return this.origin.print(media);
     }
 
     @Override

@@ -34,7 +34,7 @@ import com.github.fabriciofx.mandacarupark.db.ds.H2Memory;
 import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
-import com.github.fabriciofx.mandacarupark.page.PageTemplate;
+import com.github.fabriciofx.mandacarupark.media.Page;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.jcabi.matchers.XhtmlMatchers;
 import org.hamcrest.MatcherAssert;
@@ -45,7 +45,7 @@ public final class TestEntrada {
     public void printFake() {
         final String html = "<html><body><table><thead><td>Id</td>" +
             "<td>Placa</td><td>Data/Hora</td></thead><tbody>" +
-            "<td>${e.id}</td><td>${e.placa}</td><td>${e.dataHora}</td>" +
+            "<td>${id}</td><td>${placa}</td><td>${dataHora}</td>" +
             "</tbody></table></body></html>";
         final Entrada entrada = new EntradaFake(
             new PagamentosFake(),
@@ -55,7 +55,7 @@ public final class TestEntrada {
         );
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                entrada.print(new PageTemplate(html), "e")
+                entrada.print(new Page(html))
             ),
             XhtmlMatchers.hasXPaths(
                 "/html/body/table/tbody/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",
@@ -69,7 +69,7 @@ public final class TestEntrada {
     public void printSql() throws Exception {
         final String html = "<html><body><table><thead><td>Id</td>" +
             "<td>Placa</td><td>Data/Hora</td></thead><tbody>" +
-            "<td>${e.id}</td><td>${e.placa}</td><td>${e.dataHora}</td>" +
+            "<td>${id}</td><td>${placa}</td><td>${dataHora}</td>" +
             "</tbody></table></body></html>";
         final Session session = new NoAuth(
             new H2Memory(
@@ -89,7 +89,7 @@ public final class TestEntrada {
             );
             MatcherAssert.assertThat(
                 XhtmlMatchers.xhtml(
-                    entrada.print(new PageTemplate(html), "e")
+                    entrada.print(new Page(html))
                 ),
                 XhtmlMatchers.hasXPaths(
                     "/html/body/table/tbody/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",

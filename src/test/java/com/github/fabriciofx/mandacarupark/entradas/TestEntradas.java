@@ -35,7 +35,7 @@ import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaFake;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
-import com.github.fabriciofx.mandacarupark.page.PageTemplate;
+import com.github.fabriciofx.mandacarupark.media.Page;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.jcabi.matchers.XhtmlMatchers;
 import org.hamcrest.MatcherAssert;
@@ -47,7 +47,7 @@ public final class TestEntradas {
         final String html = "<html><body><table><thead>" +
             "<td>Id</td><td>Placa</td><td>Data/Hora</td>" +
             "</thead><tbody>${es.entry}" +
-            "<tr><td>${e.id}</td><td>${e.placa}</td><td>${e.dataHora}</td></tr>" +
+            "<tr><td>${id}</td><td>${placa}</td><td>${dataHora}</td></tr>" +
             "${es.end}</tbody></table></body></html>";
         final Entradas entradas = new EntradasFake(
             new PagamentosFake(),
@@ -72,7 +72,7 @@ public final class TestEntradas {
         );
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                entradas.print(new PageTemplate(html), "es")
+                entradas.print(new Page(html))
             ),
             XhtmlMatchers.hasXPaths(
                 "/html/body/table/tbody/tr/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",
@@ -93,7 +93,7 @@ public final class TestEntradas {
         final String html = "<html><body><table><thead>" +
             "<td>Id</td><td>Placa</td><td>Data/Hora</td>" +
             "</thead><tbody>${es.entry}" +
-            "<tr><td>${e.id}</td><td>${e.placa}</td><td>${e.dataHora}</td></tr>" +
+            "<tr><td>${id}</td><td>${placa}</td><td>${dataHora}</td></tr>" +
             "${es.end}</tbody></table></body></html>";
         final Session session = new NoAuth(
             new H2Memory(
@@ -110,7 +110,7 @@ public final class TestEntradas {
             final Entradas entradas = new EntradasSql(session);
             MatcherAssert.assertThat(
                 XhtmlMatchers.xhtml(
-                    entradas.print(new PageTemplate(html), "es")
+                    entradas.print(new Page(html))
                 ),
                 XhtmlMatchers.hasXPaths(
                     "/html/body/table/tbody/tr/td[text()='00eb2ff4-ac01-4fbe-bf08-b9f75c7216d8']",

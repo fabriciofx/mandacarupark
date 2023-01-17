@@ -21,18 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.page;
+package com.github.fabriciofx.mandacarupark.media;
 
-import com.github.fabriciofx.mandacarupark.Page;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.text.Text;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-public final class PageTemplate implements Page {
+public final class Page implements Media<String> {
     private final Text content;
 
-    public PageTemplate(final InputStream stream) {
+    public Page(final InputStream stream) {
         this(
             () -> {
                 try {
@@ -47,16 +47,20 @@ public final class PageTemplate implements Page {
         );
     }
 
-    public PageTemplate(final String content) {
+    public Page(final Media<String> media) {
+        this(media.content());
+    }
+
+    public Page(final String content) {
         this.content = () -> content;
     }
 
-    public PageTemplate(final Text text) {
+    public Page(final Text text) {
         this.content = text;
     }
 
-    public Page with(final String key, final Object value) {
-        return new PageTemplate(
+    public Media<String> with(final String key, final Object value) {
+        return new Page(
             this.content.asString().replaceAll(
                 "\\$\\{" + key + "}",
                 value.toString()
@@ -65,12 +69,12 @@ public final class PageTemplate implements Page {
     }
 
     @Override
-    public String asString() {
+    public String content() {
         return this.content.asString();
     }
 
     @Override
     public String toString() {
-        return this.asString();
+        return this.content();
     }
 }

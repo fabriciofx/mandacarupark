@@ -24,10 +24,10 @@
 package com.github.fabriciofx.mandacarupark.web.http;
 
 import com.github.fabriciofx.mandacarupark.Entradas;
-import com.github.fabriciofx.mandacarupark.Page;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
-import com.github.fabriciofx.mandacarupark.page.PageTemplate;
+import com.github.fabriciofx.mandacarupark.media.Page;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -45,17 +45,17 @@ public final class TkEntradas implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Page header = new PageTemplate(
+        final Media<String> header = new Page(
             TkEntradas.class.getClassLoader()
                 .getResourceAsStream("webapp/header.tpl")
         );
-        final Page main = new PageTemplate(
+        final Media<String> main = new Page(
             TkEntradas.class.getClassLoader()
                 .getResourceAsStream("webapp/entradas.tpl")
         ).with("header", header);
         final Entradas entradas = new EntradasSql(session);
         final InputStream body = new ByteArrayInputStream(
-            entradas.print(main, "es").getBytes()
+            entradas.print(main).content().getBytes()
         );
         return new RsHtml(body);
     }

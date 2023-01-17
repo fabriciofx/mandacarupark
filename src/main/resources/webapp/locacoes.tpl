@@ -19,10 +19,10 @@
           <tbody>
             ${ls.entry}
             <tr>
-              <td>${l.placa}</td>
-              <td>${l.entrada}</td>
-              <td>${l.saida}</td>
-              <td>${l.valor}</td>
+              <td>${placa}</td>
+              <td>${entrada}</td>
+              <td>${saida}</td>
+              <td>${valor}</td>
             </tr>
             ${ls.end}
           </tbody>

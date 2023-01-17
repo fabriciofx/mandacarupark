@@ -26,7 +26,7 @@ package com.github.fabriciofx.mandacarupark.saida;
 import com.github.fabriciofx.mandacarupark.Data;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Page;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
@@ -84,7 +84,7 @@ public final class SaidaSql implements Saida {
     }
 
     @Override
-    public String print(final Page page, final String prefix) {
+    public Media<String> print(final Media<String> media) {
         try (
             final ResultSet rset = new Select(
                 this.session,
@@ -105,10 +105,9 @@ public final class SaidaSql implements Saida {
                     "Dados sobre a saída inexistentes ou inválidos!"
                 );
             }
-            return page.with(prefix + ".id", this.id)
-                .with(prefix + ".placa", placa)
-                .with(prefix + ".dataHora", dataHora)
-                .asString();
+            return media.with("id", this.id)
+                .with("placa", placa)
+                .with("dataHora", dataHora);
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }

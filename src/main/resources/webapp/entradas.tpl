@@ -18,9 +18,9 @@
           <tbody>
             ${es.entry}
             <tr>
-              <td>${e.id}</td>
-              <td>${e.placa}</td>
-              <td>${e.dataHora}</td>
+              <td>${id}</td>
+              <td>${placa}</td>
+              <td>${dataHora}</td>
             </tr>
             ${es.end}
           </tbody>

@@ -29,5 +29,5 @@ public interface Pagamentos extends Iterable<Pagamento> {
     Pagamento pagamento(Ticket ticket, DataHora dataHora, Dinheiro valor);
     List<Pagamento> procura(Id id);
     int quantidade();
-    String print(Page page, String prefix);
+    Media<String> print(Media<String> media);
 }

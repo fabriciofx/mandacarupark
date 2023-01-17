@@ -18,9 +18,9 @@
           <tbody>
             ${ps.entry}
             <tr>
-              <td>${p.id}</td>
-              <td>${p.dataHora}</td>
-              <td>${p.valor}</td>
+              <td>${id}</td>
+              <td>${dataHora}</td>
+              <td>${valor}</td>
             </tr>
             ${ps.end}
           </tbody>

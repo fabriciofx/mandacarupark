@@ -28,7 +28,7 @@ import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Locacao;
-import com.github.fabriciofx.mandacarupark.Page;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
 
@@ -64,12 +64,11 @@ public final class LocacaoFake implements Locacao {
     }
 
     @Override
-    public String print(final Page page, final String prefix) {
-        return page
-            .with(prefix + ".placa", this.placa)
-            .with(prefix + ".entrada", this.entrada)
-            .with(prefix + ".saida", this.saida)
-            .with(prefix + ".valor", this.valor)
-            .asString();
+    public Media<String> print(final Media<String> media) {
+        return media
+            .with("placa", this.placa)
+            .with("entrada", this.entrada)
+            .with("saida", this.saida)
+            .with("valor", this.valor);
     }
 }

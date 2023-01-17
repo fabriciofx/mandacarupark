@@ -25,14 +25,13 @@ package com.github.fabriciofx.mandacarupark.saidas;
 
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Page;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.page.PageTemplate;
+import com.github.fabriciofx.mandacarupark.media.Page;
 import com.github.fabriciofx.mandacarupark.saida.SaidaFake;
-import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -74,23 +73,19 @@ public final class SaidasFake implements Saidas {
     }
 
     @Override
-    public String print(final Page page, final String prefix) {
-        final String regex = new Sprintf(
-            "\\$\\{%s\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{%s\\.end}",
-            prefix,
-            prefix
-        ).asString();
+    public Media<String> print(final Media<String> media) {
+        final String regex = "\\$\\{ss\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ss\\.end}";
         final Pattern find = Pattern.compile(regex);
-        final Matcher matcher = find.matcher(page.asString());
+        final Matcher matcher = find.matcher(media.content());
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Saida saida : this) {
-                Page pg = new PageTemplate(matcher.group(1));
-                pg = new PageTemplate(saida.print(pg, "s"));
-                sb.append(pg.asString());
+                Media<String> page = new Page(matcher.group(1));
+                page = new Page(saida.print(page));
+                sb.append(page.content());
             }
         }
-        return page.asString().replaceAll(regex, sb.toString());
+        return new Page(media.content().replaceAll(regex, sb.toString()));
     }
 
     @Override

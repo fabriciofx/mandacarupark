@@ -27,14 +27,14 @@ import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Page;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Insert;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaSql;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
-import com.github.fabriciofx.mandacarupark.page.PageTemplate;
+import com.github.fabriciofx.mandacarupark.media.Page;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -98,23 +98,19 @@ public final class EntradasSql implements Entradas {
     }
 
     @Override
-    public String print(final Page page, final String prefix) {
-        final String regex = new Sprintf(
-            "\\$\\{%s\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{%s\\.end}",
-            prefix,
-            prefix
-        ).asString();
+    public Media<String> print(final Media<String> media) {
+        final String regex = "\\$\\{es\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{es\\.end}";
         final Pattern find = Pattern.compile(regex);
-        final Matcher matcher = find.matcher(page.asString());
+        final Matcher matcher = find.matcher(media.content());
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Entrada entrada : this) {
-                Page pg = new PageTemplate(matcher.group(1));
-                pg = new PageTemplate(entrada.print(pg, "e"));
-                sb.append(pg.asString());
+                Media<String> page = new Page(matcher.group(1));
+                page = new Page(entrada.print(page));
+                sb.append(page.content());
             }
         }
-        return page.asString().replaceAll(regex, sb.toString());
+        return new Page(media.content().replaceAll(regex, sb.toString()));
     }
 
     @Override

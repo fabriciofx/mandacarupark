@@ -28,7 +28,7 @@ import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Pagamento;
-import com.github.fabriciofx.mandacarupark.Page;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
 
 public final class PagamentoFake implements Pagamento {
@@ -60,11 +60,10 @@ public final class PagamentoFake implements Pagamento {
     }
 
     @Override
-    public String print(final Page page, final String prefix) {
-        return page
-            .with(prefix + ".id", this.id)
-            .with(prefix + ".dataHora", dataHora)
-            .with(prefix + ".valor", valor)
-            .asString();
+    public Media<String> print(final Media<String> media) {
+        return media
+            .with("id", this.id)
+            .with("dataHora", dataHora)
+            .with("valor", valor);
     }
 }
