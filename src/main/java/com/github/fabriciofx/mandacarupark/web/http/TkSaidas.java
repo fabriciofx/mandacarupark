@@ -46,12 +46,10 @@ public final class TkSaidas implements Take {
     @Override
     public Response act(final Request req) throws IOException {
         final Media header = new Page(
-            TkEntradas.class.getClassLoader()
-                .getResourceAsStream("webapp/header.tpl")
+            new ResourceAsStream("webapp/header.tpl")
         );
         final Media main = new Page(
-            TkEntradas.class.getClassLoader()
-                .getResourceAsStream("webapp/saidas.tpl")
+            new ResourceAsStream("webapp/saidas.tpl")
         ).with("header", header);
         final Saidas saidas = new SaidasSql(session);
         final InputStream body = new ByteArrayInputStream(

@@ -46,14 +46,12 @@ public final class TkEntradas implements Take {
     @Override
     public Response act(final Request req) throws IOException {
         final Media header = new Page(
-            TkEntradas.class.getClassLoader()
-                .getResourceAsStream("webapp/header.tpl")
+            new ResourceAsStream("webapp/header.tpl")
         );
         final Media main = new Page(
-            TkEntradas.class.getClassLoader()
-                .getResourceAsStream("webapp/entradas.tpl")
+            new ResourceAsStream("webapp/entradas.tpl")
         ).with("header", header);
-        final Entradas entradas = new EntradasSql(session);
+        final Entradas entradas = new EntradasSql(this.session);
         final InputStream body = new ByteArrayInputStream(
             entradas.print(main).bytes()
         );

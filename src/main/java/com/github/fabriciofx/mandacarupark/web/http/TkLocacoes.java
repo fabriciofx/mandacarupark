@@ -48,12 +48,10 @@ public final class TkLocacoes implements Take {
     @Override
     public Response act(final Request req) throws IOException {
         final Media header = new Page(
-            TkLocacoes.class.getClassLoader()
-                .getResourceAsStream("webapp/header.tpl")
+            new ResourceAsStream("webapp/header.tpl")
         );
         final Media main = new Page(
-            TkLocacoes.class.getClassLoader()
-                .getResourceAsStream("webapp/locacoes.tpl")
+            new ResourceAsStream("webapp/locacoes.tpl")
         ).with("header", header);
         final Locacoes locacoes = new LocacoesSql(
             this.session,

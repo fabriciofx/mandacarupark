@@ -33,13 +33,12 @@ public final class TkPage implements TkRegex {
     @Override
     public Response act(final RqRegex req) throws IOException {
         return new RsHtml(
-            TkPage.class.getClassLoader()
-                .getResourceAsStream(
-                    String.format(
-                        "webapp/%s",
-                        req.matcher().group("path")
-                    )
+            new ResourceAsStream(
+                String.format(
+                    "webapp/%s",
+                    req.matcher().group("path")
                 )
+            )
         );
     }
 }

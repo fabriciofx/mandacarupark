@@ -23,38 +23,19 @@
  */
 package com.github.fabriciofx.mandacarupark.web.http;
 
-import com.github.fabriciofx.mandacarupark.Pagamentos;
-import com.github.fabriciofx.mandacarupark.Media;
-import com.github.fabriciofx.mandacarupark.db.Session;
-import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosSql;
-import com.github.fabriciofx.mandacarupark.media.Page;
-import org.takes.Request;
-import org.takes.Response;
-import org.takes.Take;
-import org.takes.rs.RsHtml;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public final class TkPagamentos implements Take {
-    private final Session session;
+public final class ResourceAsStream extends InputStream {
+    private final InputStream input;
 
-    public TkPagamentos(final Session session) {
-        this.session = session;
+    public ResourceAsStream(final String filename) {
+        this.input = ResourceAsStream.class.getClassLoader()
+            .getResourceAsStream(filename);
     }
 
     @Override
-    public Response act(final Request req) throws IOException {
-        final Media header = new Page(
-            new ResourceAsStream("webapp/header.tpl")
-        );
-        final Media main = new Page(
-            new ResourceAsStream("webapp/pagamentos.tpl")
-        ).with("header", header);
-        final Pagamentos pagamentos = new PagamentosSql(session);
-        final InputStream body = new ByteArrayInputStream(
-            pagamentos.print(main).bytes()
-        );
-        return new RsHtml(body);
+    public int read() throws IOException {
+        return this.input.read();
     }
 }
