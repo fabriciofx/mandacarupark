@@ -59,7 +59,7 @@ public final class TkLocacoes implements Take {
             this.session,
             new PeriodoOf(
                 new DataHoraOf("01/01/2022 08:00:00"),
-                new DataHoraOf("05/01/2023 05:39:00")
+                new DataHoraOf("18/01/2023 16:48:00")
             )
         );
         final InputStream body = new ByteArrayInputStream(
