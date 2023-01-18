@@ -23,13 +23,23 @@
  */
 package com.github.fabriciofx.mandacarupark.web.http;
 
+import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
+import com.github.fabriciofx.mandacarupark.estacionamento.EstacionamentoSql;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
+import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosSql;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
+import com.github.fabriciofx.mandacarupark.regra.DomingoGratis;
+import com.github.fabriciofx.mandacarupark.regra.MensalistaSql;
+import com.github.fabriciofx.mandacarupark.regra.Tolerancia;
+import com.github.fabriciofx.mandacarupark.regra.ValorFixo;
+import com.github.fabriciofx.mandacarupark.regras.RegrasOf;
+import com.github.fabriciofx.mandacarupark.saidas.SaidasSql;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -55,7 +65,19 @@ public final class TkEntrada implements Take {
         } else {
             id = new Uuid();
         }
-        new EntradasSql(this.session).entrada(id, placa, new DataHoraOf());
+        final Estacionamento estacionamento = new EstacionamentoSql(
+            this.session,
+            new EntradasSql(this.session),
+            new SaidasSql(this.session),
+            new PagamentosSql(this.session),
+            new RegrasOf(
+                new Tolerancia(),
+                new DomingoGratis(),
+                new MensalistaSql(this.session, new DinheiroOf("50.00")),
+                new ValorFixo(new DinheiroOf("8.00"))
+            )
+        );
+        estacionamento.entrada(id, placa, new DataHoraOf());
         return new RsForward(
             new RsFlash("Thanks for answering!"),
             "/entradas"

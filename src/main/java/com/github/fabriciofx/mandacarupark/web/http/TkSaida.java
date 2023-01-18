@@ -23,14 +23,24 @@
  */
 package com.github.fabriciofx.mandacarupark.web.http;
 
-import com.github.fabriciofx.mandacarupark.Entrada;
+import com.github.fabriciofx.mandacarupark.Entradas;
+import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Placa;
+import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
+import com.github.fabriciofx.mandacarupark.estacionamento.EstacionamentoSql;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
+import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosSql;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
+import com.github.fabriciofx.mandacarupark.regra.DomingoGratis;
+import com.github.fabriciofx.mandacarupark.regra.MensalistaSql;
+import com.github.fabriciofx.mandacarupark.regra.Tolerancia;
+import com.github.fabriciofx.mandacarupark.regra.ValorFixo;
+import com.github.fabriciofx.mandacarupark.regras.RegrasOf;
 import com.github.fabriciofx.mandacarupark.saidas.SaidasSql;
 import org.takes.Request;
 import org.takes.Response;
@@ -52,8 +62,21 @@ public final class TkSaida implements Take {
         final RqFormBase form = new RqFormBase(req);
         final Placa placa = new PlacaOf(form.param("placa").iterator().next());
         final Id id = new Uuid(form.param("ticket").iterator().next());
-        final Entrada entrada = new EntradasSql(this.session).procura(id);
-        new SaidasSql(session).saida(entrada.ticket(), placa, new DataHoraOf());
+        final Entradas entradas = new EntradasSql(this.session);
+        final Estacionamento estacionamento = new EstacionamentoSql(
+            this.session,
+            entradas,
+            new SaidasSql(this.session),
+            new PagamentosSql(this.session),
+            new RegrasOf(
+                new Tolerancia(),
+                new DomingoGratis(),
+                new MensalistaSql(this.session, new DinheiroOf("50.00")),
+                new ValorFixo(new DinheiroOf("8.00"))
+            )
+        );
+        final Ticket ticket = entradas.procura(id).ticket();
+        estacionamento.saida(ticket, placa, new DataHoraOf());
         return new RsForward(
             new RsFlash("Thanks for answering!"),
             "/saidas"
