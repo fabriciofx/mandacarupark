@@ -43,7 +43,6 @@ import com.github.fabriciofx.mandacarupark.saidas.SaidasSql;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
-import org.takes.facets.flash.RsFlash;
 import org.takes.facets.forward.RsForward;
 import org.takes.rq.form.RqFormBase;
 import java.io.IOException;
@@ -74,9 +73,6 @@ public final class TkPagamento implements Take {
         );
         final Ticket ticket = entradas.procura(id).ticket();
         estacionamento.pagamento(ticket, new DataHoraOf());
-        return new RsForward(
-            new RsFlash("Thanks for answering!"),
-            "/entradas"
-        );
+        return new RsForward("/entradas");
     }
 }
