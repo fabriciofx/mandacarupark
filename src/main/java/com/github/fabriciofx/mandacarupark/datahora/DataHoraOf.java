@@ -89,6 +89,8 @@ public final class DataHoraOf implements DataHora {
                         DateTimeFormatter.ofPattern(
                             "dd/MM/uuuu HH:mm:ss"
                         )
+                    ).appendOptional(
+                        DateTimeFormatter.ISO_LOCAL_DATE_TIME
                     ).toFormatter()
             )
         );

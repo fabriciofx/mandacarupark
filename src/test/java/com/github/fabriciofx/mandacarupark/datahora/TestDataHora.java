@@ -81,4 +81,13 @@ public final class TestDataHora {
         final DataHora parsed = new DataHoraOf(dataHora.toString());
         Assert.assertEquals("14/08/2022 07:49:20", dataHora.toString());
     }
+
+    @Test
+    public void parseDateTimeLocal() {
+        final DataHora dataHora = new DataHoraOf(
+            "2023-01-18T21:51:20"
+        );
+        Assert.assertEquals("18/01/2023", dataHora.data());
+        Assert.assertEquals("21:51:20", dataHora.hora());
+    }
 }

@@ -33,6 +33,7 @@ import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
+import org.takes.rq.form.RqFormBase;
 import org.takes.rs.RsHtml;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -53,11 +54,20 @@ public final class TkLocacoes implements Take {
         final Media main = new Page(
             new ResourceAsStream("webapp/locacoes.tpl")
         ).with("header", header);
+        final RqFormBase form = new RqFormBase(req);
+        final String inicio, termino;
+        if (form.names().iterator().hasNext()) {
+            inicio = form.param("inicio").iterator().next();
+            termino = form.param("termino").iterator().next();
+        } else {
+            inicio = "01/01/2022 00:00:00";
+            termino = "31/01/2023 23:59:59";
+        }
         final Locacoes locacoes = new LocacoesSql(
             this.session,
             new PeriodoOf(
-                new DataHoraOf("01/01/2022 08:00:00"),
-                new DataHoraOf("18/01/2023 16:48:00")
+                new DataHoraOf(inicio),
+                new DataHoraOf(termino)
             )
         );
         final InputStream body = new ByteArrayInputStream(

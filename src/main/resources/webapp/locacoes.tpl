@@ -8,6 +8,13 @@
   <body>
     <section>
       ${header}
+      <form action="/locacoes" method="post">
+        <label>Início</label>
+        <input name="inicio" id="inicio" type="datetime-local" />
+        <label>Término</label>
+        <input name="termino" id="termino" type="datetime-local" />
+        <button type="submit">Filtrar</button>
+      </form>
       <article>
         <table>
           <thead>
