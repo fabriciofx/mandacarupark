@@ -191,29 +191,19 @@
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
       <version>19.0.2</version>
+      <classifier>mac-aarch64</classifier>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-fxml</artifactId>
       <version>19.0.2</version>
+      <classifier>mac-aarch64</classifier>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-graphics</artifactId>
       <version>19.0.2</version>
-      <classifier>win</classifier>
-    </dependency>
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-graphics</artifactId>
-      <version>19.0.2</version>
-      <classifier>linux</classifier>
-    </dependency>
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-graphics</artifactId>
-      <version>19.0.2</version>
-      <classifier>mac</classifier>
+      <classifier>mac-aarch64</classifier>
     </dependency>
     <dependency>
       <groupId>com.jcabi.incubator</groupId>
