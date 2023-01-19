@@ -142,7 +142,7 @@
           <archive>
             <manifest>
               <mainClass>
-                com.github.fabriciofx.mandacarupark.cli.App
+                com.github.fabriciofx.mandacarupark.web.App
               </mainClass>
             </manifest>
           </archive>
