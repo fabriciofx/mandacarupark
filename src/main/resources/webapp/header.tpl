@@ -9,6 +9,7 @@
           <button onclick="location.href='http://localhost:8080/pagamento.html'">
             Pagamento
           </button>
+          <br/>
           <button onclick="location.href='http://localhost:8080/entradas'">
             Entradas
           </button>
