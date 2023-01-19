@@ -24,9 +24,9 @@
 package com.github.fabriciofx.mandacarupark.regras;
 
 import com.github.fabriciofx.mandacarupark.Id;
+import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.Regra;
 import com.github.fabriciofx.mandacarupark.Regras;
-import com.github.fabriciofx.mandacarupark.Periodo;
 import java.util.Arrays;
 import java.util.List;
 

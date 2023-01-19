@@ -24,7 +24,6 @@
 package com.github.fabriciofx.mandacarupark.locacoes;
 
 import com.github.fabriciofx.mandacarupark.Pagamentos;
-import com.github.fabriciofx.mandacarupark.regras.RegrasFake;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaFake;
@@ -35,6 +34,7 @@ import com.github.fabriciofx.mandacarupark.pagamento.PagamentoFake;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
 import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
+import com.github.fabriciofx.mandacarupark.regras.RegrasFake;
 import com.github.fabriciofx.mandacarupark.saida.SaidaFake;
 import com.github.fabriciofx.mandacarupark.saidas.SaidasFake;
 import com.jcabi.matchers.XhtmlMatchers;

@@ -24,11 +24,11 @@
 package com.github.fabriciofx.mandacarupark.regras;
 
 import com.github.fabriciofx.mandacarupark.Id;
+import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.Regra;
 import com.github.fabriciofx.mandacarupark.Regras;
-import com.github.fabriciofx.mandacarupark.Periodo;
-import com.github.fabriciofx.mandacarupark.regra.ValorFixo;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
+import com.github.fabriciofx.mandacarupark.regra.ValorFixo;
 
 public class RegrasFake implements Regras {
     private final Regra regra;

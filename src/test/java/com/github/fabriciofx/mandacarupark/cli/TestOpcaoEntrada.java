@@ -25,7 +25,6 @@ package com.github.fabriciofx.mandacarupark.cli;
 
 import com.github.fabriciofx.mandacarupark.Server;
 import com.github.fabriciofx.mandacarupark.console.ConsoleUnix;
-import com.github.fabriciofx.mandacarupark.regras.RegrasFake;
 import com.github.fabriciofx.mandacarupark.db.RandomName;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
 import com.github.fabriciofx.mandacarupark.db.ServerH2;
@@ -34,6 +33,7 @@ import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasFake;
 import com.github.fabriciofx.mandacarupark.estacionamento.EstacionamentoFake;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
+import com.github.fabriciofx.mandacarupark.regras.RegrasFake;
 import com.github.fabriciofx.mandacarupark.saidas.SaidasFake;
 import org.junit.Assert;
 import org.junit.Test;
