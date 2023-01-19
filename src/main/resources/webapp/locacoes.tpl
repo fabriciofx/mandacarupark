@@ -11,9 +11,9 @@
       ${header}
       <form action="/locacoes" method="post">
         <label>Início</label>
-        <input name="inicio" id="inicio" type="datetime-local" />
+        <input name="inicio" id="inicio" type="datetime-local" required />
         <label>Término</label>
-        <input name="termino" id="termino" type="datetime-local" />
+        <input name="termino" id="termino" type="datetime-local" required />
         <button type="submit">Filtrar</button>
       </form>
       <article>
