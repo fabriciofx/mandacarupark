@@ -196,7 +196,7 @@
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-fxml</artifactId>
-      <version>19.0.2</version>
+      <version>19.0.2.1</version>
       <classifier>mac-aarch64</classifier>
     </dependency>
     <dependency>
