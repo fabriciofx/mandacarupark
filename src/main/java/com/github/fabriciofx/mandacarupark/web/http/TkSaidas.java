@@ -26,7 +26,7 @@ package com.github.fabriciofx.mandacarupark.web.http;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.db.Session;
-import com.github.fabriciofx.mandacarupark.media.Page;
+import com.github.fabriciofx.mandacarupark.media.PageTemplate;
 import com.github.fabriciofx.mandacarupark.saidas.SaidasSql;
 import org.takes.Request;
 import org.takes.Response;
@@ -45,10 +45,10 @@ public final class TkSaidas implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Media header = new Page(
+        final Media header = new PageTemplate(
             new ResourceAsStream("webapp/header.tpl")
         );
-        final Media main = new Page(
+        final Media main = new PageTemplate(
             new ResourceAsStream("webapp/saidas.tpl")
         ).with("header", header);
         final Saidas saidas = new SaidasSql(session);

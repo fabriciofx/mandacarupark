@@ -29,10 +29,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-public final class Page implements Media {
+public final class PageTemplate implements Media {
     private final Text content;
 
-    public Page(final InputStream stream) {
+    public PageTemplate(final InputStream stream) {
         this(
             () -> {
                 try {
@@ -47,24 +47,24 @@ public final class Page implements Media {
         );
     }
 
-    public Page(final Media media) {
+    public PageTemplate(final Media media) {
         this(media.bytes());
     }
 
-    public Page(final byte[] bytes) {
+    public PageTemplate(final byte[] bytes) {
         this(new String(bytes));
     }
 
-    public Page(final String content) {
+    public PageTemplate(final String content) {
         this.content = () -> content;
     }
 
-    public Page(final Text text) {
+    public PageTemplate(final Text text) {
         this.content = text;
     }
 
     public Media with(final String key, final Object value) {
-        return new Page(
+        return new PageTemplate(
             this.content.asString().replaceAll(
                 "\\$\\{" + key + "}",
                 value.toString()

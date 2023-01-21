@@ -27,7 +27,7 @@ import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
-import com.github.fabriciofx.mandacarupark.media.Page;
+import com.github.fabriciofx.mandacarupark.media.PageTemplate;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -45,10 +45,10 @@ public final class TkEntradas implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Media header = new Page(
+        final Media header = new PageTemplate(
             new ResourceAsStream("webapp/header.tpl")
         );
-        final Media main = new Page(
+        final Media main = new PageTemplate(
             new ResourceAsStream("webapp/entradas.tpl")
         ).with("header", header);
         final Entradas entradas = new EntradasSql(this.session);

@@ -36,7 +36,7 @@ import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.locacao.LocacaoFake;
-import com.github.fabriciofx.mandacarupark.media.Page;
+import com.github.fabriciofx.mandacarupark.media.PageTemplate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -105,12 +105,12 @@ public final class LocacoesFake implements Locacoes {
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Locacao locacao : this) {
-                Media page = new Page(matcher.group(1));
-                page = new Page(locacao.print(page));
+                Media page = new PageTemplate(matcher.group(1));
+                page = new PageTemplate(locacao.print(page));
                 sb.append(new String(page.bytes()));
             }
         }
-        return new Page(
+        return new PageTemplate(
             new String(media.bytes()).replaceAll(
                 regex,
                 Matcher.quoteReplacement(sb.toString())

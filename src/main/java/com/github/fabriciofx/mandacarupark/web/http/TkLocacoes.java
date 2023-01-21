@@ -28,7 +28,7 @@ import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.locacoes.LocacoesSql;
-import com.github.fabriciofx.mandacarupark.media.Page;
+import com.github.fabriciofx.mandacarupark.media.PageTemplate;
 import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 import org.takes.Request;
 import org.takes.Response;
@@ -48,10 +48,10 @@ public final class TkLocacoes implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Media header = new Page(
+        final Media header = new PageTemplate(
             new ResourceAsStream("webapp/header.tpl")
         );
-        final Media main = new Page(
+        final Media main = new PageTemplate(
             new ResourceAsStream("webapp/locacoes.tpl")
         ).with("header", header);
         final RqFormBase form = new RqFormBase(req);

@@ -34,7 +34,7 @@ import com.github.fabriciofx.mandacarupark.db.ds.H2Memory;
 import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaFake;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
-import com.github.fabriciofx.mandacarupark.media.Page;
+import com.github.fabriciofx.mandacarupark.media.PageTemplate;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.jcabi.matchers.XhtmlMatchers;
@@ -72,7 +72,7 @@ public final class TestEntradas {
         );
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                entradas.print(new Page(html))
+                entradas.print(new PageTemplate(html))
             ),
             XhtmlMatchers.hasXPaths(
                 "/html/body/table/tbody/tr/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",
@@ -110,7 +110,7 @@ public final class TestEntradas {
             final Entradas entradas = new EntradasSql(session);
             MatcherAssert.assertThat(
                 XhtmlMatchers.xhtml(
-                    entradas.print(new Page(html))
+                    entradas.print(new PageTemplate(html))
                 ),
                 XhtmlMatchers.hasXPaths(
                     "/html/body/table/tbody/tr/td[text()='00eb2ff4-ac01-4fbe-bf08-b9f75c7216d8']",
