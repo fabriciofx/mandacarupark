@@ -31,6 +31,7 @@ import com.github.fabriciofx.mandacarupark.db.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.ds.H2Memory;
 import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
+import com.github.fabriciofx.mandacarupark.id.Uuid;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -51,6 +52,52 @@ public final class TestPagamentos {
             server.start();
             final Pagamentos pagamentos = new PagamentosSql(session);
             Assert.assertEquals(3, pagamentos.quantidade());
+        }
+    }
+
+    @Test
+    public void procuraExistente() throws Exception {
+        final Session session = new NoAuth(
+            new H2Memory(
+                new RandomName()
+            )
+        );
+        try (
+            final Server server = new ServerH2(
+                session,
+                new ScriptSql("mandacarupark.sql")
+            )
+        ) {
+            server.start();
+            final Pagamentos pagamentos = new PagamentosSql(session);
+            Assert.assertTrue(
+                !pagamentos.procura(
+                    new Uuid("4c32b3dd-8636-43c0-9786-4804ca2b73f5")
+                ).isEmpty()
+            );
+        }
+    }
+
+    @Test
+    public void procuraNaoExistente() throws Exception {
+        final Session session = new NoAuth(
+            new H2Memory(
+                new RandomName()
+            )
+        );
+        try (
+            final Server server = new ServerH2(
+                session,
+                new ScriptSql("mandacarupark.sql")
+            )
+        ) {
+            server.start();
+            final Pagamentos pagamentos = new PagamentosSql(session);
+            Assert.assertTrue(
+                pagamentos.procura(
+                    new Uuid("4c32b3dd-8636-43c0-9786-4804ca2b73f6")
+                ).isEmpty()
+            );
         }
     }
 }

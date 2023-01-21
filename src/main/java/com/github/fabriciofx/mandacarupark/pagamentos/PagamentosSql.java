@@ -39,7 +39,6 @@ import com.github.fabriciofx.mandacarupark.pagamento.PagamentoSql;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -72,7 +71,25 @@ public final class PagamentosSql implements Pagamentos {
 
     @Override
     public List<Pagamento> procura(final Id id) {
-        return Arrays.asList(new PagamentoSql(this.session, id));
+        try (
+            final ResultSet rset = new Select(
+                this.session,
+                new Sprintf("SELECT * FROM pagamento WHERE id = '%s'", id)
+            ).result()
+        ) {
+            final List<Pagamento> itens = new ArrayList<>(0);
+            if (rset.next()) {
+                itens.add(
+                    new PagamentoSql(
+                        this.session,
+                        new Uuid(rset.getString(1))
+                    )
+                );
+            }
+            return itens;
+        } catch (final Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @Override
