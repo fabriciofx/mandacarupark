@@ -33,7 +33,6 @@ import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Insert;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
-import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.media.PageTemplate;
 import com.github.fabriciofx.mandacarupark.pagination.Page;
 import com.github.fabriciofx.mandacarupark.pagination.PagesSql;
@@ -41,9 +40,6 @@ import com.github.fabriciofx.mandacarupark.pagination.ResultSetAsSaida;
 import com.github.fabriciofx.mandacarupark.saida.SaidaSql;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -63,8 +59,7 @@ public final class SaidasSql implements Saidas {
         new Insert(
             this.session,
             new Sprintf(
-                "INSERT INTO saida (id, placa, datahora) VALUES ('%s', '%s', " +
-                    "'%s')",
+                "INSERT INTO saida (id, placa, datahora) VALUES ('%s', '%s', '%s')",
                 ticket.id(),
                 placa,
                 dataHora.dateTime()
@@ -104,23 +99,22 @@ public final class SaidasSql implements Saidas {
 
     @Override
     public Media print(final Media media) {
-        final String regex =
-            "\\$\\{ss\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ss\\" +
-                ".end}";
+        final String regex = "\\$\\{ss\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ss\\.end}";
         final Pattern find = Pattern.compile(regex);
         final Matcher matcher = find.matcher(new String(media.bytes()));
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
-            for (final Saida saida : this) {
+            for (final Saida saida : this.todas().content()) {
                 Media page = new PageTemplate(matcher.group(1));
                 page = new PageTemplate(saida.print(page));
                 sb.append(new String(page.bytes()));
             }
         }
-        return new PageTemplate(new String(media.bytes()).replaceAll(
-            regex,
-            sb.toString()
-        )
+        return new PageTemplate(
+            new String(media.bytes()).replaceAll(
+                regex,
+                sb.toString()
+            )
         );
     }
 
@@ -130,30 +124,7 @@ public final class SaidasSql implements Saidas {
             this.session,
             "saida",
             new ResultSetAsSaida(this.session),
-            2
+            3
         ).first();
-    }
-
-    @Override
-    public Iterator<Saida> iterator() {
-        try (
-            final ResultSet rset = new Select(
-                this.session,
-                "SELECT * FROM saida"
-            ).result()
-        ) {
-            final List<Saida> itens = new ArrayList<>();
-            while (rset.next()) {
-                itens.add(
-                    new SaidaSql(
-                        this.session,
-                        new Uuid(rset.getString(1))
-                    )
-                );
-            }
-            return itens.iterator();
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
-        }
     }
 }

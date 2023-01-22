@@ -36,7 +36,6 @@ import com.github.fabriciofx.mandacarupark.pagination.PageList;
 import com.github.fabriciofx.mandacarupark.saida.SaidaFake;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -82,25 +81,22 @@ public final class SaidasFake implements Saidas {
         final Matcher matcher = find.matcher(new String(media.bytes()));
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
-            for (final Saida saida : this) {
+            for (final Saida saida : this.todas().content()) {
                 Media page = new PageTemplate(matcher.group(1));
                 page = new PageTemplate(saida.print(page));
                 sb.append(new String(page.bytes()));
             }
         }
-        return new PageTemplate(new String(media.bytes()).replaceAll(
-            regex,
-            sb.toString())
+        return new PageTemplate(
+            new String(media.bytes()).replaceAll(
+                regex,
+                sb.toString()
+            )
         );
     }
 
     @Override
     public Page<Saida> todas() {
         return new PageList<>(3, new ArrayList<>(this.itens.values()));
-    }
-
-    @Override
-    public Iterator<Saida> iterator() {
-        return this.itens.values().iterator();
     }
 }
