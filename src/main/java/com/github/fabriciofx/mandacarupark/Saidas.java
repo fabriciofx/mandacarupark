@@ -23,8 +23,11 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
+import com.github.fabriciofx.mandacarupark.pagination.Page;
+
 public interface Saidas extends Iterable<Saida> {
     Saida saida(Ticket ticket, Placa placa, DataHora dataHora);
     Saida procura(Id id);
     Media print(Media media);
+    Page<Saida> todas();
 }

@@ -31,7 +31,10 @@ import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.media.PageTemplate;
+import com.github.fabriciofx.mandacarupark.pagination.Page;
+import com.github.fabriciofx.mandacarupark.pagination.PageList;
 import com.github.fabriciofx.mandacarupark.saida.SaidaFake;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -89,6 +92,11 @@ public final class SaidasFake implements Saidas {
             regex,
             sb.toString())
         );
+    }
+
+    @Override
+    public Page<Saida> todas() {
+        return new PageList<>(3, new ArrayList<>(this.itens.values()));
     }
 
     @Override

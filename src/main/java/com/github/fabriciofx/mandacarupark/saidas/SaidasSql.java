@@ -35,6 +35,8 @@ import com.github.fabriciofx.mandacarupark.db.stmt.Insert;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.media.PageTemplate;
+import com.github.fabriciofx.mandacarupark.pagination.Page;
+import com.github.fabriciofx.mandacarupark.pagination.PageSaidaSql;
 import com.github.fabriciofx.mandacarupark.saida.SaidaSql;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
@@ -115,6 +117,11 @@ public final class SaidasSql implements Saidas {
             regex,
             sb.toString())
         );
+    }
+
+    @Override
+    public Page<Saida> todas() {
+        return new PageSaidaSql(this.session, 2, 0);
     }
 
     @Override
