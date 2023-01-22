@@ -59,12 +59,12 @@ public final class PageList<T> implements Page<T> {
     }
 
     @Override
-    public boolean hasPrev() {
+    public boolean hasPrevious() {
         return this.position - this.limit >= 0;
     }
 
     @Override
-    public Page<T> prev() {
+    public Page<T> previous() {
         final int pos = this.position - this.limit;
         return new PageList<T>(this.limit, pos, this.list);
     }

@@ -113,12 +113,12 @@ public final class PageSaidaSql implements Page<Saida> {
     }
 
     @Override
-    public boolean hasPrev() {
+    public boolean hasPrevious() {
         return this.position - this.limit >= 0;
     }
 
     @Override
-    public Page<Saida> prev() {
+    public Page<Saida> previous() {
         final int pos = this.position - this.limit;
         return new PageSaidaSql(this.session, this.limit, pos);
     }

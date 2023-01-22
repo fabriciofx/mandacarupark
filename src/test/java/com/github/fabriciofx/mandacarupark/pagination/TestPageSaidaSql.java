@@ -72,7 +72,7 @@ public final class TestPageSaidaSql {
         ) {
             server.start();
             final Page<Saida> page = new PageSaidaSql(session, 2, 0);
-            //Assert.assertEquals(2, page.content().size());
+            Assert.assertEquals(2, page.content().size());
             Assert.assertEquals(1, page.next().content().size());
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
@@ -205,7 +205,7 @@ public final class TestPageSaidaSql {
     }
 
     @Test
-    public void noHasPrevForTheFirstPage() {
+    public void noHasPreviousForTheFirstPage() {
         final Session session = new NoAuth(
             new H2Memory(
                 new RandomName()
@@ -219,14 +219,14 @@ public final class TestPageSaidaSql {
         ) {
             server.start();
             final Page<Saida> page = new PageSaidaSql(session, 3, 0);
-            Assert.assertFalse(page.hasPrev());
+            Assert.assertFalse(page.hasPrevious());
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
     }
 
     @Test
-    public void hasPrev() {
+    public void hasPrevious() {
         final Session session = new NoAuth(
             new H2Memory(
                 new RandomName()
@@ -240,14 +240,14 @@ public final class TestPageSaidaSql {
         ) {
             server.start();
             final Page<Saida> page = new PageSaidaSql(session, 2, 0).next();
-            Assert.assertTrue(page.hasPrev());
+            Assert.assertTrue(page.hasPrevious());
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
     }
 
     @Test
-    public void contentPrev() {
+    public void contentPrevious() {
         final Session session = new NoAuth(
             new H2Memory(
                 new RandomName()
@@ -267,11 +267,11 @@ public final class TestPageSaidaSql {
             );
             Assert.assertEquals(
                 new Uuid("4c32b3dd-8636-43c0-9786-4804ca2b73f5"),
-                page.prev().content().get(0).id()
+                page.previous().content().get(0).id()
             );
             Assert.assertEquals(
                 new Uuid("07d8e078-5b47-4fb5-9fb4-dd2c80dd8036"),
-                page.prev().content().get(1).id()
+                page.previous().content().get(1).id()
             );
         } catch (final Exception ex) {
             throw new RuntimeException(ex);

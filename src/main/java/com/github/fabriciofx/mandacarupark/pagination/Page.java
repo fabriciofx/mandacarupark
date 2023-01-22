@@ -29,6 +29,6 @@ public interface Page<T> {
     List<T> content();
     boolean hasNext();
     Page<T> next();
-    boolean hasPrev();
-    Page<T> prev();
+    boolean hasPrevious();
+    Page<T> previous();
 }

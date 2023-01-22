@@ -112,37 +112,37 @@ public final class TestPageList {
     }
 
     @Test
-    public void noHasPrevForTheFirstPage() {
+    public void noHasPreviousForTheFirstPage() {
         final Page<Integer> page = new PageList<>(
             2,
             Arrays.asList(1, 2, 3)
         );
-        Assert.assertFalse(page.hasPrev());
+        Assert.assertFalse(page.hasPrevious());
     }
 
     @Test
-    public void hasPrev() {
+    public void hasPrevious() {
         Page<Integer> page = new PageList<>(
             2,
             Arrays.asList(1, 2, 3)
         );
         page = page.next();
-        Assert.assertTrue(page.hasPrev());
+        Assert.assertTrue(page.hasPrevious());
     }
 
     @Test
-    public void contentPrev() {
+    public void contentPrevious() {
         Page<Integer> page = new PageList<>(
             3,
             Arrays.asList(1, 2, 3, 4, 5, 6, 7)
         );
         page = page.next().next();
         Assert.assertEquals(7, page.content().get(0).intValue());
-        Assert.assertEquals(4, page.prev().content().get(0).intValue());
-        Assert.assertEquals(5, page.prev().content().get(1).intValue());
-        Assert.assertEquals(6, page.prev().content().get(2).intValue());
-        Assert.assertEquals(1, page.prev().prev().content().get(0).intValue());
-        Assert.assertEquals(2, page.prev().prev().content().get(1).intValue());
-        Assert.assertEquals(3, page.prev().prev().content().get(2).intValue());
+        Assert.assertEquals(4, page.previous().content().get(0).intValue());
+        Assert.assertEquals(5, page.previous().content().get(1).intValue());
+        Assert.assertEquals(6, page.previous().content().get(2).intValue());
+        Assert.assertEquals(1, page.previous().previous().content().get(0).intValue());
+        Assert.assertEquals(2, page.previous().previous().content().get(1).intValue());
+        Assert.assertEquals(3, page.previous().previous().content().get(2).intValue());
     }
 }
