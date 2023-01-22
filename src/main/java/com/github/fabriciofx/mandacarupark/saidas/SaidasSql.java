@@ -36,7 +36,8 @@ import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.media.PageTemplate;
 import com.github.fabriciofx.mandacarupark.pagination.Page;
-import com.github.fabriciofx.mandacarupark.pagination.PageSaidaSql;
+import com.github.fabriciofx.mandacarupark.pagination.PagesSql;
+import com.github.fabriciofx.mandacarupark.pagination.ResultSetAsSaida;
 import com.github.fabriciofx.mandacarupark.saida.SaidaSql;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
@@ -62,7 +63,8 @@ public final class SaidasSql implements Saidas {
         new Insert(
             this.session,
             new Sprintf(
-                "INSERT INTO saida (id, placa, datahora) VALUES ('%s', '%s', '%s')",
+                "INSERT INTO saida (id, placa, datahora) VALUES ('%s', '%s', " +
+                    "'%s')",
                 ticket.id(),
                 placa,
                 dataHora.dateTime()
@@ -102,7 +104,9 @@ public final class SaidasSql implements Saidas {
 
     @Override
     public Media print(final Media media) {
-        final String regex = "\\$\\{ss\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ss\\.end}";
+        final String regex =
+            "\\$\\{ss\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ss\\" +
+                ".end}";
         final Pattern find = Pattern.compile(regex);
         final Matcher matcher = find.matcher(new String(media.bytes()));
         final StringBuilder sb = new StringBuilder();
@@ -115,13 +119,19 @@ public final class SaidasSql implements Saidas {
         }
         return new PageTemplate(new String(media.bytes()).replaceAll(
             regex,
-            sb.toString())
+            sb.toString()
+        )
         );
     }
 
     @Override
     public Page<Saida> todas() {
-        return new PageSaidaSql(this.session, 2, 0);
+        return new PagesSql(
+            this.session,
+            "saida",
+            new ResultSetAsSaida(this.session),
+            2
+        ).first();
     }
 
     @Override

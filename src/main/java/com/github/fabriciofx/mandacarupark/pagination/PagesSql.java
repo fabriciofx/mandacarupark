@@ -23,62 +23,32 @@
  */
 package com.github.fabriciofx.mandacarupark.pagination;
 
-import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
-import com.github.fabriciofx.mandacarupark.id.Uuid;
-import com.github.fabriciofx.mandacarupark.saida.SaidaSql;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Supplier;
 
-public final class PageSaidaSql implements Page<Saida> {
-    private final Supplier<List<Saida>> scalar;
+public final class PagesSql<T> implements Pages<T> {
     private final Supplier<Integer> size;
+    private final Func<ResultSet, T> func;
     private final Session session;
+    private final String tablename;
     private final int limit;
-    private final int position;
 
-    public PageSaidaSql(
+    public PagesSql(
         final Session session,
-        final int limit,
-        final int position
+        final String tablename,
+        final Func<ResultSet, T> func,
+        final int limit
     ) {
-        this.scalar = () -> {
-            try (
-                final ResultSet rset = new Select(
-                    session,
-                    new Sprintf(
-                        "SELECT * FROM saida LIMIT %d OFFSET %d",
-                        limit,
-                        position
-                    )
-                ).result()
-            ) {
-                final List<Saida> itens = new ArrayList<>();
-                while (rset.next()) {
-                    itens.add(
-                        new SaidaSql(
-                            session,
-                            new Uuid(rset.getString(1))
-                        )
-                    );
-                }
-                return itens;
-            } catch (final Exception ex) {
-                throw new RuntimeException(ex);
-            }
-        };
         this.size = () -> {
             try (
                 final ResultSet rset = new Select(
                     session,
                     new Sprintf(
-                        "SELECT COUNT(*) FROM saida",
-                        limit,
-                        position
+                        "SELECT COUNT(*) FROM %s",
+                        tablename
                     )
                 ).result()
             ) {
@@ -92,34 +62,25 @@ public final class PageSaidaSql implements Page<Saida> {
             }
         };
         this.session = session;
+        this.func = func;
+        this.tablename = tablename;
         this.limit = limit;
-        this.position = position;
     }
 
     @Override
-    public List<Saida> content() {
-        return this.scalar.get();
+    public int count() {
+        return Math.round(this.size.get() / this.limit);
     }
 
     @Override
-    public boolean hasNext() {
-        return this.size.get() > this.position + this.limit;
-    }
-
-    @Override
-    public Page<Saida> next() {
-        final int pos = this.position + this.limit;
-        return new PageSaidaSql(this.session, this.limit, pos);
-    }
-
-    @Override
-    public boolean hasPrevious() {
-        return this.position - this.limit >= 0;
-    }
-
-    @Override
-    public Page<Saida> previous() {
-        final int pos = this.position - this.limit;
-        return new PageSaidaSql(this.session, this.limit, pos);
+    public Page<T> first() {
+        return new PageSql<>(
+            this.session,
+            this.func,
+            this.tablename,
+            this.size.get(),
+            this.limit,
+            0
+        );
     }
 }
