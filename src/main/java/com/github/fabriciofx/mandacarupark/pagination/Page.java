@@ -23,9 +23,10 @@
  */
 package com.github.fabriciofx.mandacarupark.pagination;
 
+import java.util.List;
+
 public interface Page<T> {
-    int count();
-    T content(int index);
+    List<T> content();
     boolean hasNext();
     Page<T> next();
     boolean hasPrev();

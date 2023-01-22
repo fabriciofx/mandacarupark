@@ -34,7 +34,7 @@ public final class TestPageList {
             3,
             Arrays.asList(1, 2)
         );
-        Assert.assertEquals(2, page.count());
+        Assert.assertEquals(2, page.content().size());
     }
 
     @Test
@@ -43,9 +43,9 @@ public final class TestPageList {
             3,
             Arrays.asList(1, 2, 3, 4, 5, 6, 7)
         );
-        Assert.assertEquals(3, page.count());
-        Assert.assertEquals(3, page.next().count());
-        Assert.assertEquals(1, page.next().next().count());
+        Assert.assertEquals(3, page.content().size());
+        Assert.assertEquals(3, page.next().content().size());
+        Assert.assertEquals(1, page.next().next().content().size());
     }
 
     @Test
@@ -54,13 +54,13 @@ public final class TestPageList {
             3,
             Arrays.asList(1, 2, 3, 4, 5, 6, 7)
         );
-        Assert.assertEquals(1, page.content(0).intValue());
-        Assert.assertEquals(2, page.content(1).intValue());
-        Assert.assertEquals(3, page.content(2).intValue());
-        Assert.assertEquals(4, page.next().content(0).intValue());
-        Assert.assertEquals(5, page.next().content(1).intValue());
-        Assert.assertEquals(6, page.next().content(2).intValue());
-        Assert.assertEquals(7, page.next().next().content(0).intValue());
+        Assert.assertEquals(1, page.content().get(0).intValue());
+        Assert.assertEquals(2, page.content().get(1).intValue());
+        Assert.assertEquals(3, page.content().get(2).intValue());
+        Assert.assertEquals(4, page.next().content().get(0).intValue());
+        Assert.assertEquals(5, page.next().content().get(1).intValue());
+        Assert.assertEquals(6, page.next().content().get(2).intValue());
+        Assert.assertEquals(7, page.next().next().content().get(0).intValue());
     }
 
     @Test
@@ -72,7 +72,7 @@ public final class TestPageList {
                 new PageList<>(
                     2,
                     Arrays.asList(1, 2, 3)
-                ).content(2);
+                ).content().get(2);
             }
         );
     }
@@ -87,7 +87,7 @@ public final class TestPageList {
                 new PageList<>(
                     2,
                     Arrays.asList(1, 2, 3)
-                ).content(-1);
+                ).content().get(-1);
             }
         );
     }
@@ -137,12 +137,12 @@ public final class TestPageList {
             Arrays.asList(1, 2, 3, 4, 5, 6, 7)
         );
         page = page.next().next();
-        Assert.assertEquals(7, page.content(0).intValue());
-        Assert.assertEquals(4, page.prev().content(0).intValue());
-        Assert.assertEquals(5, page.prev().content(1).intValue());
-        Assert.assertEquals(6, page.prev().content(2).intValue());
-        Assert.assertEquals(1, page.prev().prev().content(0).intValue());
-        Assert.assertEquals(2, page.prev().prev().content(1).intValue());
-        Assert.assertEquals(3, page.prev().prev().content(2).intValue());
+        Assert.assertEquals(7, page.content().get(0).intValue());
+        Assert.assertEquals(4, page.prev().content().get(0).intValue());
+        Assert.assertEquals(5, page.prev().content().get(1).intValue());
+        Assert.assertEquals(6, page.prev().content().get(2).intValue());
+        Assert.assertEquals(1, page.prev().prev().content().get(0).intValue());
+        Assert.assertEquals(2, page.prev().prev().content().get(1).intValue());
+        Assert.assertEquals(3, page.prev().prev().content().get(2).intValue());
     }
 }

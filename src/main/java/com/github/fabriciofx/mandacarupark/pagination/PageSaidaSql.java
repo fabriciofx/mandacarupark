@@ -97,13 +97,8 @@ public final class PageSaidaSql implements Page<Saida> {
     }
 
     @Override
-    public int count() {
-        return this.scalar.get().size();
-    }
-
-    @Override
-    public Saida content(final int index) {
-        return this.scalar.get().get(index);
+    public List<Saida> content() {
+        return this.scalar.get();
     }
 
     @Override

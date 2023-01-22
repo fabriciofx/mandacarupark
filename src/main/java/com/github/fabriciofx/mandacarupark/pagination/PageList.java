@@ -23,7 +23,6 @@
  */
 package com.github.fabriciofx.mandacarupark.pagination;
 
-import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.util.List;
 
 public final class PageList<T> implements Page<T> {
@@ -42,29 +41,10 @@ public final class PageList<T> implements Page<T> {
     }
 
     @Override
-    public int count() {
-        int cnt = this.list.size() - this.position;
-        if (cnt > this.limit) {
-            cnt = this.limit;
-        }
-        return cnt;
-    }
-
-    @Override
-    public T content(final int index) {
-        final int start = this.position;
-        final int end  = start + this.limit - 1;
-        final int pos = start + index;
-        if (pos < start || pos > end) {
-            throw new IndexOutOfBoundsException(
-                new Sprintf(
-                    "index must be between %d and %d",
-                    start,
-                    end
-                ).asString()
-            );
-        }
-        return this.list.get(pos);
+    public List<T> content() {
+        final int begin = this.position;
+        final int end = Math.min(begin + this.limit, this.list.size());
+        return this.list.subList(begin, end);
     }
 
     @Override
