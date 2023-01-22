@@ -67,7 +67,7 @@ public final class SaidasSql implements Saidas {
                 placa,
                 dataHora.dateTime()
             )
-        ).execute();
+        ).result();
         return new SaidaSql(this.session, ticket.id());
     }
 

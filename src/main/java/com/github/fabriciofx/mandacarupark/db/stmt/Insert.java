@@ -24,11 +24,12 @@
 package com.github.fabriciofx.mandacarupark.db.stmt;
 
 import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.db.Statement;
 import com.github.fabriciofx.mandacarupark.text.Text;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-public final class Insert {
+public final class Insert implements Statement<Boolean> {
     private final Session session;
     private final Text query;
 
@@ -41,7 +42,8 @@ public final class Insert {
         this.query = query;
     }
 
-    public boolean execute() {
+    @Override
+    public Boolean result() {
         try (final Connection conn = this.session.connection()) {
             try (
                 final PreparedStatement stmt = conn.prepareStatement(

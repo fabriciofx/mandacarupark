@@ -24,6 +24,7 @@
 package com.github.fabriciofx.mandacarupark.db.stmt;
 
 import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.db.Statement;
 import com.github.fabriciofx.mandacarupark.text.Text;
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetFactory;
@@ -32,7 +33,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public final class Select {
+public final class Select implements Statement<ResultSet> {
     private final Session session;
     private final Text query;
 
@@ -45,6 +46,7 @@ public final class Select {
         this.query = query;
     }
 
+    @Override
     public ResultSet result() {
         try (final Connection conn = this.session.connection()) {
             try (

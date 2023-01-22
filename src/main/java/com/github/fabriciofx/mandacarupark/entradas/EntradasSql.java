@@ -64,7 +64,7 @@ public final class EntradasSql implements Entradas {
                 placa,
                 dataHora.dateTime()
             )
-        ).execute();
+        ).result();
         return new EntradaSql(this.session, id);
     }
 

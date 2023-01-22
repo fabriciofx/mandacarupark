@@ -65,7 +65,7 @@ public final class PagamentosSql implements Pagamentos {
                 dataHora.dateTime(),
                 valor.quantia()
             )
-        ).execute();
+        ).result();
         return new PagamentoSql(this.session, ticket.id());
     }
 

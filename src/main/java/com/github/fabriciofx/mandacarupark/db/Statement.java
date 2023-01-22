@@ -23,35 +23,6 @@
  */
 package com.github.fabriciofx.mandacarupark.db;
 
-import com.github.fabriciofx.mandacarupark.Server;
-import com.github.fabriciofx.mandacarupark.db.stmt.Insert;
-import java.io.IOException;
-
-public final class ServerH2 implements Server {
-    private final Session session;
-    private final ScriptSql script;
-
-    public ServerH2(final Session session, final ScriptSql scrpt) {
-        this.session = session;
-        this.script = scrpt;
-    }
-
-    @Override
-    public void start() throws Exception {
-        this.script.run(this.session);
-    }
-
-    @Override
-    public void stop() throws Exception {
-        new Insert(this.session, "SHUTDOWN").result();
-    }
-
-    @Override
-    public void close() throws IOException {
-        try {
-            this.stop();
-        } catch(final Exception ex) {
-            throw new IOException(ex);
-        }
-    }
+public interface Statement<T> {
+    T result();
 }
