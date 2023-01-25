@@ -24,6 +24,7 @@
 package com.github.fabriciofx.mandacarupark.web.http;
 
 import com.github.fabriciofx.mandacarupark.db.Session;
+import org.takes.facets.fork.FkMethods;
 import org.takes.facets.fork.FkRegex;
 import org.takes.facets.fork.TkFork;
 import org.takes.tk.TkClasspath;
@@ -42,15 +43,56 @@ public final class TkRoutes extends TkWrap {
                         "text/css"
                     )
                 ),
-                new FkRegex("/", new TkEntradas(session)),
-                new FkRegex("/entradas", new TkEntradas(session)),
-                new FkRegex("/saidas", new TkSaidas(session)),
-                new FkRegex("/pagamentos", new TkPagamentos(session)),
-                new FkRegex("/entrada", new TkEntrada(session)),
-                new FkRegex("/saida", new TkSaida(session)),
-                new FkRegex("/pagamento", new TkPagamento(session)),
-                new FkRegex("/locacoes", new TkLocacoes(session)),
-                new FkRegex("/(?<path>[^/]+)", new TkPage())
+                new FkRegex(
+                    "/",
+                    new TkEntradas(session)
+                ),
+                new FkRegex(
+                    "/entradas",
+                    new TkFork(
+                        new FkMethods("GET", new TkEntradas(session))
+                    )
+                ),
+                new FkRegex(
+                    "/saidas",
+                    new TkFork(
+                        new FkMethods("GET", new TkSaidas(session))
+                    )
+                ),
+                new FkRegex(
+                    "/pagamentos",
+                    new TkFork(
+                        new FkMethods("GET", new TkPagamentos(session))
+                    )
+                ),
+                new FkRegex(
+                    "/locacoes",
+                    new TkFork(
+                        new FkMethods("GET", new TkLocacoes(session))
+                    )
+                ),
+                new FkRegex(
+                    "/entrada",
+                    new TkFork(
+                        new FkMethods("POST", new TkEntrada(session))
+                    )
+                ),
+                new FkRegex(
+                    "/saida",
+                    new TkFork(
+                        new FkMethods("POST", new TkSaida(session))
+                    )
+                ),
+                new FkRegex(
+                    "/pagamento",
+                    new TkFork(
+                        new FkMethods("POST", new TkPagamento(session))
+                    )
+                ),
+                new FkRegex(
+                    "/(?<path>[^/]+)",
+                    new TkPage()
+                )
             )
         );
     }
