@@ -27,34 +27,43 @@ import com.github.fabriciofx.mandacarupark.Server;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
 import com.github.fabriciofx.mandacarupark.db.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
-import com.github.fabriciofx.mandacarupark.db.ds.H2File;
-import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.web.http.TkRoutes;
 import org.takes.http.Exit;
 import org.takes.http.FtBasic;
+import java.util.concurrent.CountDownLatch;
 
 public final class WebServerProcess extends Thread {
+    private final Session session;
     private final int port;
+    private final CountDownLatch cdl;
 
-    public WebServerProcess(final int port) {
+    public WebServerProcess(
+        final Session session,
+        final int port,
+        final CountDownLatch cdl
+    ) {
+        this.session = session;
         this.port = port;
+        this.cdl = cdl;
     }
 
     @Override
     public void run() {
-        final Session session = new NoAuth(new H2File("mandacarupark"));
         try (
             final Server server = new ServerH2(
-                session,
+                this.session,
                 new ScriptSql("mandacarupark.sql")
             )
         ) {
             server.start();
             new FtBasic(
-                new TkRoutes(session),
+                new TkRoutes(this.session),
                 this.port
             ).start(
-                Exit.NEVER
+                () -> {
+                    this.cdl.countDown();
+                    return Exit.NEVER.ready();
+                }
             );
         } catch (final Exception ex) {
             throw new RuntimeException(ex);

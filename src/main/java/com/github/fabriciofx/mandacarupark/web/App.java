@@ -24,6 +24,9 @@
 package com.github.fabriciofx.mandacarupark.web;
 
 import com.github.fabriciofx.mandacarupark.Server;
+import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.db.ds.H2File;
+import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.web.browser.Browsers;
 import com.github.fabriciofx.mandacarupark.web.server.WebServer;
 import com.github.fabriciofx.mandacarupark.web.server.WebServerProcess;
@@ -35,10 +38,10 @@ public final class App {
         final String host = "localhost";
         final int port = 8080;
         final CountDownLatch cdl = new CountDownLatch(1);
+        final Session session = new NoAuth(new H2File("mandacarupark"));
         try {
             final Server server = new WebServer(
-                cdl,
-                new WebServerProcess(port)
+                new WebServerProcess(session, port, cdl)
             );
             server.start();
             // TODO: remove temporal coupling between server and browser

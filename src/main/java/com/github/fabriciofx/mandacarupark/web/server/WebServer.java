@@ -25,21 +25,17 @@ package com.github.fabriciofx.mandacarupark.web.server;
 
 import com.github.fabriciofx.mandacarupark.Server;
 import java.io.IOException;
-import java.util.concurrent.CountDownLatch;
 
 public final class WebServer implements Server {
-    private final CountDownLatch cdl;
     private final WebServerProcess process;
 
-    public WebServer(final CountDownLatch cdl, final WebServerProcess process) {
-        this.cdl = cdl;
+    public WebServer(final WebServerProcess process) {
         this.process = process;
     }
 
     @Override
     public void start() throws Exception {
         this.process.start();
-        this.cdl.countDown();
     }
 
     @Override
