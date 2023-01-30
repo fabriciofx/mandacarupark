@@ -74,19 +74,19 @@ public class EntradasWebE2eIT {
                 new ValorFixo(new DinheiroOf("8.00"))
             )
         );
-        final CountDownLatch cdl = new CountDownLatch(1);
+        final CountDownLatch latch = new CountDownLatch(1);
         final Server h2 = new ServerH2(
             session,
             new ScriptSql("mandacarupark.sql")
         );
         final int port = new RandomPort().intValue();
         final Server web = new WebServer(
-            new WebServerProcess(estacionamento, port, cdl)
+            new WebServerProcess(estacionamento, port, latch)
         );
         try {
             h2.start();
             web.start();
-            cdl.await();
+            latch.await();
             final WebDriver driver = new Chrome();
             driver.get(
                 new Sprintf(

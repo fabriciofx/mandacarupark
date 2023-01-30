@@ -31,12 +31,12 @@ import java.util.concurrent.CountDownLatch;
 public final class Browsers {
     private final List<Browser> browsers;
 
-    public Browsers(final CountDownLatch cdl) {
+    public Browsers(final CountDownLatch latch) {
         this(
-            new Sync(cdl, new WindowsBrowser()),
-            new Sync(cdl, new LinuxBrowser()),
-            new Sync(cdl, new MacOsBrowser()),
-            new Sync(cdl, new Win32Browser())
+            new Sync(latch, new WindowsBrowser()),
+            new Sync(latch, new LinuxBrowser()),
+            new Sync(latch, new MacOsBrowser()),
+            new Sync(latch, new Win32Browser())
         );
     }
 

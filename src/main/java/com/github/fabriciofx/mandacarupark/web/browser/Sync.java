@@ -29,11 +29,11 @@ import java.net.URI;
 import java.util.concurrent.CountDownLatch;
 
 public final class Sync implements Browser {
-    private final CountDownLatch cdl;
+    private final CountDownLatch latch;
     private final Browser browser;
 
-    public Sync(final CountDownLatch cdl, final Browser browser) {
-        this.cdl = cdl;
+    public Sync(final CountDownLatch latch, final Browser browser) {
+        this.latch = latch;
         this.browser = browser;
     }
 
@@ -45,7 +45,7 @@ public final class Sync implements Browser {
     @Override
     public void open(final URI uri) throws IOException {
         try {
-            this.cdl.await();
+            this.latch.await();
         } catch (final InterruptedException ex) {
             throw new IOException(ex);
         }

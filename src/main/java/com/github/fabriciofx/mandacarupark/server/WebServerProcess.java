@@ -33,16 +33,16 @@ import java.util.concurrent.CountDownLatch;
 public final class WebServerProcess extends Thread {
     private final Estacionamento estacionamento;
     private final int port;
-    private final CountDownLatch cdl;
+    private final CountDownLatch latch;
 
     public WebServerProcess(
         final Estacionamento estacionamento,
         final int port,
-        final CountDownLatch cdl
+        final CountDownLatch latch
     ) {
         this.estacionamento = estacionamento;
         this.port = port;
-        this.cdl = cdl;
+        this.latch = latch;
     }
 
     @Override
@@ -53,7 +53,7 @@ public final class WebServerProcess extends Thread {
                 this.port
             ).start(
                 () -> {
-                    this.cdl.countDown();
+                    this.latch.countDown();
                     return Exit.NEVER.ready();
                 }
             );

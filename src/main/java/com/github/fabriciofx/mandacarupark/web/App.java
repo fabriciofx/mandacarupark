@@ -50,7 +50,7 @@ public final class App {
     public static void main(String[] args) throws Exception {
         final String host = "localhost";
         final int port = 8080;
-        final CountDownLatch cdl = new CountDownLatch(1);
+        final CountDownLatch latch = new CountDownLatch(1);
         final Session session = new NoAuth(new H2File("mandacarupark"));
         final Estacionamento estacionamento = new EstacionamentoSql(
             session,
@@ -70,11 +70,11 @@ public final class App {
                 new ScriptSql("mandacarupark.sql")
             ),
             new WebServer(
-                new WebServerProcess(estacionamento, port, cdl)
+                new WebServerProcess(estacionamento, port, latch)
             )
         ).start();
         // TODO: remove temporal coupling between server and browser
-        final Browser browser = new Browsers(cdl).browser();
+        final Browser browser = new Browsers(latch).browser();
         browser.open(new URI(String.format("http://%s:%d", host, port)));
     }
 }

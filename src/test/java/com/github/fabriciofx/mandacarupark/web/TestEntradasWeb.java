@@ -79,15 +79,15 @@ public final class TestEntradasWeb {
                 new ValorFixo(new DinheiroOf("8.00"))
             )
         );
-        final CountDownLatch cdl = new CountDownLatch(1);
+        final CountDownLatch latch = new CountDownLatch(1);
         final int port = new RandomPort().intValue();
         final Server web = new WebServer(
-            new WebServerProcess(estacionamento, port, cdl)
+            new WebServerProcess(estacionamento, port, latch)
         );
         try {
             h2.start();
             web.start();
-            cdl.await();
+            latch.await();
             final HttpRequest request = HttpRequest.newBuilder()
                 .uri(
                     new URI(
