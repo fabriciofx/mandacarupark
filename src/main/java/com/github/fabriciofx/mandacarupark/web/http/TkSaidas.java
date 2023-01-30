@@ -23,11 +23,10 @@
  */
 package com.github.fabriciofx.mandacarupark.web.http;
 
+import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Saidas;
-import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.media.PageTemplate;
-import com.github.fabriciofx.mandacarupark.saidas.SaidasSql;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -37,10 +36,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public final class TkSaidas implements Take {
-    private final Session session;
+    private final Estacionamento estacionamento;
 
-    public TkSaidas(final Session session) {
-        this.session = session;
+    public TkSaidas(final Estacionamento estacionamento) {
+        this.estacionamento = estacionamento;
     }
 
     @Override
@@ -51,7 +50,7 @@ public final class TkSaidas implements Take {
         final Media main = new PageTemplate(
             new ResourceAsStream("webapp/saidas.tpl")
         ).with("header", header);
-        final Saidas saidas = new SaidasSql(session);
+        final Saidas saidas = this.estacionamento.sobre().get("saidas");
         final InputStream body = new ByteArrayInputStream(
             saidas.print(main).bytes()
         );

@@ -38,7 +38,6 @@ import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.locacao.LocacaoFake;
 import com.github.fabriciofx.mandacarupark.media.PageTemplate;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -47,38 +46,31 @@ public final class LocacoesFake implements Locacoes {
     private final Entradas entradas;
     private final Saidas saidas;
     private final Pagamentos pagamentos;
-    private final Periodo periodo;
 
-    public LocacoesFake(
-        final Estacionamento estacionamento,
-        final Periodo periodo
-    ) {
+    public LocacoesFake(final Estacionamento estacionamento) {
         this(
             estacionamento.sobre().get("entradas"),
             estacionamento.sobre().get("saidas"),
-            estacionamento.sobre().get("pagamentos"),
-            periodo
+            estacionamento.sobre().get("pagamentos")
         );
     }
 
     public LocacoesFake(
         final Entradas entradas,
         final Saidas saidas,
-        final Pagamentos pagamentos,
-        final Periodo periodo
+        final Pagamentos pagamentos
     ) {
         this.entradas = entradas;
         this.saidas = saidas;
         this.pagamentos = pagamentos;
-        this.periodo = periodo;
     }
 
     @Override
-    public Iterator<Locacao> iterator() {
+    public List<Locacao> procura(final Periodo periodo) {
         final List<Locacao> itens = new ArrayList<>();
         for (Entrada entrada : this.entradas) {
             final DataHora dataHora = entrada.sobre().get("dataHora");
-            if (this.periodo.contem(dataHora)) {
+            if (periodo.contem(dataHora)) {
                 final Saida saida = this.saidas.procura(entrada.id());
                 final List<Pagamento> pagamento = this.pagamentos.procura(
                     entrada.id()
@@ -94,17 +86,17 @@ public final class LocacoesFake implements Locacoes {
                 );
             }
         }
-        return itens.iterator();
+        return itens;
     }
 
     @Override
-    public Media print(final Media media) {
+    public Media print(final Media media, final Periodo periodo) {
         final String regex = "\\$\\{ls\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ls\\.end}";
         final Pattern find = Pattern.compile(regex);
         final Matcher matcher = find.matcher(new String(media.bytes()));
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
-            for (final Locacao locacao : this) {
+            for (final Locacao locacao : this.procura(periodo)) {
                 Media page = new PageTemplate(matcher.group(1));
                 page = new PageTemplate(locacao.print(page));
                 sb.append(new String(page.bytes()));

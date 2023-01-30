@@ -37,6 +37,7 @@ import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
 import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.locacoes.LocacoesSql;
 import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 import com.github.fabriciofx.mandacarupark.regra.Cortesia;
 import com.github.fabriciofx.mandacarupark.ticket.TicketSql;
@@ -112,7 +113,8 @@ public final class EstacionamentoSql implements Estacionamento {
             "entradas", this.entradas,
             "saidas", this.saidas,
             "pagamentos", this.pagamentos,
-            "regras", this.regras
+            "regras", this.regras,
+            "locacoes", new LocacoesSql(this.session)
         );
     }
 }

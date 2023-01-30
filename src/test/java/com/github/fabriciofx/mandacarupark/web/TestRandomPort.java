@@ -21,11 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.web;
 
-import java.util.List;
+import com.github.fabriciofx.mandacarupark.web.server.RandomPort;
+import org.junit.Assert;
+import org.junit.Test;
 
-public interface Locacoes {
-    Media print(Media media, Periodo periodo);
-    List<Locacao> procura(Periodo periodo);
+public class TestRandomPort {
+    @Test
+    public void randomInt() {
+        final int port = new RandomPort().intValue();
+        Assert.assertTrue(port >= 1025 && port <= 65535);
+    }
 }

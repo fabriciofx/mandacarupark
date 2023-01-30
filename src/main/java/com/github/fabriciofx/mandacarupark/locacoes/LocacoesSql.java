@@ -35,29 +35,26 @@ import com.github.fabriciofx.mandacarupark.media.PageTemplate;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class LocacoesSql implements Locacoes {
     private final Session session;
-    private final Periodo periodo;
 
-    public LocacoesSql(final Session session, final Periodo periodo) {
+    public LocacoesSql(final Session session) {
         this.session = session;
-        this.periodo = periodo;
     }
 
     @Override
-    public Iterator<Locacao> iterator() {
+    public List<Locacao> procura(final Periodo periodo) {
         try (
             final ResultSet rset = new Select(
                 this.session,
                 new Sprintf(
                     "SELECT * FROM locacao WHERE entrada >= '%s' AND saida <= '%s'",
-                    this.periodo.inicio().dateTime(),
-                    this.periodo.termino().dateTime()
+                    periodo.inicio().dateTime(),
+                    periodo.termino().dateTime()
                 )
             ).result()
         ) {
@@ -70,20 +67,20 @@ public final class LocacoesSql implements Locacoes {
                     )
                 );
             }
-            return itens.iterator();
+            return itens;
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
     }
 
     @Override
-    public Media print(final Media media) {
+    public Media print(final Media media, final Periodo periodo) {
         final String regex = "\\$\\{ls\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ls\\.end}";
         final Pattern find = Pattern.compile(regex);
         final Matcher matcher = find.matcher(new String(media.bytes()));
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
-            for (final Locacao locacao : this) {
+            for (final Locacao locacao : this.procura(periodo)) {
                 Media page = new PageTemplate(matcher.group(1));
                 page = new PageTemplate(locacao.print(page));
                 sb.append(new String(page.bytes()));

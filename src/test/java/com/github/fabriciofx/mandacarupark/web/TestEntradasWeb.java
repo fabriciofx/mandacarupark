@@ -23,11 +23,26 @@
  */
 package com.github.fabriciofx.mandacarupark.web;
 
+import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Server;
 import com.github.fabriciofx.mandacarupark.db.RandomName;
+import com.github.fabriciofx.mandacarupark.db.ScriptSql;
+import com.github.fabriciofx.mandacarupark.db.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.ds.H2Memory;
 import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
+import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
+import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
+import com.github.fabriciofx.mandacarupark.estacionamento.EstacionamentoSql;
+import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosSql;
+import com.github.fabriciofx.mandacarupark.regra.DomingoGratis;
+import com.github.fabriciofx.mandacarupark.regra.MensalistaSql;
+import com.github.fabriciofx.mandacarupark.regra.Tolerancia;
+import com.github.fabriciofx.mandacarupark.regra.ValorFixo;
+import com.github.fabriciofx.mandacarupark.regras.RegrasOf;
+import com.github.fabriciofx.mandacarupark.saidas.SaidasSql;
+import com.github.fabriciofx.mandacarupark.text.Sprintf;
+import com.github.fabriciofx.mandacarupark.web.server.RandomPort;
 import com.github.fabriciofx.mandacarupark.web.server.WebServer;
 import com.github.fabriciofx.mandacarupark.web.server.WebServerProcess;
 import com.jcabi.matchers.XhtmlMatchers;
@@ -43,21 +58,45 @@ import java.util.concurrent.CountDownLatch;
 public final class TestEntradasWeb {
     @Test
     public void entradas() throws Exception {
-        final CountDownLatch cdl = new CountDownLatch(1);
         final Session session = new NoAuth(
             new H2Memory(
                 new RandomName()
             )
         );
-        try (
-            final Server server = new WebServer(
-                new WebServerProcess(session, 8080, cdl)
+        final Server h2 = new ServerH2(
+            session,
+            new ScriptSql("mandacarupark.sql")
+        );
+        final Estacionamento estacionamento = new EstacionamentoSql(
+            session,
+            new EntradasSql(session),
+            new SaidasSql(session),
+            new PagamentosSql(session),
+            new RegrasOf(
+                new Tolerancia(),
+                new DomingoGratis(),
+                new MensalistaSql(session, new DinheiroOf("50.00")),
+                new ValorFixo(new DinheiroOf("8.00"))
             )
-        ) {
-            server.start();
+        );
+        final CountDownLatch cdl = new CountDownLatch(1);
+        final int port = new RandomPort().intValue();
+        final Server web = new WebServer(
+            new WebServerProcess(estacionamento, port, cdl)
+        );
+        try {
+            h2.start();
+            web.start();
             cdl.await();
             final HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI("http://localhost:8080/entradas"))
+                .uri(
+                    new URI(
+                        new Sprintf(
+                            "http://localhost:%d/entradas",
+                            port
+                        ).asString()
+                    )
+                )
                 .GET()
                 .build();
             final HttpClient client = HttpClient.newHttpClient();
@@ -82,6 +121,11 @@ public final class TestEntradasWeb {
                     "/html/body/section/article/table/tbody/tr/td[text()='02/10/2022 22:58:23']"
                 )
             );
+        } catch (final Exception ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            web.stop();
+            h2.stop();
         }
     }
 }

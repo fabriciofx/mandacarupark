@@ -24,9 +24,8 @@
 package com.github.fabriciofx.mandacarupark.web.http;
 
 import com.github.fabriciofx.mandacarupark.Entradas;
+import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Media;
-import com.github.fabriciofx.mandacarupark.db.Session;
-import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
 import com.github.fabriciofx.mandacarupark.media.PageTemplate;
 import org.takes.Request;
 import org.takes.Response;
@@ -37,10 +36,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public final class TkEntradas implements Take {
-    private final Session session;
+    private final Estacionamento estacionamento;
 
-    public TkEntradas(final Session session) {
-        this.session = session;
+    public TkEntradas(final Estacionamento estacionamento) {
+        this.estacionamento = estacionamento;
     }
 
     @Override
@@ -51,7 +50,7 @@ public final class TkEntradas implements Take {
         final Media main = new PageTemplate(
             new ResourceAsStream("webapp/entradas.tpl")
         ).with("header", header);
-        final Entradas entradas = new EntradasSql(this.session);
+        final Entradas entradas = this.estacionamento.sobre().get("entradas");
         final InputStream body = new ByteArrayInputStream(
             entradas.print(main).bytes()
         );

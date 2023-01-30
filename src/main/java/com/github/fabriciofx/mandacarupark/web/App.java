@@ -23,10 +23,23 @@
  */
 package com.github.fabriciofx.mandacarupark.web;
 
+import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Server;
+import com.github.fabriciofx.mandacarupark.db.ScriptSql;
+import com.github.fabriciofx.mandacarupark.db.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.ds.H2File;
 import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
+import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
+import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
+import com.github.fabriciofx.mandacarupark.estacionamento.EstacionamentoSql;
+import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosSql;
+import com.github.fabriciofx.mandacarupark.regra.DomingoGratis;
+import com.github.fabriciofx.mandacarupark.regra.MensalistaSql;
+import com.github.fabriciofx.mandacarupark.regra.Tolerancia;
+import com.github.fabriciofx.mandacarupark.regra.ValorFixo;
+import com.github.fabriciofx.mandacarupark.regras.RegrasOf;
+import com.github.fabriciofx.mandacarupark.saidas.SaidasSql;
 import com.github.fabriciofx.mandacarupark.web.browser.Browsers;
 import com.github.fabriciofx.mandacarupark.web.server.WebServer;
 import com.github.fabriciofx.mandacarupark.web.server.WebServerProcess;
@@ -34,21 +47,41 @@ import java.net.URI;
 import java.util.concurrent.CountDownLatch;
 
 public final class App {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         final String host = "localhost";
         final int port = 8080;
         final CountDownLatch cdl = new CountDownLatch(1);
         final Session session = new NoAuth(new H2File("mandacarupark"));
+        final Estacionamento estacionamento = new EstacionamentoSql(
+            session,
+            new EntradasSql(session),
+            new SaidasSql(session),
+            new PagamentosSql(session),
+            new RegrasOf(
+                new Tolerancia(),
+                new DomingoGratis(),
+                new MensalistaSql(session, new DinheiroOf("50.00")),
+                new ValorFixo(new DinheiroOf("8.00"))
+            )
+        );
+        final Server h2 = new ServerH2(
+            session,
+            new ScriptSql("mandacarupark.sql")
+        );
+        final Server web = new WebServer(
+            new WebServerProcess(estacionamento, port, cdl)
+        );
         try {
-            final Server server = new WebServer(
-                new WebServerProcess(session, port, cdl)
-            );
-            server.start();
+            h2.start();
+            web.start();
             // TODO: remove temporal coupling between server and browser
             final Browser browser = new Browsers(cdl).browser();
             browser.open(new URI(String.format("http://%s:%d", host, port)));
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
+        } finally {
+            h2.stop();
+            web.stop();
         }
     }
 }

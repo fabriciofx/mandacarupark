@@ -28,18 +28,7 @@ import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
-import com.github.fabriciofx.mandacarupark.db.Session;
-import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
-import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
-import com.github.fabriciofx.mandacarupark.estacionamento.EstacionamentoSql;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
-import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosSql;
-import com.github.fabriciofx.mandacarupark.regra.DomingoGratis;
-import com.github.fabriciofx.mandacarupark.regra.MensalistaSql;
-import com.github.fabriciofx.mandacarupark.regra.Tolerancia;
-import com.github.fabriciofx.mandacarupark.regra.ValorFixo;
-import com.github.fabriciofx.mandacarupark.regras.RegrasOf;
-import com.github.fabriciofx.mandacarupark.saidas.SaidasSql;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -48,31 +37,19 @@ import org.takes.rq.form.RqFormBase;
 import java.io.IOException;
 
 public final class TkPagamento implements Take {
-    private final Session session;
+    private final Estacionamento estacionamento;
 
-    public TkPagamento(final Session session) {
-        this.session = session;
+    public TkPagamento(final Estacionamento estacionamento) {
+        this.estacionamento = estacionamento;
     }
 
     @Override
     public Response act(final Request req) throws IOException {
         final RqFormBase form = new RqFormBase(req);
         final Id id = new Uuid(form.param("ticket").iterator().next());
-        final Entradas entradas = new EntradasSql(this.session);
-        final Estacionamento estacionamento = new EstacionamentoSql(
-            this.session,
-            entradas,
-            new SaidasSql(this.session),
-            new PagamentosSql(this.session),
-            new RegrasOf(
-                new Tolerancia(),
-                new DomingoGratis(),
-                new MensalistaSql(this.session, new DinheiroOf("50.00")),
-                new ValorFixo(new DinheiroOf("8.00"))
-            )
-        );
+        final Entradas entradas = this.estacionamento.sobre().get("entradas");
         final Ticket ticket = entradas.procura(id).ticket();
-        estacionamento.pagamento(ticket, new DataHoraOf());
+        this.estacionamento.pagamento(ticket, new DataHoraOf());
         return new RsForward("/entradas");
     }
 }

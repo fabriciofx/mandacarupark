@@ -23,11 +23,10 @@
  */
 package com.github.fabriciofx.mandacarupark.web.http;
 
+import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Locacoes;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
-import com.github.fabriciofx.mandacarupark.db.Session;
-import com.github.fabriciofx.mandacarupark.locacoes.LocacoesSql;
 import com.github.fabriciofx.mandacarupark.media.PageTemplate;
 import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 import org.takes.Request;
@@ -40,10 +39,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public final class TkLocacoes implements Take {
-    private final Session session;
+    private final Estacionamento estacionamento;
 
-    public TkLocacoes(final Session session) {
-        this.session = session;
+    public TkLocacoes(final Estacionamento estacionamento) {
+        this.estacionamento = estacionamento;
     }
 
     @Override
@@ -63,15 +62,15 @@ public final class TkLocacoes implements Take {
             inicio = "01/01/2022 00:00:00";
             termino = "31/01/2023 23:59:59";
         }
-        final Locacoes locacoes = new LocacoesSql(
-            this.session,
-            new PeriodoOf(
-                new DataHoraOf(inicio),
-                new DataHoraOf(termino)
-            )
-        );
+        final Locacoes locacoes = this.estacionamento.sobre().get("locacoes");
         final InputStream body = new ByteArrayInputStream(
-            locacoes.print(main).bytes()
+            locacoes.print(
+                main,
+                new PeriodoOf(
+                    new DataHoraOf(inicio),
+                    new DataHoraOf(termino)
+                )
+            ).bytes()
         );
         return new RsHtml(body);
     }

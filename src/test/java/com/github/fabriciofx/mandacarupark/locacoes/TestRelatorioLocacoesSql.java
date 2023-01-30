@@ -54,12 +54,10 @@ public class TestRelatorioLocacoesSql {
             MatcherAssert.assertThat(
                 XhtmlMatchers.xhtml(
                     new RelatorioXml(
-                        new LocacoesSql(
-                            session,
-                            new PeriodoOf(
-                                LocalDateTime.of(2022, 7, 21, 12, 01),
-                                LocalDateTime.of(2022, 7, 21, 17, 12)
-                            )
+                        new LocacoesSql(session),
+                        new PeriodoOf(
+                            LocalDateTime.of(2022, 7, 21, 12, 01),
+                            LocalDateTime.of(2022, 7, 21, 17, 12)
                         )
                     ).conteudo()
                 ),

@@ -23,41 +23,33 @@
  */
 package com.github.fabriciofx.mandacarupark.web.server;
 
-import com.github.fabriciofx.mandacarupark.Server;
-import com.github.fabriciofx.mandacarupark.db.ScriptSql;
-import com.github.fabriciofx.mandacarupark.db.ServerH2;
-import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.web.http.TkRoutes;
 import org.takes.http.Exit;
 import org.takes.http.FtBasic;
+import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 
 public final class WebServerProcess extends Thread {
-    private final Session session;
+    private final Estacionamento estacionamento;
     private final int port;
     private final CountDownLatch cdl;
 
     public WebServerProcess(
-        final Session session,
+        final Estacionamento estacionamento,
         final int port,
         final CountDownLatch cdl
     ) {
-        this.session = session;
+        this.estacionamento = estacionamento;
         this.port = port;
         this.cdl = cdl;
     }
 
     @Override
     public void run() {
-        try (
-            final Server server = new ServerH2(
-                this.session,
-                new ScriptSql("mandacarupark.sql")
-            )
-        ) {
-            server.start();
+        try {
             new FtBasic(
-                new TkRoutes(this.session),
+                new TkRoutes(this.estacionamento),
                 this.port
             ).start(
                 () -> {
@@ -65,7 +57,7 @@ public final class WebServerProcess extends Thread {
                     return Exit.NEVER.ready();
                 }
             );
-        } catch (final Exception ex) {
+        } catch (final IOException ex) {
             throw new RuntimeException(ex);
         }
     }
