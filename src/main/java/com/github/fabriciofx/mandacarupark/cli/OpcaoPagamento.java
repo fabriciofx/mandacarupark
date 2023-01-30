@@ -11,18 +11,15 @@ public final class OpcaoPagamento implements Opcao {
     private final String mensagem;
     private final Console console;
     private final Estacionamento estacionamento;
-    private final Entradas entradas;
 
     public OpcaoPagamento(
         final String mensagem,
         final Console console,
-        final Estacionamento estacionamento,
-        final Entradas entradas
+        final Estacionamento estacionamento
     ) {
         this.mensagem = mensagem;
         this.console = console;
         this.estacionamento = estacionamento;
-        this.entradas = entradas;
     }
 
     @Override
@@ -39,7 +36,8 @@ public final class OpcaoPagamento implements Opcao {
     public void run() {
         this.console.write("  Ticket: ");
         final Uuid id = new Uuid(this.console.read());
-        final Ticket ticket = this.entradas.procura(id).ticket();
+        final Entradas entradas = this.estacionamento.sobre().get("entradas");
+        final Ticket ticket = entradas.procura(id).ticket();
         this.estacionamento.pagamento(
             ticket,
             new DataHoraOf()

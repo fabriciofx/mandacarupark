@@ -37,18 +37,15 @@ public final class OpcaoSaida implements Opcao {
     private final String mensagem;
     private final Console console;
     private final Estacionamento estacionamento;
-    private final Entradas entradas;
 
     public OpcaoSaida(
         final String mensagem,
         final Console console,
-        final Estacionamento estacionamento,
-        final Entradas entradas
+        final Estacionamento estacionamento
     ) {
         this.mensagem = mensagem;
         this.console = console;
         this.estacionamento = estacionamento;
-        this.entradas = entradas;
     }
 
     @Override
@@ -66,7 +63,8 @@ public final class OpcaoSaida implements Opcao {
         this.console.write(" Placa: ");
         final Placa placa = new Restricao(new PlacaOf(this.console.read()));
         this.console.write("Ticket: ");
-        final Ticket ticket = this.entradas.procura(
+        final Entradas entradas = this.estacionamento.sobre().get("entradas");
+        final Ticket ticket = entradas.procura(
             new Uuid(this.console.read())
         ).ticket();
         this.estacionamento.saida(ticket, placa, new DataHoraOf());

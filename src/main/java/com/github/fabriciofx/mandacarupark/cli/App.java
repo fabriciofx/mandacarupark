@@ -23,15 +23,11 @@
  */
 package com.github.fabriciofx.mandacarupark.cli;
 
-import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
-import com.github.fabriciofx.mandacarupark.Pagamentos;
-import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Server;
 import com.github.fabriciofx.mandacarupark.console.Console;
 import com.github.fabriciofx.mandacarupark.console.Consoles;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
-import com.github.fabriciofx.mandacarupark.server.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.ds.H2File;
 import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
@@ -44,6 +40,7 @@ import com.github.fabriciofx.mandacarupark.regra.Tolerancia;
 import com.github.fabriciofx.mandacarupark.regra.ValorFixo;
 import com.github.fabriciofx.mandacarupark.regras.RegrasOf;
 import com.github.fabriciofx.mandacarupark.saidas.SaidasSql;
+import com.github.fabriciofx.mandacarupark.server.ServerH2;
 
 public final class App {
     public static void main(String[] args) {
@@ -55,14 +52,11 @@ public final class App {
             )
         ) {
             server.start();
-            final Entradas entradas = new EntradasSql(session);
-            final Saidas saidas = new SaidasSql(session);
-            final Pagamentos pagamentos = new PagamentosSql(session);
             final Estacionamento estacionamento = new EstacionamentoSql(
                 session,
-                entradas,
-                saidas,
-                pagamentos,
+                new EntradasSql(session),
+                new SaidasSql(session),
+                new PagamentosSql(session),
                 new RegrasOf(
                     new DomingoGratis(),
                     new Tolerancia(),
@@ -81,19 +75,17 @@ public final class App {
                 new OpcaoSaida(
                     "2 - Saída",
                     console,
-                    estacionamento,
-                    entradas
+                    estacionamento
                 ),
                 new OpcaoPagamento(
                     "3 - Pagamento",
                     console,
-                    estacionamento,
-                    entradas
+                    estacionamento
                 ),
                 new OpcaoEntradas(
                     "4 - Entradas",
                     console,
-                    entradas
+                    estacionamento
                 ),
                 new OpcaoEncerrar(
                     "9 - Encerrar",

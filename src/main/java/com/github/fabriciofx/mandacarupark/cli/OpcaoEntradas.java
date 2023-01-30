@@ -2,22 +2,23 @@ package com.github.fabriciofx.mandacarupark.cli;
 
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
+import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.console.Console;
 import com.github.fabriciofx.mandacarupark.text.TextTable;
 
 public class OpcaoEntradas implements Opcao {
     private final String mensagem;
     private final Console console;
-    private final Entradas entradas;
+    private final Estacionamento estacionamento;
 
     public OpcaoEntradas(
         final String mensagem,
         final Console console,
-        final Entradas entradas
+        final Estacionamento estacionamento
     ) {
         this.mensagem = mensagem;
         this.console = console;
-        this.entradas = entradas;
+        this.estacionamento = estacionamento;
     }
 
     @Override
@@ -33,12 +34,13 @@ public class OpcaoEntradas implements Opcao {
     @Override
     public void run() {
         int linhas = 0;
-        for (final Entrada entrada : this.entradas) {
+        final Entradas entradas = this.estacionamento.sobre().get("entradas");
+        for (final Entrada entrada : entradas) {
             linhas++;
         }
         final String[][] tabela = new String[linhas][3];
         int linha = 0;
-        for (final Entrada entrada : this.entradas) {
+        for (final Entrada entrada : entradas) {
             tabela[linha][0] = String.format(
                 " %s ",
                 entrada.id().numero()
