@@ -21,34 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.web.server;
+package com.github.fabriciofx.mandacarupark.server;
 
 import com.github.fabriciofx.mandacarupark.Server;
-import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
-public final class WebServer implements Server {
-    private final WebServerProcess process;
+public final class Servers implements Server {
+    private final List<Server> itens;
 
-    public WebServer(final WebServerProcess process) {
-        this.process = process;
+    public Servers(final Server... itens) {
+        this(Arrays.asList(itens));
+    }
+
+    public Servers(final List<Server> itens) {
+        this.itens = itens;
     }
 
     @Override
     public void start() throws Exception {
-        this.process.start();
+        for (final Server server : this.itens) {
+            server.start();
+        }
     }
 
     @Override
     public void stop() throws Exception {
-        this.process.interrupt();
+        for (final Server server : this.itens) {
+            server.stop();
+        }
     }
 
     @Override
-    public void close() throws IOException {
-        try {
-            this.stop();
-        } catch (final Exception ex) {
-            throw new IOException(ex);
-        }
+    public void close() throws Exception {
+        this.stop();
     }
 }

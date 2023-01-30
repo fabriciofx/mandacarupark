@@ -1,4 +1,4 @@
-package com.github.fabriciofx.mandacarupark.web.server;
+package com.github.fabriciofx.mandacarupark;
 
 import java.security.SecureRandom;
 import java.util.Random;

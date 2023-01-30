@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.web;
 
-import com.github.fabriciofx.mandacarupark.web.server.RandomPort;
+import com.github.fabriciofx.mandacarupark.RandomPort;
 import org.junit.Assert;
 import org.junit.Test;
 

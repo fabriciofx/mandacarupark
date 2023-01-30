@@ -24,9 +24,7 @@
 package com.github.fabriciofx.mandacarupark.web;
 
 import com.github.fabriciofx.mandacarupark.Estacionamento;
-import com.github.fabriciofx.mandacarupark.Server;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
-import com.github.fabriciofx.mandacarupark.db.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.ds.H2File;
 import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
@@ -40,9 +38,11 @@ import com.github.fabriciofx.mandacarupark.regra.Tolerancia;
 import com.github.fabriciofx.mandacarupark.regra.ValorFixo;
 import com.github.fabriciofx.mandacarupark.regras.RegrasOf;
 import com.github.fabriciofx.mandacarupark.saidas.SaidasSql;
+import com.github.fabriciofx.mandacarupark.server.ServerH2;
+import com.github.fabriciofx.mandacarupark.server.Servers;
+import com.github.fabriciofx.mandacarupark.server.WebServer;
+import com.github.fabriciofx.mandacarupark.server.WebServerProcess;
 import com.github.fabriciofx.mandacarupark.web.browser.Browsers;
-import com.github.fabriciofx.mandacarupark.web.server.WebServer;
-import com.github.fabriciofx.mandacarupark.web.server.WebServerProcess;
 import java.net.URI;
 import java.util.concurrent.CountDownLatch;
 
@@ -64,24 +64,17 @@ public final class App {
                 new ValorFixo(new DinheiroOf("8.00"))
             )
         );
-        final Server h2 = new ServerH2(
-            session,
-            new ScriptSql("mandacarupark.sql")
-        );
-        final Server web = new WebServer(
-            new WebServerProcess(estacionamento, port, cdl)
-        );
-        try {
-            h2.start();
-            web.start();
-            // TODO: remove temporal coupling between server and browser
-            final Browser browser = new Browsers(cdl).browser();
-            browser.open(new URI(String.format("http://%s:%d", host, port)));
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
-        } finally {
-            h2.stop();
-            web.stop();
-        }
+        new Servers(
+            new ServerH2(
+                session,
+                new ScriptSql("mandacarupark.sql")
+            ),
+            new WebServer(
+                new WebServerProcess(estacionamento, port, cdl)
+            )
+        ).start();
+        // TODO: remove temporal coupling between server and browser
+        final Browser browser = new Browsers(cdl).browser();
+        browser.open(new URI(String.format("http://%s:%d", host, port)));
     }
 }

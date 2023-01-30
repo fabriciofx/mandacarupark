@@ -21,10 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.github.fabriciofx.mandacarupark.server;
 
-/**
- * WebServer.
- *
- * @since 0.0.1
- */
-package com.github.fabriciofx.mandacarupark.web.server;
+import com.github.fabriciofx.mandacarupark.Server;
+import com.github.fabriciofx.mandacarupark.db.ScriptSql;
+import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.db.stmt.Insert;
+import java.io.IOException;
+
+public final class ServerH2 implements Server {
+    private final Session session;
+    private final ScriptSql script;
+
+    public ServerH2(final Session session, final ScriptSql scrpt) {
+        this.session = session;
+        this.script = scrpt;
+    }
+
+    @Override
+    public void start() throws Exception {
+        this.script.run(this.session);
+    }
+
+    @Override
+    public void stop() throws Exception {
+        new Insert(this.session, "SHUTDOWN").result();
+    }
+
+    @Override
+    public void close() throws IOException {
+        try {
+            this.stop();
+        } catch(final Exception ex) {
+            throw new IOException(ex);
+        }
+    }
+}
