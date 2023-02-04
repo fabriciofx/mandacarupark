@@ -54,16 +54,16 @@ public final class DataMap implements Data {
     ) {
         this(
             DataMap.of(
-                new MapEntry<>(key1, value1),
-                new MapEntry<>(key2, value2),
-                new MapEntry<>(key3, value3),
-                new MapEntry<>(key4, value4),
-                new MapEntry<>(key5, value5),
-                new MapEntry<>(key6, value6),
-                new MapEntry<>(key7, value7),
-                new MapEntry<>(key8, value8),
-                new MapEntry<>(key9, value9),
-                new MapEntry<>(key10, value10)
+                new MapEntryOf<>(key1, value1),
+                new MapEntryOf<>(key2, value2),
+                new MapEntryOf<>(key3, value3),
+                new MapEntryOf<>(key4, value4),
+                new MapEntryOf<>(key5, value5),
+                new MapEntryOf<>(key6, value6),
+                new MapEntryOf<>(key7, value7),
+                new MapEntryOf<>(key8, value8),
+                new MapEntryOf<>(key9, value9),
+                new MapEntryOf<>(key10, value10)
             )
         );
     }
@@ -90,15 +90,15 @@ public final class DataMap implements Data {
     ) {
         this(
             DataMap.of(
-                new MapEntry<>(key1, value1),
-                new MapEntry<>(key2, value2),
-                new MapEntry<>(key3, value3),
-                new MapEntry<>(key4, value4),
-                new MapEntry<>(key5, value5),
-                new MapEntry<>(key6, value6),
-                new MapEntry<>(key7, value7),
-                new MapEntry<>(key8, value8),
-                new MapEntry<>(key9, value9)
+                new MapEntryOf<>(key1, value1),
+                new MapEntryOf<>(key2, value2),
+                new MapEntryOf<>(key3, value3),
+                new MapEntryOf<>(key4, value4),
+                new MapEntryOf<>(key5, value5),
+                new MapEntryOf<>(key6, value6),
+                new MapEntryOf<>(key7, value7),
+                new MapEntryOf<>(key8, value8),
+                new MapEntryOf<>(key9, value9)
             )
         );
     }
@@ -123,14 +123,14 @@ public final class DataMap implements Data {
     ) {
         this(
             DataMap.of(
-                new MapEntry<>(key1, value1),
-                new MapEntry<>(key2, value2),
-                new MapEntry<>(key3, value3),
-                new MapEntry<>(key4, value4),
-                new MapEntry<>(key5, value5),
-                new MapEntry<>(key6, value6),
-                new MapEntry<>(key7, value7),
-                new MapEntry<>(key8, value8)
+                new MapEntryOf<>(key1, value1),
+                new MapEntryOf<>(key2, value2),
+                new MapEntryOf<>(key3, value3),
+                new MapEntryOf<>(key4, value4),
+                new MapEntryOf<>(key5, value5),
+                new MapEntryOf<>(key6, value6),
+                new MapEntryOf<>(key7, value7),
+                new MapEntryOf<>(key8, value8)
             )
         );
     }
@@ -153,13 +153,13 @@ public final class DataMap implements Data {
     ) {
         this(
             DataMap.of(
-                new MapEntry<>(key1, value1),
-                new MapEntry<>(key2, value2),
-                new MapEntry<>(key3, value3),
-                new MapEntry<>(key4, value4),
-                new MapEntry<>(key5, value5),
-                new MapEntry<>(key6, value6),
-                new MapEntry<>(key7, value7)
+                new MapEntryOf<>(key1, value1),
+                new MapEntryOf<>(key2, value2),
+                new MapEntryOf<>(key3, value3),
+                new MapEntryOf<>(key4, value4),
+                new MapEntryOf<>(key5, value5),
+                new MapEntryOf<>(key6, value6),
+                new MapEntryOf<>(key7, value7)
             )
         );
     }
@@ -180,12 +180,12 @@ public final class DataMap implements Data {
     ) {
         this(
             DataMap.of(
-                new MapEntry<>(key1, value1),
-                new MapEntry<>(key2, value2),
-                new MapEntry<>(key3, value3),
-                new MapEntry<>(key4, value4),
-                new MapEntry<>(key5, value5),
-                new MapEntry<>(key6, value6)
+                new MapEntryOf<>(key1, value1),
+                new MapEntryOf<>(key2, value2),
+                new MapEntryOf<>(key3, value3),
+                new MapEntryOf<>(key4, value4),
+                new MapEntryOf<>(key5, value5),
+                new MapEntryOf<>(key6, value6)
             )
         );
     }
@@ -204,11 +204,11 @@ public final class DataMap implements Data {
     ) {
         this(
             DataMap.of(
-                new MapEntry<>(key1, value1),
-                new MapEntry<>(key2, value2),
-                new MapEntry<>(key3, value3),
-                new MapEntry<>(key4, value4),
-                new MapEntry<>(key5, value5)
+                new MapEntryOf<>(key1, value1),
+                new MapEntryOf<>(key2, value2),
+                new MapEntryOf<>(key3, value3),
+                new MapEntryOf<>(key4, value4),
+                new MapEntryOf<>(key5, value5)
             )
         );
     }
@@ -225,10 +225,10 @@ public final class DataMap implements Data {
     ) {
         this(
             DataMap.of(
-                new MapEntry<>(key1, value1),
-                new MapEntry<>(key2, value2),
-                new MapEntry<>(key3, value3),
-                new MapEntry<>(key4, value4)
+                new MapEntryOf<>(key1, value1),
+                new MapEntryOf<>(key2, value2),
+                new MapEntryOf<>(key3, value3),
+                new MapEntryOf<>(key4, value4)
             )
         );
     }
@@ -243,9 +243,9 @@ public final class DataMap implements Data {
     ) {
         this(
             DataMap.of(
-                new MapEntry<>(key1, value1),
-                new MapEntry<>(key2, value2),
-                new MapEntry<>(key3, value3)
+                new MapEntryOf<>(key1, value1),
+                new MapEntryOf<>(key2, value2),
+                new MapEntryOf<>(key3, value3)
             )
         );
     }
@@ -258,14 +258,14 @@ public final class DataMap implements Data {
     ) {
         this(
             DataMap.of(
-                new MapEntry<>(key1, value1),
-                new MapEntry<>(key2, value2)
+                new MapEntryOf<>(key1, value1),
+                new MapEntryOf<>(key2, value2)
             )
         );
     }
 
     public DataMap(final String key1, final Object value1) {
-        this(DataMap.of(new MapEntry<>(key1, value1)));
+        this(DataMap.of(new MapEntryOf<>(key1, value1)));
     }
 
     public DataMap(final Map<String, Object> items) {
@@ -286,31 +286,6 @@ public final class DataMap implements Data {
     @Override
     public String toString() {
         return this.items.toString();
-    }
-
-    private final static class MapEntry<K, V> implements Map.Entry<K, V> {
-        private final K key;
-        private final V value;
-
-        public MapEntry(final K key, final V value) {
-            this.key = key;
-            this.value = value;
-        }
-
-        @Override
-        public K getKey() {
-            return this.key;
-        }
-
-        @Override
-        public V getValue() {
-            return this.value;
-        }
-
-        @Override
-        public V setValue(V value) {
-            throw new UnsupportedOperationException("MapEntry::setValue()");
-        }
     }
 
     @SafeVarargs

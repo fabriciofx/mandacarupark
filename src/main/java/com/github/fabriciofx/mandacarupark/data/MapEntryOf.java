@@ -26,7 +26,7 @@ package com.github.fabriciofx.mandacarupark.data;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.util.Map;
 
-public class MapEntryOf<K,V> implements Map.Entry<K, V> {
+public final class MapEntryOf<K,V> implements Map.Entry<K, V> {
     private final K key;
     private final V value;
 
