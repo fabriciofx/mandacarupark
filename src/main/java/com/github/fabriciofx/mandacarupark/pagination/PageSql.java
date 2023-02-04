@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
+@SuppressWarnings("unchecked")
 public final class PageSql<T> implements Page<T> {
     private final Supplier<List<T>> scalar;
     private final Func<ResultSet, T> func;

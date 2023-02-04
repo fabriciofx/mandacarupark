@@ -35,6 +35,7 @@ import com.github.fabriciofx.mandacarupark.id.Uuid;
 import org.junit.Assert;
 import org.junit.Test;
 
+@SuppressWarnings("unchecked")
 public final class TestPageSaidaSql {
     @Test
     public void countLessThanLimit() {

@@ -43,6 +43,7 @@ import java.sql.ResultSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@SuppressWarnings("unchecked")
 public final class SaidasSql implements Saidas {
     private final Session session;
 
