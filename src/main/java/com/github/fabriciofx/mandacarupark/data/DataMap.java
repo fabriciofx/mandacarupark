@@ -273,6 +273,7 @@ public final class DataMap implements Data {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> T get(final String query) {
         return (T) (this.items.get(query));
     }
