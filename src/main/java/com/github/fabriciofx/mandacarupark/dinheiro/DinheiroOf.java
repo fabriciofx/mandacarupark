@@ -43,7 +43,7 @@ public final class DinheiroOf implements Dinheiro {
         this(
             quantia,
             Currency.getInstance("BRL"),
-            new Locale("pt", "BR")
+            new Locale.Builder().setLanguageTag("pt-BR").build()
         );
     }
 
