@@ -33,7 +33,7 @@ import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Insert;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
-import com.github.fabriciofx.mandacarupark.media.PageTemplate;
+import com.github.fabriciofx.mandacarupark.media.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.pagination.Page;
 import com.github.fabriciofx.mandacarupark.pagination.PagesSql;
 import com.github.fabriciofx.mandacarupark.pagination.ResultSetAsSaida;
@@ -105,12 +105,12 @@ public final class SaidasSql implements Saidas {
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Saida saida : this.todas().content()) {
-                Media page = new PageTemplate(matcher.group(1));
-                page = new PageTemplate(saida.print(page));
+                Media page = new HtmlTemplate(matcher.group(1));
+                page = new HtmlTemplate(saida.print(page));
                 sb.append(new String(page.bytes()));
             }
         }
-        return new PageTemplate(
+        return new HtmlTemplate(
             new String(media.bytes()).replaceAll(
                 regex,
                 sb.toString()

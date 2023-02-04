@@ -31,7 +31,7 @@ import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.locacao.LocacaoSql;
-import com.github.fabriciofx.mandacarupark.media.PageTemplate;
+import com.github.fabriciofx.mandacarupark.media.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -81,12 +81,12 @@ public final class LocacoesSql implements Locacoes {
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Locacao locacao : this.procura(periodo)) {
-                Media page = new PageTemplate(matcher.group(1));
-                page = new PageTemplate(locacao.print(page));
+                Media page = new HtmlTemplate(matcher.group(1));
+                page = new HtmlTemplate(locacao.print(page));
                 sb.append(new String(page.bytes()));
             }
         }
-        return new PageTemplate(
+        return new HtmlTemplate(
             new String(media.bytes()).replaceAll(
                 regex,
                 Matcher.quoteReplacement(sb.toString())

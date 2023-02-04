@@ -36,7 +36,7 @@ import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.locacao.LocacaoFake;
-import com.github.fabriciofx.mandacarupark.media.PageTemplate;
+import com.github.fabriciofx.mandacarupark.media.HtmlTemplate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -97,12 +97,12 @@ public final class LocacoesFake implements Locacoes {
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Locacao locacao : this.procura(periodo)) {
-                Media page = new PageTemplate(matcher.group(1));
-                page = new PageTemplate(locacao.print(page));
+                Media page = new HtmlTemplate(matcher.group(1));
+                page = new HtmlTemplate(locacao.print(page));
                 sb.append(new String(page.bytes()));
             }
         }
-        return new PageTemplate(
+        return new HtmlTemplate(
             new String(media.bytes()).replaceAll(
                 regex,
                 Matcher.quoteReplacement(sb.toString())

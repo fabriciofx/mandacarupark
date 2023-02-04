@@ -31,7 +31,7 @@ import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaFake;
-import com.github.fabriciofx.mandacarupark.media.PageTemplate;
+import com.github.fabriciofx.mandacarupark.media.HtmlTemplate;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -94,12 +94,12 @@ public final class EntradasFake implements Entradas {
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Entrada entrada : this) {
-                Media page = new PageTemplate(matcher.group(1));
-                page = new PageTemplate(entrada.print(page));
+                Media page = new HtmlTemplate(matcher.group(1));
+                page = new HtmlTemplate(entrada.print(page));
                 sb.append(new String(page.bytes()));
             }
         }
-        return new PageTemplate(
+        return new HtmlTemplate(
             new String(media.bytes()).replaceAll(regex, sb.toString())
         );
     }

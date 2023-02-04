@@ -26,7 +26,7 @@ package com.github.fabriciofx.mandacarupark.web.http;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
-import com.github.fabriciofx.mandacarupark.media.PageTemplate;
+import com.github.fabriciofx.mandacarupark.media.HtmlTemplate;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -44,10 +44,10 @@ public final class TkPagamentos implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Media header = new PageTemplate(
+        final Media header = new HtmlTemplate(
             new ResourceAsStream("webapp/header.tpl")
         );
-        final Media main = new PageTemplate(
+        final Media main = new HtmlTemplate(
             new ResourceAsStream("webapp/pagamentos.tpl")
         ).with("header", header);
         final Pagamentos pagamentos = this.estacionamento.sobre()

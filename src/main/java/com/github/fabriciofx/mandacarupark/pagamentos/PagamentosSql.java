@@ -34,7 +34,7 @@ import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Insert;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
-import com.github.fabriciofx.mandacarupark.media.PageTemplate;
+import com.github.fabriciofx.mandacarupark.media.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.pagamento.PagamentoSql;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
@@ -118,12 +118,12 @@ public final class PagamentosSql implements Pagamentos {
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Pagamento pagamento : this) {
-                Media page = new PageTemplate(matcher.group(1));
-                page = new PageTemplate(pagamento.print(page));
+                Media page = new HtmlTemplate(matcher.group(1));
+                page = new HtmlTemplate(pagamento.print(page));
                 sb.append(new String(page.bytes()));
             }
         }
-        return new PageTemplate(
+        return new HtmlTemplate(
             new String(media.bytes()).replaceAll(
                 regex,
                 Matcher.quoteReplacement(sb.toString())
