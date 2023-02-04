@@ -38,10 +38,8 @@ public final class Win32Browser implements Browser {
     @Override
     public void open(final URI uri) throws IOException {
         new Wait(
-            String.format(
-                "rundll32 url.dll,FileProtocolHandler %s",
-                uri.toURL().toString()
-            )
+            "rundll32 url.dll,FileProtocolHandler",
+            uri.toURL().toString()
         ).exec();
     }
 }

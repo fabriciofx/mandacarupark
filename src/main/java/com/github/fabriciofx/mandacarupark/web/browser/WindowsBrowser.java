@@ -37,10 +37,11 @@ public final class WindowsBrowser implements Browser {
     @Override
     public void open(final URI uri) throws IOException {
         new Wait(
-            String.format(
-                "cmd.exe /C start /wait %s",
-                uri.toURL().toString()
-            )
+            "cmd.exe",
+            "/C",
+            "start",
+            "/wait",
+            uri.toURL().toString()
         ).exec();
     }
 }

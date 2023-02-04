@@ -26,14 +26,14 @@ package com.github.fabriciofx.mandacarupark.web.command;
 import java.io.IOException;
 
 public final class Wait {
-    private final String command;
+    private final String[] command;
 
-    public Wait(final String command) {
+    public Wait(final String... command) {
         this.command = command;
     }
 
     public void exec() throws IOException {
-        final Process process = Runtime.getRuntime().exec(this.command);
+        final Process process = new ProcessBuilder(this.command).start();
         try {
             process.waitFor();
         } catch (final InterruptedException ex) {

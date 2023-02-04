@@ -38,10 +38,8 @@ public final class MacOsBrowser implements Browser {
     @Override
     public void open(final URI uri) throws IOException {
         new Wait(
-            String.format(
-                "open %s",
-                uri.toURL().toString()
-            )
+            "open",
+            uri.toURL().toString()
         ).exec();
     }
 }

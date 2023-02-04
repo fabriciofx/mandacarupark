@@ -44,13 +44,9 @@ public final class LinuxBrowser implements Browser {
         for (final String name : LinuxBrowser.NAMES) {
             try {
                 new Wait(
-                    String.format(
-                        "%s %s",
-                        name,
-                        uri.toURL().toString()
-                    )
+                    name,
+                    uri.toURL().toString()
                 ).exec();
-                break;
             } catch (final IOException ex) {
                 throw ex;
             }
