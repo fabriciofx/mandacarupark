@@ -38,6 +38,7 @@ public final class EntradasSource implements Entradas {
     private final Entradas origin;
     private final List<Target<Entrada>> targets;
 
+    @SafeVarargs
     public EntradasSource(
         final Entradas entradas,
         final Target<Entrada>... targets

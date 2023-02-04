@@ -35,6 +35,7 @@ public final class MensalistaFake implements Regra {
     private final Map<Id, Periodo> mensalistas;
     private final Dinheiro valor;
 
+    @SafeVarargs
     public MensalistaFake(
         final Dinheiro valor,
         final Map.Entry<Id, Periodo>... mensalistas
