@@ -34,7 +34,7 @@ import java.util.function.Supplier;
 @SuppressWarnings("unchecked")
 public final class PageSql<T> implements Page<T> {
     private final Supplier<List<T>> scalar;
-    private final Func<ResultSet, T> func;
+    private final Adapter<T> adapter;
     private final Session session;
     private final String tablename;
     private final int size;
@@ -43,7 +43,7 @@ public final class PageSql<T> implements Page<T> {
 
     public PageSql(
         final Session session,
-        final Func<ResultSet, T> func,
+        final Adapter<T> adapter,
         final String tablename,
         final int size,
         final int limit,
@@ -64,7 +64,7 @@ public final class PageSql<T> implements Page<T> {
             ) {
                 final List<T> itens = new ArrayList<>();
                 while (rset.next()) {
-                    itens.add(func.apply(rset));
+                    itens.add(adapter.adapt(rset));
                 }
                 return itens;
             } catch (final Exception ex) {
@@ -72,7 +72,7 @@ public final class PageSql<T> implements Page<T> {
             }
         };
         this.session = session;
-        this.func = func;
+        this.adapter = adapter;
         this.size = size;
         this.limit = limit;
         this.position = position;
@@ -93,7 +93,7 @@ public final class PageSql<T> implements Page<T> {
         final int pos = this.position + this.limit;
         return new PageSql(
             this.session,
-            this.func,
+            this.adapter,
             this.tablename,
             this.size,
             this.limit,
@@ -111,7 +111,7 @@ public final class PageSql<T> implements Page<T> {
         final int pos = this.position - this.limit;
         return new PageSql(
             this.session,
-            this.func,
+            this.adapter,
             this.tablename,
             this.size,
             this.limit,

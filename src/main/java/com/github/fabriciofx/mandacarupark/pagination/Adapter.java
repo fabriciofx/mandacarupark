@@ -23,6 +23,8 @@
  */
 package com.github.fabriciofx.mandacarupark.pagination;
 
-public interface Func<X, Y> {
-    Y apply(X input);
+import java.sql.ResultSet;
+
+public interface Adapter<T> {
+    T adapt(ResultSet rset);
 }

@@ -31,7 +31,7 @@ import java.util.function.Supplier;
 
 public final class PagesSql<T> implements Pages<T> {
     private final Supplier<Integer> size;
-    private final Func<ResultSet, T> func;
+    private final Adapter<T> adapter;
     private final Session session;
     private final String tablename;
     private final int limit;
@@ -39,7 +39,7 @@ public final class PagesSql<T> implements Pages<T> {
     public PagesSql(
         final Session session,
         final String tablename,
-        final Func<ResultSet, T> func,
+        final Adapter<T> adapter,
         final int limit
     ) {
         this.size = () -> {
@@ -62,7 +62,7 @@ public final class PagesSql<T> implements Pages<T> {
             }
         };
         this.session = session;
-        this.func = func;
+        this.adapter = adapter;
         this.tablename = tablename;
         this.limit = limit;
     }
@@ -76,7 +76,7 @@ public final class PagesSql<T> implements Pages<T> {
     public Page<T> page(final int number) {
         return new PageSql<>(
             this.session,
-            this.func,
+            this.adapter,
             this.tablename,
             this.size.get(),
             this.limit,

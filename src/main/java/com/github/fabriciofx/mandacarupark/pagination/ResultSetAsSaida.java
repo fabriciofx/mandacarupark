@@ -30,7 +30,7 @@ import com.github.fabriciofx.mandacarupark.saida.SaidaSql;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public final class ResultSetAsSaida implements Func<ResultSet, Saida> {
+public final class ResultSetAsSaida implements Adapter<Saida> {
     private final Session session;
 
     public ResultSetAsSaida(final Session session) {
@@ -38,7 +38,7 @@ public final class ResultSetAsSaida implements Func<ResultSet, Saida> {
     }
 
     @Override
-    public Saida apply(final ResultSet rset) {
+    public Saida adapt(final ResultSet rset) {
         try {
             return new SaidaSql(this.session, new Uuid(rset.getString(1)));
         } catch (final SQLException ex) {
