@@ -23,7 +23,7 @@
  */
 
 /**
- * Teste de Estacionamento.
+ * Testes de Estacionamento.
  *
  * @since 0.0.1
  */

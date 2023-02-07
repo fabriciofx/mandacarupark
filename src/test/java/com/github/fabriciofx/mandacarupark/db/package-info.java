@@ -23,7 +23,7 @@
  */
 
 /**
- * Tests for DB.
+ * Testes de acesso a banco de dados.
  *
  * @since 0.0.1
  */

@@ -23,7 +23,7 @@
  */
 
 /**
- * Teste de período.
+ * Testes de Periodo.
  *
  * @since 0.0.1
  */

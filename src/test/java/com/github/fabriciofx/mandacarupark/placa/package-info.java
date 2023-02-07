@@ -23,7 +23,7 @@
  */
 
 /**
- * Teste Placa.
+ * Testes de Placa.
  *
  * @since 0.0.1
  */

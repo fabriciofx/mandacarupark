@@ -23,7 +23,7 @@
  */
 
 /**
- * Teste de Ticket.
+ * Testes de Ticket.
  *
  * @since 0.0.1
  */

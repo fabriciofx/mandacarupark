@@ -23,7 +23,7 @@
  */
 
 /**
- * GUI (JavaFX).
+ * Graphical User Interface (JavaFX).
  *
  * @since 0.0.1
  */

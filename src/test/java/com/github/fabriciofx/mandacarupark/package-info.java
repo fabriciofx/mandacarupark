@@ -23,7 +23,7 @@
  */
 
 /**
- * Tests.
+ * Testes.
  *
  * @since 0.0.1
  */

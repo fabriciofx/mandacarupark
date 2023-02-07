@@ -23,7 +23,7 @@
  */
 
 /**
- * Teste E2E.
+ * Testes end-to-end (E2E).
  *
  * @since 0.0.1
  */

@@ -23,7 +23,7 @@
  */
 
 /**
- * Testes de OpcaoEntrada.
+ * Testes de Command Line Interface (CLI).
  *
  * @since 0.0.1
  */

@@ -23,7 +23,7 @@
  */
 
 /**
- * Teste de Estrada.
+ * Testes de Estrada.
  *
  * @since 0.0.1
  */

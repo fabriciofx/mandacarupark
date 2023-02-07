@@ -21,4 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+/**
+ * Command Line Interface.
+ *
+ * @since 0.0.1
+ */
 package com.github.fabriciofx.mandacarupark.cli;

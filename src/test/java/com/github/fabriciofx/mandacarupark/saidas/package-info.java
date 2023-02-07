@@ -23,7 +23,7 @@
  */
 
 /**
- * Teste de Saidas.
+ * Testes de Saidas.
  *
  * @since 0.0.1
  */
