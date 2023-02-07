@@ -13,7 +13,7 @@
           <button onclick="location.href='http://localhost:8080/entradas'">
             Entradas
           </button>
-          <button onclick="location.href='http://localhost:8080/saidas'">
+          <button onclick="location.href='http://localhost:8080/saidas?page=1'">
             Saídas
           </button>
           <button onclick="location.href='http://localhost:8080/pagamentos'">

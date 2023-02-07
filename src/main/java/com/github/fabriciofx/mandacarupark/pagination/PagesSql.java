@@ -73,14 +73,14 @@ public final class PagesSql<T> implements Pages<T> {
     }
 
     @Override
-    public Page<T> first() {
+    public Page<T> page(final int number) {
         return new PageSql<>(
             this.session,
             this.func,
             this.tablename,
             this.size.get(),
             this.limit,
-            0
+            number
         );
     }
 }

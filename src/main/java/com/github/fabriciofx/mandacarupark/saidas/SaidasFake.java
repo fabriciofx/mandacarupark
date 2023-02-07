@@ -25,20 +25,16 @@ package com.github.fabriciofx.mandacarupark.saidas;
 
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.media.HtmlTemplate;
-import com.github.fabriciofx.mandacarupark.pagination.Page;
-import com.github.fabriciofx.mandacarupark.pagination.PageList;
+import com.github.fabriciofx.mandacarupark.pagination.Pages;
+import com.github.fabriciofx.mandacarupark.pagination.PagesList;
 import com.github.fabriciofx.mandacarupark.saida.SaidaFake;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public final class SaidasFake implements Saidas {
     private final Map<Id, Saida> itens;
@@ -75,28 +71,7 @@ public final class SaidasFake implements Saidas {
     }
 
     @Override
-    public Media print(final Media media) {
-        final String regex = "\\$\\{ss\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ss\\.end}";
-        final Pattern find = Pattern.compile(regex);
-        final Matcher matcher = find.matcher(new String(media.bytes()));
-        final StringBuilder sb = new StringBuilder();
-        while (matcher.find()) {
-            for (final Saida saida : this.todas().content()) {
-                Media page = new HtmlTemplate(matcher.group(1));
-                page = new HtmlTemplate(saida.print(page));
-                sb.append(new String(page.bytes()));
-            }
-        }
-        return new HtmlTemplate(
-            new String(media.bytes()).replaceAll(
-                regex,
-                sb.toString()
-            )
-        );
-    }
-
-    @Override
-    public Page<Saida> todas() {
-        return new PageList<>(3, new ArrayList<>(this.itens.values()));
+    public Pages<Saida> pages(final int limit) {
+        return new PagesList<>(new ArrayList<>(this.itens.values()), limit);
     }
 }

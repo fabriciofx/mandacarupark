@@ -21,26 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.pagination;
 
-import java.util.List;
-
-public final class PagesList<T> implements Pages<T> {
-    private final List<T> list;
-    private final int limit;
-
-    public PagesList(final List<T> list, final int limit) {
-        this.list = list;
-        this.limit = limit;
-    }
-
-    @Override
-    public int count() {
-        return Math.round(this.list.size() / this.limit);
-    }
-
-    @Override
-    public Page<T> page(final int number) {
-        return new PageList<>(this.limit, number, this.list);
-    }
-}
+/**
+ * Print.
+ *
+ * @since 0.0.1
+ */
+package com.github.fabriciofx.mandacarupark.print;

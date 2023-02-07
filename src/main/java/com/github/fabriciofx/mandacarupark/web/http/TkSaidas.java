@@ -27,14 +27,18 @@ import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.media.HtmlTemplate;
+import com.github.fabriciofx.mandacarupark.print.SaidasPrint;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
+import org.takes.misc.Href;
+import org.takes.rq.RqHref;
 import org.takes.rs.RsHtml;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+@SuppressWarnings("unchecked")
 public final class TkSaidas implements Take {
     private final Estacionamento estacionamento;
 
@@ -44,15 +48,27 @@ public final class TkSaidas implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Media header = new HtmlTemplate(
-            new ResourceAsStream("webapp/header.tpl")
-        );
+        final Saidas saidas = this.estacionamento.sobre().get("saidas");
+        final Href href = new RqHref.Base(req).href();
+        final int number;
+        if (href.param("page").iterator().hasNext()) {
+            number = Integer.parseInt(href.param("page").iterator().next());
+        } else {
+            number = 1;
+        }
         final Media main = new HtmlTemplate(
             new ResourceAsStream("webapp/saidas.tpl")
-        ).with("header", header);
-        final Saidas saidas = this.estacionamento.sobre().get("saidas");
+        ).with(
+            "header",
+            new HtmlTemplate(new ResourceAsStream("webapp/header.tpl"))
+        ).with(
+            "footer",
+            new HtmlTemplate(
+                new Footer(saidas.pages(1), number, "http://localhost:8080/saidas")
+            )
+        );
         final InputStream body = new ByteArrayInputStream(
-            saidas.print(main).bytes()
+            new SaidasPrint(saidas.pages(1).page(number - 1)).print(main).bytes()
         );
         return new RsHtml(body);
     }

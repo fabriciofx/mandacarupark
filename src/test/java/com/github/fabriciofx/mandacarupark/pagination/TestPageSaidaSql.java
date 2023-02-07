@@ -56,7 +56,7 @@ public final class TestPageSaidaSql {
                 "saida",
                 new ResultSetAsSaida(session),
                 2
-            ).first();
+            ).page(0);
             Assert.assertEquals(2, page.content().size());
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
@@ -82,7 +82,7 @@ public final class TestPageSaidaSql {
                 "saida",
                 new ResultSetAsSaida(session),
                 2
-            ).first();
+            ).page(0);
             Assert.assertEquals(2, page.content().size());
             Assert.assertEquals(1, page.next().content().size());
         } catch (final Exception ex) {
@@ -109,7 +109,7 @@ public final class TestPageSaidaSql {
                 "saida",
                 new ResultSetAsSaida(session),
                 2
-            ).first();
+            ).page(0);
             Assert.assertEquals(
                 new Uuid("4c32b3dd-8636-43c0-9786-4804ca2b73f5"),
                 page.content().get(0).id()
@@ -150,7 +150,7 @@ public final class TestPageSaidaSql {
                         "saida",
                         new ResultSetAsSaida(session),
                         2
-                    ).first();
+                    ).page(0);
                     page.content().get(2);
                 }
             }
@@ -180,7 +180,7 @@ public final class TestPageSaidaSql {
                         "saida",
                         new ResultSetAsSaida(session),
                         2
-                    ).first();
+                    ).page(0);
                     page.content().get(-1);
                 }
             }
@@ -206,7 +206,7 @@ public final class TestPageSaidaSql {
                 "saida",
                 new ResultSetAsSaida(session),
                 3
-            ).first();
+            ).page(0);
             Assert.assertFalse(page.hasNext());
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
@@ -232,7 +232,7 @@ public final class TestPageSaidaSql {
                 "saida",
                 new ResultSetAsSaida(session),
                 2
-            ).first();
+            ).page(0);
             Assert.assertTrue(page.hasNext());
             Assert.assertFalse(page.next().hasNext());
         } catch (final Exception ex) {
@@ -259,7 +259,7 @@ public final class TestPageSaidaSql {
                 "saida",
                 new ResultSetAsSaida(session),
                 3
-            ).first();
+            ).page(0);
             Assert.assertFalse(page.hasPrevious());
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
@@ -285,7 +285,7 @@ public final class TestPageSaidaSql {
                 "saida",
                 new ResultSetAsSaida(session),
                 2
-            ).first().next();
+            ).page(0).next();
             Assert.assertTrue(page.hasPrevious());
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
@@ -311,7 +311,7 @@ public final class TestPageSaidaSql {
                 "saida",
                 new ResultSetAsSaida(session),
                 2
-            ).first().next();
+            ).page(0).next();
             Assert.assertEquals(
                 new Uuid("8c878e6f-ee13-4a37-a208-7510c2638944"),
                 page.content().get(0).id()

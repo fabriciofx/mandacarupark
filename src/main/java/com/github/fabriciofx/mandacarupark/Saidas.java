@@ -23,11 +23,10 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
-import com.github.fabriciofx.mandacarupark.pagination.Page;
+import com.github.fabriciofx.mandacarupark.pagination.Pages;
 
 public interface Saidas {
     Saida saida(Ticket ticket, Placa placa, DataHora dataHora);
     Saida procura(Id id);
-    Media print(Media media);
-    Page<Saida> todas();
+    Pages<Saida> pages(int limit);
 }

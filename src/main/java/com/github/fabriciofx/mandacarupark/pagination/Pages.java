@@ -25,5 +25,5 @@ package com.github.fabriciofx.mandacarupark.pagination;
 
 public interface Pages<T> {
     int count();
-    Page<T> first();
+    Page<T> page(int number);
 }

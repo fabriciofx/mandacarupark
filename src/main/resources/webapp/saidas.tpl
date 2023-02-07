@@ -26,15 +26,7 @@
             ${ss.end}
           </tbody>
         </table>
-        <div class="center">
-          <a href="http://localhost:8080/saidas/?page=1">&lt; Anterior</a>
-          <a href="http://localhost:8080/saidas/?page=1">1</a>
-          <a href="http://localhost:8080/saidas/?page=2">2</a>
-          <a href="http://localhost:8080/saidas/?page=3">3</a>
-          ...
-          <a href="http://localhost:8080/saidas/?page=6">6</a>
-          <a href="http://localhost:8080/saidas/?page=1">Próximo &gt;</a>
-        </div>
+        ${footer}
       </article>
     </section>
   </body>

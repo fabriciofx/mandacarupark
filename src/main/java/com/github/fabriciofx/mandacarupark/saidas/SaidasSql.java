@@ -25,7 +25,6 @@ package com.github.fabriciofx.mandacarupark.saidas;
 
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Saidas;
@@ -33,15 +32,12 @@ import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Insert;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
-import com.github.fabriciofx.mandacarupark.media.HtmlTemplate;
-import com.github.fabriciofx.mandacarupark.pagination.Page;
+import com.github.fabriciofx.mandacarupark.pagination.Pages;
 import com.github.fabriciofx.mandacarupark.pagination.PagesSql;
 import com.github.fabriciofx.mandacarupark.pagination.ResultSetAsSaida;
 import com.github.fabriciofx.mandacarupark.saida.SaidaSql;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @SuppressWarnings("unchecked")
 public final class SaidasSql implements Saidas {
@@ -99,33 +95,12 @@ public final class SaidasSql implements Saidas {
     }
 
     @Override
-    public Media print(final Media media) {
-        final String regex = "\\$\\{ss\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ss\\.end}";
-        final Pattern find = Pattern.compile(regex);
-        final Matcher matcher = find.matcher(new String(media.bytes()));
-        final StringBuilder sb = new StringBuilder();
-        while (matcher.find()) {
-            for (final Saida saida : this.todas().content()) {
-                Media page = new HtmlTemplate(matcher.group(1));
-                page = new HtmlTemplate(saida.print(page));
-                sb.append(new String(page.bytes()));
-            }
-        }
-        return new HtmlTemplate(
-            new String(media.bytes()).replaceAll(
-                regex,
-                sb.toString()
-            )
-        );
-    }
-
-    @Override
-    public Page<Saida> todas() {
+    public Pages<Saida> pages(final int limit) {
         return new PagesSql(
             this.session,
             "saida",
             new ResultSetAsSaida(this.session),
-            3
-        ).first();
+            limit
+        );
     }
 }

@@ -28,18 +28,20 @@ import com.github.fabriciofx.mandacarupark.Server;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.RandomName;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
-import com.github.fabriciofx.mandacarupark.server.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.ds.H2Memory;
 import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.media.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
+import com.github.fabriciofx.mandacarupark.print.SaidasPrint;
 import com.github.fabriciofx.mandacarupark.saida.SaidaFake;
+import com.github.fabriciofx.mandacarupark.server.ServerH2;
 import com.jcabi.matchers.XhtmlMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
+@SuppressWarnings("unchecked")
 public final class TestSaidas {
     @Test
     public void printFake() {
@@ -67,7 +69,9 @@ public final class TestSaidas {
         );
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                saidas.print(new HtmlTemplate(html))
+                new SaidasPrint(
+                    saidas.pages(3).page(0)
+                ).print(new HtmlTemplate(html))
             ),
             XhtmlMatchers.hasXPaths(
                 "/html/body/table/tbody/tr/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",
@@ -105,7 +109,9 @@ public final class TestSaidas {
             final Saidas saidas = new SaidasSql(session);
             MatcherAssert.assertThat(
                 XhtmlMatchers.xhtml(
-                    saidas.print(new HtmlTemplate(html))
+                    new SaidasPrint(
+                        saidas.pages(3).page(0)
+                    ).print(new HtmlTemplate(html))
                 ),
                 XhtmlMatchers.hasXPaths(
                     "/html/body/table/tbody/tr/td[text()='4c32b3dd-8636-43c0-9786-4804ca2b73f5']",
