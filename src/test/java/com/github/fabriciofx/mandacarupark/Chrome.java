@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
 
-public class Chrome implements WebDriver {
+public final class Chrome implements WebDriver {
     private final Supplier<WebDriver> browser;
 
     public Chrome() {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class Cached<T> implements Supplier<T> {
+public final class Cached<T> implements Supplier<T> {
     private final List<T> cache = new ArrayList<>(0);
     private final Supplier<T> supplier;
 

@@ -41,7 +41,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.regex.Pattern;
 
-public class TestOpcaoEntrada {
+public final class TestOpcaoEntrada {
     @Test
     public void entrada() throws Exception {
         try (

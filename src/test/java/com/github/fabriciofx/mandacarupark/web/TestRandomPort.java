@@ -27,7 +27,7 @@ import com.github.fabriciofx.mandacarupark.RandomPort;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TestRandomPort {
+public final class TestRandomPort {
     @Test
     public void randomInt() {
         final int port = new RandomPort().intValue();

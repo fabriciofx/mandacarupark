@@ -54,7 +54,7 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-public class EntradasWebE2eIT {
+public final class EntradasWebE2eIT {
     @Test
     public void entradas() throws Exception {
         final Session session = new NoAuth(

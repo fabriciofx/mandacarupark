@@ -30,7 +30,7 @@ import com.github.fabriciofx.mandacarupark.Regras;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.regra.ValorFixo;
 
-public class RegrasFake implements Regras {
+public final class RegrasFake implements Regras {
     private final Regra regra;
 
     public RegrasFake() {

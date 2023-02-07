@@ -6,7 +6,7 @@ import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.console.Console;
 import com.github.fabriciofx.mandacarupark.text.TextTable;
 
-public class OpcaoEntradas implements Opcao {
+public final class OpcaoEntradas implements Opcao {
     private final String mensagem;
     private final Console console;
     private final Estacionamento estacionamento;

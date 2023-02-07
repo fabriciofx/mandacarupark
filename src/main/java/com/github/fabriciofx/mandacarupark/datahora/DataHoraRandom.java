@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class DataHoraRandom implements DataHora {
+public final class DataHoraRandom implements DataHora {
     private final DataHora origin;
 
     public DataHoraRandom(

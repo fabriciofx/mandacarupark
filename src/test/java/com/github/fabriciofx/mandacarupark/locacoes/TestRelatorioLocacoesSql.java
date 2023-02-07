@@ -36,7 +36,7 @@ import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import java.time.LocalDateTime;
 
-public class TestRelatorioLocacoesSql {
+public final class TestRelatorioLocacoesSql {
     @Test
     public void relatorio() throws Exception {
         final Session session = new NoAuth(

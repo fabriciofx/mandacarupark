@@ -32,7 +32,7 @@ import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 
-public class RelatorioXml implements Relatorio {
+public final class RelatorioXml implements Relatorio {
     private final Locacoes locacoes;
     private final Periodo periodo;
 

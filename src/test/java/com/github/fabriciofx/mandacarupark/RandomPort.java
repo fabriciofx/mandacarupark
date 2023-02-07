@@ -3,7 +3,7 @@ package com.github.fabriciofx.mandacarupark;
 import java.security.SecureRandom;
 import java.util.Random;
 
-public class RandomPort extends Number {
+public final class RandomPort extends Number {
     private final Random random;
     private final int min;
     private final int max;

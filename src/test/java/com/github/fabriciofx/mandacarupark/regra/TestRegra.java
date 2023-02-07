@@ -47,7 +47,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import java.time.LocalDateTime;
 
-public class TestRegra {
+public final class TestRegra {
     @Test
     public void tolerancia() {
         final Regras regras = new RegrasOf(
