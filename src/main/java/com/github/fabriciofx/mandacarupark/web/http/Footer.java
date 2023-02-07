@@ -2,6 +2,7 @@ package com.github.fabriciofx.mandacarupark.web.http;
 
 import com.github.fabriciofx.mandacarupark.pagination.Pages;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
+import com.github.fabriciofx.mandacarupark.text.SprintfOf;
 import com.github.fabriciofx.mandacarupark.text.Text;
 
 public final class Footer<T> implements Text {
@@ -17,15 +18,11 @@ public final class Footer<T> implements Text {
 
     @Override
     public String asString() {
-        return new Sprintf(
+        return new SprintfOf(
             "<div class=\"center\">\n%s%s%s\t\t</div>\n",
-            new Footer.Anterior(this.url, this.number).asString(),
-            new Footer.Numeros(
-                this.url, this.number, this.pages.count()
-            ).asString(),
-            new Footer.Proximo(
-                this.url, this.number, this.pages.count()
-            ).asString()
+            new Footer.Anterior(this.url, this.number),
+            new Footer.Numeros(this.url, this.number, this.pages.count()),
+            new Footer.Proximo(this.url, this.number, this.pages.count())
         ).asString();
     }
 
