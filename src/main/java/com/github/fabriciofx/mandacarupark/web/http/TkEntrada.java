@@ -33,7 +33,7 @@ import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
 import org.takes.facets.forward.RsForward;
-import org.takes.rq.form.RqFormBase;
+import org.takes.rq.form.RqFormSmart;
 import java.io.IOException;
 
 public final class TkEntrada implements Take {
@@ -45,11 +45,11 @@ public final class TkEntrada implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final RqFormBase form = new RqFormBase(req);
-        final Placa placa = new PlacaOf(form.param("placa").iterator().next());
+        final RqFormSmart form = new RqFormSmart(req);
+        final Placa placa = new PlacaOf(form.single("placa"));
         final Id id;
-        if (!form.param("ticket").iterator().next().equals("")) {
-            id = new Uuid(form.param("ticket").iterator().next());
+        if (!form.single("ticket").equals("")) {
+            id = new Uuid(form.single("ticket"));
         } else {
             id = new Uuid();
         }

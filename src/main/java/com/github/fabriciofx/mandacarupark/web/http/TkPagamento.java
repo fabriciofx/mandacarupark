@@ -33,7 +33,7 @@ import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
 import org.takes.facets.forward.RsForward;
-import org.takes.rq.form.RqFormBase;
+import org.takes.rq.form.RqFormSmart;
 import java.io.IOException;
 
 public final class TkPagamento implements Take {
@@ -45,8 +45,8 @@ public final class TkPagamento implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final RqFormBase form = new RqFormBase(req);
-        final Id id = new Uuid(form.param("ticket").iterator().next());
+        final RqFormSmart form = new RqFormSmart(req);
+        final Id id = new Uuid(form.single("ticket"));
         final Entradas entradas = this.estacionamento.sobre().get("entradas");
         final Ticket ticket = entradas.procura(id).ticket();
         this.estacionamento.pagamento(ticket, new DataHoraOf());
