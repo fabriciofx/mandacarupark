@@ -23,42 +23,31 @@
  */
 package com.github.fabriciofx.mandacarupark.web.http;
 
-import com.github.fabriciofx.mandacarupark.text.Text;
 import org.takes.Request;
 import org.takes.misc.Href;
 import org.takes.rq.RqHref;
 import java.io.IOException;
 
-public final class HttpParam implements Text {
-    private final Request req;
-    private final String key;
-    private final String def;
+public final class HttpParam {
+    private final RqHref request;
 
-    public HttpParam(final Request req, final String key, final String def) {
-        this.req = req;
-        this.key = key;
-        this.def = def;
+    public HttpParam(final Request req) {
+        this.request = new RqHref.Base(req);
     }
 
-    @Override
-    public String asString() {
+    public String value(final String key, final String def) {
         final Href href;
         try {
-            href = new RqHref.Base(this.req).href();
+            href = this.request.href();
         } catch (final IOException ex) {
             throw new RuntimeException(ex);
         }
         final String value;
-        if (href.param(this.key).iterator().hasNext()) {
-            value = href.param("page").iterator().next();
+        if (href.param(key).iterator().hasNext()) {
+            value = href.param(key).iterator().next();
         } else {
-            value = this.def;
+            value = def;
         }
         return value;
-    }
-
-    @Override
-    public String toString() {
-        return this.asString();
     }
 }

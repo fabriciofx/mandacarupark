@@ -48,7 +48,7 @@ public final class TkSaidas implements Take {
     public Response act(final Request req) throws IOException {
         final Saidas saidas = this.estacionamento.sobre().get("saidas");
         final int number = Integer.parseInt(
-            new HttpParam(req, "page", "1").asString()
+            new HttpParam(req).value("page", "1")
         );
         final Media main = new HtmlTemplate(
             new ResourceAsStream("webapp/saidas.tpl")
