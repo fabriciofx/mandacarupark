@@ -31,6 +31,7 @@ import com.github.fabriciofx.mandacarupark.print.SaidasPrint;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
+import org.takes.rq.RqHref;
 import org.takes.rs.RsHtml;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -48,7 +49,7 @@ public final class TkSaidas implements Take {
     public Response act(final Request req) throws IOException {
         final Saidas saidas = this.estacionamento.sobre().get("saidas");
         final int number = Integer.parseInt(
-            new HttpParam(req).value("page", "1")
+            new RqHref.Smart(req).single("page", "1")
         );
         final Media main = new HtmlTemplate(
             new ResourceAsStream("webapp/saidas.tpl")
