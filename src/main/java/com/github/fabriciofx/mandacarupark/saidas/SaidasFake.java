@@ -34,6 +34,7 @@ import com.github.fabriciofx.mandacarupark.pagination.PagesList;
 import com.github.fabriciofx.mandacarupark.saida.SaidaFake;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public final class SaidasFake implements Saidas {
@@ -66,8 +67,13 @@ public final class SaidasFake implements Saidas {
     }
 
     @Override
-    public Saida procura(final Id id) {
-        return this.itens.get(id);
+    public List<Saida> procura(final Id id) {
+        final Saida saida = this.itens.get(id);
+        final List<Saida> lista = new ArrayList<>(0);
+        if (saida != null) {
+            lista.add(saida);
+        }
+        return lista;
     }
 
     @Override

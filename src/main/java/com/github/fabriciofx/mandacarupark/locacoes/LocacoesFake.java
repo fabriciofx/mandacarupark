@@ -71,19 +71,22 @@ public final class LocacoesFake implements Locacoes {
         for (Entrada entrada : this.entradas) {
             final DataHora dataHora = entrada.sobre().get("dataHora");
             if (periodo.contem(dataHora)) {
-                final Saida saida = this.saidas.procura(entrada.id());
-                final List<Pagamento> pagamento = this.pagamentos.procura(
-                    entrada.id()
-                );
-                itens.add(
-                    new LocacaoFake(
-                        entrada.id(),
-                        entrada.sobre().get("placa"),
-                        entrada.sobre().get("dataHora"),
-                        saida.sobre().get("dataHora"),
-                        pagamento.get(0).sobre().get("valor")
-                    )
-                );
+                final List<Saida> lista = this.saidas.procura(entrada.id());
+                if (!lista.isEmpty()) {
+                    final Saida saida = lista.get(0);
+                    final List<Pagamento> pagamento = this.pagamentos.procura(
+                        entrada.id()
+                    );
+                    itens.add(
+                        new LocacaoFake(
+                            entrada.id(),
+                            entrada.sobre().get("placa"),
+                            entrada.sobre().get("dataHora"),
+                            saida.sobre().get("dataHora"),
+                            pagamento.get(0).sobre().get("valor")
+                        )
+                    );
+                }
             }
         }
         return itens;

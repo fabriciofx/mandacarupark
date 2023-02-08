@@ -24,9 +24,10 @@
 package com.github.fabriciofx.mandacarupark;
 
 import com.github.fabriciofx.mandacarupark.pagination.Pages;
+import java.util.List;
 
 public interface Saidas {
     Saida saida(Ticket ticket, Placa placa, DataHora dataHora);
-    Saida procura(Id id);
+    List<Saida> procura(Id id);
     Pages<Saida> pages(int limit);
 }

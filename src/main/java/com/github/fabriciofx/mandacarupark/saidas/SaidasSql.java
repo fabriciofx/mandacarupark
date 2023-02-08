@@ -38,6 +38,8 @@ import com.github.fabriciofx.mandacarupark.pagination.ResultSetAsSaida;
 import com.github.fabriciofx.mandacarupark.saida.SaidaSql;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("unchecked")
 public final class SaidasSql implements Saidas {
@@ -66,7 +68,7 @@ public final class SaidasSql implements Saidas {
     }
 
     @Override
-    public Saida procura(final Id id) {
+    public List<Saida> procura(final Id id) {
         int quantidade = 0;
         try (
             final ResultSet rset = new Select(
@@ -83,15 +85,11 @@ public final class SaidasSql implements Saidas {
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
-        if (quantidade == 0) {
-            throw new RuntimeException(
-                String.format(
-                    "Entrada com id '%s' não encontrada!",
-                    id
-                )
-            );
+        final List<Saida> itens = new ArrayList<>(0);
+        if (quantidade != 0) {
+            itens.add(new SaidaSql(this.session, id));
         }
-        return new SaidaSql(this.session, id);
+        return itens;
     }
 
     @Override
