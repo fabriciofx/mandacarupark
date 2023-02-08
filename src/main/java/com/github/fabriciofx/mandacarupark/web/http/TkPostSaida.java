@@ -38,10 +38,10 @@ import org.takes.facets.forward.RsForward;
 import org.takes.rq.form.RqFormSmart;
 import java.io.IOException;
 
-public final class TkSaida implements Take {
+public final class TkPostSaida implements Take {
     private final Estacionamento estacionamento;
 
-    public TkSaida(final Estacionamento estacionamento) {
+    public TkPostSaida(final Estacionamento estacionamento) {
         this.estacionamento = estacionamento;
     }
 

@@ -38,10 +38,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @SuppressWarnings("unchecked")
-public final class TkSaidas implements Take {
+public final class TkGetSaidas implements Take {
     private final Estacionamento estacionamento;
 
-    public TkSaidas(final Estacionamento estacionamento) {
+    public TkGetSaidas(final Estacionamento estacionamento) {
         this.estacionamento = estacionamento;
     }
 

@@ -38,10 +38,10 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public final class TkLocacoes implements Take {
+public final class TkGetLocacoes implements Take {
     private final Estacionamento estacionamento;
 
-    public TkLocacoes(final Estacionamento estacionamento) {
+    public TkGetLocacoes(final Estacionamento estacionamento) {
         this.estacionamento = estacionamento;
     }
 

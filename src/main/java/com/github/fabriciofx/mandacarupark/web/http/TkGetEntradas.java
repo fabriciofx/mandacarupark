@@ -23,37 +23,37 @@
  */
 package com.github.fabriciofx.mandacarupark.web.http;
 
+import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
-import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Placa;
-import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
-import com.github.fabriciofx.mandacarupark.id.Uuid;
-import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
+import com.github.fabriciofx.mandacarupark.Media;
+import com.github.fabriciofx.mandacarupark.media.HtmlTemplate;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
-import org.takes.facets.forward.RsForward;
-import org.takes.rq.form.RqFormSmart;
+import org.takes.rs.RsHtml;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
-public final class TkEntrada implements Take {
+public final class TkGetEntradas implements Take {
     private final Estacionamento estacionamento;
 
-    public TkEntrada(final Estacionamento estacionamento) {
+    public TkGetEntradas(final Estacionamento estacionamento) {
         this.estacionamento = estacionamento;
     }
 
     @Override
     public Response act(final Request req) throws IOException {
-        final RqFormSmart form = new RqFormSmart(req);
-        final Placa placa = new PlacaOf(form.single("placa"));
-        final Id id;
-        if (!form.single("ticket").equals("")) {
-            id = new Uuid(form.single("ticket"));
-        } else {
-            id = new Uuid();
-        }
-        this.estacionamento.entrada(id, placa, new DataHoraOf());
-        return new RsForward("/entradas");
+        final Media header = new HtmlTemplate(
+            new ResourceAsStream("webapp/header.tpl")
+        );
+        final Media main = new HtmlTemplate(
+            new ResourceAsStream("webapp/entradas.tpl")
+        ).with("header", header);
+        final Entradas entradas = this.estacionamento.sobre().get("entradas");
+        final InputStream body = new ByteArrayInputStream(
+            entradas.print(main).bytes()
+        );
+        return new RsHtml(body);
     }
 }

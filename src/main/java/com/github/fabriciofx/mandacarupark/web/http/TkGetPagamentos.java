@@ -35,10 +35,10 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public final class TkPagamentos implements Take {
+public final class TkGetPagamentos implements Take {
     private final Estacionamento estacionamento;
 
-    public TkPagamentos(final Estacionamento estacionamento) {
+    public TkGetPagamentos(final Estacionamento estacionamento) {
         this.estacionamento = estacionamento;
     }
 

@@ -24,7 +24,6 @@
 package com.github.fabriciofx.mandacarupark.web.http;
 
 import com.github.fabriciofx.mandacarupark.Estacionamento;
-import com.github.fabriciofx.mandacarupark.db.Session;
 import org.takes.facets.fork.FkMethods;
 import org.takes.facets.fork.FkRegex;
 import org.takes.facets.fork.TkFork;
@@ -46,48 +45,54 @@ public final class TkRoutes extends TkWrap {
                 ),
                 new FkRegex(
                     "/",
-                    new TkEntradas(estacionamento)
+                    new TkGetEntradas(estacionamento)
                 ),
                 new FkRegex(
                     "/entradas",
                     new TkFork(
-                        new FkMethods("GET", new TkEntradas(estacionamento))
+                        new FkMethods("GET", new TkGetEntradas(estacionamento))
                     )
                 ),
                 new FkRegex(
                     "/saidas",
                     new TkFork(
-                        new FkMethods("GET", new TkSaidas(estacionamento))
+                        new FkMethods("GET", new TkGetSaidas(estacionamento))
                     )
                 ),
                 new FkRegex(
                     "/pagamentos",
                     new TkFork(
-                        new FkMethods("GET", new TkPagamentos(estacionamento))
+                        new FkMethods(
+                            "GET",
+                            new TkGetPagamentos(estacionamento)
+                        )
                     )
                 ),
                 new FkRegex(
                     "/locacoes",
                     new TkFork(
-                        new FkMethods("GET", new TkLocacoes(estacionamento))
+                        new FkMethods("GET", new TkGetLocacoes(estacionamento))
                     )
                 ),
                 new FkRegex(
                     "/entrada",
                     new TkFork(
-                        new FkMethods("POST", new TkEntrada(estacionamento))
+                        new FkMethods("POST", new TkPostEntrada(estacionamento))
                     )
                 ),
                 new FkRegex(
                     "/saida",
                     new TkFork(
-                        new FkMethods("POST", new TkSaida(estacionamento))
+                        new FkMethods("POST", new TkPostSaida(estacionamento))
                     )
                 ),
                 new FkRegex(
                     "/pagamento",
                     new TkFork(
-                        new FkMethods("POST", new TkPagamento(estacionamento))
+                        new FkMethods(
+                            "POST",
+                            new TkPostPagamento(estacionamento)
+                        )
                     )
                 ),
                 new FkRegex(
