@@ -30,12 +30,14 @@ import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
+import com.github.fabriciofx.mandacarupark.media.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
 import org.takes.facets.forward.RsForward;
 import org.takes.rq.form.RqFormSmart;
+import org.takes.rs.RsHtml;
 import java.io.IOException;
 
 public final class TkPostSaida implements Take {
@@ -52,7 +54,15 @@ public final class TkPostSaida implements Take {
         final Id id = new Uuid(form.single("ticket"));
         final Entradas entradas = this.estacionamento.sobre().get("entradas");
         final Ticket ticket = entradas.procura(id).ticket();
-        this.estacionamento.saida(ticket, placa, new DataHoraOf());
+        try {
+            this.estacionamento.saida(ticket, placa, new DataHoraOf());
+        } catch (final Exception ex) {
+            return new RsHtml(
+                new HtmlTemplate(
+                    new ResourceAsStream("webapp/erro.html")
+                ).with("error", ex.getMessage()).toString()
+            );
+        }
         return new RsForward("/saidas");
     }
 }
