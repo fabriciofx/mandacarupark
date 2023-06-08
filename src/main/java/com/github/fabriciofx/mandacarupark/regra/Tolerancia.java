@@ -42,11 +42,7 @@ public final class Tolerancia implements Regra {
 
     @Override
     public boolean avalie(final Id id, final Periodo periodo) {
-        boolean resultado = false;
-        if (periodo.minutos() <= this.minutos) {
-            resultado = true;
-        }
-        return resultado;
+        return periodo.minutos() <= this.minutos;
     }
 
     @Override
