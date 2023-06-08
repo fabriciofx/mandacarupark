@@ -40,7 +40,7 @@ public final class Restricao implements Placa {
     @Override
     public String numero() {
         final String numero = this.origin.numero();
-        if (!this.PADRAO.matcher(numero).matches()) {
+        if (!PADRAO.matcher(numero).matches()) {
             throw new RuntimeException("Placa: número inválido!");
         }
         return numero;

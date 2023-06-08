@@ -50,7 +50,7 @@ public final class NoNulls implements Placa {
 
     @Override
     public boolean equals(final Object obj) {
-        return this.origin.equals(obj);
+        return this == obj || (obj instanceof Placa && this.origin.equals(obj));
     }
 
     @Override
