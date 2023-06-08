@@ -23,7 +23,9 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
-public interface Server extends AutoCloseable {
+import java.io.Closeable;
+
+public interface Server extends Closeable {
     void start() throws Exception;
     void stop() throws Exception;
 }

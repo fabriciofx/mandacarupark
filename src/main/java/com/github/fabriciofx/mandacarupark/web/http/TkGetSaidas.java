@@ -59,11 +59,11 @@ public final class TkGetSaidas implements Take {
         ).with(
             "footer",
             new HtmlTemplate(
-                new Footer(saidas.pages(1), number, "http://localhost:8080/saidas")
+                new Footer<>(saidas.pages(1), number, "http://localhost:8080/saidas")
             )
         );
         final InputStream body = new ByteArrayInputStream(
-            new SaidasPrint(saidas.pages(1).page(number - 1)).print(main).bytes()
+            new SaidasPrint<>(saidas.pages(1).page(number - 1)).print(main).bytes()
         );
         return new RsHtml(body);
     }

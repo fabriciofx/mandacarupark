@@ -4,6 +4,7 @@ import java.security.SecureRandom;
 import java.util.Random;
 
 public final class RandomPort extends Number {
+    private static final long serialVersionUID = -1544510274704233661L;
     private final Random random;
     private final int min;
     private final int max;

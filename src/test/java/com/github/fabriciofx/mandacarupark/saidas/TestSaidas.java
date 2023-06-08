@@ -69,7 +69,7 @@ public final class TestSaidas {
         );
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                new SaidasPrint(
+                new SaidasPrint<>(
                     saidas.pages(3).page(0)
                 ).print(new HtmlTemplate(html))
             ),
@@ -109,7 +109,7 @@ public final class TestSaidas {
             final Saidas saidas = new SaidasSql(session);
             MatcherAssert.assertThat(
                 XhtmlMatchers.xhtml(
-                    new SaidasPrint(
+                    new SaidasPrint<>(
                         saidas.pages(3).page(0)
                     ).print(new HtmlTemplate(html))
                 ),

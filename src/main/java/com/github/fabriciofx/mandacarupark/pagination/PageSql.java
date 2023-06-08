@@ -91,7 +91,7 @@ public final class PageSql<T> implements Page<T> {
     @Override
     public Page<T> next() {
         final int pos = this.position + this.limit;
-        return new PageSql(
+        return new PageSql<>(
             this.session,
             this.adapter,
             this.tablename,
@@ -109,7 +109,7 @@ public final class PageSql<T> implements Page<T> {
     @Override
     public Page<T> previous() {
         final int pos = this.position - this.limit;
-        return new PageSql(
+        return new PageSql<>(
             this.session,
             this.adapter,
             this.tablename,

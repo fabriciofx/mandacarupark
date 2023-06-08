@@ -94,7 +94,7 @@ public final class SaidasSql implements Saidas {
 
     @Override
     public Pages<Saida> pages(final int limit) {
-        return new PagesSql(
+        return new PagesSql<>(
             this.session,
             "saida",
             new ResultSetAsSaida(this.session),

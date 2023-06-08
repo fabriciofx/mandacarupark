@@ -24,6 +24,7 @@
 package com.github.fabriciofx.mandacarupark.server;
 
 import com.github.fabriciofx.mandacarupark.Server;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -53,7 +54,11 @@ public final class Servers implements Server {
     }
 
     @Override
-    public void close() throws Exception {
-        this.stop();
+    public void close() throws IOException {
+        try {
+            this.stop();
+        } catch (final Exception ex) {
+            throw new IOException(ex);
+        }
     }
 }

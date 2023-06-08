@@ -51,7 +51,7 @@ public final class TestPageSaidaSql {
             )
         ) {
             server.start();
-            final Page<Saida> page = new PagesSql(
+            final Page<Saida> page = new PagesSql<>(
                 session,
                 "saida",
                 new ResultSetAsSaida(session),
@@ -77,7 +77,7 @@ public final class TestPageSaidaSql {
             )
         ) {
             server.start();
-            final Page<Saida> page = new PagesSql(
+            final Page<Saida> page = new PagesSql<>(
                 session,
                 "saida",
                 new ResultSetAsSaida(session),
@@ -104,7 +104,7 @@ public final class TestPageSaidaSql {
             )
         ) {
             server.start();
-            final Page<Saida> page = new PagesSql(
+            final Page<Saida> page = new PagesSql<>(
                 session,
                 "saida",
                 new ResultSetAsSaida(session),
@@ -145,7 +145,7 @@ public final class TestPageSaidaSql {
                     )
                 ) {
                     server.start();
-                    final Page<Saida> page = new PagesSql(
+                    final Page<Saida> page = new PagesSql<>(
                         session,
                         "saida",
                         new ResultSetAsSaida(session),
@@ -175,7 +175,7 @@ public final class TestPageSaidaSql {
                     )
                 ) {
                     server.start();
-                    final Page<Saida> page = new PagesSql(
+                    final Page<Saida> page = new PagesSql<>(
                         session,
                         "saida",
                         new ResultSetAsSaida(session),
@@ -201,7 +201,7 @@ public final class TestPageSaidaSql {
             )
         ) {
             server.start();
-            final Page<Saida> page = new PagesSql(
+            final Page<Saida> page = new PagesSql<>(
                 session,
                 "saida",
                 new ResultSetAsSaida(session),
@@ -227,7 +227,7 @@ public final class TestPageSaidaSql {
             )
         ) {
             server.start();
-            final Page<Saida> page = new PagesSql(
+            final Page<Saida> page = new PagesSql<>(
                 session,
                 "saida",
                 new ResultSetAsSaida(session),
@@ -254,7 +254,7 @@ public final class TestPageSaidaSql {
             )
         ) {
             server.start();
-            final Page<Saida> page = new PagesSql(
+            final Page<Saida> page = new PagesSql<>(
                 session,
                 "saida",
                 new ResultSetAsSaida(session),
@@ -280,7 +280,7 @@ public final class TestPageSaidaSql {
             )
         ) {
             server.start();
-            final Page<Saida> page = new PagesSql(
+            final Page<Saida> page = new PagesSql<>(
                 session,
                 "saida",
                 new ResultSetAsSaida(session),
@@ -306,7 +306,7 @@ public final class TestPageSaidaSql {
             )
         ) {
             server.start();
-            final Page<Saida> page = new PagesSql(
+            final Page<Saida> page = new PagesSql<>(
                 session,
                 "saida",
                 new ResultSetAsSaida(session),

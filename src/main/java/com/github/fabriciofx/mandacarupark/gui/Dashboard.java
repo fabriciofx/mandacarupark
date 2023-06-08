@@ -28,11 +28,11 @@ import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Server;
 import com.github.fabriciofx.mandacarupark.db.RandomName;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
-import com.github.fabriciofx.mandacarupark.server.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.ds.H2Memory;
 import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
+import com.github.fabriciofx.mandacarupark.server.ServerH2;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -61,32 +61,32 @@ public final class Dashboard extends Application {
 
     @Override
     public void start(Stage stage) {
-        Scene scene = new Scene(new Group(), 600, 500);
+        final Scene scene = new Scene(new Group(), 600, 500);
         stage.setTitle("MandacaruPark");
-
         final Label label = new Label("Entradas");
         label.setFont(new Font("Arial", 20));
-
-        TableColumn<Map, String> coluna1 = new TableColumn<>("Id");
+        final TableColumn<Map<String, String>, String> coluna1 =
+            new TableColumn<>("Id");
         coluna1.setCellValueFactory(new MapValueFactory("id"));
         coluna1.setMinWidth(250);
-
-        TableColumn<Map, String> coluna2 = new TableColumn<>("Placa");
+        final TableColumn<Map<String, String>, String> coluna2 =
+            new TableColumn<>("Placa");
         coluna2.setCellValueFactory(new MapValueFactory("placa"));
         coluna2.setMinWidth(130);
-
-        TableColumn<Map, String> coluna3 = new TableColumn<>("Data/Hora");
+        final TableColumn<Map<String, String>, String> coluna3 =
+            new TableColumn<>("Data/Hora");
         coluna3.setCellValueFactory(new MapValueFactory("dataHora"));
         coluna3.setMinWidth(130);
-
-        TableView tableView = new TableView<>(generateDataInMap());
+        final TableView<Map<String, String>> tableView = new TableView<>(
+            generateDataInMap()
+        );
         tableView.prefHeightProperty().bind(stage.heightProperty());
         tableView.prefWidthProperty().bind(stage.widthProperty());
         tableView.setEditable(true);
         tableView.getSelectionModel().setCellSelectionEnabled(true);
         tableView.getColumns().setAll(coluna1, coluna2, coluna3);
-
-        Callback<TableColumn<Map, String>, TableCell<Map, String>>
+        final Callback<TableColumn<Map<String, String>, String>,
+            TableCell<Map<String, String>, String>>
             cellFactoryForMap = p -> new TextFieldTableCell(
             new StringConverter() {
                 @Override
@@ -102,7 +102,6 @@ public final class Dashboard extends Application {
         coluna1.setCellFactory(cellFactoryForMap);
         coluna2.setCellFactory(cellFactoryForMap);
         coluna3.setCellFactory(cellFactoryForMap);
-
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
@@ -112,8 +111,9 @@ public final class Dashboard extends Application {
         stage.show();
     }
 
-    private ObservableList<Map> generateDataInMap() {
-        final ObservableList<Map> linhas = FXCollections.observableArrayList();
+    private ObservableList<Map<String, String>> generateDataInMap() {
+        final ObservableList<Map<String, String>> linhas =
+            FXCollections.observableArrayList();
         final Session session = new NoAuth(new H2Memory(new RandomName()));
         try (
             final Server server = new ServerH2(
@@ -123,7 +123,7 @@ public final class Dashboard extends Application {
         ) {
             server.start();
             final Entradas entradas = new EntradasSql(session);
-            for (final Entrada entrada: entradas) {
+            for (final Entrada entrada : entradas) {
                 final Map<String, String> linha = new HashMap<>();
                 linha.put(
                     "id",

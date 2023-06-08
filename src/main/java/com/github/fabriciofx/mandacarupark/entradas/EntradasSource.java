@@ -34,6 +34,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+@SuppressWarnings("varargs")
 public final class EntradasSource implements Entradas {
     private final Entradas origin;
     private final List<Target<Entrada>> targets;
