@@ -24,7 +24,7 @@
 package com.github.fabriciofx.mandacarupark;
 
 public interface Data {
-    <T> T get(final String query);
+    <T> T get(String query);
 
-    Data with(final String key, final Object value);
+    Data with(String key, Object value);
 }
