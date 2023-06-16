@@ -67,7 +67,6 @@ public final class SaidaSql implements Saida {
             if (rset.next()) {
                 placa = new PlacaOf(rset.getString(1));
                 dataHora = new DataHoraOf(rset.getString(2));
-
             } else {
                 throw new RuntimeException(
                     "Dados sobre a saída inexistentes ou inválidos!"
@@ -99,7 +98,6 @@ public final class SaidaSql implements Saida {
             if (rset.next()) {
                 placa = new PlacaOf(rset.getString(1));
                 dataHora = new DataHoraOf(rset.getString(2));
-
             } else {
                 throw new RuntimeException(
                     "Dados sobre a saída inexistentes ou inválidos!"
