@@ -84,30 +84,9 @@ public final class SaidaSql implements Saida {
 
     @Override
     public Media print(final Media media) {
-        try (
-            final ResultSet rset = new Select(
-                this.session,
-                new Sprintf(
-                    "SELECT placa, datahora FROM saida WHERE id = '%s'",
-                    this.id
-                )
-            ).result()
-        ) {
-            final DataHora dataHora;
-            final Placa placa;
-            if (rset.next()) {
-                placa = new PlacaOf(rset.getString(1));
-                dataHora = new DataHoraOf(rset.getString(2));
-            } else {
-                throw new RuntimeException(
-                    "Dados sobre a saída inexistentes ou inválidos!"
-                );
-            }
-            return media.with("id", this.id)
-                .with("placa", placa)
-                .with("dataHora", dataHora);
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
-        }
+        final Data data = this.sobre();
+        return media.with("id", this.id)
+            .with("placa", data.get("placa"))
+            .with("dataHora", data.get("dataHora"));
     }
 }
