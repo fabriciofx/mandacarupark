@@ -21,28 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.pagination;
 
-import com.github.fabriciofx.mandacarupark.db.Session;
-import com.github.fabriciofx.mandacarupark.Saida;
-import com.github.fabriciofx.mandacarupark.id.Uuid;
-import com.github.fabriciofx.mandacarupark.saida.SaidaSql;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-public final class ResultSetAsSaida implements Adapter<Saida> {
-    private final Session session;
-
-    public ResultSetAsSaida(final Session session) {
-        this.session = session;
-    }
-
-    @Override
-    public Saida adapt(final ResultSet rset) {
-        try {
-            return new SaidaSql(this.session, new Uuid(rset.getString(1)));
-        } catch (final SQLException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-}
+/**
+ * Adapters.
+ *
+ * @since 0.0.1
+ */
+package com.github.fabriciofx.mandacarupark.pagination.adapters;

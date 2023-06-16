@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.pagination;
 
+import com.github.fabriciofx.mandacarupark.pagination.page.PageList;
 import org.junit.Assert;
 import org.junit.Test;
 import java.util.Arrays;

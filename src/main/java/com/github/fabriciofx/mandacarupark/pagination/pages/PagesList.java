@@ -21,51 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.pagination;
+package com.github.fabriciofx.mandacarupark.pagination.pages;
 
+import com.github.fabriciofx.mandacarupark.pagination.Page;
+import com.github.fabriciofx.mandacarupark.pagination.Pages;
+import com.github.fabriciofx.mandacarupark.pagination.page.PageList;
 import java.util.List;
 
-public final class PageList<T> implements Page<T> {
-    private final int limit;
-    private final int position;
+public final class PagesList<T> implements Pages<T> {
     private final List<T> list;
+    private final int limit;
 
-    public PageList(final int limit, final List<T> list) {
-        this(limit, 0, list);
-    }
-
-    public PageList(final int limit, final int position, final List<T> list) {
-        this.limit = limit;
-        this.position = position;
+    public PagesList(final List<T> list, final int limit) {
         this.list = list;
+        this.limit = limit;
     }
 
     @Override
-    public List<T> content() {
-        final int begin = this.position;
-        final int end = Math.min(begin + this.limit, this.list.size());
-        return this.list.subList(begin, end);
+    public int count() {
+        return Math.round(this.list.size() / this.limit);
     }
 
     @Override
-    public boolean hasNext() {
-        return this.list.size() > this.position + this.limit;
-    }
-
-    @Override
-    public Page<T> next() {
-        final int pos = this.position + this.limit;
-        return new PageList<T>(this.limit, pos, this.list);
-    }
-
-    @Override
-    public boolean hasPrevious() {
-        return this.position - this.limit >= 0;
-    }
-
-    @Override
-    public Page<T> previous() {
-        final int pos = this.position - this.limit;
-        return new PageList<T>(this.limit, pos, this.list);
+    public Page<T> page(final int number) {
+        return new PageList<>(this.limit, number, this.list);
     }
 }
