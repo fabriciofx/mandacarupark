@@ -32,6 +32,7 @@ import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.RandomName;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.server.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.ds.H2Memory;
@@ -87,7 +88,7 @@ public final class TestEstacionamentoSql {
             final Entrada entrada = entradas.procura(ticket.id());
             Assert.assertEquals(
                 "ABC1234",
-                entrada.sobre().get("placa").toString()
+                entrada.sobre(new MapMedia()).get("placa").toString()
             );
         }
     }

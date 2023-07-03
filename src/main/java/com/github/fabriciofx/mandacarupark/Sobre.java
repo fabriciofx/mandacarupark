@@ -23,8 +23,6 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
-public interface Entrada extends Sobre {
-    Id id();
-    Ticket ticket();
-    Template print(Template template);
+public interface Sobre {
+    Media sobre(Media media);
 }

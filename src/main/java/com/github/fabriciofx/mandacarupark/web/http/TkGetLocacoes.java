@@ -27,8 +27,9 @@ import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Locacoes;
 import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
-import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
+import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -62,7 +63,8 @@ public final class TkGetLocacoes implements Take {
             inicio = "01/01/2022 00:00:00";
             termino = "31/01/2023 23:59:59";
         }
-        final Locacoes locacoes = this.estacionamento.sobre().get("locacoes");
+        final Locacoes locacoes = this.estacionamento.sobre(new MapMedia())
+            .get("locacoes");
         final InputStream body = new ByteArrayInputStream(
             locacoes.print(
                 main,

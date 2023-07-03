@@ -26,6 +26,7 @@ package com.github.fabriciofx.mandacarupark.web.http;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Saidas;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.print.SaidasPrint;
 import org.takes.Request;
@@ -47,7 +48,8 @@ public final class TkGetSaidas implements Take {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Saidas saidas = this.estacionamento.sobre().get("saidas");
+        final Saidas saidas = this.estacionamento.sobre(new MapMedia())
+            .get("saidas");
         final int number = Integer.parseInt(
             new RqHref.Smart(req).single("page", "1")
         );

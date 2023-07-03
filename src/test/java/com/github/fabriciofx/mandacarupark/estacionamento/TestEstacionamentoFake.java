@@ -35,6 +35,7 @@ import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasFake;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.regra.DomingoGratis;
@@ -69,7 +70,7 @@ public final class TestEstacionamentoFake {
         final Entrada entrada = entradas.procura(ticket.id());
         Assert.assertEquals(
             "ABC1234",
-            entrada.sobre().get("placa").toString()
+            entrada.sobre(new MapMedia()).get("placa").toString()
         );
     }
 
@@ -183,7 +184,7 @@ public final class TestEstacionamentoFake {
         );
         final StringBuilder sb = new StringBuilder();
         for (final Entrada entrada : entradas) {
-            sb.append(entrada.sobre().toString());
+            sb.append(entrada.sobre(new MapMedia()).toString());
         }
         Assert.assertTrue(
             sb.toString().contains("placa=XYZ9876") &&

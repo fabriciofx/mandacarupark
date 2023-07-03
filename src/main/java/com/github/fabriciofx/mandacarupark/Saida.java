@@ -23,7 +23,6 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
-public interface Saida extends Printer {
+public interface Saida extends Sobre, Printer {
     Id id();
-    Media sobre();
 }

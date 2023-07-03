@@ -23,8 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
-public interface Pagamento {
+public interface Pagamento extends Sobre {
     Id id();
-    Media sobre();
     Template print(Template template);
 }

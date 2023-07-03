@@ -30,6 +30,7 @@ import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import org.takes.Request;
@@ -52,7 +53,8 @@ public final class TkPostSaida implements Take {
         final RqFormSmart form = new RqFormSmart(req);
         final Placa placa = new PlacaOf(form.single("placa"));
         final Id id = new Uuid(form.single("ticket"));
-        final Entradas entradas = this.estacionamento.sobre().get("entradas");
+        final Entradas entradas = this.estacionamento.sobre(new MapMedia())
+            .get("entradas");
         final Ticket ticket = entradas.procura(id).ticket();
         try {
             this.estacionamento.saida(ticket, placa, new DataHoraOf());

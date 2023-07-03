@@ -55,16 +55,17 @@ public final class EntradaSql implements Entrada {
 
     @Override
     public Ticket ticket() {
+        final Media media = this.sobre(new MapMedia());
         return new TicketSql(
             this.session,
             this.id,
-            this.sobre().get("placa"),
-            this.sobre().get("dataHora")
+            media.get("placa"),
+            media.get("dataHora")
         );
     }
 
     @Override
-    public Media sobre() {
+    public Media sobre(final Media media) {
         try (
             final ResultSet rset = new Select(
                 this.session,
@@ -84,11 +85,9 @@ public final class EntradaSql implements Entrada {
                     "Dados sobre a entrada inexistentes ou inválidos!"
                 );
             }
-            return new MapMedia(
-                "id", this.id,
-                "placa", placa,
-                "dataHora", dataHora
-            );
+            return media.with("id", this.id)
+                .with("placa", placa)
+                .with("dataHora", dataHora);
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -96,31 +95,10 @@ public final class EntradaSql implements Entrada {
 
     @Override
     public Template print(final Template template) {
-        try (
-            final ResultSet rset = new Select(
-                this.session,
-                new Sprintf(
-                    "SELECT placa, datahora FROM entrada WHERE id = '%s'",
-                    this.id
-                )
-            ).result()
-        ) {
-            final DataHora dataHora;
-            final Placa placa;
-            if (rset.next()) {
-                placa = new PlacaOf(rset.getString(1));
-                dataHora = new DataHoraOf(rset.getString(2));
-            } else {
-                throw new RuntimeException(
-                    "Dados sobre a entrada inexistentes ou inválidos!"
-                );
-            }
-            return template
-                .with("id", this.id)
-                .with("placa", placa)
-                .with("dataHora", dataHora);
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
-        }
+        final Media media = this.sobre(new MapMedia());
+        return template
+            .with("id", this.id)
+            .with("placa", media.get("placa"))
+            .with("dataHora", media.get("dataHora"));
     }
 }

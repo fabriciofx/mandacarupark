@@ -52,7 +52,7 @@ public final class SaidaSql implements Saida {
     }
 
     @Override
-    public Media sobre() {
+    public Media sobre(final Media media) {
         try (
             final ResultSet rset = new Select(
                 this.session,
@@ -72,11 +72,9 @@ public final class SaidaSql implements Saida {
                     "Dados sobre a saída inexistentes ou inválidos!"
                 );
             }
-            return new MapMedia(
-                "id", this.id,
-                "placa", placa,
-                "dataHora", dataHora
-            );
+            return media.with("id", this.id)
+                .with("placa", placa)
+                .with("dataHora", dataHora);
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -84,7 +82,7 @@ public final class SaidaSql implements Saida {
 
     @Override
     public Template print(final Template template) {
-        final Media media = this.sobre();
+        final Media media = this.sobre(new MapMedia());
         return template.with("id", this.id)
             .with("placa", media.get("placa"))
             .with("dataHora", media.get("dataHora"));

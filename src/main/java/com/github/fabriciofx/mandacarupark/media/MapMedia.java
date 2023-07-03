@@ -268,6 +268,10 @@ public final class MapMedia implements Media {
         this(MapMedia.of(new MapEntryOf<>(key1, value1)));
     }
 
+    public MapMedia() {
+        this(new HashMap<>());
+    }
+
     public MapMedia(final Map<String, Object> items) {
         this.items = items;
     }

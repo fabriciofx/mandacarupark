@@ -24,8 +24,10 @@
 package com.github.fabriciofx.mandacarupark.ticket.imagem;
 
 import com.github.fabriciofx.mandacarupark.DataHora;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.awt.Color;
 import java.awt.Font;
@@ -45,8 +47,9 @@ public final class ImagemTicket implements Imagem {
 
     @Override
     public BufferedImage imagem() {
-        final Placa placa = ticket.sobre().get("placa");
-        final DataHora dataHora = ticket.sobre().get("dataHora");
+        final Media media = ticket.sobre(new MapMedia());
+        final Placa placa = media.get("placa");
+        final DataHora dataHora = media.get("dataHora");
         final InputStream font7 = Thread.currentThread()
             .getContextClassLoader()
             .getResourceAsStream("font/roboto-bold.ttf");

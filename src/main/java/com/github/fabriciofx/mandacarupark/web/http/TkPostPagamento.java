@@ -29,6 +29,7 @@ import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -47,7 +48,8 @@ public final class TkPostPagamento implements Take {
     public Response act(final Request req) throws IOException {
         final RqFormSmart form = new RqFormSmart(req);
         final Id id = new Uuid(form.single("ticket"));
-        final Entradas entradas = this.estacionamento.sobre().get("entradas");
+        final Entradas entradas = this.estacionamento.sobre(new MapMedia())
+            .get("entradas");
         final Ticket ticket = entradas.procura(id).ticket();
         this.estacionamento.pagamento(ticket, new DataHoraOf());
         return new RsForward("/entradas");

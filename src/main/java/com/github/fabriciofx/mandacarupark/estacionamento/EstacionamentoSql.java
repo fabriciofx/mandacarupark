@@ -29,15 +29,16 @@ import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Id;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Regras;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.locacoes.LocacoesSql;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 import com.github.fabriciofx.mandacarupark.regra.Cortesia;
 import com.github.fabriciofx.mandacarupark.ticket.TicketSql;
@@ -76,7 +77,7 @@ public final class EstacionamentoSql implements Estacionamento {
     @Override
     public Dinheiro valor(final Ticket ticket, final DataHora termino) {
         final Periodo periodo = new PeriodoOf(
-            ticket.sobre().get("dataHora"),
+            ticket.sobre(new MapMedia()).get("dataHora"),
             termino
         );
         return this.regras.regra(
@@ -101,20 +102,18 @@ public final class EstacionamentoSql implements Estacionamento {
         if (!ticket.validado()) {
             throw new RuntimeException("Ticket não validado!");
         }
-        if (!ticket.sobre().get("placa").equals(placa)) {
+        if (!ticket.sobre(new MapMedia()).get("placa").equals(placa)) {
             throw new RuntimeException("Ticket não confere com a placa!");
         }
         this.saidas.saida(ticket, placa, dataHora);
     }
 
     @Override
-    public MapMedia sobre() {
-        return new MapMedia(
-            "entradas", this.entradas,
-            "saidas", this.saidas,
-            "pagamentos", this.pagamentos,
-            "regras", this.regras,
-            "locacoes", new LocacoesSql(this.session)
-        );
+    public Media sobre(final Media media) {
+        return media.with("entradas", this.entradas)
+            .with("saidas", this.saidas)
+            .with("pagamentos", this.pagamentos)
+            .with("regras", this.regras)
+            .with("locacoes", new LocacoesSql(this.session));
     }
 }

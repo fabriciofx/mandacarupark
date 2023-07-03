@@ -24,6 +24,7 @@
 package com.github.fabriciofx.mandacarupark.locacoes;
 
 import com.github.fabriciofx.mandacarupark.Pagamentos;
+import com.github.fabriciofx.mandacarupark.Relatorio;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaFake;
@@ -62,82 +63,83 @@ public final class TestRelatorioLocacoesFake {
                 new DinheiroOf("5.00")
             )
         );
-        MatcherAssert.assertThat(
-            XhtmlMatchers.xhtml(
-                new RelatorioXml(
-                    new LocacoesFake(
-                        new EstacionamentoFake(
-                            new EntradasFake(
-                                pagamentos,
-                                new EntradaFake(
-                                    pagamentos,
-                                    new Uuid(
-                                        "d589e997-c61d-47b3-90cf-c5ba23c8b427"
-                                    ),
-                                    new PlacaOf("ABC1234"),
-                                    new DataHoraOf(
-                                        LocalDateTime.of(2022, 8, 2, 10, 30)
-                                    )
-                                ),
-                                new EntradaFake(
-                                    pagamentos,
-                                    new Uuid(
-                                        "e90107c4-f792-4569-abb3-353605f01716"
-                                    ),
-                                    new PlacaOf("DEF5678"),
-                                    new DataHoraOf(
-                                        LocalDateTime.of(2022, 8, 2, 10, 31)
-                                    )
-                                ),
-                                new EntradaFake(
-                                    pagamentos,
-                                    new Uuid(
-                                        "15e32c1b-55ef-4cc6-a9bf-28da74d2309a"
-                                    ),
-                                    new PlacaOf("GHI9012"),
-                                    new DataHoraOf(
-                                        LocalDateTime.of(2022, 8, 2, 10, 32)
-                                    )
-                                )
-                            ),
-                            new SaidasFake(
-                                new SaidaFake(
-                                    new Uuid(
-                                        "d589e997-c61d-47b3-90cf-c5ba23c8b427"
-                                    ),
-                                    new PlacaOf("ABC1234"),
-                                    new DataHoraOf(
-                                        LocalDateTime.of(2022, 8, 2, 11, 40)
-                                    )
-                                ),
-                                new SaidaFake(
-                                    new Uuid(
-                                        "e90107c4-f792-4569-abb3-353605f01716"
-                                    ),
-                                    new PlacaOf("DEF5678"),
-                                    new DataHoraOf(
-                                        LocalDateTime.of(2022, 8, 2, 11, 15)
-                                    )
-                                ),
-                                new SaidaFake(
-                                    new Uuid(
-                                        "15e32c1b-55ef-4cc6-a9bf-28da74d2309a"
-                                    ),
-                                    new PlacaOf("GHI9012"),
-                                    new DataHoraOf(
-                                        LocalDateTime.of(2022, 8, 2, 11, 22)
-                                    )
-                                )
-                            ),
+        final Relatorio relatorio = new RelatorioXml(
+            new LocacoesFake(
+                new EstacionamentoFake(
+                    new EntradasFake(
+                        pagamentos,
+                        new EntradaFake(
                             pagamentos,
-                            new RegrasFake()
+                            new Uuid(
+                                "d589e997-c61d-47b3-90cf-c5ba23c8b427"
+                            ),
+                            new PlacaOf("ABC1234"),
+                            new DataHoraOf(
+                                LocalDateTime.of(2022, 8, 2, 10, 30)
+                            )
+                        ),
+                        new EntradaFake(
+                            pagamentos,
+                            new Uuid(
+                                "e90107c4-f792-4569-abb3-353605f01716"
+                            ),
+                            new PlacaOf("DEF5678"),
+                            new DataHoraOf(
+                                LocalDateTime.of(2022, 8, 2, 10, 31)
+                            )
+                        ),
+                        new EntradaFake(
+                            pagamentos,
+                            new Uuid(
+                                "15e32c1b-55ef-4cc6-a9bf-28da74d2309a"
+                            ),
+                            new PlacaOf("GHI9012"),
+                            new DataHoraOf(
+                                LocalDateTime.of(2022, 8, 2, 10, 32)
+                            )
                         )
                     ),
-                    new PeriodoOf(
-                        LocalDateTime.of(2022, 8, 2, 10, 30),
-                        LocalDateTime.of(2022, 8, 2, 11, 40)
-                    )
-                ).conteudo()
+                    new SaidasFake(
+                        new SaidaFake(
+                            new Uuid(
+                                "d589e997-c61d-47b3-90cf-c5ba23c8b427"
+                            ),
+                            new PlacaOf("ABC1234"),
+                            new DataHoraOf(
+                                LocalDateTime.of(2022, 8, 2, 11, 40)
+                            )
+                        ),
+                        new SaidaFake(
+                            new Uuid(
+                                "e90107c4-f792-4569-abb3-353605f01716"
+                            ),
+                            new PlacaOf("DEF5678"),
+                            new DataHoraOf(
+                                LocalDateTime.of(2022, 8, 2, 11, 15)
+                            )
+                        ),
+                        new SaidaFake(
+                            new Uuid(
+                                "15e32c1b-55ef-4cc6-a9bf-28da74d2309a"
+                            ),
+                            new PlacaOf("GHI9012"),
+                            new DataHoraOf(
+                                LocalDateTime.of(2022, 8, 2, 11, 22)
+                            )
+                        )
+                    ),
+                    pagamentos,
+                    new RegrasFake()
+                )
+            ),
+            new PeriodoOf(
+                LocalDateTime.of(2022, 8, 2, 10, 30),
+                LocalDateTime.of(2022, 8, 2, 11, 40)
+            )
+        );
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                relatorio.conteudo()
             ),
             XhtmlMatchers.hasXPaths(
                 "/locacoes/locacao/placa[text()='ABC1234']",

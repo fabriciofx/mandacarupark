@@ -29,6 +29,7 @@ import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.console.Console;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 
 public final class OpcaoPagamento implements Opcao {
     private final String mensagem;
@@ -59,7 +60,8 @@ public final class OpcaoPagamento implements Opcao {
     public void run() {
         this.console.write("  Ticket: ");
         final Uuid id = new Uuid(this.console.read());
-        final Entradas entradas = this.estacionamento.sobre().get("entradas");
+        final Entradas entradas = this.estacionamento.sobre(new MapMedia())
+            .get("entradas");
         final Ticket ticket = entradas.procura(id).ticket();
         this.estacionamento.pagamento(
             ticket,
@@ -69,7 +71,7 @@ public final class OpcaoPagamento implements Opcao {
             String.format(
                 "Ticket id: %s referente a placa %s %sestá pago!\n",
                 ticket.id(),
-                ticket.sobre().get("placa"),
+                ticket.sobre(new MapMedia()).get("placa"),
                 ticket.validado() ? "" : "não "
             )
         );

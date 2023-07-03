@@ -23,12 +23,9 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
-
-public interface Estacionamento {
+public interface Estacionamento extends Sobre {
     Ticket entrada(Id id, Placa placa, DataHora dataHora);
     Dinheiro valor(Ticket ticket, DataHora termino);
     void pagamento(Ticket ticket, DataHora dataHora);
     void saida(Ticket ticket, Placa placa, DataHora dataHora);
-    MapMedia sobre();
 }

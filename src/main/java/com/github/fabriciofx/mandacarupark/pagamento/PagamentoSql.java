@@ -23,17 +23,17 @@
  */
 package com.github.fabriciofx.mandacarupark.pagamento;
 
-import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Template;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Pagamento;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 import java.util.regex.Matcher;
@@ -53,7 +53,7 @@ public final class PagamentoSql implements Pagamento {
     }
 
     @Override
-    public Media sobre() {
+    public Media sobre(final Media media) {
         try (
             final ResultSet rset = new Select(
                 this.session,
@@ -71,10 +71,8 @@ public final class PagamentoSql implements Pagamento {
             } else {
                 throw new RuntimeException("Dados inexistentes ou inválidos!");
             }
-            return new MapMedia(
-                "dataHora", dataHora,
-                "valor", valor
-            );
+            return media.with("dataHora", dataHora)
+                .with("valor", valor);
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -82,29 +80,12 @@ public final class PagamentoSql implements Pagamento {
 
     @Override
     public Template print(final Template template) {
-        try (
-            final ResultSet rset = new Select(
-                this.session,
-                new Sprintf(
-                    "SELECT datahora, valor FROM pagamento WHERE id = '%s'",
-                    this.id
-                )
-            ).result()
-        ) {
-            final DataHora dataHora;
-            final Dinheiro valor;
-            if (rset.next()) {
-                dataHora = new DataHoraOf(rset.getString(1));
-                valor = new DinheiroOf(rset.getBigDecimal(2));
-            } else {
-                throw new RuntimeException("Dados inexistentes ou inválidos!");
-            }
-            return template
-                .with("id", this.id)
-                .with("dataHora", dataHora)
-                .with("valor", Matcher.quoteReplacement(valor.toString()));
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
-        }
+        final Media media = this.sobre(new MapMedia());
+        return template
+            .with("id", this.id)
+            .with("dataHora", media.get("dataHora"))
+            .with("valor",
+                Matcher.quoteReplacement(media.get("valor").toString())
+            );
     }
 }

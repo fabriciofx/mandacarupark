@@ -29,13 +29,15 @@ import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Locacao;
 import com.github.fabriciofx.mandacarupark.Locacoes;
-import com.github.fabriciofx.mandacarupark.Template;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Saidas;
+import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.locacao.LocacaoFake;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +51,9 @@ public final class LocacoesFake implements Locacoes {
 
     public LocacoesFake(final Estacionamento estacionamento) {
         this(
-            estacionamento.sobre().get("entradas"),
-            estacionamento.sobre().get("saidas"),
-            estacionamento.sobre().get("pagamentos")
+            estacionamento.sobre(new MapMedia()).get("entradas"),
+            estacionamento.sobre(new MapMedia()).get("saidas"),
+            estacionamento.sobre(new MapMedia()).get("pagamentos")
         );
     }
 
@@ -69,7 +71,8 @@ public final class LocacoesFake implements Locacoes {
     public List<Locacao> procura(final Periodo periodo) {
         final List<Locacao> itens = new ArrayList<>();
         for (Entrada entrada : this.entradas) {
-            final DataHora dataHora = entrada.sobre().get("dataHora");
+            final Media media = entrada.sobre(new MapMedia());
+            final DataHora dataHora = media.get("dataHora");
             if (periodo.contem(dataHora)) {
                 final List<Saida> lista = this.saidas.procura(entrada.id());
                 if (!lista.isEmpty()) {
@@ -80,10 +83,10 @@ public final class LocacoesFake implements Locacoes {
                     itens.add(
                         new LocacaoFake(
                             entrada.id(),
-                            entrada.sobre().get("placa"),
-                            entrada.sobre().get("dataHora"),
-                            saida.sobre().get("dataHora"),
-                            pagamento.get(0).sobre().get("valor")
+                            media.get("placa"),
+                            media.get("dataHora"),
+                            saida.sobre(new MapMedia()).get("dataHora"),
+                            pagamento.get(0).sobre(new MapMedia()).get("valor")
                         )
                     );
                 }

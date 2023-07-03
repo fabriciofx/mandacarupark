@@ -30,7 +30,7 @@ import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
  *
  * @since 0.0.1
  */
-public interface Ticket {
+public interface Ticket extends Sobre {
     /**
      * Id do ticket.
      * @return O id do ticket
@@ -42,12 +42,6 @@ public interface Ticket {
      * @return Verdadeiro se o ticket foi pago, falso caso contrário.
      */
     boolean validado();
-
-    /**
-     * Obtém os dados do ticket.
-     * @return Os dados do ticket.
-     */
-    Media sobre();
 
     /**
      * Obtém uma imagem do ticket.

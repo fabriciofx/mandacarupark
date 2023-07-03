@@ -23,12 +23,11 @@
  */
 package com.github.fabriciofx.mandacarupark.ticket;
 
-import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Id;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
@@ -93,11 +92,9 @@ public final class TicketSql implements Ticket {
     }
 
     @Override
-    public Media sobre() {
-        return new MapMedia(
-            "placa", this.placa,
-            "dataHora", this.dataHora
-        );
+    public Media sobre(final Media media) {
+        return media.with("placa", this.placa)
+            .with("dataHora", this.dataHora);
     }
 
     @Override

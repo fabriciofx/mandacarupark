@@ -23,7 +23,6 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
-public interface Locacao {
-    Media sobre();
+public interface Locacao extends Sobre {
     Template print(Template template);
 }

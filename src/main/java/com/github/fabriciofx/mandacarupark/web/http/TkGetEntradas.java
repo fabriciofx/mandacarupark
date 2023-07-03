@@ -26,6 +26,7 @@ package com.github.fabriciofx.mandacarupark.web.http;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Template;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import org.takes.Request;
 import org.takes.Response;
@@ -50,7 +51,8 @@ public final class TkGetEntradas implements Take {
         final Template main = new HtmlTemplate(
             new ResourceAsStream("webapp/entradas.tpl")
         ).with("header", header);
-        final Entradas entradas = this.estacionamento.sobre().get("entradas");
+        final Entradas entradas = this.estacionamento.sobre(new MapMedia())
+            .get("entradas");
         final InputStream body = new ByteArrayInputStream(
             entradas.print(main).bytes()
         );

@@ -26,9 +26,11 @@ package com.github.fabriciofx.mandacarupark.locacoes;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Locacao;
 import com.github.fabriciofx.mandacarupark.Locacoes;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.Relatorio;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 
@@ -46,12 +48,13 @@ public final class RelatorioXml implements Relatorio {
         final Directives directives = new Directives().add("locacoes");
         Dinheiro total = new DinheiroOf("0.00");
         for (final Locacao locacao : this.locacoes.procura(this.periodo)) {
-            final Dinheiro valor = locacao.sobre().get("valor");
+            final Media media = locacao.sobre(new MapMedia());
+            final Dinheiro valor = media.get("valor");
             total = new DinheiroOf(total.quantia().add(valor.quantia()));
             directives.add("locacao")
-                .add("placa").set(locacao.sobre().get("placa")).up()
-                .add("entrada").set(locacao.sobre().get("entrada")).up()
-                .add("saida").set(locacao.sobre().get("saida")).up()
+                .add("placa").set(media.get("placa")).up()
+                .add("entrada").set(media.get("entrada")).up()
+                .add("saida").set(media.get("saida")).up()
                 .add("valor").set(valor).up()
                 .up();
         }

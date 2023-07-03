@@ -23,18 +23,18 @@
  */
 package com.github.fabriciofx.mandacarupark.locacao;
 
-import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Locacao;
-import com.github.fabriciofx.mandacarupark.Template;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Placa;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
@@ -50,7 +50,7 @@ public final class LocacaoSql implements Locacao {
     }
 
     @Override
-    public Media sobre() {
+    public Media sobre(final Media media) {
         try (
             final ResultSet rset = new Select(
                 this.session,
@@ -81,12 +81,10 @@ public final class LocacaoSql implements Locacao {
                     "Dados sobre a locação são inexistentes ou inválidos!"
                 );
             }
-            return new MapMedia(
-                "placa", placa,
-                "entrada", entrada,
-                "saida", saida,
-                "valor", valor
-            );
+            return media.with("placa", placa)
+                .with("entrada", entrada)
+                .with("saida", saida)
+                .with("valor", valor);
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -94,43 +92,14 @@ public final class LocacaoSql implements Locacao {
 
     @Override
     public Template print(final Template template) {
-        try (
-            final ResultSet rset = new Select(
-                this.session,
-                new Sprintf(
-                    "SELECT placa, entrada, saida, valor FROM locacao WHERE id = '%s'",
-                    this.id
+        final Media media = this.sobre(new MapMedia());
+        return template
+            .with("placa", media.get("placa").toString())
+            .with("entrada", media.get("entrada").toString())
+            .with("saida", media.get("saida").toString())
+            .with("valor", Matcher.quoteReplacement(
+                    media.get("valor").toString()
                 )
-            ).result()
-        ) {
-            final Placa placa;
-            final DataHora entrada, saida;
-            final Dinheiro valor;
-            if (rset.next()) {
-                placa = new PlacaOf(rset.getString(1));
-                entrada = new DataHoraOf(rset.getString(2));
-                if (rset.getString(3) != null) {
-                    saida = new DataHoraOf(rset.getString(3));
-                } else {
-                    saida = new DataHoraOf();
-                }
-                if (rset.getString(4) != null) {
-                    valor = new DinheiroOf(rset.getString(4));
-                } else {
-                    valor = new DinheiroOf("0.00");
-                }
-            } else {
-                throw new RuntimeException(
-                    "Dados sobre a locação são inexistentes ou inválidos!"
-                );
-            }
-            return template
-                .with("placa", placa.toString())
-                .with("entrada", entrada.toString())
-                .with("saida", saida.toString())
-                .with("valor", Matcher.quoteReplacement(valor.toString()));
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
-        }
+            );
     }
 }

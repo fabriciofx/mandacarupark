@@ -23,14 +23,13 @@
  */
 package com.github.fabriciofx.mandacarupark.locacao;
 
-import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Locacao;
-import com.github.fabriciofx.mandacarupark.Template;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Placa;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.Template;
 
 public final class LocacaoFake implements Locacao {
     private final Id id;
@@ -54,13 +53,11 @@ public final class LocacaoFake implements Locacao {
     }
 
     @Override
-    public Media sobre() {
-        return new MapMedia(
-            "placa", this.placa,
-            "entrada", this.entrada,
-            "saida", this.saida,
-            "valor", this.valor
-        );
+    public Media sobre(final Media media) {
+        return media.with("placa", this.placa)
+            .with("entrada", this.entrada)
+            .with("saida", this.saida)
+            .with("valor", this.valor);
     }
 
     @Override

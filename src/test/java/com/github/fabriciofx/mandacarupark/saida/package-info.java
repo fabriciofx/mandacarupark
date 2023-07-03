@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
 
-public interface Entrada extends Sobre {
-    Id id();
-    Ticket ticket();
-    Template print(Template template);
-}
+/**
+ * Testes de Saida.
+ *
+ * @since 0.0.1
+ */
+package com.github.fabriciofx.mandacarupark.saida;
