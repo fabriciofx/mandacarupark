@@ -24,5 +24,5 @@
 package com.github.fabriciofx.mandacarupark;
 
 public interface Printer {
-    Media print(Media media);
+    Template print(Template template);
 }

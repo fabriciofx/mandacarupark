@@ -32,7 +32,7 @@ import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.ds.H2Memory;
 import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
-import com.github.fabriciofx.mandacarupark.media.HtmlTemplate;
+import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.print.SaidasPrint;
 import com.github.fabriciofx.mandacarupark.saida.SaidaFake;

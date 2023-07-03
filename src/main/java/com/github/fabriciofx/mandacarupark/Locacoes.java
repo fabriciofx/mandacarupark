@@ -26,6 +26,6 @@ package com.github.fabriciofx.mandacarupark;
 import java.util.List;
 
 public interface Locacoes {
-    Media print(Media media, Periodo periodo);
+    Template print(Template template, Periodo periodo);
     List<Locacao> procura(Periodo periodo);
 }

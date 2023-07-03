@@ -23,9 +23,9 @@
  */
 package com.github.fabriciofx.mandacarupark.print;
 
-import com.github.fabriciofx.mandacarupark.Media;
+import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Printer;
-import com.github.fabriciofx.mandacarupark.media.HtmlTemplate;
+import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.pagination.Page;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,19 +40,19 @@ public final class PagePrint<T extends Printer> implements Printer {
     }
 
     @Override
-    public Media print(final Media media) {
+    public Template print(final Template template) {
         final Pattern find = Pattern.compile(this.regex);
-        final Matcher matcher = find.matcher(new String(media.bytes()));
+        final Matcher matcher = find.matcher(new String(template.bytes()));
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Printer printer : this.page.content()) {
-                Media md = new HtmlTemplate(matcher.group(1));
+                Template md = new HtmlTemplate(matcher.group(1));
                 md = new HtmlTemplate(printer.print(md));
                 sb.append(new String(md.bytes()));
             }
         }
         return new HtmlTemplate(
-            new String(media.bytes()).replaceAll(
+            new String(template.bytes()).replaceAll(
                 this.regex,
                 sb.toString()
             )

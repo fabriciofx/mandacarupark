@@ -27,7 +27,7 @@ import com.github.fabriciofx.mandacarupark.Data;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Media;
+import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
@@ -95,7 +95,7 @@ public final class EntradaSql implements Entrada {
     }
 
     @Override
-    public Media print(final Media media) {
+    public Template print(final Template template) {
         try (
             final ResultSet rset = new Select(
                 this.session,
@@ -115,7 +115,7 @@ public final class EntradaSql implements Entrada {
                     "Dados sobre a entrada inexistentes ou inválidos!"
                 );
             }
-            return media
+            return template
                 .with("id", this.id)
                 .with("placa", placa)
                 .with("dataHora", dataHora);

@@ -26,7 +26,7 @@ package com.github.fabriciofx.mandacarupark.saida;
 import com.github.fabriciofx.mandacarupark.Data;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Media;
+import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
@@ -61,8 +61,8 @@ public final class SaidaFake implements Saida {
     }
 
     @Override
-    public Media print(final Media media) {
-        return media
+    public Template print(final Template template) {
+        return template
             .with("id", this.id)
             .with("placa", this.placa)
             .with("dataHora", this.dataHora);

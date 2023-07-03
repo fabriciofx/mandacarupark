@@ -27,7 +27,7 @@ import com.github.fabriciofx.mandacarupark.Data;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Media;
+import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
@@ -81,7 +81,7 @@ public final class PagamentoSql implements Pagamento {
     }
 
     @Override
-    public Media print(final Media media) {
+    public Template print(final Template template) {
         try (
             final ResultSet rset = new Select(
                 this.session,
@@ -99,7 +99,7 @@ public final class PagamentoSql implements Pagamento {
             } else {
                 throw new RuntimeException("Dados inexistentes ou inválidos!");
             }
-            return media
+            return template
                 .with("id", this.id)
                 .with("dataHora", dataHora)
                 .with("valor", Matcher.quoteReplacement(valor.toString()));

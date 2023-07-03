@@ -30,7 +30,7 @@ import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
-import com.github.fabriciofx.mandacarupark.media.HtmlTemplate;
+import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import org.takes.Request;
 import org.takes.Response;

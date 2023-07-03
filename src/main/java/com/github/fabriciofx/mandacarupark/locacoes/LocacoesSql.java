@@ -25,13 +25,13 @@ package com.github.fabriciofx.mandacarupark.locacoes;
 
 import com.github.fabriciofx.mandacarupark.Locacao;
 import com.github.fabriciofx.mandacarupark.Locacoes;
-import com.github.fabriciofx.mandacarupark.Media;
+import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.locacao.LocacaoSql;
-import com.github.fabriciofx.mandacarupark.media.HtmlTemplate;
+import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -74,20 +74,20 @@ public final class LocacoesSql implements Locacoes {
     }
 
     @Override
-    public Media print(final Media media, final Periodo periodo) {
+    public Template print(final Template template, final Periodo periodo) {
         final String regex = "\\$\\{ls\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ls\\.end}";
         final Pattern find = Pattern.compile(regex);
-        final Matcher matcher = find.matcher(new String(media.bytes()));
+        final Matcher matcher = find.matcher(new String(template.bytes()));
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Locacao locacao : this.procura(periodo)) {
-                Media page = new HtmlTemplate(matcher.group(1));
+                Template page = new HtmlTemplate(matcher.group(1));
                 page = new HtmlTemplate(locacao.print(page));
                 sb.append(new String(page.bytes()));
             }
         }
         return new HtmlTemplate(
-            new String(media.bytes()).replaceAll(
+            new String(template.bytes()).replaceAll(
                 regex,
                 Matcher.quoteReplacement(sb.toString())
             )

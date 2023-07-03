@@ -26,7 +26,7 @@ package com.github.fabriciofx.mandacarupark.saida;
 import com.github.fabriciofx.mandacarupark.Data;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Media;
+import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.data.DataMap;
@@ -83,9 +83,9 @@ public final class SaidaSql implements Saida {
     }
 
     @Override
-    public Media print(final Media media) {
+    public Template print(final Template template) {
         final Data data = this.sobre();
-        return media.with("id", this.id)
+        return template.with("id", this.id)
             .with("placa", data.get("placa"))
             .with("dataHora", data.get("dataHora"));
     }

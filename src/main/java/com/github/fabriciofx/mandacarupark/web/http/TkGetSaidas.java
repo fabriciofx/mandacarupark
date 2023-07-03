@@ -24,9 +24,9 @@
 package com.github.fabriciofx.mandacarupark.web.http;
 
 import com.github.fabriciofx.mandacarupark.Estacionamento;
-import com.github.fabriciofx.mandacarupark.Media;
+import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Saidas;
-import com.github.fabriciofx.mandacarupark.media.HtmlTemplate;
+import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.print.SaidasPrint;
 import org.takes.Request;
 import org.takes.Response;
@@ -51,7 +51,7 @@ public final class TkGetSaidas implements Take {
         final int number = Integer.parseInt(
             new RqHref.Smart(req).single("page", "1")
         );
-        final Media main = new HtmlTemplate(
+        final Template main = new HtmlTemplate(
             new ResourceAsStream("webapp/saidas.tpl")
         ).with(
             "header",

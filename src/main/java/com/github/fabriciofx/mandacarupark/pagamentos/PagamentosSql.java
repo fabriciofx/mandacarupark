@@ -26,7 +26,7 @@ package com.github.fabriciofx.mandacarupark.pagamentos;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Media;
+import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Ticket;
@@ -34,7 +34,7 @@ import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Insert;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
-import com.github.fabriciofx.mandacarupark.media.HtmlTemplate;
+import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.pagamento.PagamentoSql;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
@@ -111,20 +111,20 @@ public final class PagamentosSql implements Pagamentos {
     }
 
     @Override
-    public Media print(final Media media) {
+    public Template print(final Template template) {
         final String regex = "\\$\\{ps\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ps\\.end}";
         final Pattern find = Pattern.compile(regex);
-        final Matcher matcher = find.matcher(new String(media.bytes()));
+        final Matcher matcher = find.matcher(new String(template.bytes()));
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Pagamento pagamento : this) {
-                Media page = new HtmlTemplate(matcher.group(1));
+                Template page = new HtmlTemplate(matcher.group(1));
                 page = new HtmlTemplate(pagamento.print(page));
                 sb.append(new String(page.bytes()));
             }
         }
         return new HtmlTemplate(
-            new String(media.bytes()).replaceAll(
+            new String(template.bytes()).replaceAll(
                 regex,
                 Matcher.quoteReplacement(sb.toString())
             )

@@ -21,15 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.media;
+package com.github.fabriciofx.mandacarupark.template;
 
-import com.github.fabriciofx.mandacarupark.Media;
+import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.text.Text;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-public final class HtmlTemplate implements Media {
+public final class HtmlTemplate implements Template {
     private final Text content;
 
     public HtmlTemplate(final InputStream stream) {
@@ -47,8 +47,8 @@ public final class HtmlTemplate implements Media {
         );
     }
 
-    public HtmlTemplate(final Media media) {
-        this(media.bytes());
+    public HtmlTemplate(final Template template) {
+        this(template.bytes());
     }
 
     public HtmlTemplate(final byte[] bytes) {
@@ -63,7 +63,7 @@ public final class HtmlTemplate implements Media {
         this.content = text;
     }
 
-    public Media with(final String key, final Object value) {
+    public Template with(final String key, final Object value) {
         return new HtmlTemplate(
             this.content.asString().replaceAll(
                 "\\$\\{" + key + "}",

@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.print;
 
-import com.github.fabriciofx.mandacarupark.Media;
+import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Printer;
 import com.github.fabriciofx.mandacarupark.pagination.Page;
 
@@ -38,7 +38,7 @@ public final class SaidasPrint<T extends Printer> implements Printer {
     }
 
     @Override
-    public Media print(final Media media) {
-        return this.printer.print(media);
+    public Template print(final Template template) {
+        return this.printer.print(template);
     }
 }

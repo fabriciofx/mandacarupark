@@ -27,11 +27,11 @@ import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Media;
+import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaFake;
-import com.github.fabriciofx.mandacarupark.media.HtmlTemplate;
+import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -87,20 +87,20 @@ public final class EntradasFake implements Entradas {
     }
 
     @Override
-    public Media print(final Media media) {
+    public Template print(final Template template) {
         final String regex = "\\$\\{es\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{es\\.end}";
         final Pattern find = Pattern.compile(regex);
-        final Matcher matcher = find.matcher(new String(media.bytes()));
+        final Matcher matcher = find.matcher(new String(template.bytes()));
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Entrada entrada : this) {
-                Media page = new HtmlTemplate(matcher.group(1));
+                Template page = new HtmlTemplate(matcher.group(1));
                 page = new HtmlTemplate(entrada.print(page));
                 sb.append(new String(page.bytes()));
             }
         }
         return new HtmlTemplate(
-            new String(media.bytes()).replaceAll(regex, sb.toString())
+            new String(template.bytes()).replaceAll(regex, sb.toString())
         );
     }
 
