@@ -92,6 +92,7 @@
             <target>17</target>
             <compilerArgs>
               <arg>-Xlint:all</arg>
+              <arg>-Xlint:-processing</arg>
             </compilerArgs>
           </configuration>
         </plugin>
