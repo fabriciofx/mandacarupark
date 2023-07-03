@@ -26,6 +26,6 @@ package com.github.fabriciofx.mandacarupark;
 public interface Entrada {
     Id id();
     Ticket ticket();
-    Data sobre();
+    Media sobre();
     Template print(Template template);
 }

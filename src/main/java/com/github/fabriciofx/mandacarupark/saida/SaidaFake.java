@@ -23,13 +23,13 @@
  */
 package com.github.fabriciofx.mandacarupark.saida;
 
-import com.github.fabriciofx.mandacarupark.Data;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saida;
-import com.github.fabriciofx.mandacarupark.data.DataMap;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 
 public final class SaidaFake implements Saida {
     private final Id id;
@@ -52,8 +52,8 @@ public final class SaidaFake implements Saida {
     }
 
     @Override
-    public Data sobre() {
-        return new DataMap(
+    public Media sobre() {
+        return new MapMedia(
             "id", this.id,
             "placa", this.placa,
             "dataHora", this.dataHora

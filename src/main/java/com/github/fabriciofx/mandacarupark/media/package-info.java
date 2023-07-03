@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
 
-public interface Data {
-    <T> T get(String query);
-
-    Data with(String key, Object value);
-}
+/**
+ * Media.
+ *
+ * @since 0.0.1
+ */
+package com.github.fabriciofx.mandacarupark.media;

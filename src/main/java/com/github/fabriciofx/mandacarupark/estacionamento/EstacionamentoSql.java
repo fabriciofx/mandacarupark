@@ -35,7 +35,7 @@ import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Regras;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.data.DataMap;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.locacoes.LocacoesSql;
 import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
@@ -108,8 +108,8 @@ public final class EstacionamentoSql implements Estacionamento {
     }
 
     @Override
-    public DataMap sobre() {
-        return new DataMap(
+    public MapMedia sobre() {
+        return new MapMedia(
             "entradas", this.entradas,
             "saidas", this.saidas,
             "pagamentos", this.pagamentos,

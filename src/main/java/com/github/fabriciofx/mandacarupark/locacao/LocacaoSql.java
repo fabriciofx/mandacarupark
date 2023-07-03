@@ -23,14 +23,14 @@
  */
 package com.github.fabriciofx.mandacarupark.locacao;
 
-import com.github.fabriciofx.mandacarupark.Data;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Locacao;
 import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Placa;
-import com.github.fabriciofx.mandacarupark.data.DataMap;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
@@ -50,7 +50,7 @@ public final class LocacaoSql implements Locacao {
     }
 
     @Override
-    public Data sobre() {
+    public Media sobre() {
         try (
             final ResultSet rset = new Select(
                 this.session,
@@ -81,7 +81,7 @@ public final class LocacaoSql implements Locacao {
                     "Dados sobre a locação são inexistentes ou inválidos!"
                 );
             }
-            return new DataMap(
+            return new MapMedia(
                 "placa", placa,
                 "entrada", entrada,
                 "saida", saida,

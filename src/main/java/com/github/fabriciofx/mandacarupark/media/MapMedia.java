@@ -21,16 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.data;
+package com.github.fabriciofx.mandacarupark.media;
 
-import com.github.fabriciofx.mandacarupark.Data;
+import com.github.fabriciofx.mandacarupark.Media;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class DataMap implements Data {
+public final class MapMedia implements Media {
     private final Map<String, Object> items;
 
-    public DataMap(
+    public MapMedia(
         final String key1,
         final Object value1,
         final String key2,
@@ -53,7 +53,7 @@ public final class DataMap implements Data {
         final Object value10
     ) {
         this(
-            DataMap.of(
+            MapMedia.of(
                 new MapEntryOf<>(key1, value1),
                 new MapEntryOf<>(key2, value2),
                 new MapEntryOf<>(key3, value3),
@@ -68,7 +68,7 @@ public final class DataMap implements Data {
         );
     }
 
-    public DataMap(
+    public MapMedia(
         final String key1,
         final Object value1,
         final String key2,
@@ -89,7 +89,7 @@ public final class DataMap implements Data {
         final Object value9
     ) {
         this(
-            DataMap.of(
+            MapMedia.of(
                 new MapEntryOf<>(key1, value1),
                 new MapEntryOf<>(key2, value2),
                 new MapEntryOf<>(key3, value3),
@@ -103,7 +103,7 @@ public final class DataMap implements Data {
         );
     }
 
-    public DataMap(
+    public MapMedia(
         final String key1,
         final Object value1,
         final String key2,
@@ -122,7 +122,7 @@ public final class DataMap implements Data {
         final Object value8
     ) {
         this(
-            DataMap.of(
+            MapMedia.of(
                 new MapEntryOf<>(key1, value1),
                 new MapEntryOf<>(key2, value2),
                 new MapEntryOf<>(key3, value3),
@@ -135,7 +135,7 @@ public final class DataMap implements Data {
         );
     }
 
-    public DataMap(
+    public MapMedia(
         final String key1,
         final Object value1,
         final String key2,
@@ -152,7 +152,7 @@ public final class DataMap implements Data {
         final Object value7
     ) {
         this(
-            DataMap.of(
+            MapMedia.of(
                 new MapEntryOf<>(key1, value1),
                 new MapEntryOf<>(key2, value2),
                 new MapEntryOf<>(key3, value3),
@@ -164,7 +164,7 @@ public final class DataMap implements Data {
         );
     }
 
-    public DataMap(
+    public MapMedia(
         final String key1,
         final Object value1,
         final String key2,
@@ -179,7 +179,7 @@ public final class DataMap implements Data {
         final Object value6
     ) {
         this(
-            DataMap.of(
+            MapMedia.of(
                 new MapEntryOf<>(key1, value1),
                 new MapEntryOf<>(key2, value2),
                 new MapEntryOf<>(key3, value3),
@@ -190,7 +190,7 @@ public final class DataMap implements Data {
         );
     }
 
-    public DataMap(
+    public MapMedia(
         final String key1,
         final Object value1,
         final String key2,
@@ -203,7 +203,7 @@ public final class DataMap implements Data {
         final Object value5
     ) {
         this(
-            DataMap.of(
+            MapMedia.of(
                 new MapEntryOf<>(key1, value1),
                 new MapEntryOf<>(key2, value2),
                 new MapEntryOf<>(key3, value3),
@@ -213,7 +213,7 @@ public final class DataMap implements Data {
         );
     }
 
-    public DataMap(
+    public MapMedia(
         final String key1,
         final Object value1,
         final String key2,
@@ -224,7 +224,7 @@ public final class DataMap implements Data {
         final Object value4
     ) {
         this(
-            DataMap.of(
+            MapMedia.of(
                 new MapEntryOf<>(key1, value1),
                 new MapEntryOf<>(key2, value2),
                 new MapEntryOf<>(key3, value3),
@@ -233,7 +233,7 @@ public final class DataMap implements Data {
         );
     }
 
-    public DataMap(
+    public MapMedia(
         final String key1,
         final Object value1,
         final String key2,
@@ -242,7 +242,7 @@ public final class DataMap implements Data {
         final Object value3
     ) {
         this(
-            DataMap.of(
+            MapMedia.of(
                 new MapEntryOf<>(key1, value1),
                 new MapEntryOf<>(key2, value2),
                 new MapEntryOf<>(key3, value3)
@@ -250,25 +250,25 @@ public final class DataMap implements Data {
         );
     }
 
-    public DataMap(
+    public MapMedia(
         final String key1,
         final Object value1,
         final String key2,
         final Object value2
     ) {
         this(
-            DataMap.of(
+            MapMedia.of(
                 new MapEntryOf<>(key1, value1),
                 new MapEntryOf<>(key2, value2)
             )
         );
     }
 
-    public DataMap(final String key1, final Object value1) {
-        this(DataMap.of(new MapEntryOf<>(key1, value1)));
+    public MapMedia(final String key1, final Object value1) {
+        this(MapMedia.of(new MapEntryOf<>(key1, value1)));
     }
 
-    public DataMap(final Map<String, Object> items) {
+    public MapMedia(final Map<String, Object> items) {
         this.items = items;
     }
 
@@ -279,9 +279,9 @@ public final class DataMap implements Data {
     }
 
     @Override
-    public DataMap with(final String key, final Object value) {
+    public MapMedia with(final String key, final Object value) {
         this.items.put(key, value);
-        return new DataMap(this.items);
+        return new MapMedia(this.items);
     }
 
     @Override

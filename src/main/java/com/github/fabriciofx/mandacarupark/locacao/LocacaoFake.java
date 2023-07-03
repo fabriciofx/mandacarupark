@@ -23,14 +23,14 @@
  */
 package com.github.fabriciofx.mandacarupark.locacao;
 
-import com.github.fabriciofx.mandacarupark.Data;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Locacao;
 import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Placa;
-import com.github.fabriciofx.mandacarupark.data.DataMap;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 
 public final class LocacaoFake implements Locacao {
     private final Id id;
@@ -54,8 +54,8 @@ public final class LocacaoFake implements Locacao {
     }
 
     @Override
-    public Data sobre() {
-        return new DataMap(
+    public Media sobre() {
+        return new MapMedia(
             "placa", this.placa,
             "entrada", this.entrada,
             "saida", this.saida,

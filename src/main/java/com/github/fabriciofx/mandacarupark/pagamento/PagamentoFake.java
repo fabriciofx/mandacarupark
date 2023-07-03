@@ -23,13 +23,13 @@
  */
 package com.github.fabriciofx.mandacarupark.pagamento;
 
-import com.github.fabriciofx.mandacarupark.Data;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Pagamento;
-import com.github.fabriciofx.mandacarupark.data.DataMap;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 
 public final class PagamentoFake implements Pagamento {
     private final Id id;
@@ -52,8 +52,8 @@ public final class PagamentoFake implements Pagamento {
     }
 
     @Override
-    public Data sobre() {
-        return new DataMap(
+    public Media sobre() {
+        return new MapMedia(
             "dataHora", this.dataHora,
             "valor", this.valor
         );

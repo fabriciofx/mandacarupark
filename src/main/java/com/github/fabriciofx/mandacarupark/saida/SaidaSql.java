@@ -23,13 +23,13 @@
  */
 package com.github.fabriciofx.mandacarupark.saida;
 
-import com.github.fabriciofx.mandacarupark.Data;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Saida;
-import com.github.fabriciofx.mandacarupark.data.DataMap;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
@@ -52,7 +52,7 @@ public final class SaidaSql implements Saida {
     }
 
     @Override
-    public Data sobre() {
+    public Media sobre() {
         try (
             final ResultSet rset = new Select(
                 this.session,
@@ -72,7 +72,7 @@ public final class SaidaSql implements Saida {
                     "Dados sobre a saída inexistentes ou inválidos!"
                 );
             }
-            return new DataMap(
+            return new MapMedia(
                 "id", this.id,
                 "placa", placa,
                 "dataHora", dataHora
@@ -84,9 +84,9 @@ public final class SaidaSql implements Saida {
 
     @Override
     public Template print(final Template template) {
-        final Data data = this.sobre();
+        final Media media = this.sobre();
         return template.with("id", this.id)
-            .with("placa", data.get("placa"))
-            .with("dataHora", data.get("dataHora"));
+            .with("placa", media.get("placa"))
+            .with("dataHora", media.get("dataHora"));
     }
 }

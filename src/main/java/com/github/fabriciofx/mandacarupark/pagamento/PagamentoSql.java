@@ -23,13 +23,13 @@
  */
 package com.github.fabriciofx.mandacarupark.pagamento;
 
-import com.github.fabriciofx.mandacarupark.Data;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Pagamento;
-import com.github.fabriciofx.mandacarupark.data.DataMap;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
@@ -53,7 +53,7 @@ public final class PagamentoSql implements Pagamento {
     }
 
     @Override
-    public Data sobre() {
+    public Media sobre() {
         try (
             final ResultSet rset = new Select(
                 this.session,
@@ -71,7 +71,7 @@ public final class PagamentoSql implements Pagamento {
             } else {
                 throw new RuntimeException("Dados inexistentes ou inválidos!");
             }
-            return new DataMap(
+            return new MapMedia(
                 "dataHora", dataHora,
                 "valor", valor
             );
