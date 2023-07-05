@@ -24,6 +24,6 @@
 package com.github.fabriciofx.mandacarupark;
 
 public interface Template {
-    Template with(final String key, final Object value);
+    Template with(String key, Object value);
     byte[] bytes();
 }
