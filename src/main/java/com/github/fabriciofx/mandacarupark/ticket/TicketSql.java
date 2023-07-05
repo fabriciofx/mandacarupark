@@ -93,8 +93,11 @@ public final class TicketSql implements Ticket {
 
     @Override
     public Media sobre(final Media media) {
-        return media.with("placa", this.placa)
-            .with("dataHora", this.dataHora);
+        return media.begin("ticket")
+            .with("id", this.id)
+            .with("placa", this.placa)
+            .with("dataHora", this.dataHora)
+            .end("ticket");
     }
 
     @Override
