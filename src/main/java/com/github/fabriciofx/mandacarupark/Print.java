@@ -23,6 +23,6 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
-public interface Printer {
+public interface Print {
     Template print(Template template);
 }

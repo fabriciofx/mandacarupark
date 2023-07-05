@@ -24,11 +24,11 @@
 package com.github.fabriciofx.mandacarupark.web.http;
 
 import com.github.fabriciofx.mandacarupark.Estacionamento;
-import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Saidas;
+import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.saidas.SaidasPrint;
 import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
-import com.github.fabriciofx.mandacarupark.print.SaidasPrint;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
@@ -49,7 +49,7 @@ public final class TkGetSaidas implements Take {
     @Override
     public Response act(final Request req) throws IOException {
         final Saidas saidas = this.estacionamento.sobre(new MapMedia())
-            .get("saidas");
+            .select("saidas");
         final int number = Integer.parseInt(
             new RqHref.Smart(req).single("page", "1")
         );
@@ -65,7 +65,7 @@ public final class TkGetSaidas implements Take {
             )
         );
         final InputStream body = new ByteArrayInputStream(
-            new SaidasPrint<>(saidas.pages(1).page(number - 1)).print(main).bytes()
+            new SaidasPrint(saidas).print(main).toString().getBytes()
         );
         return new RsHtml(body);
     }

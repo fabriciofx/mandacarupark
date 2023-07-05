@@ -24,7 +24,8 @@
 package com.github.fabriciofx.mandacarupark;
 
 public interface Media {
-    <T> T get(String query);
-
+    <T> T select(String query);
+    Media begin(String name);
+    Media end(String name);
     Media with(String key, Object value);
 }

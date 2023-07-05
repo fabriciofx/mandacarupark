@@ -61,7 +61,7 @@ public final class OpcaoPagamento implements Opcao {
         this.console.write("  Ticket: ");
         final Uuid id = new Uuid(this.console.read());
         final Entradas entradas = this.estacionamento.sobre(new MapMedia())
-            .get("entradas");
+            .select("entradas");
         final Ticket ticket = entradas.procura(id).ticket();
         this.estacionamento.pagamento(
             ticket,
@@ -71,7 +71,7 @@ public final class OpcaoPagamento implements Opcao {
             String.format(
                 "Ticket id: %s referente a placa %s %sestá pago!\n",
                 ticket.id(),
-                ticket.sobre(new MapMedia()).get("placa"),
+                ticket.sobre(new MapMedia()).select("placa"),
                 ticket.validado() ? "" : "não "
             )
         );

@@ -28,38 +28,20 @@ import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Media;
-import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Placa;
-import com.github.fabriciofx.mandacarupark.entrada.EntradaFake;
-import java.util.HashMap;
+import com.github.fabriciofx.mandacarupark.Print;
+import com.github.fabriciofx.mandacarupark.Template;
+import com.github.fabriciofx.mandacarupark.entrada.EntradaPrint;
+import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public final class EntradasFake implements Entradas {
-    private final Map<Id, Entrada> itens;
-    private final Pagamentos pagamentos;
+public final class EntradasPrint implements Entradas, Print {
+    private final Entradas entradas;
 
-    public EntradasFake(final Pagamentos pagamentos) {
-        this(pagamentos, new HashMap<>());
-    }
-
-    public EntradasFake(
-        final Pagamentos pagamentos,
-        final Entrada... entradas
-    ) {
-        this.pagamentos = pagamentos;
-        this.itens = new HashMap<>();
-        for (final Entrada entrada : entradas) {
-            this.itens.put(entrada.id(), entrada);
-        }
-    }
-
-    public EntradasFake(
-        final Pagamentos pagamentos,
-        final Map<Id, Entrada> itens
-    ) {
-        this.pagamentos = pagamentos;
-        this.itens = itens;
+    public EntradasPrint(final Entradas entradas) {
+        this.entradas = entradas;
     }
 
     @Override
@@ -68,32 +50,39 @@ public final class EntradasFake implements Entradas {
         final Placa placa,
         final DataHora dataHora
     ) {
-        final Entrada entrada = new EntradaFake(
-            this.pagamentos,
-            id,
-            placa,
-            dataHora
-        );
-        this.itens.put(entrada.id(), entrada);
-        return entrada;
+        return this.entradas.entrada(id, placa, dataHora);
     }
 
     @Override
     public Entrada procura(final Id id) {
-        return this.itens.get(id);
-    }
-
-    @Override
-    public Iterator<Entrada> iterator() {
-        return this.itens.values().iterator();
+        return this.entradas.procura(id);
     }
 
     @Override
     public Media sobre(final Media media) {
-        Media med = media.begin("entradas");
-        for (final Entrada entrada : this) {
-            med = entrada.sobre(med);
+        return this.entradas.sobre(media);
+    }
+
+    @Override
+    public Iterator<Entrada> iterator() {
+        return this.entradas.iterator();
+    }
+
+    @Override
+    public Template print(final Template template) {
+        final String regex = "\\$\\{es\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{es\\.end}";
+        final Pattern find = Pattern.compile(regex);
+        final Matcher matcher = find.matcher(template.toString());
+        final StringBuilder sb = new StringBuilder();
+        while (matcher.find()) {
+            for (final Entrada entrada : this.entradas) {
+                Template page = new HtmlTemplate(matcher.group(1));
+                page = new HtmlTemplate(new EntradaPrint(entrada).print(page).toString());
+                sb.append(new String(page.bytes()));
+            }
         }
-        return med.end("entradas");
+        return new HtmlTemplate(
+            new String(template.bytes()).replaceAll(regex, sb.toString())
+        );
     }
 }

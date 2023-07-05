@@ -65,7 +65,7 @@ public final class OpcaoSaida implements Opcao {
         final Placa placa = new Restricao(new PlacaOf(this.console.read()));
         this.console.write("Ticket: ");
         final Entradas entradas = this.estacionamento.sobre(new MapMedia())
-            .get("entradas");
+            .select("entradas");
         final Ticket ticket = entradas.procura(
             new Uuid(this.console.read())
         ).ticket();

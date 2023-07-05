@@ -51,15 +51,15 @@ public final class TestSaida {
         );
         Assert.assertEquals(
             "8c878e6f-ee13-4a37-a208-7510c2638944",
-            saida.sobre(new MapMedia()).get("id").toString()
+            saida.sobre(new MapMedia()).select("id").toString()
         );
         Assert.assertEquals(
             "ABC1234",
-            saida.sobre(new MapMedia()).get("placa").toString()
+            saida.sobre(new MapMedia()).select("placa").toString()
         );
         Assert.assertEquals(
             "21/07/2022 17:11:12",
-            saida.sobre(new MapMedia()).get("dataHora").toString()
+            saida.sobre(new MapMedia()).select("dataHora").toString()
         );
     }
 
@@ -76,7 +76,7 @@ public final class TestSaida {
         );
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                saida.print(new HtmlTemplate(html))
+                new SaidaPrint(saida).print(new HtmlTemplate(html))
             ),
             XhtmlMatchers.hasXPaths(
                 "/html/body/table/tbody/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",
@@ -106,15 +106,15 @@ public final class TestSaida {
             );
             Assert.assertEquals(
                 "8c878e6f-ee13-4a37-a208-7510c2638944",
-                saida.sobre(new MapMedia()).get("id").toString()
+                saida.sobre(new MapMedia()).select("id").toString()
             );
             Assert.assertEquals(
                 "ABC1234",
-                saida.sobre(new MapMedia()).get("placa").toString()
+                saida.sobre(new MapMedia()).select("placa").toString()
             );
             Assert.assertEquals(
                 "21/07/2022 17:11:12",
-                saida.sobre(new MapMedia()).get("dataHora").toString()
+                saida.sobre(new MapMedia()).select("dataHora").toString()
             );
         }
     }
@@ -143,7 +143,7 @@ public final class TestSaida {
             );
             MatcherAssert.assertThat(
                 XhtmlMatchers.xhtml(
-                    saida.print(new HtmlTemplate(html))
+                    new SaidaPrint(saida).print(new HtmlTemplate(html))
                 ),
                 XhtmlMatchers.hasXPaths(
                     "/html/body/table/tbody/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",

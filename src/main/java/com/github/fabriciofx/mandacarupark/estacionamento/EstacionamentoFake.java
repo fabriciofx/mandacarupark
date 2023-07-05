@@ -78,7 +78,7 @@ public final class EstacionamentoFake implements Estacionamento {
     @Override
     public Dinheiro valor(final Ticket ticket, final DataHora termino) {
         final Periodo periodo = new PeriodoOf(
-            ticket.sobre(new MapMedia()).get("dataHora"),
+            ticket.sobre(new MapMedia()).select("dataHora"),
             termino
         );
         return this.regras.regra(
@@ -103,7 +103,7 @@ public final class EstacionamentoFake implements Estacionamento {
         if (!ticket.validado()) {
             throw new RuntimeException("Ticket não validado!");
         }
-        if (!ticket.sobre(new MapMedia()).get("placa").equals(placa)) {
+        if (!ticket.sobre(new MapMedia()).select("placa").equals(placa)) {
             throw new RuntimeException("Ticket não confere com a placa!");
         }
         this.saidas.saida(ticket, placa, dataHora);

@@ -25,5 +25,4 @@ package com.github.fabriciofx.mandacarupark;
 
 public interface Pagamento extends Sobre {
     Id id();
-    Template print(Template template);
 }

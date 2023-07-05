@@ -28,15 +28,12 @@ import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Pagamento;
-import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
-import java.util.regex.Matcher;
 
 public final class PagamentoSql implements Pagamento {
     private final Session session;
@@ -76,16 +73,5 @@ public final class PagamentoSql implements Pagamento {
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
-    }
-
-    @Override
-    public Template print(final Template template) {
-        final Media media = this.sobre(new MapMedia());
-        return template
-            .with("id", this.id)
-            .with("dataHora", media.get("dataHora"))
-            .with("valor",
-                Matcher.quoteReplacement(media.get("valor").toString())
-            );
     }
 }

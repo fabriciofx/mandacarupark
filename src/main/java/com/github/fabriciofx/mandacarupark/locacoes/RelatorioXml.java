@@ -49,12 +49,12 @@ public final class RelatorioXml implements Relatorio {
         Dinheiro total = new DinheiroOf("0.00");
         for (final Locacao locacao : this.locacoes.procura(this.periodo)) {
             final Media media = locacao.sobre(new MapMedia());
-            final Dinheiro valor = media.get("valor");
+            final Dinheiro valor = media.select("valor");
             total = new DinheiroOf(total.quantia().add(valor.quantia()));
             directives.add("locacao")
-                .add("placa").set(media.get("placa")).up()
-                .add("entrada").set(media.get("entrada")).up()
-                .add("saida").set(media.get("saida")).up()
+                .add("placa").set(media.select("placa")).up()
+                .add("entrada").set(media.select("entrada")).up()
+                .add("saida").set(media.select("saida")).up()
                 .add("valor").set(valor).up()
                 .up();
         }

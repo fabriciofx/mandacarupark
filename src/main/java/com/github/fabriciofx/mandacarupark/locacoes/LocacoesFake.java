@@ -35,14 +35,12 @@ import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Saidas;
-import com.github.fabriciofx.mandacarupark.Template;
+import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.locacao.LocacaoFake;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
-import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
+import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public final class LocacoesFake implements Locacoes {
     private final Entradas entradas;
@@ -51,9 +49,9 @@ public final class LocacoesFake implements Locacoes {
 
     public LocacoesFake(final Estacionamento estacionamento) {
         this(
-            estacionamento.sobre(new MapMedia()).get("entradas"),
-            estacionamento.sobre(new MapMedia()).get("saidas"),
-            estacionamento.sobre(new MapMedia()).get("pagamentos")
+            estacionamento.sobre(new MapMedia()).select("entradas"),
+            estacionamento.sobre(new MapMedia()).select("saidas"),
+            estacionamento.sobre(new MapMedia()).select("pagamentos")
         );
     }
 
@@ -72,7 +70,7 @@ public final class LocacoesFake implements Locacoes {
         final List<Locacao> itens = new ArrayList<>();
         for (Entrada entrada : this.entradas) {
             final Media media = entrada.sobre(new MapMedia());
-            final DataHora dataHora = media.get("dataHora");
+            final DataHora dataHora = media.select("dataHora");
             if (periodo.contem(dataHora)) {
                 final List<Saida> lista = this.saidas.procura(entrada.id());
                 if (!lista.isEmpty()) {
@@ -83,10 +81,10 @@ public final class LocacoesFake implements Locacoes {
                     itens.add(
                         new LocacaoFake(
                             entrada.id(),
-                            media.get("placa"),
-                            media.get("dataHora"),
-                            saida.sobre(new MapMedia()).get("dataHora"),
-                            pagamento.get(0).sobre(new MapMedia()).get("valor")
+                            media.select("placa"),
+                            media.select("dataHora"),
+                            saida.sobre(new MapMedia()).select("dataHora"),
+                            pagamento.get(0).sobre(new MapMedia()).select("valor")
                         )
                     );
                 }
@@ -96,23 +94,17 @@ public final class LocacoesFake implements Locacoes {
     }
 
     @Override
-    public Template print(final Template template, final Periodo periodo) {
-        final String regex = "\\$\\{ls\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ls\\.end}";
-        final Pattern find = Pattern.compile(regex);
-        final Matcher matcher = find.matcher(new String(template.bytes()));
-        final StringBuilder sb = new StringBuilder();
-        while (matcher.find()) {
-            for (final Locacao locacao : this.procura(periodo)) {
-                Template page = new HtmlTemplate(matcher.group(1));
-                page = new HtmlTemplate(locacao.print(page));
-                sb.append(new String(page.bytes()));
-            }
-        }
-        return new HtmlTemplate(
-            new String(template.bytes()).replaceAll(
-                regex,
-                Matcher.quoteReplacement(sb.toString())
+    public Media sobre(final Media media) {
+        Media med = media;
+        for (final Locacao locacao : this.procura(
+            new PeriodoOf(
+                new DataHoraOf("01/01/2020 00:00:00"),
+                new DataHoraOf("31/12/2023 23:59:59")
             )
-        );
+        )
+        ) {
+            med = locacao.sobre(med);
+        }
+        return med;
     }
 }

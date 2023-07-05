@@ -21,24 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.print;
+package com.github.fabriciofx.mandacarupark.entrada;
 
+import com.github.fabriciofx.mandacarupark.Entrada;
+import com.github.fabriciofx.mandacarupark.Id;
+import com.github.fabriciofx.mandacarupark.Media;
+import com.github.fabriciofx.mandacarupark.Print;
 import com.github.fabriciofx.mandacarupark.Template;
-import com.github.fabriciofx.mandacarupark.Printer;
-import com.github.fabriciofx.mandacarupark.pagination.Page;
+import com.github.fabriciofx.mandacarupark.Ticket;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 
-public final class SaidasPrint<T extends Printer> implements Printer {
-    private final PagePrint<T> printer;
+public final class EntradaPrint implements Entrada, Print {
+    private final Entrada entrada;
 
-    public SaidasPrint(final Page<T> page) {
-        this.printer = new PagePrint<>(
-            "\\$\\{ss\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ss\\.end}",
-            page
-        );
+    public EntradaPrint(final Entrada entrada) {
+        this.entrada = entrada;
+    }
+
+    @Override
+    public Id id() {
+        return this.entrada.id();
+    }
+
+    @Override
+    public Ticket ticket() {
+        return this.entrada.ticket();
+    }
+
+    @Override
+    public Media sobre(final Media media) {
+        return this.entrada.sobre(media);
     }
 
     @Override
     public Template print(final Template template) {
-        return this.printer.print(template);
+        final Media media = this.sobre(new MapMedia());
+        return template.with("id", media.select("id"))
+            .with("placa", media.select("placa"))
+            .with("dataHora", media.select("dataHora"));
     }
 }

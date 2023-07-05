@@ -23,8 +23,8 @@
  */
 
 /**
- * Print.
+ * Media.
  *
  * @since 0.0.1
  */
-package com.github.fabriciofx.mandacarupark.print;
+package com.github.fabriciofx.mandacarupark.media;

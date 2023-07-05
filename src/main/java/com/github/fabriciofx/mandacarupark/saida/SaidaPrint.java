@@ -21,9 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.saida;
 
-public interface Template {
-    Template with(final String key, final Object value);
-    byte[] bytes();
+import com.github.fabriciofx.mandacarupark.Id;
+import com.github.fabriciofx.mandacarupark.Media;
+import com.github.fabriciofx.mandacarupark.Print;
+import com.github.fabriciofx.mandacarupark.Saida;
+import com.github.fabriciofx.mandacarupark.Template;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
+
+public final class SaidaPrint implements Saida, Print {
+    private final Saida saida;
+
+    public SaidaPrint(final Saida saida) {
+        this.saida = saida;
+    }
+
+    @Override
+    public Id id() {
+        return this.saida.id();
+    }
+
+    @Override
+    public Media sobre(final Media media) {
+        return this.saida.sobre(media);
+    }
+
+    @Override
+    public Template print(final Template template) {
+        final Media media = this.sobre(new MapMedia());
+        return template.with("id", media.select("id"))
+            .with("placa", media.select("placa"))
+            .with("dataHora", media.select("dataHora"));
+    }
 }

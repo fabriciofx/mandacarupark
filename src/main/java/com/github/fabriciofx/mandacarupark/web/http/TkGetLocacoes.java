@@ -26,18 +26,13 @@ package com.github.fabriciofx.mandacarupark.web.http;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Locacoes;
 import com.github.fabriciofx.mandacarupark.Template;
-import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
-import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
-import org.takes.rq.form.RqFormBase;
 import org.takes.rs.RsHtml;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 public final class TkGetLocacoes implements Take {
     private final Estacionamento estacionamento;
@@ -54,26 +49,31 @@ public final class TkGetLocacoes implements Take {
         final Template main = new HtmlTemplate(
             new ResourceAsStream("webapp/locacoes.tpl")
         ).with("header", header);
-        final RqFormBase form = new RqFormBase(req);
-        final String inicio, termino;
-        if (form.names().iterator().hasNext()) {
-            inicio = form.param("inicio").iterator().next();
-            termino = form.param("termino").iterator().next();
-        } else {
-            inicio = "01/01/2022 00:00:00";
-            termino = "31/01/2023 23:59:59";
-        }
+//        final RqFormBase form = new RqFormBase(req);
+//        final String inicio, termino;
+//        if (form.names().iterator().hasNext()) {
+//            inicio = form.param("inicio").iterator().next();
+//            termino = form.param("termino").iterator().next();
+//        } else {
+//            inicio = "01/01/2022 00:00:00";
+//            termino = "31/01/2023 23:59:59";
+//        }
         final Locacoes locacoes = this.estacionamento.sobre(new MapMedia())
-            .get("locacoes");
-        final InputStream body = new ByteArrayInputStream(
-            locacoes.print(
-                main,
-                new PeriodoOf(
-                    new DataHoraOf(inicio),
-                    new DataHoraOf(termino)
-                )
-            ).bytes()
-        );
-        return new RsHtml(body);
+            .select("locacoes");
+//        final InputStream body = new ByteArrayInputStream(
+//            locacoes.sobre(
+//                main,
+//                new PeriodoOf(
+//                    new DataHoraOf(inicio),
+//                    new DataHoraOf(termino)
+//                )
+//            ).toString().getBytes()
+//        );
+//        final InputStream body = new ByteArrayInputStream(
+//            locacoes.sobre(main).toString().getBytes()
+//        );
+//        return new RsHtml(body);
+        return new RsHtml("");
+
     }
 }

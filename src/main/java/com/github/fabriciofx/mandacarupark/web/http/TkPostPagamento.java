@@ -49,7 +49,7 @@ public final class TkPostPagamento implements Take {
         final RqFormSmart form = new RqFormSmart(req);
         final Id id = new Uuid(form.single("ticket"));
         final Entradas entradas = this.estacionamento.sobre(new MapMedia())
-            .get("entradas");
+            .select("entradas");
         final Ticket ticket = entradas.procura(id).ticket();
         this.estacionamento.pagamento(ticket, new DataHoraOf());
         return new RsForward("/entradas");

@@ -60,7 +60,7 @@ public final class OpcaoEntradas implements Opcao {
     public void run() {
         int linhas = 0;
         final Entradas entradas = this.estacionamento.sobre(new MapMedia())
-            .get("entradas");
+            .select("entradas");
         for (final Entrada entrada : entradas) {
             linhas++;
         }
@@ -74,11 +74,11 @@ public final class OpcaoEntradas implements Opcao {
             );
             tabela[linha][1] = String.format(
                 " %s ",
-                media.get("placa").toString()
+                media.select("placa").toString()
             );
             tabela[linha][2] = String.format(
                 " %s ",
-                media.get("dataHora").toString()
+                media.select("dataHora").toString()
             );
             linha++;
         }

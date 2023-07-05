@@ -27,21 +27,18 @@ import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Template;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Insert;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaSql;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
-import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public final class EntradasSql implements Entradas {
     private final Session session;
@@ -98,24 +95,6 @@ public final class EntradasSql implements Entradas {
     }
 
     @Override
-    public Template print(final Template template) {
-        final String regex = "\\$\\{es\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{es\\.end}";
-        final Pattern find = Pattern.compile(regex);
-        final Matcher matcher = find.matcher(new String(template.bytes()));
-        final StringBuilder sb = new StringBuilder();
-        while (matcher.find()) {
-            for (final Entrada entrada : this) {
-                Template page = new HtmlTemplate(matcher.group(1));
-                page = new HtmlTemplate(entrada.print(page));
-                sb.append(new String(page.bytes()));
-            }
-        }
-        return new HtmlTemplate(
-            new String(template.bytes()).replaceAll(regex, sb.toString())
-        );
-    }
-
-    @Override
     public Iterator<Entrada> iterator() {
         try (
             final ResultSet rset = new Select(
@@ -136,5 +115,14 @@ public final class EntradasSql implements Entradas {
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    @Override
+    public Media sobre(final Media media) {
+        Media med = media.begin("entradas");
+        for (final Entrada entrada : this) {
+            med = entrada.sobre(med);
+        }
+        return med.end("entradas");
     }
 }

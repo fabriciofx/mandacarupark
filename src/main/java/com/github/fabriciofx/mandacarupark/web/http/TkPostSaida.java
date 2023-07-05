@@ -54,7 +54,7 @@ public final class TkPostSaida implements Take {
         final Placa placa = new PlacaOf(form.single("placa"));
         final Id id = new Uuid(form.single("ticket"));
         final Entradas entradas = this.estacionamento.sobre(new MapMedia())
-            .get("entradas");
+            .select("entradas");
         final Ticket ticket = entradas.procura(id).ticket();
         try {
             this.estacionamento.saida(ticket, placa, new DataHoraOf());

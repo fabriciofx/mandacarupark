@@ -27,63 +27,52 @@ import com.github.fabriciofx.mandacarupark.Locacao;
 import com.github.fabriciofx.mandacarupark.Locacoes;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Periodo;
+import com.github.fabriciofx.mandacarupark.Print;
+import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
-import com.github.fabriciofx.mandacarupark.db.Session;
-import com.github.fabriciofx.mandacarupark.db.stmt.Select;
-import com.github.fabriciofx.mandacarupark.id.Uuid;
-import com.github.fabriciofx.mandacarupark.locacao.LocacaoSql;
+import com.github.fabriciofx.mandacarupark.locacao.LocacaoPrint;
 import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
-import com.github.fabriciofx.mandacarupark.text.Sprintf;
-import java.sql.ResultSet;
-import java.util.ArrayList;
+import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public final class LocacoesSql implements Locacoes {
-    private final Session session;
+public final class LocacoesPrint implements Locacoes, Print {
+    private final Locacoes locacoes;
 
-    public LocacoesSql(final Session session) {
-        this.session = session;
+    public LocacoesPrint(final Locacoes locacoes) {
+        this.locacoes = locacoes;
     }
 
     @Override
     public List<Locacao> procura(final Periodo periodo) {
-        try (
-            final ResultSet rset = new Select(
-                this.session,
-                new Sprintf(
-                    "SELECT * FROM locacao WHERE entrada >= '%s' AND saida <= '%s'",
-                    periodo.inicio().dateTime(),
-                    periodo.termino().dateTime()
-                )
-            ).result()
-        ) {
-            final List<Locacao> itens = new ArrayList<>();
-            while (rset.next()) {
-                itens.add(
-                    new LocacaoSql(
-                        this.session,
-                        new Uuid(rset.getString(1))
-                    )
-                );
-            }
-            return itens;
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
-        }
+        return this.locacoes.procura(periodo);
     }
 
     @Override
     public Media sobre(final Media media) {
-        Media med = media;
-        for (final Locacao locacao : this.procura(
-                new PeriodoOf(
-                    new DataHoraOf("01/01/2020 00:00:00"),
-                    new DataHoraOf("31/12/2023 23:59:59")
-                )
-            )
-        ) {
-            med = locacao.sobre(med);
+        return this.locacoes.sobre(media);
+    }
+
+    @Override
+    public Template print(final Template template) {
+        final String regex = "\\$\\{ls\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ls\\.end}";
+        final Pattern find = Pattern.compile(regex);
+        final Matcher matcher = find.matcher(template.toString());
+        final StringBuilder sb = new StringBuilder();
+        final Periodo periodo = new PeriodoOf(
+            new DataHoraOf("01/01/2022 00:00:00"),
+            new DataHoraOf("31/12/2023 23:59:59")
+        );
+        while (matcher.find()) {
+            for (final Locacao locacao : this.locacoes.procura(periodo)) {
+                Template page = new HtmlTemplate(matcher.group(1));
+                page = new HtmlTemplate(new LocacaoPrint(locacao).print(page).toString());
+                sb.append(new String(page.bytes()));
+            }
         }
-        return med;
+        return new HtmlTemplate(
+            new String(template.bytes()).replaceAll(regex, sb.toString())
+        );
     }
 }

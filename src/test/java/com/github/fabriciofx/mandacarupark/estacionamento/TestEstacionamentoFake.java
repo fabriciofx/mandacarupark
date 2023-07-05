@@ -70,7 +70,7 @@ public final class TestEstacionamentoFake {
         final Entrada entrada = entradas.procura(ticket.id());
         Assert.assertEquals(
             "ABC1234",
-            entrada.sobre(new MapMedia()).get("placa").toString()
+            entrada.sobre(new MapMedia()).select("placa").toString()
         );
     }
 

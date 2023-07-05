@@ -28,7 +28,6 @@ import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Pagamento;
-import com.github.fabriciofx.mandacarupark.Template;
 
 public final class PagamentoFake implements Pagamento {
     private final Id id;
@@ -53,14 +52,6 @@ public final class PagamentoFake implements Pagamento {
     @Override
     public Media sobre(final Media media) {
         return media.with("dataHora", this.dataHora)
-            .with("valor", this.valor);
-    }
-
-    @Override
-    public Template print(final Template template) {
-        return template
-            .with("id", this.id)
-            .with("dataHora", this.dataHora)
             .with("valor", this.valor);
     }
 }

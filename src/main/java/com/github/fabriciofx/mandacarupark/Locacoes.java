@@ -25,7 +25,6 @@ package com.github.fabriciofx.mandacarupark;
 
 import java.util.List;
 
-public interface Locacoes {
-    Template print(Template template, Periodo periodo);
+public interface Locacoes extends Sobre {
     List<Locacao> procura(Periodo periodo);
 }

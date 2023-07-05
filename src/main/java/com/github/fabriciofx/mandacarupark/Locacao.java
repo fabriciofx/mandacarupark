@@ -24,5 +24,4 @@
 package com.github.fabriciofx.mandacarupark;
 
 public interface Locacao extends Sobre {
-    Template print(Template template);
 }

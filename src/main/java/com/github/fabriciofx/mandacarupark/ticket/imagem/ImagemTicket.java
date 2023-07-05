@@ -48,8 +48,8 @@ public final class ImagemTicket implements Imagem {
     @Override
     public BufferedImage imagem() {
         final Media media = ticket.sobre(new MapMedia());
-        final Placa placa = media.get("placa");
-        final DataHora dataHora = media.get("dataHora");
+        final Placa placa = media.select("placa");
+        final DataHora dataHora = media.select("dataHora");
         final InputStream font7 = Thread.currentThread()
             .getContextClassLoader()
             .getResourceAsStream("font/roboto-bold.ttf");

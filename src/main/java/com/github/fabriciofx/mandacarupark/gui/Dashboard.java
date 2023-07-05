@@ -129,8 +129,8 @@ public final class Dashboard extends Application {
                 final Media media = entrada.sobre(new MapMedia());
                 final Map<String, String> linha = new HashMap<>();
                 linha.put("id", entrada.id().toString());
-                linha.put("placa", media.get("placa").toString());
-                linha.put("dataHora", media.get("dataHora").toString());
+                linha.put("placa", media.select("placa").toString());
+                linha.put("dataHora", media.select("dataHora").toString());
                 linhas.add(linha);
             }
         } catch (final Exception ex) {

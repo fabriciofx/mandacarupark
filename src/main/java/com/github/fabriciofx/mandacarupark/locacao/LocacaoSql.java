@@ -29,16 +29,13 @@ import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Locacao;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Placa;
-import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
-import java.util.regex.Matcher;
 
 public final class LocacaoSql implements Locacao {
     private final Session session;
@@ -81,25 +78,14 @@ public final class LocacaoSql implements Locacao {
                     "Dados sobre a locação são inexistentes ou inválidos!"
                 );
             }
-            return media.with("placa", placa)
+            return media.begin("locacao")
+                .with("placa", placa)
                 .with("entrada", entrada)
                 .with("saida", saida)
-                .with("valor", valor);
+                .with("valor", valor)
+                .end("locacao");
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
-    }
-
-    @Override
-    public Template print(final Template template) {
-        final Media media = this.sobre(new MapMedia());
-        return template
-            .with("placa", media.get("placa").toString())
-            .with("entrada", media.get("entrada").toString())
-            .with("saida", media.get("saida").toString())
-            .with("valor", Matcher.quoteReplacement(
-                    media.get("valor").toString()
-                )
-            );
     }
 }

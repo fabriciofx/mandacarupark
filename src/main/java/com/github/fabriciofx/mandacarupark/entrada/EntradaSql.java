@@ -27,7 +27,6 @@ import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
@@ -59,8 +58,8 @@ public final class EntradaSql implements Entrada {
         return new TicketSql(
             this.session,
             this.id,
-            media.get("placa"),
-            media.get("dataHora")
+            media.select("placa"),
+            media.select("dataHora")
         );
     }
 
@@ -85,20 +84,13 @@ public final class EntradaSql implements Entrada {
                     "Dados sobre a entrada inexistentes ou inválidos!"
                 );
             }
-            return media.with("id", this.id)
+            return media.begin("entrada")
+                .with("id", this.id)
                 .with("placa", placa)
-                .with("dataHora", dataHora);
+                .with("dataHora", dataHora)
+                .end("entrada");
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
-    }
-
-    @Override
-    public Template print(final Template template) {
-        final Media media = this.sobre(new MapMedia());
-        return template
-            .with("id", this.id)
-            .with("placa", media.get("placa"))
-            .with("dataHora", media.get("dataHora"));
     }
 }

@@ -29,7 +29,6 @@ import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Locacao;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Placa;
-import com.github.fabriciofx.mandacarupark.Template;
 
 public final class LocacaoFake implements Locacao {
     private final Id id;
@@ -54,18 +53,11 @@ public final class LocacaoFake implements Locacao {
 
     @Override
     public Media sobre(final Media media) {
-        return media.with("placa", this.placa)
-            .with("entrada", this.entrada)
-            .with("saida", this.saida)
-            .with("valor", this.valor);
-    }
-
-    @Override
-    public Template print(final Template template) {
-        return template
+        return media.begin("locacao")
             .with("placa", this.placa)
             .with("entrada", this.entrada)
             .with("saida", this.saida)
-            .with("valor", this.valor);
+            .with("valor", this.valor)
+            .end("locacao");
     }
 }

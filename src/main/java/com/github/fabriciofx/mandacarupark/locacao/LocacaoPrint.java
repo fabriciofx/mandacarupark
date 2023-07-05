@@ -21,41 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.print;
+package com.github.fabriciofx.mandacarupark.locacao;
 
+import com.github.fabriciofx.mandacarupark.Locacao;
+import com.github.fabriciofx.mandacarupark.Media;
+import com.github.fabriciofx.mandacarupark.Print;
 import com.github.fabriciofx.mandacarupark.Template;
-import com.github.fabriciofx.mandacarupark.Printer;
-import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
-import com.github.fabriciofx.mandacarupark.pagination.Page;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 
-public final class PagePrint<T extends Printer> implements Printer {
-    private final String regex;
-    private final Page<T> page;
+public final class LocacaoPrint implements Locacao, Print {
+    private final Locacao locacao;
 
-    public PagePrint(final String regex, final Page<T> page) {
-        this.regex = regex;
-        this.page = page;
+    public LocacaoPrint(final Locacao locacao) {
+        this.locacao = locacao;
+    }
+
+    @Override
+    public Media sobre(final Media media) {
+        return this.locacao.sobre(media);
     }
 
     @Override
     public Template print(final Template template) {
-        final Pattern find = Pattern.compile(this.regex);
-        final Matcher matcher = find.matcher(new String(template.bytes()));
-        final StringBuilder sb = new StringBuilder();
-        while (matcher.find()) {
-            for (final Printer printer : this.page.content()) {
-                Template md = new HtmlTemplate(matcher.group(1));
-                md = new HtmlTemplate(printer.print(md));
-                sb.append(new String(md.bytes()));
-            }
-        }
-        return new HtmlTemplate(
-            new String(template.bytes()).replaceAll(
-                this.regex,
-                sb.toString()
-            )
-        );
+        final Media media = this.sobre(new MapMedia());
+        return template.with("placa", media.select("placa"))
+            .with("entrada", media.select("entrada"))
+            .with("saida", media.select("saida"))
+            .with("valor", media.select("valor"));
     }
 }

@@ -24,9 +24,10 @@
 package com.github.fabriciofx.mandacarupark.web.http;
 
 import com.github.fabriciofx.mandacarupark.Estacionamento;
-import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
+import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosPrint;
 import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import org.takes.Request;
 import org.takes.Response;
@@ -52,9 +53,9 @@ public final class TkGetPagamentos implements Take {
             new ResourceAsStream("webapp/pagamentos.tpl")
         ).with("header", header);
         final Pagamentos pagamentos = this.estacionamento.sobre(new MapMedia())
-            .get("pagamentos");
+            .select("pagamentos");
         final InputStream body = new ByteArrayInputStream(
-            pagamentos.print(main).bytes()
+            new PagamentosPrint(pagamentos).print(main).toString().getBytes()
         );
         return new RsHtml(body);
     }

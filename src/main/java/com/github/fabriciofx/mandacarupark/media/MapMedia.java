@@ -278,8 +278,18 @@ public final class MapMedia implements Media {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> T get(final String query) {
+    public <T> T select(final String query) {
         return (T) (this.items.get(query));
+    }
+
+    @Override
+    public Media begin(final String name) {
+        return this;
+    }
+
+    @Override
+    public Media end(final String name) {
+        return this;
     }
 
     @Override

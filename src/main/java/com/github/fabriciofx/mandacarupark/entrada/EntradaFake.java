@@ -29,7 +29,6 @@ import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Placa;
-import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.ticket.TicketFake;
 
@@ -68,16 +67,10 @@ public final class EntradaFake implements Entrada {
 
     @Override
     public Media sobre(final Media media) {
-        return media.with("id", this.id)
-            .with("placa", this.placa)
-            .with("dataHora", this.dataHora);
-    }
-
-    @Override
-    public Template print(final Template template) {
-        return template
+        return media.begin("entrada")
             .with("id", this.id)
             .with("placa", this.placa)
-            .with("dataHora", this.dataHora);
+            .with("dataHora", this.dataHora)
+            .end("entrada");
     }
 }

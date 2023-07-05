@@ -47,10 +47,6 @@ public final class HtmlTemplate implements Template {
         );
     }
 
-    public HtmlTemplate(final Template template) {
-        this(template.bytes());
-    }
-
     public HtmlTemplate(final byte[] bytes) {
         this(new String(bytes));
     }
@@ -63,6 +59,7 @@ public final class HtmlTemplate implements Template {
         this.content = text;
     }
 
+    @Override
     public Template with(final String key, final Object value) {
         return new HtmlTemplate(
             this.content.asString().replaceAll(
@@ -73,12 +70,12 @@ public final class HtmlTemplate implements Template {
     }
 
     @Override
-    public byte[] bytes() {
-        return this.content.asString().getBytes();
+    public String toString() {
+        return this.content.asString();
     }
 
     @Override
-    public String toString() {
-        return this.content.asString();
+    public byte[] bytes() {
+        return this.toString().getBytes();
     }
 }
