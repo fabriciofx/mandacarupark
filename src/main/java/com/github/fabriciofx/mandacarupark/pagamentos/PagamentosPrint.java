@@ -32,7 +32,6 @@ import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Print;
 import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.pagamento.PagamentoPrint;
 import java.util.Iterator;
 import java.util.List;
@@ -83,12 +82,12 @@ public final class PagamentosPrint implements Pagamentos, Print {
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Pagamento pagamento : this.pagamentos) {
-                Template page = new HtmlTemplate(matcher.group(1));
-                page = new HtmlTemplate(new PagamentoPrint(pagamento).print(page).toString());
+                Template page = template.from(matcher.group(1));
+                page = template.from(new PagamentoPrint(pagamento).print(page).toString());
                 sb.append(new String(page.bytes()));
             }
         }
-        return new HtmlTemplate(
+        return template.from(
             new String(template.bytes()).replaceAll(regex, sb.toString())
         );
     }

@@ -10,7 +10,6 @@ import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.pagination.Pages;
 import com.github.fabriciofx.mandacarupark.saida.SaidaPrint;
-import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -49,12 +48,12 @@ public final class SaidasPrint implements Saidas, Print {
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Saida saida : this.saidas.pages(30).page(0).content()) {
-                Template page = new HtmlTemplate(matcher.group(1));
-                page = new HtmlTemplate(new SaidaPrint(saida).print(page).toString());
+                Template page = template.from(matcher.group(1));
+                page = template.from(new SaidaPrint(saida).print(page).toString());
                 sb.append(new String(page.bytes()));
             }
         }
-        return new HtmlTemplate(
+        return template.from(
             new String(template.bytes()).replaceAll(regex, sb.toString())
         );
     }

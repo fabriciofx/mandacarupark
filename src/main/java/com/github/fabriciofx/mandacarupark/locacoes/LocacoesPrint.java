@@ -32,7 +32,6 @@ import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.locacao.LocacaoPrint;
 import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
-import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -66,12 +65,12 @@ public final class LocacoesPrint implements Locacoes, Print {
         );
         while (matcher.find()) {
             for (final Locacao locacao : this.locacoes.procura(periodo)) {
-                Template page = new HtmlTemplate(matcher.group(1));
-                page = new HtmlTemplate(new LocacaoPrint(locacao).print(page).toString());
+                Template page = template.from(matcher.group(1));
+                page = template.from(new LocacaoPrint(locacao).print(page).toString());
                 sb.append(new String(page.bytes()));
             }
         }
-        return new HtmlTemplate(
+        return template.from(
             new String(template.bytes()).replaceAll(regex, sb.toString())
         );
     }

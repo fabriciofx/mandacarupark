@@ -60,6 +60,11 @@ public final class HtmlTemplate implements Template {
     }
 
     @Override
+    public Template from(final String content) {
+        return new HtmlTemplate(content);
+    }
+
+    @Override
     public Template with(final String key, final Object value) {
         return new HtmlTemplate(
             this.content.asString().replaceAll(
@@ -70,12 +75,12 @@ public final class HtmlTemplate implements Template {
     }
 
     @Override
-    public String toString() {
-        return this.content.asString();
+    public byte[] bytes() {
+        return this.toString().getBytes();
     }
 
     @Override
-    public byte[] bytes() {
-        return this.toString().getBytes();
+    public String toString() {
+        return this.content.asString();
     }
 }

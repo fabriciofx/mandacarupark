@@ -32,7 +32,6 @@ import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Print;
 import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaPrint;
-import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -76,12 +75,12 @@ public final class EntradasPrint implements Entradas, Print {
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Entrada entrada : this.entradas) {
-                Template page = new HtmlTemplate(matcher.group(1));
-                page = new HtmlTemplate(new EntradaPrint(entrada).print(page).toString());
+                Template page = template.from(matcher.group(1));
+                page = template.from(new EntradaPrint(entrada).print(page).toString());
                 sb.append(new String(page.bytes()));
             }
         }
-        return new HtmlTemplate(
+        return template.from(
             new String(template.bytes()).replaceAll(regex, sb.toString())
         );
     }
