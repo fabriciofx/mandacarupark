@@ -49,7 +49,7 @@ public final class ValorVariavel implements Regra {
 
     @Override
     public Dinheiro valor(final Id id, final Periodo periodo) {
-        long tempo = periodo.minutos() - 240;
+        long tempo = periodo.duration().toMinutes() - 240;
         long horas = 4;
         while (tempo > 0) {
             tempo = tempo - 60;

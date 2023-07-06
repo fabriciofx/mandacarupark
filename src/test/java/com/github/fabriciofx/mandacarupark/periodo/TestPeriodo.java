@@ -58,7 +58,7 @@ public final class TestPeriodo {
                 );
                 new Restricao(
                     new PeriodoOf(agoraMais1Minuto, agora)
-                ).minutos();
+                ).duration().toMinutes();
             }
         );
     }

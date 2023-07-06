@@ -26,6 +26,7 @@ package com.github.fabriciofx.mandacarupark.periodo;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Periodo;
 import java.time.DayOfWeek;
+import java.time.Duration;
 
 public final class Restricao implements Periodo {
     private final Periodo origin;
@@ -35,9 +36,9 @@ public final class Restricao implements Periodo {
     }
 
     @Override
-    public long minutos() {
+    public Duration duration() {
         this.inicioAntesTermino(this.origin);
-        return this.origin.minutos();
+        return this.origin.duration();
     }
 
     @Override

@@ -24,6 +24,7 @@
 package com.github.fabriciofx.mandacarupark;
 
 import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
+import java.time.Duration;
 
 /**
  * Ticket do estacionamento.
@@ -48,4 +49,11 @@ public interface Ticket extends Sobre {
      * @return Uma imagem do ticket.
      */
     Imagem imagem();
+
+    /**
+     * Calcula o tempo de duração da permanência.
+     * @param atual A data e hora atual.
+     * @return O tempo de duração da permanência
+     */
+    Duration permanencia(DataHora atual);
 }

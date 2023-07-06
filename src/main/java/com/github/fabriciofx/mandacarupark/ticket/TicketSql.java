@@ -30,6 +30,7 @@ import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
+import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemCodeQr;
@@ -42,6 +43,7 @@ import java.awt.FontFormatException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.ResultSet;
+import java.time.Duration;
 
 public final class TicketSql implements Ticket {
     private final Session session;
@@ -132,5 +134,10 @@ public final class TicketSql implements Ticket {
             ),
             this
         );
+    }
+
+    @Override
+    public Duration permanencia(final DataHora atual) {
+        return new PeriodoOf(this.dataHora, atual).duration();
     }
 }

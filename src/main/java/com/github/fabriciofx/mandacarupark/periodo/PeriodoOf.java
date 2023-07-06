@@ -50,12 +50,11 @@ public final class PeriodoOf implements Periodo {
     }
 
     @Override
-    public long minutos() {
-        final Duration decorrido = Duration.between(
+    public Duration duration() {
+        return Duration.between(
             this.inicio.dateTime(),
             this.termino.dateTime()
         );
-        return decorrido.toMinutes();
     }
 
     @Override

@@ -24,9 +24,10 @@
 package com.github.fabriciofx.mandacarupark;
 
 import java.time.DayOfWeek;
+import java.time.Duration;
 
 public interface Periodo {
-    long minutos();
+    Duration duration();
     boolean contem(DataHora dataHora);
     boolean contem(Periodo periodo);
     DataHora inicio();

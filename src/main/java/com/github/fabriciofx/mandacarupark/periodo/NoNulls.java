@@ -26,6 +26,7 @@ package com.github.fabriciofx.mandacarupark.periodo;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Periodo;
 import java.time.DayOfWeek;
+import java.time.Duration;
 
 public final class NoNulls implements Periodo {
     private final Periodo origin;
@@ -35,13 +36,19 @@ public final class NoNulls implements Periodo {
     }
 
     @Override
-    public long minutos() {
+    public Duration duration() {
         if (this.origin == null) {
             throw new IllegalArgumentException(
                 "NULL ao invés de um período válido"
             );
         }
-        return this.origin.minutos();
+        final Duration duracao = this.origin.duration();
+        if (duracao == null) {
+            throw new IllegalArgumentException(
+                "NULL ao invés de uma duração válida"
+            );
+        }
+        return duracao;
     }
 
     @Override

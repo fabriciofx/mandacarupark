@@ -31,7 +31,9 @@ import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.jcabi.matchers.XhtmlMatchers;
 import org.hamcrest.MatcherAssert;
+import org.junit.Assert;
 import org.junit.Test;
+import java.time.Duration;
 
 public final class TestTicket {
     @Test
@@ -52,5 +54,20 @@ public final class TestTicket {
                 "/ticket/dataHora[text()='21/07/2022 12:01:15']"
             )
         );
+    }
+
+    @Test
+    public void permanencia() {
+        final Ticket ticket = new TicketFake(
+            new PagamentosFake(),
+            new Uuid("8c878e6f-ee13-4a37-a208-7510c2638944"),
+            new PlacaOf("ABC1234"),
+            new DataHoraOf("2023-07-01 13:37:14")
+        );
+        final Duration permanencia = ticket.permanencia(
+            new DataHoraOf("2023-07-01 15:27:14")
+        );
+        Assert.assertEquals(1, permanencia.toHoursPart());
+        Assert.assertEquals(50, permanencia.toMinutesPart());
     }
 }
