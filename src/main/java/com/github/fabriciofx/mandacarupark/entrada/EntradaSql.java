@@ -23,13 +23,12 @@
  */
 package com.github.fabriciofx.mandacarupark.entrada;
 
-import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Id;
+import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
@@ -54,13 +53,7 @@ public final class EntradaSql implements Entrada {
 
     @Override
     public Ticket ticket() {
-        final Media media = this.sobre(new MapMedia());
-        return new TicketSql(
-            this.session,
-            this.id,
-            media.select("placa"),
-            media.select("dataHora")
-        );
+        return new TicketSql(this.session, this.id);
     }
 
     @Override

@@ -71,7 +71,7 @@ public final class EstacionamentoSql implements Estacionamento {
         final DataHora dataHora
     ) {
         final Entrada entrada = this.entradas.entrada(id, placa, dataHora);
-        return new TicketSql(this.session, entrada.id(), placa, dataHora);
+        return new TicketSql(this.session, entrada.id());
     }
 
     @Override

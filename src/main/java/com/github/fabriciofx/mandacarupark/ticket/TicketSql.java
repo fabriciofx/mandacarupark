@@ -28,9 +28,12 @@ import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
+import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
+import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemCodeQr;
@@ -48,19 +51,10 @@ import java.time.Duration;
 public final class TicketSql implements Ticket {
     private final Session session;
     private final Id id;
-    private final Placa placa;
-    private final DataHora dataHora;
 
-    public TicketSql(
-        final Session session,
-        final Id id,
-        final Placa placa,
-        final DataHora dataHora
-    ) {
+    public TicketSql(final Session session, final Id id) {
         this.session = session;
         this.id = id;
-        this.placa = placa;
-        this.dataHora = dataHora;
     }
 
     @Override
@@ -95,11 +89,33 @@ public final class TicketSql implements Ticket {
 
     @Override
     public Media sobre(final Media media) {
-        return media.begin("ticket")
-            .with("id", this.id)
-            .with("placa", this.placa)
-            .with("dataHora", this.dataHora)
-            .end("ticket");
+        try (
+            final ResultSet rset = new Select(
+                this.session,
+                new Sprintf(
+                    "SELECT placa, datahora FROM entrada WHERE id = '%s'",
+                    this.id
+                )
+            ).result()
+        ) {
+            final DataHora dataHora;
+            final Placa placa;
+            if (rset.next()) {
+                placa = new PlacaOf(rset.getString(1));
+                dataHora = new DataHoraOf(rset.getString(2));
+            } else {
+                throw new RuntimeException(
+                    "Dados sobre a entrada inexistentes ou inválidos!"
+                );
+            }
+            return media.begin("ticket")
+                .with("id", this.id)
+                .with("placa", placa)
+                .with("dataHora", dataHora)
+                .end("ticket");
+        } catch (final Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @Override
@@ -138,6 +154,7 @@ public final class TicketSql implements Ticket {
 
     @Override
     public Duration permanencia(final DataHora atual) {
-        return new PeriodoOf(this.dataHora, atual).duration();
+        final Media media = this.sobre(new MapMedia());
+        return new PeriodoOf(media.select("dataHora"), atual).duration();
     }
 }
