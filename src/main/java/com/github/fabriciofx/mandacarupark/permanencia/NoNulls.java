@@ -21,38 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.permanencia;
 
-import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
+import com.github.fabriciofx.mandacarupark.Media;
+import com.github.fabriciofx.mandacarupark.Permanencia;
 
-/**
- * Ticket do estacionamento.
- *
- * @since 0.0.1
- */
-public interface Ticket extends Sobre {
-    /**
-     * Id do ticket.
-     * @return O id do ticket
-     */
-    Id id();
+public final class NoNulls implements Permanencia {
+    private final Permanencia origin;
 
-    /**
-     * Verifica se o ticket foi pago, isto é, validado.
-     * @return Verdadeiro se o ticket foi pago, falso caso contrário.
-     */
-    boolean validado();
+    public NoNulls(final Permanencia permanencia) {
+        this.origin = permanencia;
+    }
 
-    /**
-     * Obtém uma imagem do ticket.
-     * @return Uma imagem do ticket.
-     */
-    Imagem imagem();
+    @Override
+    public int horas() {
+        if (this.origin == null) {
+            throw new IllegalArgumentException(
+                "NULL ao invés de uma permanência válida"
+            );
+        }
+        return this.origin.horas();
+    }
 
-    /**
-     * Calcula o tempo de permanência.
-     * @param atual A data e hora atual.
-     * @return O tempo de permanência.
-     */
-    Permanencia permanencia(DataHora atual);
+    @Override
+    public int minutos() {
+        if (this.origin == null) {
+            throw new IllegalArgumentException(
+                "NULL ao invés de uma permanência válida"
+            );
+        }
+        return this.origin.minutos();
+    }
+
+    @Override
+    public Media sobre(final Media media) {
+        if (this.origin == null) {
+            throw new IllegalArgumentException(
+                "NULL ao invés de uma permanência válida"
+            );
+        }
+        return this.origin.sobre(media);
+    }
 }

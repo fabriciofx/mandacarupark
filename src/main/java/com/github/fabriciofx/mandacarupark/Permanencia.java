@@ -23,36 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
-import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
-
-/**
- * Ticket do estacionamento.
- *
- * @since 0.0.1
- */
-public interface Ticket extends Sobre {
-    /**
-     * Id do ticket.
-     * @return O id do ticket
-     */
-    Id id();
-
-    /**
-     * Verifica se o ticket foi pago, isto é, validado.
-     * @return Verdadeiro se o ticket foi pago, falso caso contrário.
-     */
-    boolean validado();
-
-    /**
-     * Obtém uma imagem do ticket.
-     * @return Uma imagem do ticket.
-     */
-    Imagem imagem();
-
-    /**
-     * Calcula o tempo de permanência.
-     * @param atual A data e hora atual.
-     * @return O tempo de permanência.
-     */
-    Permanencia permanencia(DataHora atual);
+public interface Permanencia extends Sobre {
+    int horas();
+    int minutos();
 }

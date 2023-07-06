@@ -28,9 +28,10 @@ import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
+import com.github.fabriciofx.mandacarupark.Permanencia;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
+import com.github.fabriciofx.mandacarupark.permanencia.PermanenciaOf;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemCodeQr;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemPapel;
@@ -41,7 +42,6 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.Duration;
 import java.util.List;
 
 public final class TicketFake implements Ticket {
@@ -117,7 +117,7 @@ public final class TicketFake implements Ticket {
     }
 
     @Override
-    public Duration permanencia(final DataHora atual) {
-        return new PeriodoOf(this.dataHora, atual).duration();
+    public Permanencia permanencia(final DataHora atual) {
+        return new PermanenciaOf(this.dataHora, atual);
     }
 }

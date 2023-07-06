@@ -21,38 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.permanencia;
 
-import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
+import com.github.fabriciofx.mandacarupark.DataHora;
+import com.github.fabriciofx.mandacarupark.Media;
+import com.github.fabriciofx.mandacarupark.Permanencia;
+import java.time.Duration;
 
-/**
- * Ticket do estacionamento.
- *
- * @since 0.0.1
- */
-public interface Ticket extends Sobre {
-    /**
-     * Id do ticket.
-     * @return O id do ticket
-     */
-    Id id();
+public final class PermanenciaOf implements Permanencia {
+    private final Duration duracao;
 
-    /**
-     * Verifica se o ticket foi pago, isto é, validado.
-     * @return Verdadeiro se o ticket foi pago, falso caso contrário.
-     */
-    boolean validado();
+    public PermanenciaOf(final DataHora inicio, final DataHora termino) {
+        this(Duration.between(inicio.dateTime(), termino.dateTime()));
+    }
 
-    /**
-     * Obtém uma imagem do ticket.
-     * @return Uma imagem do ticket.
-     */
-    Imagem imagem();
+    public PermanenciaOf(final Duration duracao) {
+        this.duracao = duracao;
+    }
 
-    /**
-     * Calcula o tempo de permanência.
-     * @param atual A data e hora atual.
-     * @return O tempo de permanência.
-     */
-    Permanencia permanencia(DataHora atual);
+    @Override
+    public int horas() {
+        return this.duracao.toHoursPart();
+    }
+
+    @Override
+    public int minutos() {
+        return this.duracao.toMinutesPart();
+    }
+
+    @Override
+    public Media sobre(final Media media) {
+        return media.begin("permanencia")
+            .with("horas", this.horas())
+            .with("minutos", this.minutos())
+            .end("permanencia");
+    }
 }

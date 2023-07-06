@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.ticket;
 
+import com.github.fabriciofx.mandacarupark.Permanencia;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
@@ -33,7 +34,6 @@ import com.jcabi.matchers.XhtmlMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
 import org.junit.Test;
-import java.time.Duration;
 
 public final class TestTicket {
     @Test
@@ -64,10 +64,10 @@ public final class TestTicket {
             new PlacaOf("ABC1234"),
             new DataHoraOf("2023-07-01 13:37:14")
         );
-        final Duration permanencia = ticket.permanencia(
+        final Permanencia permanencia = ticket.permanencia(
             new DataHoraOf("2023-07-01 15:27:14")
         );
-        Assert.assertEquals(1, permanencia.toHoursPart());
-        Assert.assertEquals(50, permanencia.toMinutesPart());
+        Assert.assertEquals(1, permanencia.horas());
+        Assert.assertEquals(50, permanencia.minutos());
     }
 }

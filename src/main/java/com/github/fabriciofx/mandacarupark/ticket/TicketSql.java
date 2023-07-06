@@ -26,13 +26,14 @@ package com.github.fabriciofx.mandacarupark.ticket;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Media;
+import com.github.fabriciofx.mandacarupark.Permanencia;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
-import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
+import com.github.fabriciofx.mandacarupark.permanencia.PermanenciaOf;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
@@ -46,7 +47,6 @@ import java.awt.FontFormatException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.ResultSet;
-import java.time.Duration;
 
 public final class TicketSql implements Ticket {
     private final Session session;
@@ -153,8 +153,8 @@ public final class TicketSql implements Ticket {
     }
 
     @Override
-    public Duration permanencia(final DataHora atual) {
+    public Permanencia permanencia(final DataHora atual) {
         final Media media = this.sobre(new MapMedia());
-        return new PeriodoOf(media.select("dataHora"), atual).duration();
+        return new PermanenciaOf(media.select("dataHora"), atual);
     }
 }
