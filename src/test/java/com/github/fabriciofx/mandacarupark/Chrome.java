@@ -43,6 +43,7 @@ public final class Chrome implements WebDriver {
             () -> {
                 final ChromeDriverService service = new ChromeDriverService
                     .Builder()
+                    .withLogOutput(System.out)
                     .build();
                 service.sendOutputTo(OutputStream.nullOutputStream());
                 final ChromeOptions options = new ChromeOptions();
