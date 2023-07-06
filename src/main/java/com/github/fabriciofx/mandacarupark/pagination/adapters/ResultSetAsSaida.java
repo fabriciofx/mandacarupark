@@ -23,8 +23,8 @@
  */
 package com.github.fabriciofx.mandacarupark.pagination.adapters;
 
-import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.Saida;
+import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.pagination.Adapter;
 import com.github.fabriciofx.mandacarupark.saida.SaidaSql;

@@ -66,13 +66,12 @@ public final class EstacionamentoFake implements Estacionamento {
         final DataHora dataHora
     ) {
         final Entrada entrada = entradas.entrada(id, placa, dataHora);
-        final Ticket ticket = new TicketFake(
+        return new TicketFake(
             this.pagamentos,
             entrada.id(),
             placa,
             dataHora
         );
-        return ticket;
     }
 
     @Override
