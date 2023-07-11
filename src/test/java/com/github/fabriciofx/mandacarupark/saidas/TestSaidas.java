@@ -32,10 +32,11 @@ import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.ds.H2Memory;
 import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
-import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.saida.SaidaFake;
+import com.github.fabriciofx.mandacarupark.saida.SaidaPrint;
 import com.github.fabriciofx.mandacarupark.server.ServerH2;
+import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.jcabi.matchers.XhtmlMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -115,6 +116,127 @@ public final class TestSaidas {
                     "/html/body/table/tbody/tr/td[text()='07d8e078-5b47-4fb5-9fb4-dd2c80dd8036']",
                     "/html/body/table/tbody/tr/td[text()='DEF5678']",
                     "/html/body/table/tbody/tr/td[text()='21/07/2022 14:06:31']",
+                    "/html/body/table/tbody/tr/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",
+                    "/html/body/table/tbody/tr/td[text()='ABC1234']",
+                    "/html/body/table/tbody/tr/td[text()='21/07/2022 17:11:12']"
+                )
+            );
+        }
+    }
+
+    @Test
+    public void fakePages() {
+        final String html = "<html><body><table><thead>" +
+            "<td>Id</td><td>Placa</td><td>Data/Hora</td>" +
+            "</thead><tbody>"+
+            "<tr><td>${id}</td><td>${placa}</td><td>${dataHora}</td></tr>" +
+            "</tbody></table></body></html>";
+        final Saidas saidas = new SaidasFake(
+            new SaidaFake(
+                new Uuid("8c878e6f-ee13-4a37-a208-7510c2638944"),
+                new PlacaOf("ABC1234"),
+                new DataHoraOf("2022-07-21 12:01:15")
+            ),
+            new SaidaFake(
+                new Uuid("07d8e078-5b47-4fb5-9fb4-dd2c80dd8036"),
+                new PlacaOf("DEF5678"),
+                new DataHoraOf("2022-07-21 12:05:38")
+            ),
+            new SaidaFake(
+                new Uuid("4c32b3dd-8636-43c0-9786-4804ca2b73f5"),
+                new PlacaOf("GHI9012"),
+                new DataHoraOf("2022-07-21 12:06:51")
+            )
+        );
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new SaidaPrint(
+                    saidas.pages(1).page(0).content().get(0)
+                ).print(new HtmlTemplate(html))
+            ),
+            XhtmlMatchers.hasXPaths(
+                "/html/body/table/tbody/tr/td[text()='07d8e078-5b47-4fb5-9fb4-dd2c80dd8036']",
+                "/html/body/table/tbody/tr/td[text()='DEF5678']",
+                "/html/body/table/tbody/tr/td[text()='21/07/2022 12:05:38']"
+            )
+        );
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new SaidaPrint(
+                    saidas.pages(1).page(1).content().get(0)
+                ).print(new HtmlTemplate(html))
+            ),
+            XhtmlMatchers.hasXPaths(
+                "/html/body/table/tbody/tr/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",
+                "/html/body/table/tbody/tr/td[text()='ABC1234']",
+                "/html/body/table/tbody/tr/td[text()='21/07/2022 12:01:15']"
+            )
+        );
+        MatcherAssert.assertThat(
+            XhtmlMatchers.xhtml(
+                new SaidaPrint(
+                    saidas.pages(1).page(2).content().get(0)
+                ).print(new HtmlTemplate(html))
+            ),
+            XhtmlMatchers.hasXPaths(
+                "/html/body/table/tbody/tr/td[text()='4c32b3dd-8636-43c0-9786-4804ca2b73f5']",
+                "/html/body/table/tbody/tr/td[text()='GHI9012']",
+                "/html/body/table/tbody/tr/td[text()='21/07/2022 12:06:51']"
+            )
+        );
+    }
+
+    @Test
+    public void sqlPages() throws Exception {
+        final String html = "<html><body><table><thead>" +
+            "<td>Id</td><td>Placa</td><td>Data/Hora</td>" +
+            "</thead><tbody>"+
+            "<tr><td>${id}</td><td>${placa}</td><td>${dataHora}</td></tr>" +
+            "</tbody></table></body></html>";
+        final Session session = new NoAuth(
+            new H2Memory(
+                new RandomName()
+            )
+        );
+        try (
+            final Server server = new ServerH2(
+                session,
+                new ScriptSql("mandacarupark.sql")
+            )
+        ) {
+            server.start();
+            final Saidas saidas = new SaidasSql(session);
+            MatcherAssert.assertThat(
+                XhtmlMatchers.xhtml(
+                    new SaidaPrint(
+                        saidas.pages(1).page(0).content().get(0)
+                    ).print(new HtmlTemplate(html))
+                ),
+                XhtmlMatchers.hasXPaths(
+                    "/html/body/table/tbody/tr/td[text()='4c32b3dd-8636-43c0-9786-4804ca2b73f5']",
+                    "/html/body/table/tbody/tr/td[text()='GHI9012']",
+                    "/html/body/table/tbody/tr/td[text()='21/07/2022 13:11:23']"
+                )
+            );
+            MatcherAssert.assertThat(
+                XhtmlMatchers.xhtml(
+                    new SaidaPrint(
+                        saidas.pages(1).page(1).content().get(0)
+                    ).print(new HtmlTemplate(html))
+                ),
+                XhtmlMatchers.hasXPaths(
+                    "/html/body/table/tbody/tr/td[text()='07d8e078-5b47-4fb5-9fb4-dd2c80dd8036']",
+                    "/html/body/table/tbody/tr/td[text()='DEF5678']",
+                    "/html/body/table/tbody/tr/td[text()='21/07/2022 14:06:31']"
+                )
+            );
+            MatcherAssert.assertThat(
+                XhtmlMatchers.xhtml(
+                    new SaidaPrint(
+                        saidas.pages(1).page(2).content().get(0)
+                    ).print(new HtmlTemplate(html))
+                ),
+                XhtmlMatchers.hasXPaths(
                     "/html/body/table/tbody/tr/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",
                     "/html/body/table/tbody/tr/td[text()='ABC1234']",
                     "/html/body/table/tbody/tr/td[text()='21/07/2022 17:11:12']"
