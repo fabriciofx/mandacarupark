@@ -16,9 +16,13 @@ import java.util.regex.Pattern;
 
 public final class SaidasPrint implements Saidas, Print {
     private final Saidas saidas;
+    private final int limit;
+    private final int number;
 
-    public SaidasPrint(final Saidas saidas) {
+    public SaidasPrint(final Saidas saidas, final int limit, final int number) {
         this.saidas = saidas;
+        this.limit = limit;
+        this.number = number;
     }
 
     @Override
@@ -47,7 +51,7 @@ public final class SaidasPrint implements Saidas, Print {
         final Matcher matcher = find.matcher(template.toString());
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
-            for (final Saida saida : this.saidas.pages(30).page(0).content()) {
+            for (final Saida saida : this.saidas.pages(this.limit).page(this.number).content()) {
                 Template page = template.from(matcher.group(1));
                 page = template.from(new SaidaPrint(saida).print(page).toString());
                 sb.append(new String(page.bytes()));

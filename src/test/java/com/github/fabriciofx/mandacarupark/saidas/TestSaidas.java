@@ -69,7 +69,7 @@ public final class TestSaidas {
         );
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                new SaidasPrint(saidas).print(new HtmlTemplate(html))
+                new SaidasPrint(saidas, 3, 0).print(new HtmlTemplate(html))
             ),
             XhtmlMatchers.hasXPaths(
                 "/html/body/table/tbody/tr/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",
@@ -107,7 +107,7 @@ public final class TestSaidas {
             final Saidas saidas = new SaidasSql(session);
             MatcherAssert.assertThat(
                 XhtmlMatchers.xhtml(
-                    new SaidasPrint(saidas).print(new HtmlTemplate(html))
+                    new SaidasPrint(saidas, 3, 0).print(new HtmlTemplate(html))
                 ),
                 XhtmlMatchers.hasXPaths(
                     "/html/body/table/tbody/tr/td[text()='4c32b3dd-8636-43c0-9786-4804ca2b73f5']",

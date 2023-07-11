@@ -65,7 +65,11 @@ public final class TkGetSaidas implements Take {
             )
         );
         final InputStream body = new ByteArrayInputStream(
-            new SaidasPrint(saidas).print(main).toString().getBytes()
+            new SaidasPrint(
+                saidas,
+                1,
+                number - 1
+            ).print(main).toString().getBytes()
         );
         return new RsHtml(body);
     }
