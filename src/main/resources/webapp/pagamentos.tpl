@@ -17,7 +17,7 @@
             <td>Valor</td>
           </thead>
           <tbody>
-            ${ps.entry}
+            ${ps.begin}
             <tr>
               <td>${id}</td>
               <td>${dataHora}</td>

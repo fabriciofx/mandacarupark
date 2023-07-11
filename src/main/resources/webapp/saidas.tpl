@@ -17,7 +17,7 @@
             <td>Data/Hora</td>
           </thead>
           <tbody>
-            ${ss.entry}
+            ${ss.begin}
             <tr>
               <td>${id}</td>
               <td>${placa}</td>

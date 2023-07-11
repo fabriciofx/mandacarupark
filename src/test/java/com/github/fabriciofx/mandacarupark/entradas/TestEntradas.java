@@ -46,7 +46,7 @@ public final class TestEntradas {
     public void printFake() {
         final String html = "<html><body><table><thead>" +
             "<td>Id</td><td>Placa</td><td>Data/Hora</td>" +
-            "</thead><tbody>${es.entry}" +
+            "</thead><tbody>${es.begin}" +
             "<tr><td>${id}</td><td>${placa}</td><td>${dataHora}</td></tr>" +
             "${es.end}</tbody></table></body></html>";
         final Entradas entradas = new EntradasFake(
@@ -92,7 +92,7 @@ public final class TestEntradas {
     public void printSql() throws Exception {
         final String html = "<html><body><table><thead>" +
             "<td>Id</td><td>Placa</td><td>Data/Hora</td>" +
-            "</thead><tbody>${es.entry}" +
+            "</thead><tbody>${es.begin}" +
             "<tr><td>${id}</td><td>${placa}</td><td>${dataHora}</td></tr>" +
             "${es.end}</tbody></table></body></html>";
         final Session session = new NoAuth(

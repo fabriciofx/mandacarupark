@@ -25,7 +25,7 @@
             <td>Valor</td>
           </thead>
           <tbody>
-            ${ls.entry}
+            ${ls.begin}
             <tr>
               <td>${placa}</td>
               <td>${entrada}</td>

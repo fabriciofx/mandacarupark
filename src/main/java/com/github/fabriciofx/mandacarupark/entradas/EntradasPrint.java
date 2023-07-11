@@ -69,7 +69,7 @@ public final class EntradasPrint implements Entradas, Print {
 
     @Override
     public Template print(final Template template) {
-        final String regex = "\\$\\{es\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{es\\.end}";
+        final String regex = "\\$\\{es\\.begin}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{es\\.end}";
         final Pattern find = Pattern.compile(regex);
         final Matcher matcher = find.matcher(template.toString());
         final StringBuilder sb = new StringBuilder();

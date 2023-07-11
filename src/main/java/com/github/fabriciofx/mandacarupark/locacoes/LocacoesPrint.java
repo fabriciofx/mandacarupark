@@ -55,7 +55,7 @@ public final class LocacoesPrint implements Locacoes, Print {
 
     @Override
     public Template print(final Template template) {
-        final String regex = "\\$\\{ls\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ls\\.end}";
+        final String regex = "\\$\\{ls\\.begin}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ls\\.end}";
         final Pattern find = Pattern.compile(regex);
         final Matcher matcher = find.matcher(template.toString());
         final StringBuilder sb = new StringBuilder();

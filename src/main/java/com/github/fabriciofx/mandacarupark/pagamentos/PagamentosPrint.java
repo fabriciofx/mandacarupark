@@ -76,7 +76,7 @@ public final class PagamentosPrint implements Pagamentos, Print {
 
     @Override
     public Template print(final Template template) {
-        final String regex = "\\$\\{ps\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ps\\.end}";
+        final String regex = "\\$\\{ps\\.begin}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ps\\.end}";
         final Pattern find = Pattern.compile(regex);
         final Matcher matcher = find.matcher(template.toString());
         final StringBuilder sb = new StringBuilder();

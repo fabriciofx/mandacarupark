@@ -46,7 +46,7 @@ public final class SaidasPrint implements Saidas, Print {
 
     @Override
     public Template print(final Template template) {
-        final String regex = "\\$\\{ss\\.entry}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ss\\.end}";
+        final String regex = "\\$\\{ss\\.begin}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ss\\.end}";
         final Pattern find = Pattern.compile(regex);
         final Matcher matcher = find.matcher(template.toString());
         final StringBuilder sb = new StringBuilder();

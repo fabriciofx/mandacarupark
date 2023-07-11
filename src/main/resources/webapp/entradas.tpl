@@ -17,7 +17,7 @@
             <td>Data/Hora</td>
           </thead>
           <tbody>
-            ${es.entry}
+            ${es.begin}
             <tr>
               <td>${id}</td>
               <td>${placa}</td>
