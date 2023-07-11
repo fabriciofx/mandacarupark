@@ -53,6 +53,9 @@ public final class TkGetSaidas implements Take {
         final int number = Integer.parseInt(
             new RqHref.Smart(req).single("page", "1")
         );
+        final int limit = Integer.parseInt(
+            new RqHref.Smart(req).single("limit", "1")
+        );
         final Template main = new HtmlTemplate(
             new ResourceAsStream("webapp/saidas.tpl")
         ).with(
@@ -61,13 +64,18 @@ public final class TkGetSaidas implements Take {
         ).with(
             "footer",
             new HtmlTemplate(
-                new Footer<>(saidas.pages(1), number, "http://localhost:8080/saidas")
+                new Footer<>(
+                    saidas.pages(limit),
+                    number,
+                    limit,
+                    "http://localhost:8080/saidas"
+                )
             )
         );
         final InputStream body = new ByteArrayInputStream(
             new SaidasPrint(
                 saidas,
-                1,
+                limit,
                 number - 1
             ).print(main).toString().getBytes()
         );

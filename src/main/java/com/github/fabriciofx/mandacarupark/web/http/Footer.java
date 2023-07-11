@@ -31,11 +31,18 @@ import com.github.fabriciofx.mandacarupark.text.Text;
 public final class Footer<T> implements Text {
     private final Pages<T> pages;
     private final int number;
+    private final int limit;
     private final String url;
 
-    public Footer(final Pages<T> pages, final int number, final String url) {
+    public Footer(
+        final Pages<T> pages,
+        final int number,
+        final int limit,
+        final String url
+    ) {
         this.pages = pages;
         this.number = number;
+        this.limit = limit;
         this.url = url;
     }
 
@@ -43,19 +50,39 @@ public final class Footer<T> implements Text {
     public String asString() {
         return new SprintfOf(
             "<div class=\"center\">\n%s%s%s\t\t</div>\n",
-            new Footer.Anterior(this.url, this.number),
-            new Footer.Numeros(this.url, this.number, this.pages.count()),
-            new Footer.Proximo(this.url, this.number, this.pages.count())
+            new Footer.Anterior(
+                this.url,
+                this.number,
+                this.limit
+            ),
+            new Footer.Numeros(
+                this.url,
+                this.number,
+                this.limit,
+                this.pages.count()
+            ),
+            new Footer.Proximo(
+                this.url,
+                this.number,
+                this.limit,
+                this.pages.count()
+            )
         ).asString();
     }
 
     static final private class Anterior implements Text {
         private final String url;
         private final int number;
+        private final int limit;
 
-        public Anterior(final String url, final int number) {
+        public Anterior(
+            final String url,
+            final int number,
+            final int limit
+        ) {
             this.url = url;
             this.number = number;
+            this.limit = limit;
         }
 
         @Override
@@ -63,9 +90,10 @@ public final class Footer<T> implements Text {
             final String content;
             if (this.number - 1 >= 1) {
                 content = new Sprintf(
-                    "\t\t  <a href=\"%s?page=%d\">< Anterior</a>\n",
+                    "\t\t  <a href=\"%s?page=%d&limit=%d\">< Anterior</a>\n",
                     this.url,
-                    this.number - 1
+                    this.number - 1,
+                    this.limit
                 ).asString();
             } else {
                 content = "\t\t  < Anterior\n";
@@ -78,10 +106,17 @@ public final class Footer<T> implements Text {
         private final String url;
         private final int number;
         private final int total;
+        private final int limit;
 
-        public Numeros(final String url, final int number, final int total) {
+        public Numeros(
+            final String url,
+            final int number,
+            final int limit,
+            final int total
+        ) {
             this.url = url;
             this.number = number;
+            this.limit = limit;
             this.total = total;
         }
 
@@ -94,9 +129,10 @@ public final class Footer<T> implements Text {
                 } else {
                     content.append(
                         new Sprintf(
-                            "\t\t  <a href=\"%s?page=%d\">%d</a>\n",
+                            "\t\t  <a href=\"%s?page=%d&limit=%d\">%d</a>\n",
                             this.url,
                             num,
+                            this.limit,
                             num
                         ).asString()
                     );
@@ -109,11 +145,18 @@ public final class Footer<T> implements Text {
     static final private class Proximo implements Text {
         private final String url;
         private final int number;
+        private final int limit;
         private final int total;
 
-        public Proximo(final String url, final int number, final int total) {
+        public Proximo(
+            final String url,
+            final int number,
+            final int limit,
+            final int total
+        ) {
             this.url = url;
             this.number = number;
+            this.limit = limit;
             this.total = total;
         }
 
@@ -122,9 +165,10 @@ public final class Footer<T> implements Text {
             final String content;
             if (this.number + 1 <= this.total) {
                 content = new Sprintf(
-                    "\t\t  <a href=\"%s?page=%d\">Próximo ></a>\n",
+                    "\t\t  <a href=\"%s?page=%d&limit=%d\">Próximo ></a>\n",
                     this.url,
-                    this.number + 1
+                    this.number + 1,
+                    this.limit
                 ).asString();
             } else {
                 content = "\t\t  Próximo >\n";
