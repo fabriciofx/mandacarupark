@@ -25,7 +25,7 @@ package com.github.fabriciofx.mandacarupark.pagination.page;
 
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
-import com.github.fabriciofx.mandacarupark.pagination.Adapter;
+import com.github.fabriciofx.mandacarupark.adapter.Adapter;
 import com.github.fabriciofx.mandacarupark.pagination.Page;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;

@@ -33,7 +33,7 @@ import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Insert;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.pagination.Pages;
-import com.github.fabriciofx.mandacarupark.pagination.adapters.ResultSetAsSaida;
+import com.github.fabriciofx.mandacarupark.adapter.ResultSetAsSaida;
 import com.github.fabriciofx.mandacarupark.pagination.pages.PagesSql;
 import com.github.fabriciofx.mandacarupark.saida.SaidaSql;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;

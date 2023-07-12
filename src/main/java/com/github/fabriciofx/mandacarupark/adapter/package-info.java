@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.pagination;
 
-import java.sql.ResultSet;
-
-public interface Adapter<T> {
-    T adapt(ResultSet rset);
-}
+/**
+ * Adapters.
+ *
+ * @since 0.0.1
+ */
+package com.github.fabriciofx.mandacarupark.adapter;
