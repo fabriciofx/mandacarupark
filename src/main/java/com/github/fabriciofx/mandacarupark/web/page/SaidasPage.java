@@ -21,41 +21,63 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.web.http;
+package com.github.fabriciofx.mandacarupark.web.page;
 
-import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
+import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Template;
-import com.github.fabriciofx.mandacarupark.entradas.EntradasPrint;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.saidas.SaidasPrint;
 import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
+import com.github.fabriciofx.mandacarupark.web.HttpPage;
 import org.takes.Request;
 import org.takes.Response;
-import org.takes.Take;
+import org.takes.rq.RqHref;
 import org.takes.rs.RsHtml;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public final class TkGetEntradas implements Take {
+@SuppressWarnings("unchecked")
+public final class SaidasPage implements HttpPage {
     private final Estacionamento estacionamento;
 
-    public TkGetEntradas(final Estacionamento estacionamento) {
+    public SaidasPage(final Estacionamento estacionamento) {
         this.estacionamento = estacionamento;
     }
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Template header = new HtmlTemplate(
-            new ResourceAsStream("webapp/header.tpl")
+        final Saidas saidas = this.estacionamento.sobre(new MapMedia())
+            .select("saidas");
+        final int number = Integer.parseInt(
+            new RqHref.Smart(req).single("page", "1")
+        );
+        final int limit = Integer.parseInt(
+            new RqHref.Smart(req).single("limit", "1")
         );
         final Template main = new HtmlTemplate(
-            new ResourceAsStream("webapp/entradas.tpl")
-        ).with("header", header);
-        final Entradas entradas = this.estacionamento.sobre(new MapMedia())
-            .select("entradas");
+            new ResourceAsStream("webapp/saidas.tpl")
+        ).with(
+            "header",
+            new HtmlTemplate(new ResourceAsStream("webapp/header.tpl"))
+        ).with(
+            "footer",
+            new HtmlTemplate(
+                new Footer<>(
+                    saidas.pages(limit),
+                    number,
+                    limit,
+                    "http://localhost:8080/saidas"
+                )
+            )
+        );
         final InputStream body = new ByteArrayInputStream(
-            new EntradasPrint(entradas).print(main).toString().getBytes()
+            new SaidasPrint(
+                saidas,
+                limit,
+                number - 1
+            ).print(main).toString().getBytes()
         );
         return new RsHtml(body);
     }

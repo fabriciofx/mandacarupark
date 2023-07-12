@@ -21,44 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.server;
+package com.github.fabriciofx.mandacarupark.web.page;
 
 import com.github.fabriciofx.mandacarupark.Estacionamento;
-import com.github.fabriciofx.mandacarupark.web.page.RoutesPage;
-import org.takes.http.Exit;
-import org.takes.http.FtBasic;
+import com.github.fabriciofx.mandacarupark.Id;
+import com.github.fabriciofx.mandacarupark.Placa;
+import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
+import com.github.fabriciofx.mandacarupark.id.Uuid;
+import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
+import com.github.fabriciofx.mandacarupark.web.HttpPage;
+import org.takes.Request;
+import org.takes.Response;
+import org.takes.facets.forward.RsForward;
+import org.takes.rq.form.RqFormSmart;
 import java.io.IOException;
-import java.util.concurrent.CountDownLatch;
 
-public final class WebServerProcess extends Thread {
+public final class EntradaPage implements HttpPage {
     private final Estacionamento estacionamento;
-    private final int port;
-    private final CountDownLatch latch;
 
-    public WebServerProcess(
-        final Estacionamento estacionamento,
-        final int port,
-        final CountDownLatch latch
-    ) {
+    public EntradaPage(final Estacionamento estacionamento) {
         this.estacionamento = estacionamento;
-        this.port = port;
-        this.latch = latch;
     }
 
     @Override
-    public void run() {
-        try {
-            new FtBasic(
-                new RoutesPage(this.estacionamento),
-                this.port
-            ).start(
-                () -> {
-                    this.latch.countDown();
-                    return Exit.NEVER.ready();
-                }
-            );
-        } catch (final IOException ex) {
-            throw new RuntimeException(ex);
+    public Response act(final Request req) throws IOException {
+        final RqFormSmart form = new RqFormSmart(req);
+        final Placa placa = new PlacaOf(form.single("placa"));
+        final Id id;
+        if (!form.single("ticket").equals("")) {
+            id = new Uuid(form.single("ticket"));
+        } else {
+            id = new Uuid();
         }
+        this.estacionamento.entrada(id, placa, new DataHoraOf());
+        return new RsForward("/entradas");
     }
 }

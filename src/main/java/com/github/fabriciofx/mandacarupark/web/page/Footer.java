@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.web.http;
+package com.github.fabriciofx.mandacarupark.web.page;
 
 import com.github.fabriciofx.mandacarupark.pagination.Pages;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;

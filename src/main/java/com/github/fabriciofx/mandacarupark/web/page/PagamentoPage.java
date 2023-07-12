@@ -21,50 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.web.http;
+package com.github.fabriciofx.mandacarupark.web.page;
 
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
-import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
-import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
+import com.github.fabriciofx.mandacarupark.web.HttpPage;
 import org.takes.Request;
 import org.takes.Response;
-import org.takes.Take;
 import org.takes.facets.forward.RsForward;
 import org.takes.rq.form.RqFormSmart;
-import org.takes.rs.RsHtml;
 import java.io.IOException;
 
-public final class TkPostSaida implements Take {
+public final class PagamentoPage implements HttpPage {
     private final Estacionamento estacionamento;
 
-    public TkPostSaida(final Estacionamento estacionamento) {
+    public PagamentoPage(final Estacionamento estacionamento) {
         this.estacionamento = estacionamento;
     }
 
     @Override
     public Response act(final Request req) throws IOException {
         final RqFormSmart form = new RqFormSmart(req);
-        final Placa placa = new PlacaOf(form.single("placa"));
         final Id id = new Uuid(form.single("ticket"));
         final Entradas entradas = this.estacionamento.sobre(new MapMedia())
             .select("entradas");
         final Ticket ticket = entradas.procura(id).ticket();
-        try {
-            this.estacionamento.saida(ticket, placa, new DataHoraOf());
-        } catch (final Exception ex) {
-            return new RsHtml(
-                new HtmlTemplate(
-                    new ResourceAsStream("webapp/erro.html")
-                ).with("error", ex.getMessage()).toString()
-            );
-        }
-        return new RsForward("/saidas");
+        this.estacionamento.pagamento(ticket, new DataHoraOf());
+        return new RsForward("/entradas");
     }
 }

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.web.http;
+package com.github.fabriciofx.mandacarupark.web.page;
 
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import org.takes.facets.fork.FkMethods;
@@ -31,8 +31,8 @@ import org.takes.tk.TkClasspath;
 import org.takes.tk.TkWithType;
 import org.takes.tk.TkWrap;
 
-public final class TkRoutes extends TkWrap {
-    public TkRoutes(final Estacionamento estacionamento) {
+public final class RoutesPage extends TkWrap {
+    public RoutesPage(final Estacionamento estacionamento) {
         super(
             new TkFork(
                 new FkRegex("/robots.txt", ""),
@@ -45,18 +45,18 @@ public final class TkRoutes extends TkWrap {
                 ),
                 new FkRegex(
                     "/",
-                    new TkGetEntradas(estacionamento)
+                    new EntradasPage(estacionamento)
                 ),
                 new FkRegex(
                     "/entradas",
                     new TkFork(
-                        new FkMethods("GET", new TkGetEntradas(estacionamento))
+                        new FkMethods("GET", new EntradasPage(estacionamento))
                     )
                 ),
                 new FkRegex(
                     "/saidas",
                     new TkFork(
-                        new FkMethods("GET", new TkGetSaidas(estacionamento))
+                        new FkMethods("GET", new SaidasPage(estacionamento))
                     )
                 ),
                 new FkRegex(
@@ -64,26 +64,26 @@ public final class TkRoutes extends TkWrap {
                     new TkFork(
                         new FkMethods(
                             "GET",
-                            new TkGetPagamentos(estacionamento)
+                            new PagamentosPage(estacionamento)
                         )
                     )
                 ),
                 new FkRegex(
                     "/locacoes",
                     new TkFork(
-                        new FkMethods("GET", new TkGetLocacoes(estacionamento))
+                        new FkMethods("GET", new LocacoesPage(estacionamento))
                     )
                 ),
                 new FkRegex(
                     "/entrada",
                     new TkFork(
-                        new FkMethods("POST", new TkPostEntrada(estacionamento))
+                        new FkMethods("POST", new EntradaPage(estacionamento))
                     )
                 ),
                 new FkRegex(
                     "/saida",
                     new TkFork(
-                        new FkMethods("POST", new TkPostSaida(estacionamento))
+                        new FkMethods("POST", new SaidaPage(estacionamento))
                     )
                 ),
                 new FkRegex(
@@ -91,13 +91,13 @@ public final class TkRoutes extends TkWrap {
                     new TkFork(
                         new FkMethods(
                             "POST",
-                            new TkPostPagamento(estacionamento)
+                            new PagamentoPage(estacionamento)
                         )
                     )
                 ),
                 new FkRegex(
                     "/(?<path>[^/]+)",
-                    new TkPage()
+                    new AnyPage()
                 )
             )
         );

@@ -21,24 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.web.http;
 
-import org.takes.Response;
-import org.takes.facets.fork.RqRegex;
-import org.takes.facets.fork.TkRegex;
-import org.takes.rs.RsHtml;
-import java.io.IOException;
-
-public final class TkPage implements TkRegex {
-    @Override
-    public Response act(final RqRegex req) throws IOException {
-        return new RsHtml(
-            new ResourceAsStream(
-                String.format(
-                    "webapp/%s",
-                    req.matcher().group("path")
-                )
-            )
-        );
-    }
-}
+/**
+ * HTTP.
+ *
+ * @since 0.0.1
+ */
+package com.github.fabriciofx.mandacarupark.web.page;

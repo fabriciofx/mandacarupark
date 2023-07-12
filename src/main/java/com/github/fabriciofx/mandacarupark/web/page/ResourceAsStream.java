@@ -21,39 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.web.http;
+package com.github.fabriciofx.mandacarupark.web.page;
 
-import com.github.fabriciofx.mandacarupark.Estacionamento;
-import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Placa;
-import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
-import com.github.fabriciofx.mandacarupark.id.Uuid;
-import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
-import org.takes.Request;
-import org.takes.Response;
-import org.takes.Take;
-import org.takes.facets.forward.RsForward;
-import org.takes.rq.form.RqFormSmart;
 import java.io.IOException;
+import java.io.InputStream;
 
-public final class TkPostEntrada implements Take {
-    private final Estacionamento estacionamento;
+public final class ResourceAsStream extends InputStream {
+    private final InputStream input;
 
-    public TkPostEntrada(final Estacionamento estacionamento) {
-        this.estacionamento = estacionamento;
+    public ResourceAsStream(final String filename) {
+        this.input = ResourceAsStream.class.getClassLoader()
+            .getResourceAsStream(filename);
     }
 
     @Override
-    public Response act(final Request req) throws IOException {
-        final RqFormSmart form = new RqFormSmart(req);
-        final Placa placa = new PlacaOf(form.single("placa"));
-        final Id id;
-        if (!form.single("ticket").equals("")) {
-            id = new Uuid(form.single("ticket"));
-        } else {
-            id = new Uuid();
-        }
-        this.estacionamento.entrada(id, placa, new DataHoraOf());
-        return new RsForward("/entradas");
+    public int read() throws IOException {
+        return this.input.read();
     }
 }

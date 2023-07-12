@@ -21,21 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.web.http;
+package com.github.fabriciofx.mandacarupark.web;
 
-import java.io.IOException;
-import java.io.InputStream;
+import org.takes.Take;
 
-public final class ResourceAsStream extends InputStream {
-    private final InputStream input;
-
-    public ResourceAsStream(final String filename) {
-        this.input = ResourceAsStream.class.getClassLoader()
-            .getResourceAsStream(filename);
-    }
-
-    @Override
-    public int read() throws IOException {
-        return this.input.read();
-    }
+public interface HttpPage extends Take {
 }

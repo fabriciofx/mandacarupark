@@ -21,26 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.web.http;
+package com.github.fabriciofx.mandacarupark.web.page;
 
 import com.github.fabriciofx.mandacarupark.Estacionamento;
-import com.github.fabriciofx.mandacarupark.Pagamentos;
+import com.github.fabriciofx.mandacarupark.Locacoes;
 import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
-import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosPrint;
 import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
+import com.github.fabriciofx.mandacarupark.web.HttpPage;
 import org.takes.Request;
 import org.takes.Response;
-import org.takes.Take;
 import org.takes.rs.RsHtml;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
-public final class TkGetPagamentos implements Take {
+public final class LocacoesPage implements HttpPage {
     private final Estacionamento estacionamento;
 
-    public TkGetPagamentos(final Estacionamento estacionamento) {
+    public LocacoesPage(final Estacionamento estacionamento) {
         this.estacionamento = estacionamento;
     }
 
@@ -50,13 +47,33 @@ public final class TkGetPagamentos implements Take {
             new ResourceAsStream("webapp/header.tpl")
         );
         final Template main = new HtmlTemplate(
-            new ResourceAsStream("webapp/pagamentos.tpl")
+            new ResourceAsStream("webapp/locacoes.tpl")
         ).with("header", header);
-        final Pagamentos pagamentos = this.estacionamento.sobre(new MapMedia())
-            .select("pagamentos");
-        final InputStream body = new ByteArrayInputStream(
-            new PagamentosPrint(pagamentos).print(main).toString().getBytes()
-        );
-        return new RsHtml(body);
+//        final RqFormBase form = new RqFormBase(req);
+//        final String inicio, termino;
+//        if (form.names().iterator().hasNext()) {
+//            inicio = form.param("inicio").iterator().next();
+//            termino = form.param("termino").iterator().next();
+//        } else {
+//            inicio = "01/01/2022 00:00:00";
+//            termino = "31/01/2023 23:59:59";
+//        }
+        final Locacoes locacoes = this.estacionamento.sobre(new MapMedia())
+            .select("locacoes");
+//        final InputStream body = new ByteArrayInputStream(
+//            locacoes.sobre(
+//                main,
+//                new PeriodoOf(
+//                    new DataHoraOf(inicio),
+//                    new DataHoraOf(termino)
+//                )
+//            ).toString().getBytes()
+//        );
+//        final InputStream body = new ByteArrayInputStream(
+//            locacoes.sobre(main).toString().getBytes()
+//        );
+//        return new RsHtml(body);
+        return new RsHtml("");
+
     }
 }

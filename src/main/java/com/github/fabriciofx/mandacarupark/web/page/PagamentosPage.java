@@ -21,37 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.web.http;
+package com.github.fabriciofx.mandacarupark.web.page;
 
-import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
-import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
-import com.github.fabriciofx.mandacarupark.id.Uuid;
+import com.github.fabriciofx.mandacarupark.Pagamentos;
+import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosPrint;
+import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
+import com.github.fabriciofx.mandacarupark.web.HttpPage;
 import org.takes.Request;
 import org.takes.Response;
-import org.takes.Take;
-import org.takes.facets.forward.RsForward;
-import org.takes.rq.form.RqFormSmart;
+import org.takes.rs.RsHtml;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
-public final class TkPostPagamento implements Take {
+public final class PagamentosPage implements HttpPage {
     private final Estacionamento estacionamento;
 
-    public TkPostPagamento(final Estacionamento estacionamento) {
+    public PagamentosPage(final Estacionamento estacionamento) {
         this.estacionamento = estacionamento;
     }
 
     @Override
     public Response act(final Request req) throws IOException {
-        final RqFormSmart form = new RqFormSmart(req);
-        final Id id = new Uuid(form.single("ticket"));
-        final Entradas entradas = this.estacionamento.sobre(new MapMedia())
-            .select("entradas");
-        final Ticket ticket = entradas.procura(id).ticket();
-        this.estacionamento.pagamento(ticket, new DataHoraOf());
-        return new RsForward("/entradas");
+        final Template header = new HtmlTemplate(
+            new ResourceAsStream("webapp/header.tpl")
+        );
+        final Template main = new HtmlTemplate(
+            new ResourceAsStream("webapp/pagamentos.tpl")
+        ).with("header", header);
+        final Pagamentos pagamentos = this.estacionamento.sobre(new MapMedia())
+            .select("pagamentos");
+        final InputStream body = new ByteArrayInputStream(
+            new PagamentosPrint(pagamentos).print(main).toString().getBytes()
+        );
+        return new RsHtml(body);
     }
 }
