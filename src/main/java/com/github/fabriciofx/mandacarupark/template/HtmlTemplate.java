@@ -60,7 +60,7 @@ public final class HtmlTemplate implements Template {
     }
 
     @Override
-    public Template from(final String content) {
+    public Template create(final String content) {
         return new HtmlTemplate(content);
     }
 

@@ -26,7 +26,7 @@ package com.github.fabriciofx.mandacarupark;
 import com.github.fabriciofx.mandacarupark.text.Text;
 
 public interface Template extends Text {
-    Template from(String content);
+    Template create(String content);
     Template with(String key, Object value);
     byte[] bytes();
 }

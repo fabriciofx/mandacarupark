@@ -87,8 +87,8 @@ public final class PagamentosHtml implements Pagamentos, Html {
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Pagamento pagamento : this.pagamentos) {
-                Template page = this.template.from(matcher.group(1));
-                page = this.template.from(
+                Template page = this.template.create(matcher.group(1));
+                page = this.template.create(
                     new PagamentoHtml(pagamento, page).html()
                 );
                 sb.append(new String(page.bytes()));

@@ -67,8 +67,8 @@ public final class LocacoesHtml implements Locacoes, Html {
         );
         while (matcher.find()) {
             for (final Locacao locacao : this.locacoes.procura(periodo)) {
-                Template page = this.template.from(matcher.group(1));
-                page = this.template.from(
+                Template page = this.template.create(matcher.group(1));
+                page = this.template.create(
                     new LocacaoHtml(locacao, page).html()
                 );
                 sb.append(new String(page.bytes()));
