@@ -21,43 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.entrada;
+package com.github.fabriciofx.mandacarupark;
 
-import com.github.fabriciofx.mandacarupark.Entrada;
-import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Media;
-import com.github.fabriciofx.mandacarupark.Print;
-import com.github.fabriciofx.mandacarupark.Template;
-import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
-
-public final class EntradaPrint implements Entrada, Print {
-    private final Entrada entrada;
-
-    public EntradaPrint(final Entrada entrada) {
-        this.entrada = entrada;
-    }
-
-    @Override
-    public Id id() {
-        return this.entrada.id();
-    }
-
-    @Override
-    public Ticket ticket() {
-        return this.entrada.ticket();
-    }
-
-    @Override
-    public Media sobre(final Media media) {
-        return this.entrada.sobre(media);
-    }
-
-    @Override
-    public Template print(final Template template) {
-        final Media media = this.sobre(new MapMedia());
-        return template.with("id", media.select("id"))
-            .with("placa", media.select("placa"))
-            .with("dataHora", media.select("dataHora"));
-    }
+public interface Html {
+    String html();
 }

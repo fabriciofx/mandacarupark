@@ -76,7 +76,7 @@ public final class TestSaida {
         );
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                new SaidaPrint(saida).print(new HtmlTemplate(html))
+                new SaidaHtml(saida, new HtmlTemplate(html)).html()
             ),
             XhtmlMatchers.hasXPaths(
                 "/html/body/table/tbody/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",
@@ -143,7 +143,7 @@ public final class TestSaida {
             );
             MatcherAssert.assertThat(
                 XhtmlMatchers.xhtml(
-                    new SaidaPrint(saida).print(new HtmlTemplate(html))
+                    new SaidaHtml(saida, new HtmlTemplate(html)).html()
                 ),
                 XhtmlMatchers.hasXPaths(
                     "/html/body/table/tbody/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",

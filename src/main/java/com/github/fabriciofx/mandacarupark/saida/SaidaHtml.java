@@ -25,16 +25,18 @@ package com.github.fabriciofx.mandacarupark.saida;
 
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Media;
-import com.github.fabriciofx.mandacarupark.Print;
+import com.github.fabriciofx.mandacarupark.Html;
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
 
-public final class SaidaPrint implements Saida, Print {
+public final class SaidaHtml implements Saida, Html {
     private final Saida saida;
+    private final Template template;
 
-    public SaidaPrint(final Saida saida) {
+    public SaidaHtml(final Saida saida, final Template template) {
         this.saida = saida;
+        this.template = template;
     }
 
     @Override
@@ -48,10 +50,11 @@ public final class SaidaPrint implements Saida, Print {
     }
 
     @Override
-    public Template print(final Template template) {
+    public String html() {
         final Media media = this.sobre(new MapMedia());
-        return template.with("id", media.select("id"))
+        return this.template.with("id", media.select("id"))
             .with("placa", media.select("placa"))
-            .with("dataHora", media.select("dataHora"));
+            .with("dataHora", media.select("dataHora"))
+            .asString();
     }
 }

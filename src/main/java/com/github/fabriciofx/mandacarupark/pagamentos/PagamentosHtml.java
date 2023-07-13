@@ -29,20 +29,25 @@ import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
-import com.github.fabriciofx.mandacarupark.Print;
+import com.github.fabriciofx.mandacarupark.Html;
 import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.pagamento.PagamentoPrint;
+import com.github.fabriciofx.mandacarupark.pagamento.PagamentoHtml;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class PagamentosPrint implements Pagamentos, Print {
+public final class PagamentosHtml implements Pagamentos, Html {
     private final Pagamentos pagamentos;
+    private final Template template;
 
-    public PagamentosPrint(final Pagamentos pagamentos) {
+    public PagamentosHtml(
+        final Pagamentos pagamentos,
+        final Template template
+    ) {
         this.pagamentos = pagamentos;
+        this.template = template;
     }
 
     @Override
@@ -75,20 +80,20 @@ public final class PagamentosPrint implements Pagamentos, Print {
     }
 
     @Override
-    public Template print(final Template template) {
+    public String html() {
         final String regex = "\\$\\{ps\\.begin}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ps\\.end}";
         final Pattern find = Pattern.compile(regex);
-        final Matcher matcher = find.matcher(template.toString());
+        final Matcher matcher = find.matcher(this.template.asString());
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Pagamento pagamento : this.pagamentos) {
-                Template page = template.from(matcher.group(1));
-                page = template.from(new PagamentoPrint(pagamento).print(page).toString());
+                Template page = this.template.from(matcher.group(1));
+                page = this.template.from(
+                    new PagamentoHtml(pagamento, page).html()
+                );
                 sb.append(new String(page.bytes()));
             }
         }
-        return template.from(
-            new String(template.bytes()).replaceAll(regex, sb.toString())
-        );
+        return this.template.asString().replaceAll(regex, sb.toString());
     }
 }

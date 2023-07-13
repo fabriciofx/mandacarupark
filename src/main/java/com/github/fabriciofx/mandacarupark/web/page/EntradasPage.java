@@ -26,7 +26,7 @@ package com.github.fabriciofx.mandacarupark.web.page;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Template;
-import com.github.fabriciofx.mandacarupark.entradas.EntradasPrint;
+import com.github.fabriciofx.mandacarupark.entradas.EntradasHtml;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.web.HttpPage;
@@ -55,7 +55,7 @@ public final class EntradasPage implements HttpPage {
         final Entradas entradas = this.estacionamento.sobre(new MapMedia())
             .select("entradas");
         final InputStream body = new ByteArrayInputStream(
-            new EntradasPrint(entradas).print(main).toString().getBytes()
+            new EntradasHtml(entradas, main).html().getBytes()
         );
         return new RsHtml(body);
     }

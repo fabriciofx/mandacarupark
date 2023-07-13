@@ -27,7 +27,7 @@ import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
-import com.github.fabriciofx.mandacarupark.saidas.SaidasPrint;
+import com.github.fabriciofx.mandacarupark.saidas.SaidasHtml;
 import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.web.HttpPage;
 import org.takes.Request;
@@ -73,11 +73,12 @@ public final class SaidasPage implements HttpPage {
             )
         );
         final InputStream body = new ByteArrayInputStream(
-            new SaidasPrint(
+            new SaidasHtml(
                 saidas,
                 limit,
-                number - 1
-            ).print(main).toString().getBytes()
+                number - 1,
+                main
+            ).html().getBytes()
         );
         return new RsHtml(body);
     }

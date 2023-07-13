@@ -27,7 +27,7 @@ import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
-import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosPrint;
+import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosHtml;
 import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.web.HttpPage;
 import org.takes.Request;
@@ -55,7 +55,7 @@ public final class PagamentosPage implements HttpPage {
         final Pagamentos pagamentos = this.estacionamento.sobre(new MapMedia())
             .select("pagamentos");
         final InputStream body = new ByteArrayInputStream(
-            new PagamentosPrint(pagamentos).print(main).toString().getBytes()
+            new PagamentosHtml(pagamentos, main).html().getBytes()
         );
         return new RsHtml(body);
     }

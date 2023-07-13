@@ -81,6 +81,11 @@ public final class HtmlTemplate implements Template {
 
     @Override
     public String toString() {
+        return this.asString();
+    }
+
+    @Override
+    public String asString() {
         return this.content.asString();
     }
 }

@@ -21,67 +21,59 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.entradas;
+package com.github.fabriciofx.mandacarupark.locacoes;
 
-import com.github.fabriciofx.mandacarupark.DataHora;
-import com.github.fabriciofx.mandacarupark.Entrada;
-import com.github.fabriciofx.mandacarupark.Entradas;
-import com.github.fabriciofx.mandacarupark.Id;
+import com.github.fabriciofx.mandacarupark.Locacao;
+import com.github.fabriciofx.mandacarupark.Locacoes;
 import com.github.fabriciofx.mandacarupark.Media;
-import com.github.fabriciofx.mandacarupark.Placa;
-import com.github.fabriciofx.mandacarupark.Print;
+import com.github.fabriciofx.mandacarupark.Periodo;
+import com.github.fabriciofx.mandacarupark.Html;
 import com.github.fabriciofx.mandacarupark.Template;
-import com.github.fabriciofx.mandacarupark.entrada.EntradaPrint;
-import java.util.Iterator;
+import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
+import com.github.fabriciofx.mandacarupark.locacao.LocacaoHtml;
+import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class EntradasPrint implements Entradas, Print {
-    private final Entradas entradas;
+public final class LocacoesHtml implements Locacoes, Html {
+    private final Locacoes locacoes;
+    private final Template template;
 
-    public EntradasPrint(final Entradas entradas) {
-        this.entradas = entradas;
+    public LocacoesHtml(final Locacoes locacoes, final Template template) {
+        this.locacoes = locacoes;
+        this.template = template;
     }
 
     @Override
-    public Entrada entrada(
-        final Id id,
-        final Placa placa,
-        final DataHora dataHora
-    ) {
-        return this.entradas.entrada(id, placa, dataHora);
-    }
-
-    @Override
-    public Entrada procura(final Id id) {
-        return this.entradas.procura(id);
+    public List<Locacao> procura(final Periodo periodo) {
+        return this.locacoes.procura(periodo);
     }
 
     @Override
     public Media sobre(final Media media) {
-        return this.entradas.sobre(media);
+        return this.locacoes.sobre(media);
     }
 
     @Override
-    public Iterator<Entrada> iterator() {
-        return this.entradas.iterator();
-    }
-
-    @Override
-    public Template print(final Template template) {
-        final String regex = "\\$\\{es\\.begin}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{es\\.end}";
+    public String html() {
+        final String regex = "\\$\\{ls\\.begin}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ls\\.end}";
         final Pattern find = Pattern.compile(regex);
-        final Matcher matcher = find.matcher(template.toString());
+        final Matcher matcher = find.matcher(this.template.asString());
         final StringBuilder sb = new StringBuilder();
+        final Periodo periodo = new PeriodoOf(
+            new DataHoraOf("01/01/2022 00:00:00"),
+            new DataHoraOf("31/12/2023 23:59:59")
+        );
         while (matcher.find()) {
-            for (final Entrada entrada : this.entradas) {
-                Template page = template.from(matcher.group(1));
-                page = template.from(new EntradaPrint(entrada).print(page).toString());
+            for (final Locacao locacao : this.locacoes.procura(periodo)) {
+                Template page = this.template.from(matcher.group(1));
+                page = this.template.from(
+                    new LocacaoHtml(locacao, page).html()
+                );
                 sb.append(new String(page.bytes()));
             }
         }
-        return template.from(
-            new String(template.bytes()).replaceAll(regex, sb.toString())
-        );
+        return this.template.asString().replaceAll(regex, sb.toString());
     }
 }

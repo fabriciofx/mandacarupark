@@ -21,8 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.locacao;
 
-public interface Print {
-    Template print(Template template);
+import com.github.fabriciofx.mandacarupark.Locacao;
+import com.github.fabriciofx.mandacarupark.Media;
+import com.github.fabriciofx.mandacarupark.Html;
+import com.github.fabriciofx.mandacarupark.Template;
+import com.github.fabriciofx.mandacarupark.media.MapMedia;
+
+public final class LocacaoHtml implements Locacao, Html {
+    private final Locacao locacao;
+    private final Template template;
+
+    public LocacaoHtml(final Locacao locacao, final Template template) {
+        this.locacao = locacao;
+        this.template = template;
+    }
+
+    @Override
+    public Media sobre(final Media media) {
+        return this.locacao.sobre(media);
+    }
+
+    @Override
+    public String html() {
+        final Media media = this.sobre(new MapMedia());
+        return this.template.with("placa", media.select("placa"))
+            .with("entrada", media.select("entrada"))
+            .with("saida", media.select("saida"))
+            .with("valor", media.select("valor"))
+            .asString();
+    }
 }

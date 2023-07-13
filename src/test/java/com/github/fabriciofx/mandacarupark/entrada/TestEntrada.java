@@ -28,14 +28,14 @@ import com.github.fabriciofx.mandacarupark.Server;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.RandomName;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
-import com.github.fabriciofx.mandacarupark.server.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.ds.H2Memory;
 import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
-import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
+import com.github.fabriciofx.mandacarupark.server.ServerH2;
+import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.jcabi.matchers.XhtmlMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -55,7 +55,7 @@ public final class TestEntrada {
         );
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                new EntradaPrint(entrada).print(new HtmlTemplate(html))
+                new EntradaHtml(entrada, new HtmlTemplate(html)).html()
             ),
             XhtmlMatchers.hasXPaths(
                 "/html/body/table/tbody/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",
@@ -89,7 +89,7 @@ public final class TestEntrada {
             );
             MatcherAssert.assertThat(
                 XhtmlMatchers.xhtml(
-                    new EntradaPrint(entrada).print(new HtmlTemplate(html))
+                    new EntradaHtml(entrada, new HtmlTemplate(html)).html()
                 ),
                 XhtmlMatchers.hasXPaths(
                     "/html/body/table/tbody/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",

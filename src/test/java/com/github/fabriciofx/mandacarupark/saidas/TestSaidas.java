@@ -34,7 +34,7 @@ import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.saida.SaidaFake;
-import com.github.fabriciofx.mandacarupark.saida.SaidaPrint;
+import com.github.fabriciofx.mandacarupark.saida.SaidaHtml;
 import com.github.fabriciofx.mandacarupark.server.ServerH2;
 import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.jcabi.matchers.XhtmlMatchers;
@@ -69,7 +69,7 @@ public final class TestSaidas {
         );
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                new SaidasPrint(saidas, 3, 0).print(new HtmlTemplate(html))
+                new SaidasHtml(saidas, 3, 0, new HtmlTemplate(html)).html()
             ),
             XhtmlMatchers.hasXPaths(
                 "/html/body/table/tbody/tr/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",
@@ -107,7 +107,7 @@ public final class TestSaidas {
             final Saidas saidas = new SaidasSql(session);
             MatcherAssert.assertThat(
                 XhtmlMatchers.xhtml(
-                    new SaidasPrint(saidas, 3, 0).print(new HtmlTemplate(html))
+                    new SaidasHtml(saidas, 3, 0, new HtmlTemplate(html)).html()
                 ),
                 XhtmlMatchers.hasXPaths(
                     "/html/body/table/tbody/tr/td[text()='4c32b3dd-8636-43c0-9786-4804ca2b73f5']",
@@ -150,9 +150,10 @@ public final class TestSaidas {
         );
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                new SaidaPrint(
-                    saidas.pages(1).page(0).content().get(0)
-                ).print(new HtmlTemplate(html))
+                new SaidaHtml(
+                    saidas.pages(1).page(0).content().get(0),
+                    new HtmlTemplate(html)
+                ).html()
             ),
             XhtmlMatchers.hasXPaths(
                 "/html/body/table/tbody/tr/td[text()='07d8e078-5b47-4fb5-9fb4-dd2c80dd8036']",
@@ -162,9 +163,10 @@ public final class TestSaidas {
         );
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                new SaidaPrint(
-                    saidas.pages(1).page(1).content().get(0)
-                ).print(new HtmlTemplate(html))
+                new SaidaHtml(
+                    saidas.pages(1).page(1).content().get(0),
+                    new HtmlTemplate(html)
+                ).html()
             ),
             XhtmlMatchers.hasXPaths(
                 "/html/body/table/tbody/tr/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",
@@ -174,9 +176,10 @@ public final class TestSaidas {
         );
         MatcherAssert.assertThat(
             XhtmlMatchers.xhtml(
-                new SaidaPrint(
-                    saidas.pages(1).page(2).content().get(0)
-                ).print(new HtmlTemplate(html))
+                new SaidaHtml(
+                    saidas.pages(1).page(2).content().get(0),
+                    new HtmlTemplate(html)
+                ).html()
             ),
             XhtmlMatchers.hasXPaths(
                 "/html/body/table/tbody/tr/td[text()='4c32b3dd-8636-43c0-9786-4804ca2b73f5']",
@@ -208,9 +211,10 @@ public final class TestSaidas {
             final Saidas saidas = new SaidasSql(session);
             MatcherAssert.assertThat(
                 XhtmlMatchers.xhtml(
-                    new SaidaPrint(
-                        saidas.pages(1).page(0).content().get(0)
-                    ).print(new HtmlTemplate(html))
+                    new SaidaHtml(
+                        saidas.pages(1).page(0).content().get(0),
+                        new HtmlTemplate(html)
+                    ).html()
                 ),
                 XhtmlMatchers.hasXPaths(
                     "/html/body/table/tbody/tr/td[text()='4c32b3dd-8636-43c0-9786-4804ca2b73f5']",
@@ -220,9 +224,10 @@ public final class TestSaidas {
             );
             MatcherAssert.assertThat(
                 XhtmlMatchers.xhtml(
-                    new SaidaPrint(
-                        saidas.pages(1).page(1).content().get(0)
-                    ).print(new HtmlTemplate(html))
+                    new SaidaHtml(
+                        saidas.pages(1).page(1).content().get(0),
+                        new HtmlTemplate(html)
+                    ).html()
                 ),
                 XhtmlMatchers.hasXPaths(
                     "/html/body/table/tbody/tr/td[text()='07d8e078-5b47-4fb5-9fb4-dd2c80dd8036']",
@@ -232,9 +237,10 @@ public final class TestSaidas {
             );
             MatcherAssert.assertThat(
                 XhtmlMatchers.xhtml(
-                    new SaidaPrint(
-                        saidas.pages(1).page(2).content().get(0)
-                    ).print(new HtmlTemplate(html))
+                    new SaidaHtml(
+                        saidas.pages(1).page(2).content().get(0),
+                        new HtmlTemplate(html)
+                    ).html()
                 ),
                 XhtmlMatchers.hasXPaths(
                     "/html/body/table/tbody/tr/td[text()='8c878e6f-ee13-4a37-a208-7510c2638944']",
