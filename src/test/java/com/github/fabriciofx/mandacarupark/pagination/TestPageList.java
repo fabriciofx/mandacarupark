@@ -58,9 +58,11 @@ public final class TestPageList {
         Assert.assertEquals(1, page.content().get(0).intValue());
         Assert.assertEquals(2, page.content().get(1).intValue());
         Assert.assertEquals(3, page.content().get(2).intValue());
+
         Assert.assertEquals(4, page.next().content().get(0).intValue());
         Assert.assertEquals(5, page.next().content().get(1).intValue());
         Assert.assertEquals(6, page.next().content().get(2).intValue());
+
         Assert.assertEquals(7, page.next().next().content().get(0).intValue());
     }
 
@@ -139,9 +141,11 @@ public final class TestPageList {
         );
         page = page.next().next();
         Assert.assertEquals(7, page.content().get(0).intValue());
+
         Assert.assertEquals(4, page.previous().content().get(0).intValue());
         Assert.assertEquals(5, page.previous().content().get(1).intValue());
         Assert.assertEquals(6, page.previous().content().get(2).intValue());
+
         Assert.assertEquals(1, page.previous().previous().content().get(0).intValue());
         Assert.assertEquals(2, page.previous().previous().content().get(1).intValue());
         Assert.assertEquals(3, page.previous().previous().content().get(2).intValue());

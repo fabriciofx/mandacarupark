@@ -38,7 +38,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 @SuppressWarnings("unchecked")
-public final class TestPageSaidaSql {
+public final class TestPageSql {
     @Test
     public void countLessThanLimit() {
         final Session session = new NoAuth(

@@ -35,13 +35,13 @@ import java.util.function.Supplier;
 
 @SuppressWarnings("unchecked")
 public final class PageSql<T> implements Page<T> {
-    private final Supplier<List<T>> scalar;
-    private final Adapter<T> adapter;
+    private final Supplier<List<T>> itens;
     private final Session session;
+    private final Adapter<T> adapter;
     private final String tablename;
     private final int size;
     private final int limit;
-    private final int position;
+    private final int number;
 
     public PageSql(
         final Session session,
@@ -49,10 +49,9 @@ public final class PageSql<T> implements Page<T> {
         final String tablename,
         final int size,
         final int limit,
-        final int position
+        final int number
     ) {
-        this.tablename = tablename;
-        this.scalar = () -> {
+        this.itens = () -> {
             try (
                 final ResultSet rset = new Select(
                     session,
@@ -60,7 +59,7 @@ public final class PageSql<T> implements Page<T> {
                         "SELECT * FROM %s LIMIT %d OFFSET %d",
                         tablename,
                         limit,
-                        position
+                        limit * number
                     )
                 ).result()
             ) {
@@ -74,50 +73,51 @@ public final class PageSql<T> implements Page<T> {
             }
         };
         this.session = session;
+        this.tablename = tablename;
         this.adapter = adapter;
         this.size = size;
         this.limit = limit;
-        this.position = position;
+        this.number = number;
     }
 
     @Override
     public List<T> content() {
-        return this.scalar.get();
+        return this.itens.get();
     }
 
     @Override
     public boolean hasNext() {
-        return this.size > this.position + this.limit;
+        final int rem = Math.min(this.size % this.limit, 1);
+        final int pages = this.size / this.limit + rem;
+        return this.number < pages - 1;
     }
 
     @Override
     public Page<T> next() {
-        final int pos = this.position + this.limit;
         return new PageSql<>(
             this.session,
             this.adapter,
             this.tablename,
             this.size,
             this.limit,
-            pos
+            this.number + 1
         );
     }
 
     @Override
     public boolean hasPrevious() {
-        return this.position - this.limit >= 0;
+        return this.number > 0;
     }
 
     @Override
     public Page<T> previous() {
-        final int pos = this.position - this.limit;
         return new PageSql<>(
             this.session,
             this.adapter,
             this.tablename,
             this.size,
             this.limit,
-            pos
+            this.number - 1
         );
     }
 }

@@ -29,21 +29,22 @@ import com.github.fabriciofx.mandacarupark.pagination.page.PageList;
 import java.util.List;
 
 public final class PagesList<T> implements Pages<T> {
-    private final List<T> list;
+    private final List<T> itens;
     private final int limit;
 
-    public PagesList(final List<T> list, final int limit) {
-        this.list = list;
+    public PagesList(final int limit, final List<T> itens) {
+        this.itens = itens;
         this.limit = limit;
     }
 
     @Override
     public int count() {
-        return Math.round(this.list.size() / this.limit);
+        final int rem = Math.min(this.itens.size() % this.limit, 1);
+        return this.itens.size() / this.limit + rem;
     }
 
     @Override
     public Page<T> page(final int number) {
-        return new PageList<>(this.limit, number, this.list);
+        return new PageList<>(this.limit, number, this.itens);
     }
 }

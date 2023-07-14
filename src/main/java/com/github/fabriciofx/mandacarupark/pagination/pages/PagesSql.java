@@ -73,7 +73,8 @@ public final class PagesSql<T> implements Pages<T> {
 
     @Override
     public int count() {
-        return Math.round(this.size.get() / this.limit);
+        final int rem = Math.min(this.size.get() % this.limit, 1);
+        return this.size.get() / this.limit + rem;
     }
 
     @Override

@@ -78,6 +78,6 @@ public final class SaidasFake implements Saidas {
 
     @Override
     public Pages<Saida> pages(final int limit) {
-        return new PagesList<>(new ArrayList<>(this.itens.values()), limit);
+        return new PagesList<>(limit, new ArrayList<>(this.itens.values()));
     }
 }

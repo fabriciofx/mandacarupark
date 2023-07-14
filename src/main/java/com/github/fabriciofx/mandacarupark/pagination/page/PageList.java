@@ -28,45 +28,60 @@ import java.util.List;
 
 public final class PageList<T> implements Page<T> {
     private final int limit;
-    private final int position;
-    private final List<T> list;
+    private final int number;
+    private final List<T> itens;
 
-    public PageList(final int limit, final List<T> list) {
-        this(limit, 0, list);
+    public PageList(
+        final int limit,
+        final List<T> itens
+    ) {
+        this(limit, 0, itens);
     }
 
-    public PageList(final int limit, final int position, final List<T> list) {
+    public PageList(
+        final int limit,
+        final int number,
+        final List<T> itens
+    ) {
         this.limit = limit;
-        this.position = position;
-        this.list = list;
+        this.number = number;
+        this.itens = itens;
     }
 
     @Override
     public List<T> content() {
-        final int begin = this.position;
-        final int end = Math.min(begin + this.limit, this.list.size());
-        return this.list.subList(begin, end);
+        final int begin = this.number * this.limit;
+        final int end = Math.min(begin + this.limit, this.itens.size());
+        return this.itens.subList(begin, end);
     }
 
     @Override
     public boolean hasNext() {
-        return this.list.size() > this.position + this.limit;
+        final int rem = Math.min(this.itens.size() % this.limit, 1);
+        final int pages = this.itens.size() / this.limit + rem;
+        return this.number < pages - 1;
     }
 
     @Override
     public Page<T> next() {
-        final int pos = this.position + this.limit;
-        return new PageList<T>(this.limit, pos, this.list);
+        return new PageList<>(
+            this.limit,
+            this.number + 1,
+            this.itens
+        );
     }
 
     @Override
     public boolean hasPrevious() {
-        return this.position - this.limit >= 0;
+        return this.number > 0;
     }
 
     @Override
     public Page<T> previous() {
-        final int pos = this.position - this.limit;
-        return new PageList<T>(this.limit, pos, this.list);
+        return new PageList<>(
+            this.limit,
+            this.number - 1,
+            this.itens
+        );
     }
 }
