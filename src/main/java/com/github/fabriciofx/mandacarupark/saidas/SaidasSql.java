@@ -96,7 +96,8 @@ public final class SaidasSql implements Saidas {
     public Pages<Saida> pages(final int limit) {
         return new PagesSql<>(
             this.session,
-            "saida",
+            "SELECT COUNT(*) FROM saida",
+            "SELECT * FROM saida",
             new ResultSetAsSaida(this.session),
             limit
         );

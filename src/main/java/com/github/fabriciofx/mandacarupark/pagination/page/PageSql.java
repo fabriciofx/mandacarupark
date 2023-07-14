@@ -38,7 +38,7 @@ public final class PageSql<T> implements Page<T> {
     private final Supplier<List<T>> itens;
     private final Session session;
     private final Adapter<T> adapter;
-    private final String tablename;
+    private final String allQuery;
     private final int size;
     private final int limit;
     private final int number;
@@ -46,7 +46,7 @@ public final class PageSql<T> implements Page<T> {
     public PageSql(
         final Session session,
         final Adapter<T> adapter,
-        final String tablename,
+        final String allQuery,
         final int size,
         final int limit,
         final int number
@@ -56,8 +56,8 @@ public final class PageSql<T> implements Page<T> {
                 final ResultSet rset = new Select(
                     session,
                     new Sprintf(
-                        "SELECT * FROM %s LIMIT %d OFFSET %d",
-                        tablename,
+                        "%s LIMIT %d OFFSET %d",
+                        allQuery,
                         limit,
                         limit * number
                     )
@@ -73,7 +73,7 @@ public final class PageSql<T> implements Page<T> {
             }
         };
         this.session = session;
-        this.tablename = tablename;
+        this.allQuery = allQuery;
         this.adapter = adapter;
         this.size = size;
         this.limit = limit;
@@ -97,7 +97,7 @@ public final class PageSql<T> implements Page<T> {
         return new PageSql<>(
             this.session,
             this.adapter,
-            this.tablename,
+            this.allQuery,
             this.size,
             this.limit,
             this.number + 1
@@ -114,7 +114,7 @@ public final class PageSql<T> implements Page<T> {
         return new PageSql<>(
             this.session,
             this.adapter,
-            this.tablename,
+            this.allQuery,
             this.size,
             this.limit,
             this.number - 1

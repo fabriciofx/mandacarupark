@@ -55,7 +55,8 @@ public final class TestPageSql {
             server.start();
             final Page<Saida> page = new PagesSql<>(
                 session,
-                "saida",
+                "SELECT COUNT(*) FROM saida",
+                "SELECT * FROM saida",
                 new ResultSetAsSaida(session),
                 2
             ).page(0);
@@ -81,7 +82,8 @@ public final class TestPageSql {
             server.start();
             final Page<Saida> page = new PagesSql<>(
                 session,
-                "saida",
+                "SELECT COUNT(*) FROM saida",
+                "SELECT * FROM saida",
                 new ResultSetAsSaida(session),
                 2
             ).page(0);
@@ -108,7 +110,8 @@ public final class TestPageSql {
             server.start();
             final Page<Saida> page = new PagesSql<>(
                 session,
-                "saida",
+                "SELECT COUNT(*) FROM saida",
+                "SELECT * FROM saida",
                 new ResultSetAsSaida(session),
                 2
             ).page(0);
@@ -149,7 +152,8 @@ public final class TestPageSql {
                     server.start();
                     final Page<Saida> page = new PagesSql<>(
                         session,
-                        "saida",
+                        "SELECT COUNT(*) FROM saida",
+                        "SELECT * FROM saida",
                         new ResultSetAsSaida(session),
                         2
                     ).page(0);
@@ -179,7 +183,8 @@ public final class TestPageSql {
                     server.start();
                     final Page<Saida> page = new PagesSql<>(
                         session,
-                        "saida",
+                        "SELECT COUNT(*) FROM saida",
+                        "SELECT * FROM saida",
                         new ResultSetAsSaida(session),
                         2
                     ).page(0);
@@ -205,7 +210,8 @@ public final class TestPageSql {
             server.start();
             final Page<Saida> page = new PagesSql<>(
                 session,
-                "saida",
+                "SELECT COUNT(*) FROM saida",
+                "SELECT * FROM saida",
                 new ResultSetAsSaida(session),
                 3
             ).page(0);
@@ -231,7 +237,8 @@ public final class TestPageSql {
             server.start();
             final Page<Saida> page = new PagesSql<>(
                 session,
-                "saida",
+                "SELECT COUNT(*) FROM saida",
+                "SELECT * FROM saida",
                 new ResultSetAsSaida(session),
                 2
             ).page(0);
@@ -258,7 +265,8 @@ public final class TestPageSql {
             server.start();
             final Page<Saida> page = new PagesSql<>(
                 session,
-                "saida",
+                "SELECT COUNT(*) FROM saida",
+                "SELECT * FROM saida",
                 new ResultSetAsSaida(session),
                 3
             ).page(0);
@@ -284,7 +292,8 @@ public final class TestPageSql {
             server.start();
             final Page<Saida> page = new PagesSql<>(
                 session,
-                "saida",
+                "SELECT COUNT(*) FROM saida",
+                "SELECT * FROM saida",
                 new ResultSetAsSaida(session),
                 2
             ).page(0).next();
@@ -310,7 +319,8 @@ public final class TestPageSql {
             server.start();
             final Page<Saida> page = new PagesSql<>(
                 session,
-                "saida",
+                "SELECT COUNT(*) FROM saida",
+                "SELECT * FROM saida",
                 new ResultSetAsSaida(session),
                 2
             ).page(0).next();

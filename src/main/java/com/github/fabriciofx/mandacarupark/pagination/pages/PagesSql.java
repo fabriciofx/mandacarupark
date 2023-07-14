@@ -23,13 +23,12 @@
  */
 package com.github.fabriciofx.mandacarupark.pagination.pages;
 
+import com.github.fabriciofx.mandacarupark.adapter.Adapter;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
-import com.github.fabriciofx.mandacarupark.adapter.Adapter;
 import com.github.fabriciofx.mandacarupark.pagination.Page;
 import com.github.fabriciofx.mandacarupark.pagination.Pages;
 import com.github.fabriciofx.mandacarupark.pagination.page.PageSql;
-import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 import java.util.function.Supplier;
 
@@ -37,24 +36,20 @@ public final class PagesSql<T> implements Pages<T> {
     private final Supplier<Integer> size;
     private final Adapter<T> adapter;
     private final Session session;
-    private final String tablename;
+    private final String countQuery;
+    private final String allQuery;
     private final int limit;
 
     public PagesSql(
         final Session session,
-        final String tablename,
+        final String countQuery,
+        final String allQuery,
         final Adapter<T> adapter,
         final int limit
     ) {
         this.size = () -> {
             try (
-                final ResultSet rset = new Select(
-                    session,
-                    new Sprintf(
-                        "SELECT COUNT(*) FROM %s",
-                        tablename
-                    )
-                ).result()
+                final ResultSet rset = new Select(session, countQuery).result()
             ) {
                 if (rset.next()) {
                     return rset.getInt(1);
@@ -67,7 +62,8 @@ public final class PagesSql<T> implements Pages<T> {
         };
         this.session = session;
         this.adapter = adapter;
-        this.tablename = tablename;
+        this.countQuery = countQuery;
+        this.allQuery = allQuery;
         this.limit = limit;
     }
 
@@ -82,7 +78,7 @@ public final class PagesSql<T> implements Pages<T> {
         return new PageSql<>(
             this.session,
             this.adapter,
-            this.tablename,
+            this.allQuery,
             this.size.get(),
             this.limit,
             number

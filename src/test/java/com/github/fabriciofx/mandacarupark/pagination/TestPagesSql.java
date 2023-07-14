@@ -53,7 +53,8 @@ public final class TestPagesSql {
             server.start();
             final Pages<Saida> pages = new PagesSql<>(
                 session,
-                "saida",
+                "SELECT COUNT(*) FROM saida",
+                "SELECT * FROM saida",
                 new ResultSetAsSaida(session),
                 2
             );
@@ -79,7 +80,8 @@ public final class TestPagesSql {
             server.start();
             final Pages<Saida> pages = new PagesSql<>(
                 session,
-                "saida",
+                "SELECT COUNT(*) FROM saida",
+                "SELECT * FROM saida",
                 new ResultSetAsSaida(session),
                 2
             );
