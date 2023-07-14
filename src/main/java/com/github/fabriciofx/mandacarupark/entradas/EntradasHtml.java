@@ -79,7 +79,7 @@ public final class EntradasHtml implements Entradas, Html {
             for (final Entrada entrada : this.entradas) {
                 Template page = this.template.create(matcher.group(1));
                 page = this.template.create(new EntradaHtml(entrada, page).html());
-                sb.append(new String(page.bytes()));
+                sb.append(page.asString());
             }
         }
         return this.template.asString().replaceAll(regex, sb.toString());

@@ -60,7 +60,9 @@ public final class SaidasPage implements HttpPage {
             new ResourceAsStream("webapp/saidas.tpl")
         ).with(
             "header",
-            new HtmlTemplate(new ResourceAsStream("webapp/header.tpl"))
+            new HtmlTemplate(
+                new ResourceAsStream("webapp/header.tpl")
+            ).asString()
         ).with(
             "footer",
             new HtmlTemplate(
@@ -70,7 +72,7 @@ public final class SaidasPage implements HttpPage {
                     limit,
                     "http://localhost:8080/saidas"
                 )
-            )
+            ).asString()
         );
         final InputStream body = new ByteArrayInputStream(
             new SaidasHtml(

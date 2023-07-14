@@ -71,7 +71,7 @@ public final class LocacoesHtml implements Locacoes, Html {
                 page = this.template.create(
                     new LocacaoHtml(locacao, page).html()
                 );
-                sb.append(new String(page.bytes()));
+                sb.append(page.asString());
             }
         }
         return this.template.asString().replaceAll(regex, sb.toString());

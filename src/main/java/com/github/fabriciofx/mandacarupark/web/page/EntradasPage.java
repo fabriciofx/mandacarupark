@@ -51,7 +51,7 @@ public final class EntradasPage implements HttpPage {
         );
         final Template main = new HtmlTemplate(
             new ResourceAsStream("webapp/entradas.tpl")
-        ).with("header", header);
+        ).with("header", header.asString());
         final Entradas entradas = this.estacionamento.sobre(new MapMedia())
             .select("entradas");
         final InputStream body = new ByteArrayInputStream(

@@ -51,7 +51,7 @@ public final class PagamentosPage implements HttpPage {
         );
         final Template main = new HtmlTemplate(
             new ResourceAsStream("webapp/pagamentos.tpl")
-        ).with("header", header);
+        ).with("header", header.asString());
         final Pagamentos pagamentos = this.estacionamento.sobre(new MapMedia())
             .select("pagamentos");
         final InputStream body = new ByteArrayInputStream(

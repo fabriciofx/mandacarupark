@@ -59,9 +59,9 @@ public final class SaidasHtml implements Saidas, Html {
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
             for (final Saida saida : this.saidas.pages(this.limit).page(this.number).content()) {
-                Template page = template.create(matcher.group(1));
+                Template page = this.template.create(matcher.group(1));
                 page = this.template.create(new SaidaHtml(saida, page).html());
-                sb.append(new String(page.bytes()));
+                sb.append(page.asString());
             }
         }
         return this.template.asString().replaceAll(regex, sb.toString());

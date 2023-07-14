@@ -47,10 +47,6 @@ public final class HtmlTemplate implements Template {
         );
     }
 
-    public HtmlTemplate(final byte[] bytes) {
-        this(new String(bytes));
-    }
-
     public HtmlTemplate(final String content) {
         this.content = () -> content;
     }
@@ -77,11 +73,6 @@ public final class HtmlTemplate implements Template {
     @Override
     public byte[] bytes() {
         return this.toString().getBytes();
-    }
-
-    @Override
-    public String toString() {
-        return this.asString();
     }
 
     @Override

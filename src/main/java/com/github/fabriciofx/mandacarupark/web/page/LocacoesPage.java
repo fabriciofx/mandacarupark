@@ -48,7 +48,7 @@ public final class LocacoesPage implements HttpPage {
         );
         final Template main = new HtmlTemplate(
             new ResourceAsStream("webapp/locacoes.tpl")
-        ).with("header", header);
+        ).with("header", header.asString());
 //        final RqFormBase form = new RqFormBase(req);
 //        final String inicio, termino;
 //        if (form.names().iterator().hasNext()) {

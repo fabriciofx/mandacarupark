@@ -91,7 +91,7 @@ public final class PagamentosHtml implements Pagamentos, Html {
                 page = this.template.create(
                     new PagamentoHtml(pagamento, page).html()
                 );
-                sb.append(new String(page.bytes()));
+                sb.append(page.asString());
             }
         }
         return this.template.asString().replaceAll(regex, sb.toString());
