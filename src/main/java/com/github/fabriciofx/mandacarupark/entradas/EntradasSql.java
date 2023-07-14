@@ -66,7 +66,7 @@ public final class EntradasSql implements Entradas {
     }
 
     @Override
-    public Entrada procura(final Id id) {
+    public List<Entrada> procura(final Id id) {
         int quantidade = 0;
         try (
             final ResultSet rset = new Select(
@@ -83,15 +83,11 @@ public final class EntradasSql implements Entradas {
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
-        if (quantidade == 0) {
-            throw new RuntimeException(
-                String.format(
-                    "Entrada com id '%s' não encontrada!",
-                    id
-                )
-            );
+        final List<Entrada> itens = new ArrayList<>(1);
+        if (quantidade != 0) {
+            itens.add(new EntradaSql(this.session, id));
         }
-        return new EntradaSql(this.session, id);
+        return itens;
     }
 
     @Override

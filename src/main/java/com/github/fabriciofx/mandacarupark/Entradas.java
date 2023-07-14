@@ -23,7 +23,9 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
+import java.util.List;
+
 public interface Entradas extends Iterable<Entrada>, Sobre {
     Entrada entrada(Id id, Placa placa, DataHora dataHora);
-    Entrada procura(Id id);
+    List<Entrada> procura(Id id);
 }

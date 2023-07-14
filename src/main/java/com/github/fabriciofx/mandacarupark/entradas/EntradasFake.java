@@ -31,8 +31,10 @@ import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaFake;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public final class EntradasFake implements Entradas {
@@ -79,8 +81,13 @@ public final class EntradasFake implements Entradas {
     }
 
     @Override
-    public Entrada procura(final Id id) {
-        return this.itens.get(id);
+    public List<Entrada> procura(final Id id) {
+        final Entrada entrada = this.itens.get(id);
+        final List<Entrada> lista = new ArrayList<>(1);
+        if (entrada != null) {
+            lista.add(entrada);
+        }
+        return lista;
     }
 
     @Override

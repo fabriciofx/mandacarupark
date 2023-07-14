@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.web.page;
 
+import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Id;
@@ -33,6 +34,7 @@ import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
+import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import com.github.fabriciofx.mandacarupark.web.HttpPage;
 import org.takes.Request;
 import org.takes.Response;
@@ -40,6 +42,7 @@ import org.takes.facets.forward.RsForward;
 import org.takes.rq.form.RqFormSmart;
 import org.takes.rs.RsHtml;
 import java.io.IOException;
+import java.util.List;
 
 public final class SaidaPage implements HttpPage {
     private final Estacionamento estacionamento;
@@ -55,7 +58,16 @@ public final class SaidaPage implements HttpPage {
         final Id id = new Uuid(form.single("ticket"));
         final Entradas entradas = this.estacionamento.sobre(new MapMedia())
             .select("entradas");
-        final Ticket ticket = entradas.procura(id).ticket();
+        final List<Entrada> entrada = entradas.procura(id);
+        if (entrada.isEmpty()) {
+            throw new RuntimeException(
+                new Sprintf(
+                    "entrada do ticket %s não encontrada",
+                    id.numero()
+                ).asString()
+            );
+        }
+        final Ticket ticket = entrada.get(0).ticket();
         try {
             this.estacionamento.saida(ticket, placa, new DataHoraOf());
         } catch (final Exception ex) {

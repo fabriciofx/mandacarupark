@@ -23,8 +23,10 @@
  */
 package com.github.fabriciofx.mandacarupark.cli;
 
+import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
+import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.console.Console;
@@ -33,6 +35,8 @@ import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.placa.Restricao;
+import com.github.fabriciofx.mandacarupark.text.Sprintf;
+import java.util.List;
 
 public final class OpcaoSaida implements Opcao {
     private final String mensagem;
@@ -66,9 +70,17 @@ public final class OpcaoSaida implements Opcao {
         this.console.write("Ticket: ");
         final Entradas entradas = this.estacionamento.sobre(new MapMedia())
             .select("entradas");
-        final Ticket ticket = entradas.procura(
-            new Uuid(this.console.read())
-        ).ticket();
+        final Id id = new Uuid(this.console.read());
+        final List<Entrada> entrada = entradas.procura(id);
+        if (entrada.isEmpty()) {
+            throw new RuntimeException(
+                new Sprintf(
+                    "entrada do ticket %s não encontrada",
+                    id.numero()
+                ).asString()
+            );
+        }
+        final Ticket ticket = entrada.get(0).ticket();
         this.estacionamento.saida(ticket, placa, new DataHoraOf());
     }
 }

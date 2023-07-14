@@ -60,7 +60,7 @@ public final class EntradasSource implements Entradas {
     }
 
     @Override
-    public Entrada procura(Id id) {
+    public List<Entrada> procura(Id id) {
         return this.origin.procura(id);
     }
 

@@ -26,13 +26,14 @@ package com.github.fabriciofx.mandacarupark.entradas;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
+import com.github.fabriciofx.mandacarupark.Html;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Placa;
-import com.github.fabriciofx.mandacarupark.Html;
 import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaHtml;
 import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -55,7 +56,7 @@ public final class EntradasHtml implements Entradas, Html {
     }
 
     @Override
-    public Entrada procura(final Id id) {
+    public List<Entrada> procura(final Id id) {
         return this.entradas.procura(id);
     }
 

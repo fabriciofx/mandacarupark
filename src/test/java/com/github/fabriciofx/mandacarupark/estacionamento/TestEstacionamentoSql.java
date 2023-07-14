@@ -47,9 +47,11 @@ import com.github.fabriciofx.mandacarupark.regra.Tolerancia;
 import com.github.fabriciofx.mandacarupark.regra.ValorFixo;
 import com.github.fabriciofx.mandacarupark.regras.RegrasOf;
 import com.github.fabriciofx.mandacarupark.saidas.SaidasSql;
+import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import org.junit.Assert;
 import org.junit.Test;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public final class TestEstacionamentoSql {
     @Test
@@ -85,10 +87,18 @@ public final class TestEstacionamentoSql {
                 placa,
                 new DataHoraOf(dateTime)
             );
-            final Entrada entrada = entradas.procura(ticket.id());
+            final List<Entrada> entrada = entradas.procura(ticket.id());
+            if (entrada.isEmpty()) {
+                throw new RuntimeException(
+                    new Sprintf(
+                        "entrada do ticket %s não encontrada",
+                        ticket.id().numero()
+                    ).asString()
+                );
+            }
             Assert.assertEquals(
                 "ABC1234",
-                entrada.sobre(new MapMedia()).select("placa").toString()
+                entrada.get(0).sobre(new MapMedia()).select("placa").toString()
             );
         }
     }
