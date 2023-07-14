@@ -28,6 +28,7 @@ import com.github.fabriciofx.mandacarupark.db.ScriptSql;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.ds.H2File;
 import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
+import com.github.fabriciofx.mandacarupark.db.session.Sticky;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
 import com.github.fabriciofx.mandacarupark.estacionamento.EstacionamentoSql;
@@ -51,7 +52,11 @@ public final class App {
         final String host = "localhost";
         final int port = 8080;
         final CountDownLatch latch = new CountDownLatch(1);
-        final Session session = new NoAuth(new H2File("mandacarupark"));
+        final Session session = new Sticky(
+            new NoAuth(
+                new H2File("mandacarupark")
+            )
+        );
         final Estacionamento estacionamento = new EstacionamentoSql(
             session,
             new EntradasSql(session),
