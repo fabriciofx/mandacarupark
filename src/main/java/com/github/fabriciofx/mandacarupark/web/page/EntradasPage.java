@@ -33,9 +33,7 @@ import com.github.fabriciofx.mandacarupark.web.HttpPage;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.rs.RsHtml;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 public final class EntradasPage implements HttpPage {
     private final Estacionamento estacionamento;
@@ -54,9 +52,6 @@ public final class EntradasPage implements HttpPage {
         ).with("header", header.asString());
         final Entradas entradas = this.estacionamento.sobre(new MapMedia())
             .select("entradas");
-        final InputStream body = new ByteArrayInputStream(
-            new EntradasHtml(entradas, main).html().getBytes()
-        );
-        return new RsHtml(body);
+        return new RsHtml(new EntradasHtml(entradas, main).html());
     }
 }

@@ -34,9 +34,7 @@ import org.takes.Request;
 import org.takes.Response;
 import org.takes.rq.RqHref;
 import org.takes.rs.RsHtml;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 @SuppressWarnings("unchecked")
 public final class SaidasPage implements HttpPage {
@@ -74,14 +72,13 @@ public final class SaidasPage implements HttpPage {
                 )
             ).asString()
         );
-        final InputStream body = new ByteArrayInputStream(
+        return new RsHtml(
             new SaidasHtml(
                 saidas,
                 limit,
                 number - 1,
                 main
-            ).html().getBytes()
+            ).html()
         );
-        return new RsHtml(body);
     }
 }

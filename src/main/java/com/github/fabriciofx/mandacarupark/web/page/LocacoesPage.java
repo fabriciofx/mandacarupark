@@ -26,6 +26,7 @@ package com.github.fabriciofx.mandacarupark.web.page;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Locacoes;
 import com.github.fabriciofx.mandacarupark.Template;
+import com.github.fabriciofx.mandacarupark.locacoes.LocacoesHtml;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.web.HttpPage;
@@ -73,7 +74,7 @@ public final class LocacoesPage implements HttpPage {
 //            locacoes.sobre(main).toString().getBytes()
 //        );
 //        return new RsHtml(body);
-        return new RsHtml("");
+        return new RsHtml(new LocacoesHtml(locacoes, main).html());
 
     }
 }
