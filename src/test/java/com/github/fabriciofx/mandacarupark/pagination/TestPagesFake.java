@@ -23,15 +23,15 @@
  */
 package com.github.fabriciofx.mandacarupark.pagination;
 
-import com.github.fabriciofx.mandacarupark.pagination.pages.PagesList;
+import com.github.fabriciofx.mandacarupark.pagination.pages.PagesFake;
 import org.junit.Assert;
 import org.junit.Test;
 import java.util.Arrays;
 
-public final class TestPagesList {
+public final class TestPagesFake {
     @Test
     public void countLessThanLimit() {
-        final Pages<Integer> pages = new PagesList<>(
+        final Pages<Integer> pages = new PagesFake<>(
             3,
             Arrays.asList(1, 2)
         );
@@ -40,23 +40,23 @@ public final class TestPagesList {
 
     @Test
     public void countGreaterThanLimit() {
-        final Pages<Integer> pages1 = new PagesList<>(
+        final Pages<Integer> pages1 = new PagesFake<>(
             3,
             Arrays.asList(1, 2, 3, 4, 5, 6)
         );
-        final Pages<Integer> pages2 = new PagesList<>(
+        final Pages<Integer> pages2 = new PagesFake<>(
             3,
             Arrays.asList(1, 2, 3, 4, 5, 6, 7)
         );
-        final Pages<Integer> pages3 = new PagesList<>(
+        final Pages<Integer> pages3 = new PagesFake<>(
             3,
             Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8)
         );
-        final Pages<Integer> pages4 = new PagesList<>(
+        final Pages<Integer> pages4 = new PagesFake<>(
             3,
             Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9)
         );
-        final Pages<Integer> pages5 = new PagesList<>(
+        final Pages<Integer> pages5 = new PagesFake<>(
             3,
             Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
         );
@@ -69,7 +69,7 @@ public final class TestPagesList {
 
     @Test
     public void contentByPage2() {
-        final Pages<Integer> pages = new PagesList<>(
+        final Pages<Integer> pages = new PagesFake<>(
             3,
             Arrays.asList(1, 2)
         );
@@ -79,7 +79,7 @@ public final class TestPagesList {
 
     @Test
     public void contentByPage3() {
-        final Pages<Integer> pages = new PagesList<>(
+        final Pages<Integer> pages = new PagesFake<>(
             3,
             Arrays.asList(1, 2, 3)
         );
@@ -90,7 +90,7 @@ public final class TestPagesList {
 
     @Test
     public void contentByPage4() {
-        final Pages<Integer> pages = new PagesList<>(
+        final Pages<Integer> pages = new PagesFake<>(
             3,
             Arrays.asList(1, 2, 3, 4)
         );
@@ -103,7 +103,7 @@ public final class TestPagesList {
 
     @Test
     public void contentByPage5() {
-        final Pages<Integer> pages = new PagesList<>(
+        final Pages<Integer> pages = new PagesFake<>(
             3,
             Arrays.asList(1, 2, 3, 4, 5)
         );
@@ -117,7 +117,7 @@ public final class TestPagesList {
 
     @Test
     public void contentByPage6() {
-        final Pages<Integer> pages = new PagesList<>(
+        final Pages<Integer> pages = new PagesFake<>(
             3,
             Arrays.asList(1, 2, 3, 4, 5, 6)
         );
@@ -132,7 +132,7 @@ public final class TestPagesList {
 
     @Test
     public void contentByPage7() {
-        final Pages<Integer> pages = new PagesList<>(
+        final Pages<Integer> pages = new PagesFake<>(
             3,
             Arrays.asList(1, 2, 3, 4, 5, 6, 7)
         );
@@ -149,7 +149,7 @@ public final class TestPagesList {
 
     @Test
     public void contentByPage8() {
-        final Pages<Integer> pages = new PagesList<>(
+        final Pages<Integer> pages = new PagesFake<>(
             3,
             Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8)
         );

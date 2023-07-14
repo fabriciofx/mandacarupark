@@ -26,19 +26,19 @@ package com.github.fabriciofx.mandacarupark.pagination.page;
 import com.github.fabriciofx.mandacarupark.pagination.Page;
 import java.util.List;
 
-public final class PageList<T> implements Page<T> {
+public final class PageFake<T> implements Page<T> {
     private final int limit;
     private final int number;
     private final List<T> itens;
 
-    public PageList(
+    public PageFake(
         final int limit,
         final List<T> itens
     ) {
         this(limit, 0, itens);
     }
 
-    public PageList(
+    public PageFake(
         final int limit,
         final int number,
         final List<T> itens
@@ -64,7 +64,7 @@ public final class PageList<T> implements Page<T> {
 
     @Override
     public Page<T> next() {
-        return new PageList<>(
+        return new PageFake<>(
             this.limit,
             this.number + 1,
             this.itens
@@ -78,7 +78,7 @@ public final class PageList<T> implements Page<T> {
 
     @Override
     public Page<T> previous() {
-        return new PageList<>(
+        return new PageFake<>(
             this.limit,
             this.number - 1,
             this.itens

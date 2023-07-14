@@ -23,15 +23,15 @@
  */
 package com.github.fabriciofx.mandacarupark.pagination;
 
-import com.github.fabriciofx.mandacarupark.pagination.page.PageList;
+import com.github.fabriciofx.mandacarupark.pagination.page.PageFake;
 import org.junit.Assert;
 import org.junit.Test;
 import java.util.Arrays;
 
-public final class TestPageList {
+public final class TestPageFake {
     @Test
     public void countLessThanLimit() {
-        final Page<Integer> page = new PageList<>(
+        final Page<Integer> page = new PageFake<>(
             3,
             Arrays.asList(1, 2)
         );
@@ -40,7 +40,7 @@ public final class TestPageList {
 
     @Test
     public void countGreaterThanLimit() {
-        final Page<Integer> page = new PageList<>(
+        final Page<Integer> page = new PageFake<>(
             3,
             Arrays.asList(1, 2, 3, 4, 5, 6, 7)
         );
@@ -51,7 +51,7 @@ public final class TestPageList {
 
     @Test
     public void contentNext() {
-        final Page<Integer> page = new PageList<>(
+        final Page<Integer> page = new PageFake<>(
             3,
             Arrays.asList(1, 2, 3, 4, 5, 6, 7)
         );
@@ -72,7 +72,7 @@ public final class TestPageList {
             "index must be between 0 and 2",
             IndexOutOfBoundsException.class,
             () -> {
-                new PageList<>(
+                new PageFake<>(
                     2,
                     Arrays.asList(1, 2, 3)
                 ).content().get(2);
@@ -87,7 +87,7 @@ public final class TestPageList {
             "index must be between 0 and 2",
             IndexOutOfBoundsException.class,
             () -> {
-                new PageList<>(
+                new PageFake<>(
                     2,
                     Arrays.asList(1, 2, 3)
                 ).content().get(-1);
@@ -97,7 +97,7 @@ public final class TestPageList {
 
     @Test
     public void hasNextOneElement() {
-        final Page<Integer> page = new PageList<>(
+        final Page<Integer> page = new PageFake<>(
             2,
             Arrays.asList(1)
         );
@@ -106,7 +106,7 @@ public final class TestPageList {
 
     @Test
     public void hasNext() {
-        final Page<Integer> page = new PageList<>(
+        final Page<Integer> page = new PageFake<>(
             2,
             Arrays.asList(1, 2, 3)
         );
@@ -116,7 +116,7 @@ public final class TestPageList {
 
     @Test
     public void noHasPreviousForTheFirstPage() {
-        final Page<Integer> page = new PageList<>(
+        final Page<Integer> page = new PageFake<>(
             2,
             Arrays.asList(1, 2, 3)
         );
@@ -125,7 +125,7 @@ public final class TestPageList {
 
     @Test
     public void hasPrevious() {
-        Page<Integer> page = new PageList<>(
+        Page<Integer> page = new PageFake<>(
             2,
             Arrays.asList(1, 2, 3)
         );
@@ -135,7 +135,7 @@ public final class TestPageList {
 
     @Test
     public void contentPrevious() {
-        Page<Integer> page = new PageList<>(
+        Page<Integer> page = new PageFake<>(
             3,
             Arrays.asList(1, 2, 3, 4, 5, 6, 7)
         );

@@ -30,7 +30,7 @@ import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.pagination.Pages;
-import com.github.fabriciofx.mandacarupark.pagination.pages.PagesList;
+import com.github.fabriciofx.mandacarupark.pagination.pages.PagesFake;
 import com.github.fabriciofx.mandacarupark.saida.SaidaFake;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,6 +78,6 @@ public final class SaidasFake implements Saidas {
 
     @Override
     public Pages<Saida> pages(final int limit) {
-        return new PagesList<>(limit, new ArrayList<>(this.itens.values()));
+        return new PagesFake<>(limit, new ArrayList<>(this.itens.values()));
     }
 }
