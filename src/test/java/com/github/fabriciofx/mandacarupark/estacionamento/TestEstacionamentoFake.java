@@ -193,9 +193,16 @@ public final class TestEstacionamentoFake {
             )
         );
         final StringBuilder sb = new StringBuilder();
-        for (final Entrada entrada : entradas) {
-            sb.append(entrada.sobre(new MapMedia()).toString());
-        }
+        sb.append(
+            entradas.pages(2).page(0).content().get(0).sobre(
+                new MapMedia()
+            ).toString()
+        );
+        sb.append(
+            entradas.pages(2).page(0).content().get(1).sobre(
+                new MapMedia()
+            ).toString()
+        );
         Assert.assertTrue(
             sb.toString().contains("placa=XYZ9876") &&
             sb.toString().contains("dataHora=02/08/2022 11:12") &&

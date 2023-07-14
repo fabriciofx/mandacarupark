@@ -21,13 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.adapter;
 
-import com.github.fabriciofx.mandacarupark.pagination.Pages;
-import java.util.List;
+import com.github.fabriciofx.mandacarupark.Entrada;
+import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.entrada.EntradaSql;
+import com.github.fabriciofx.mandacarupark.id.Uuid;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public interface Entradas {
-    Entrada entrada(Id id, Placa placa, DataHora dataHora);
-    List<Entrada> procura(Id id);
-    Pages<Entrada> pages(int limit);
+public final class ResultSetAsEntrada implements Adapter<Entrada> {
+    private final Session session;
+
+    public ResultSetAsEntrada(final Session session) {
+        this.session = session;
+    }
+
+    @Override
+    public Entrada adapt(final ResultSet rset) {
+        try {
+            return new EntradaSql(this.session, new Uuid(rset.getString(1)));
+        } catch (final SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 }

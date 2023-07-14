@@ -10,7 +10,7 @@
             Pagamento
           </button>
           <br/>
-          <button onclick="location.href='http://localhost:8080/entradas'">
+          <button onclick="location.href='http://localhost:8080/entradas?page=1&amp;limit=1'">
             Entradas
           </button>
           <button onclick="location.href='http://localhost:8080/saidas?page=1&amp;limit=1'">

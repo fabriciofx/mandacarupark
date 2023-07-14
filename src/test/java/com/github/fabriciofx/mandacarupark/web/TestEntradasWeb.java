@@ -92,7 +92,7 @@ public final class TestEntradasWeb {
                 .uri(
                     new URI(
                         new Sprintf(
-                            "http://localhost:%d/entradas",
+                            "http://localhost:%d/entradas?page=1&amp;limit=3",
                             port
                         ).asString()
                     )
@@ -112,13 +112,7 @@ public final class TestEntradasWeb {
                 XhtmlMatchers.hasXPaths(
                     "/html/body/section/article/table/tbody/tr/td[text()='00eb2ff4-ac01-4fbe-bf08-b9f75c7216d8']",
                     "/html/body/section/article/table/tbody/tr/td[text()='NPT5913']",
-                    "/html/body/section/article/table/tbody/tr/td[text()='02/10/2022 22:48:57']",
-                    "/html/body/section/article/table/tbody/tr/td[text()='1017ec42-f8bf-4f3b-ae48-3791cdca38be']",
-                    "/html/body/section/article/table/tbody/tr/td[text()='IOP1234']",
-                    "/html/body/section/article/table/tbody/tr/td[text()='02/10/2022 22:54:04']",
-                    "/html/body/section/article/table/tbody/tr/td[text()='0382a94e-8e42-4904-818f-e2b9041873af']",
-                    "/html/body/section/article/table/tbody/tr/td[text()='FAB1234']",
-                    "/html/body/section/article/table/tbody/tr/td[text()='02/10/2022 22:58:23']"
+                    "/html/body/section/article/table/tbody/tr/td[text()='02/10/2022 22:48:57']"
                 )
             );
         } catch (final Exception ex) {

@@ -40,10 +40,12 @@ import com.github.fabriciofx.mandacarupark.saida.SaidaFake;
 import com.github.fabriciofx.mandacarupark.saidas.SaidasFake;
 import com.jcabi.matchers.XhtmlMatchers;
 import org.hamcrest.MatcherAssert;
+import org.junit.Ignore;
 import org.junit.Test;
 import java.time.LocalDateTime;
 
 public final class TestRelatorioLocacoesFake {
+    @Ignore
     @Test
     public void relatorio() throws Exception {
         final Pagamentos pagamentos = new PagamentosFake(

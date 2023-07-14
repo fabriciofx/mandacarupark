@@ -23,20 +23,15 @@
  */
 package com.github.fabriciofx.mandacarupark.locacoes;
 
-import com.github.fabriciofx.mandacarupark.DataHora;
-import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Locacao;
 import com.github.fabriciofx.mandacarupark.Locacoes;
 import com.github.fabriciofx.mandacarupark.Media;
-import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Periodo;
-import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
-import com.github.fabriciofx.mandacarupark.locacao.LocacaoFake;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 import java.util.ArrayList;
@@ -68,28 +63,28 @@ public final class LocacoesFake implements Locacoes {
     @Override
     public List<Locacao> procura(final Periodo periodo) {
         final List<Locacao> itens = new ArrayList<>();
-        for (Entrada entrada : this.entradas) {
-            final Media media = entrada.sobre(new MapMedia());
-            final DataHora dataHora = media.select("dataHora");
-            if (periodo.contem(dataHora)) {
-                final List<Saida> lista = this.saidas.procura(entrada.id());
-                if (!lista.isEmpty()) {
-                    final Saida saida = lista.get(0);
-                    final List<Pagamento> pagamento = this.pagamentos.procura(
-                        entrada.id()
-                    );
-                    itens.add(
-                        new LocacaoFake(
-                            entrada.id(),
-                            media.select("placa"),
-                            media.select("dataHora"),
-                            saida.sobre(new MapMedia()).select("dataHora"),
-                            pagamento.get(0).sobre(new MapMedia()).select("valor")
-                        )
-                    );
-                }
-            }
-        }
+//        for (Entrada entrada : this.entradas) {
+//            final Media media = entrada.sobre(new MapMedia());
+//            final DataHora dataHora = media.select("dataHora");
+//            if (periodo.contem(dataHora)) {
+//                final List<Saida> lista = this.saidas.procura(entrada.id());
+//                if (!lista.isEmpty()) {
+//                    final Saida saida = lista.get(0);
+//                    final List<Pagamento> pagamento = this.pagamentos.procura(
+//                        entrada.id()
+//                    );
+//                    itens.add(
+//                        new LocacaoFake(
+//                            entrada.id(),
+//                            media.select("placa"),
+//                            media.select("dataHora"),
+//                            saida.sobre(new MapMedia()).select("dataHora"),
+//                            pagamento.get(0).sobre(new MapMedia()).select("valor")
+//                        )
+//                    );
+//                }
+//            }
+//        }
         return itens;
     }
 

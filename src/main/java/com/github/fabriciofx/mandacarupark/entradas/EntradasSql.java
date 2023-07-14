@@ -27,17 +27,17 @@ import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Placa;
+import com.github.fabriciofx.mandacarupark.adapter.ResultSetAsEntrada;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Insert;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaSql;
-import com.github.fabriciofx.mandacarupark.id.Uuid;
+import com.github.fabriciofx.mandacarupark.pagination.Pages;
+import com.github.fabriciofx.mandacarupark.pagination.pages.PagesSql;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public final class EntradasSql implements Entradas {
@@ -91,34 +91,13 @@ public final class EntradasSql implements Entradas {
     }
 
     @Override
-    public Iterator<Entrada> iterator() {
-        try (
-            final ResultSet rset = new Select(
-                this.session,
-                "SELECT * FROM entrada WHERE NOT EXISTS (SELECT FROM saida WHERE entrada.id = saida.id)"
-            ).result()
-        ) {
-            final List<Entrada> itens = new ArrayList<>();
-            while (rset.next()) {
-                itens.add(
-                    new EntradaSql(
-                        this.session,
-                        new Uuid(rset.getString(1))
-                    )
-                );
-            }
-            return itens.iterator();
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    @Override
-    public Media sobre(final Media media) {
-        Media med = media.begin("entradas");
-        for (final Entrada entrada : this) {
-            med = entrada.sobre(med);
-        }
-        return med.end("entradas");
+    public Pages<Entrada> pages(final int limit) {
+        return new PagesSql<>(
+            this.session,
+            "SELECT COUNT(*) FROM entrada WHERE NOT EXISTS (SELECT FROM saida WHERE entrada.id = saida.id)",
+            "SELECT * FROM entrada WHERE NOT EXISTS (SELECT FROM saida WHERE entrada.id = saida.id)",
+            new ResultSetAsEntrada(this.session),
+            limit
+        );
     }
 }

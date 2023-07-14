@@ -27,13 +27,13 @@ import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaFake;
+import com.github.fabriciofx.mandacarupark.pagination.Pages;
+import com.github.fabriciofx.mandacarupark.pagination.pages.PagesFake;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -91,16 +91,7 @@ public final class EntradasFake implements Entradas {
     }
 
     @Override
-    public Iterator<Entrada> iterator() {
-        return this.itens.values().iterator();
-    }
-
-    @Override
-    public Media sobre(final Media media) {
-        Media med = media.begin("entradas");
-        for (final Entrada entrada : this) {
-            med = entrada.sobre(med);
-        }
-        return med.end("entradas");
+    public Pages<Entrada> pages(final int limit) {
+        return new PagesFake<>(limit, new ArrayList<>(this.itens.values()));
     }
 }

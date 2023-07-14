@@ -125,13 +125,15 @@ public final class Dashboard extends Application {
         ) {
             server.start();
             final Entradas entradas = new EntradasSql(session);
-            for (final Entrada entrada : entradas) {
-                final Media media = entrada.sobre(new MapMedia());
-                final Map<String, String> linha = new HashMap<>();
-                linha.put("id", entrada.id().toString());
-                linha.put("placa", media.select("placa").toString());
-                linha.put("dataHora", media.select("dataHora").toString());
-                linhas.add(linha);
+            for (int pag = 0; pag < entradas.pages(1).count(); pag++) {
+                for (final Entrada entrada : entradas.pages(1).page(pag).content()) {
+                    final Media media = entrada.sobre(new MapMedia());
+                    final Map<String, String> linha = new HashMap<>();
+                    linha.put("id", entrada.id().toString());
+                    linha.put("placa", media.select("placa").toString());
+                    linha.put("dataHora", media.select("dataHora").toString());
+                    linhas.add(linha);
+                }
             }
         } catch (final Exception ex) {
             throw new RuntimeException(ex);

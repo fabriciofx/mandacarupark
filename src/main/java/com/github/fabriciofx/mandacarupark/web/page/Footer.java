@@ -90,13 +90,13 @@ public final class Footer<T> implements Text {
             final String content;
             if (this.number - 1 >= 1) {
                 content = new Sprintf(
-                    "\t\t  <a href=\"%s?page=%d&limit=%d\">< Anterior</a>\n",
+                    "\t\t  <a href=\"%s?page=%d&amp;limit=%d\">&#8592; Anterior</a>\n",
                     this.url,
                     this.number - 1,
                     this.limit
                 ).asString();
             } else {
-                content = "\t\t  < Anterior\n";
+                content = "\t\t  &#8592; Anterior\n";
             }
             return content;
         }
@@ -129,7 +129,7 @@ public final class Footer<T> implements Text {
                 } else {
                     content.append(
                         new Sprintf(
-                            "\t\t  <a href=\"%s?page=%d&limit=%d\">%d</a>\n",
+                            "\t\t  <a href=\"%s?page=%d&amp;limit=%d\">%d</a>\n",
                             this.url,
                             num,
                             this.limit,
@@ -165,13 +165,13 @@ public final class Footer<T> implements Text {
             final String content;
             if (this.number + 1 <= this.total) {
                 content = new Sprintf(
-                    "\t\t  <a href=\"%s?page=%d&limit=%d\">Próximo ></a>\n",
+                    "\t\t  <a href=\"%s?page=%d&amp;limit=%d\">Próximo &#8594;</a>\n",
                     this.url,
                     this.number + 1,
                     this.limit
                 ).asString();
             } else {
-                content = "\t\t  Próximo >\n";
+                content = "\t\t  Próximo &#8594;\n";
             }
             return content;
         }

@@ -32,6 +32,7 @@ import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.web.HttpPage;
 import org.takes.Request;
 import org.takes.Response;
+import org.takes.rq.RqHref;
 import org.takes.rs.RsHtml;
 import java.io.IOException;
 
@@ -44,14 +45,39 @@ public final class EntradasPage implements HttpPage {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Template header = new HtmlTemplate(
-            new ResourceAsStream("webapp/header.tpl")
+        final Entradas entradas = this.estacionamento.sobre(new MapMedia())
+            .select("entradas");
+        final int number = Integer.parseInt(
+            new RqHref.Smart(req).single("page", "1")
+        );
+        final int limit = Integer.parseInt(
+            new RqHref.Smart(req).single("limit", "1")
         );
         final Template main = new HtmlTemplate(
             new ResourceAsStream("webapp/entradas.tpl")
-        ).with("header", header.asString());
-        final Entradas entradas = this.estacionamento.sobre(new MapMedia())
-            .select("entradas");
-        return new RsHtml(new EntradasHtml(entradas, main).html());
+        ).with(
+            "header",
+            new HtmlTemplate(
+                new ResourceAsStream("webapp/header.tpl")
+            ).asString()
+        ).with(
+            "footer",
+            new HtmlTemplate(
+                new Footer<>(
+                    entradas.pages(limit),
+                    number,
+                    limit,
+                    "http://localhost:8080/entradas"
+                )
+            ).asString()
+        );
+        return new RsHtml(
+            new EntradasHtml(
+                entradas,
+                limit,
+                number - 1,
+                main
+            ).html()
+        );
     }
 }

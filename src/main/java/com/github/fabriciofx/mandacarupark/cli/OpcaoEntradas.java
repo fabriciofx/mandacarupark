@@ -58,29 +58,28 @@ public final class OpcaoEntradas implements Opcao {
 
     @Override
     public void run() {
-        int linhas = 0;
         final Entradas entradas = this.estacionamento.sobre(new MapMedia())
             .select("entradas");
-        for (final Entrada entrada : entradas) {
-            linhas++;
-        }
+        final int linhas = entradas.pages(1).count();
         final String[][] tabela = new String[linhas][3];
         int linha = 0;
-        for (final Entrada entrada : entradas) {
-            final Media media = entrada.sobre(new MapMedia());
-            tabela[linha][0] = String.format(
-                " %s ",
-                entrada.id().numero()
-            );
-            tabela[linha][1] = String.format(
-                " %s ",
-                media.select("placa").toString()
-            );
-            tabela[linha][2] = String.format(
-                " %s ",
-                media.select("dataHora").toString()
-            );
-            linha++;
+        for (int pag = 0; pag < entradas.pages(1).count(); pag++) {
+            for (final Entrada entrada : entradas.pages(1).page(pag).content()) {
+                final Media media = entrada.sobre(new MapMedia());
+                tabela[linha][0] = String.format(
+                    " %s ",
+                    entrada.id().numero()
+                );
+                tabela[linha][1] = String.format(
+                    " %s ",
+                    media.select("placa").toString()
+                );
+                tabela[linha][2] = String.format(
+                    " %s ",
+                    media.select("dataHora").toString()
+                );
+                linha++;
+            }
         }
         this.console.write(new TextTable(tabela).asString());
     }

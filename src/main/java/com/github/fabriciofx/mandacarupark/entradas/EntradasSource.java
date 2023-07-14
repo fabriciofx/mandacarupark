@@ -27,11 +27,10 @@ import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Target;
+import com.github.fabriciofx.mandacarupark.pagination.Pages;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 @SuppressWarnings("varargs")
@@ -65,16 +64,7 @@ public final class EntradasSource implements Entradas {
     }
 
     @Override
-    public Iterator<Entrada> iterator() {
-        return this.origin.iterator();
-    }
-
-    @Override
-    public Media sobre(final Media media) {
-        Media med = media.begin("entradas");
-        for (final Entrada entrada : this) {
-            med = entrada.sobre(med);
-        }
-        return med.end("entradas");
+    public Pages<Entrada> pages(final int limit) {
+        return this.origin.pages(limit);
     }
 }
