@@ -1,19 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
   <head>
     <meta charset="utf-8"/>
-    <link rel="stylesheet" href="/css/tacit-css-1.5.5.min.css" media="screen"/>
-    <link rel="stylesheet" href="/css/styles.css" media="screen"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="css/tacit-css-1.5.5.min.css" media="screen"/>
+    <link rel="stylesheet" href="css/styles.css" media="screen"/>
     <title>MandacaruPark</title>
   </head>
   <body>
     <section>
       ${header}
       <form action="/locacoes" method="post">
-        <label>Início</label>
-        <input name="inicio" id="inicio" type="datetime-local" required />
-        <label>Término</label>
-        <input name="termino" id="termino" type="datetime-local" required />
+        <label for="inicio">Início</label>
+        <input type="datetime-local" id="inicio" name="inicio" required />
+        <label for="termino">Término</label>
+        <input type="datetime-local" id="termino" name="termino" required />
         <button type="submit">Filtrar</button>
       </form>
       <article>

@@ -1,5 +1,23 @@
-button {
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+}
+
+nav a {
+    text-decoration: none;
+    color: black;
+    background-color: lightgrey;
     font-weight: bold;
+    padding: 10px;
+    border-radius: 3px;
+}
+
+nav a:hover {
+    text-decoration: none;
+    color: white;
+    background-color: black;
 }
 
 table thead {

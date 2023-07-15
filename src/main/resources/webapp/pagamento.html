@@ -1,43 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
   <head>
     <meta charset="utf-8"/>
-    <link rel="stylesheet" href="/css/tacit-css-1.5.5.min.css" media="screen"/>
-    <link rel="stylesheet" href="/css/styles.css" media="screen"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="css/tacit-css-1.5.5.min.css" media="screen"/>
+    <link rel="stylesheet" href="css/styles.css" media="screen"/>
     <title>MandacaruPark</title>
   </head>
   <body>
     <section>
       <header>
         <nav>
-          <button onclick="location.href='http://localhost:8080/entrada.html'">
-            Entrada
-          </button>
-          <button onclick="location.href='http://localhost:8080/saida.html'">
-            Saída
-          </button>
-          <button onclick="location.href='http://localhost:8080/pagamento.html'">
-            Pagamento
-          </button>
-          <br/>
-          <button onclick="location.href='http://localhost:8080/entradas'">
-            Entradas
-          </button>
-          <button onclick="location.href='http://localhost:8080/saidas'">
-            Saídas
-          </button>
-          <button onclick="location.href='http://localhost:8080/pagamentos'">
-            Pagamentos
-          </button>
-          <button onclick="location.href='http://localhost:8080/locacoes'">
-            Locações
-          </button>
+          <ul>
+            <li>
+              <a href="http://localhost:8080/entrada.html">
+                Entrada
+              </a>
+            </li>
+            <li>
+              <a href="http://localhost:8080/saida.html">
+                Saída
+              </a>
+            </li>
+            <li>
+              <a href="http://localhost:8080/pagamento.html">
+                Pagamento
+              </a>
+            </li>
+            <li>
+              <a href="http://localhost:8080/entradas?page=1&amp;limit=1">
+                Entradas
+              </a>
+            </li>
+            <li>
+              <a href="http://localhost:8080/saidas?page=1&amp;limit=1">
+                Saídas
+              </a>
+            </li>
+            <li>
+              <a href="http://localhost:8080/pagamentos">
+                Pagamentos
+              </a>
+            </li>
+            <li>
+              <a href="http://localhost:8080/locacoes">
+                Locações
+              </a>
+            </li>
+          </ul>
         </nav>
       </header>
       <article>
         <form action="/pagamento" method="post">
-          <label>Ticket</label>
-          <input name="ticket" type="text" size="38" maxlength="36" required />
+          <label for="ticket">Ticket</label>
+          <input type="text" id="ticket" name="ticket" size="38" maxlength="36" required />
           <button type="submit">Pagar</button>
         </form>
       </article>
