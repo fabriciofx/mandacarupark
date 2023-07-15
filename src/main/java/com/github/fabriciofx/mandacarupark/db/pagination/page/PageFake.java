@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.pagination.page;
+package com.github.fabriciofx.mandacarupark.db.pagination.page;
 
-import com.github.fabriciofx.mandacarupark.pagination.Page;
+import com.github.fabriciofx.mandacarupark.db.pagination.Page;
 import java.util.List;
 
 public final class PageFake<T> implements Page<T> {

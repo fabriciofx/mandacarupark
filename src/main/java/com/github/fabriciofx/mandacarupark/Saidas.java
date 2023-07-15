@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
-import com.github.fabriciofx.mandacarupark.pagination.Pages;
+import com.github.fabriciofx.mandacarupark.db.pagination.Pages;
 import java.util.List;
 
 public interface Saidas {

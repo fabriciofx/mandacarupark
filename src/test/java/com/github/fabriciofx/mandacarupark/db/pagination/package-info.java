@@ -23,8 +23,8 @@
  */
 
 /**
- * Pages.
+ * Testes de Paginação.
  *
  * @since 0.0.1
  */
-package com.github.fabriciofx.mandacarupark.pagination.pages;
+package com.github.fabriciofx.mandacarupark.db.pagination;

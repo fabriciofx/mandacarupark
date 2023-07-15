@@ -21,9 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.pagination;
+package com.github.fabriciofx.mandacarupark.db.pagination;
 
-import com.github.fabriciofx.mandacarupark.pagination.page.PageFake;
+import com.github.fabriciofx.mandacarupark.db.pagination.Page;
+import com.github.fabriciofx.mandacarupark.db.pagination.page.PageFake;
 import org.junit.Assert;
 import org.junit.Test;
 import java.util.Arrays;

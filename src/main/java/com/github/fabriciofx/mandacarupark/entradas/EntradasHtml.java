@@ -31,7 +31,7 @@ import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.entrada.EntradaHtml;
-import com.github.fabriciofx.mandacarupark.pagination.Pages;
+import com.github.fabriciofx.mandacarupark.db.pagination.Pages;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

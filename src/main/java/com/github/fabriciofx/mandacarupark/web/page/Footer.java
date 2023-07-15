@@ -23,7 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.web.page;
 
-import com.github.fabriciofx.mandacarupark.pagination.Pages;
+import com.github.fabriciofx.mandacarupark.db.pagination.Pages;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import com.github.fabriciofx.mandacarupark.text.SprintfOf;
 import com.github.fabriciofx.mandacarupark.text.Text;

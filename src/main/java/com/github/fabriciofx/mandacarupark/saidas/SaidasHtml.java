@@ -8,7 +8,7 @@ import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.pagination.Pages;
+import com.github.fabriciofx.mandacarupark.db.pagination.Pages;
 import com.github.fabriciofx.mandacarupark.saida.SaidaHtml;
 import java.util.List;
 import java.util.regex.Matcher;

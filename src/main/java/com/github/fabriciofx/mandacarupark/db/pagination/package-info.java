@@ -21,14 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.pagination;
 
-import java.util.List;
-
-public interface Page<T> {
-    List<T> content();
-    boolean hasNext();
-    Page<T> next();
-    boolean hasPrevious();
-    Page<T> previous();
-}
+/**
+ * Pagination.
+ *
+ * @since 0.0.1
+ */
+package com.github.fabriciofx.mandacarupark.db.pagination;

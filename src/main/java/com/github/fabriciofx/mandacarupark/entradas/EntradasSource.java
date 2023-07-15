@@ -29,7 +29,7 @@ import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Target;
-import com.github.fabriciofx.mandacarupark.pagination.Pages;
+import com.github.fabriciofx.mandacarupark.db.pagination.Pages;
 import java.util.Arrays;
 import java.util.List;
 

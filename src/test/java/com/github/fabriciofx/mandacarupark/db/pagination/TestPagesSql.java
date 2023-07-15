@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.pagination;
+package com.github.fabriciofx.mandacarupark.db.pagination;
 
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Server;
@@ -30,8 +30,9 @@ import com.github.fabriciofx.mandacarupark.db.RandomName;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.ds.H2Memory;
+import com.github.fabriciofx.mandacarupark.db.pagination.Pages;
 import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
-import com.github.fabriciofx.mandacarupark.pagination.pages.PagesSql;
+import com.github.fabriciofx.mandacarupark.db.pagination.pages.PagesSql;
 import com.github.fabriciofx.mandacarupark.server.ServerH2;
 import org.junit.Assert;
 import org.junit.Test;

@@ -21,13 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.pagination;
+package com.github.fabriciofx.mandacarupark.db.pagination;
 
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Server;
 import com.github.fabriciofx.mandacarupark.db.RandomName;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
-import com.github.fabriciofx.mandacarupark.pagination.pages.PagesSql;
+import com.github.fabriciofx.mandacarupark.db.pagination.Page;
+import com.github.fabriciofx.mandacarupark.db.pagination.pages.PagesSql;
 import com.github.fabriciofx.mandacarupark.adapter.ResultSetAsSaida;
 import com.github.fabriciofx.mandacarupark.server.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;

@@ -21,14 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.pagination.pages;
+package com.github.fabriciofx.mandacarupark.db.pagination.pages;
 
 import com.github.fabriciofx.mandacarupark.adapter.Adapter;
 import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.db.pagination.page.PageSql;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
-import com.github.fabriciofx.mandacarupark.pagination.Page;
-import com.github.fabriciofx.mandacarupark.pagination.Pages;
-import com.github.fabriciofx.mandacarupark.pagination.page.PageSql;
+import com.github.fabriciofx.mandacarupark.db.pagination.Page;
+import com.github.fabriciofx.mandacarupark.db.pagination.Pages;
 import java.sql.ResultSet;
 import java.util.function.Supplier;
 

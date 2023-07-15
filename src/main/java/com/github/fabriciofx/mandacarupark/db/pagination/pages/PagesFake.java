@@ -21,9 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.pagination;
+package com.github.fabriciofx.mandacarupark.db.pagination.pages;
 
-public interface Pages<T> {
-    int count();
-    Page<T> page(int number);
+import com.github.fabriciofx.mandacarupark.db.pagination.Page;
+import com.github.fabriciofx.mandacarupark.db.pagination.Pages;
+import com.github.fabriciofx.mandacarupark.db.pagination.page.PageFake;
+import java.util.List;
+
+public final class PagesFake<T> implements Pages<T> {
+    private final List<T> itens;
+    private final int limit;
+
+    public PagesFake(final int limit, final List<T> itens) {
+        this.itens = itens;
+        this.limit = limit;
+    }
+
+    @Override
+    public int count() {
+        final int rem = Math.min(this.itens.size() % this.limit, 1);
+        return this.itens.size() / this.limit + rem;
+    }
+
+    @Override
+    public Page<T> page(final int number) {
+        return new PageFake<>(this.limit, number, this.itens);
+    }
 }
