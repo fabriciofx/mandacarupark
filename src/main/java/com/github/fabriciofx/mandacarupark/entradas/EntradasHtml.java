@@ -86,6 +86,9 @@ public final class EntradasHtml implements Entradas, Html {
                 sb.append(page.asString());
             }
         }
-        return this.template.asString().replaceAll(regex, sb.toString());
+        return this.template.asString().replaceAll(
+            regex,
+            Matcher.quoteReplacement(sb.toString())
+        );
     }
 }

@@ -64,6 +64,9 @@ public final class SaidasHtml implements Saidas, Html {
                 sb.append(page.asString());
             }
         }
-        return this.template.asString().replaceAll(regex, sb.toString());
+        return this.template.asString().replaceAll(
+            regex,
+            Matcher.quoteReplacement(sb.toString())
+        );
     }
 }
