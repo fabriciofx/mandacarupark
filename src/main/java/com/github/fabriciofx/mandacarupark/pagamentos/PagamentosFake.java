@@ -26,14 +26,14 @@ package com.github.fabriciofx.mandacarupark.pagamentos;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Ticket;
+import com.github.fabriciofx.mandacarupark.db.pagination.Pages;
+import com.github.fabriciofx.mandacarupark.db.pagination.pages.PagesFake;
 import com.github.fabriciofx.mandacarupark.pagamento.PagamentoFake;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -84,38 +84,8 @@ public final class PagamentosFake implements Pagamentos {
         return this.itens.size();
     }
 
-//    @Override
-//    public Template print(final Template template) {
-//        final String regex = "\\$\\{ps\\.begin}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ps\\.end}";
-//        final Pattern find = Pattern.compile(regex);
-//        final Matcher matcher = find.matcher(new String(template.bytes()));
-//        final StringBuilder sb = new StringBuilder();
-//        while (matcher.find()) {
-//            for (final Pagamento pagamento : this) {
-//                Template page = new HtmlMedia(matcher.group(1));
-//                page = new HtmlMedia(pagamento.print(page));
-//                sb.append(new String(page.bytes()));
-//            }
-//        }
-//        return new HtmlMedia(
-//            new String(template.bytes()).replaceAll(
-//                regex,
-//                Matcher.quoteReplacement(sb.toString())
-//            )
-//        );
-//    }
-
     @Override
-    public Iterator<Pagamento> iterator() {
-        return this.itens.values().iterator();
-    }
-
-    @Override
-    public Media sobre(final Media media) {
-        Media med = media;
-        for (final Pagamento pagamento : this) {
-            med = pagamento.sobre(med);
-        }
-        return med;
+    public Pages<Pagamento> pages(final int limit) {
+        return new PagesFake<>(limit, new ArrayList<>(this.itens.values()));
     }
 }

@@ -26,11 +26,13 @@ package com.github.fabriciofx.mandacarupark.pagamentos;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
 import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Ticket;
+import com.github.fabriciofx.mandacarupark.adapter.ResultSetAsPagamento;
 import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.db.pagination.Pages;
+import com.github.fabriciofx.mandacarupark.db.pagination.pages.PagesSql;
 import com.github.fabriciofx.mandacarupark.db.stmt.Insert;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
@@ -38,7 +40,6 @@ import com.github.fabriciofx.mandacarupark.pagamento.PagamentoSql;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public final class PagamentosSql implements Pagamentos {
@@ -107,55 +108,14 @@ public final class PagamentosSql implements Pagamentos {
         return quantidade;
     }
 
-//    @Override
-//    public Template print(final Template template) {
-//        final String regex = "\\$\\{ps\\.begin}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ps\\.end}";
-//        final Pattern find = Pattern.compile(regex);
-//        final Matcher matcher = find.matcher(new String(template.bytes()));
-//        final StringBuilder sb = new StringBuilder();
-//        while (matcher.find()) {
-//            for (final Pagamento pagamento : this) {
-//                Template page = new HtmlMedia(matcher.group(1));
-//                page = new HtmlMedia(pagamento.print(page));
-//                sb.append(new String(page.bytes()));
-//            }
-//        }
-//        return new HtmlMedia(
-//            new String(template.bytes()).replaceAll(
-//                regex,
-//                Matcher.quoteReplacement(sb.toString())
-//            )
-//        );
-//    }
-
     @Override
-    public Iterator<Pagamento> iterator() {
-        try (
-            final ResultSet rset = new Select(
-                this.session,
-                "SELECT * FROM pagamento"
-            ).result()) {
-            final List<Pagamento> itens = new ArrayList<>();
-            while (rset.next()) {
-                itens.add(
-                    new PagamentoSql(
-                        this.session,
-                        new Uuid(rset.getString(1))
-                    )
-                );
-            }
-            return itens.iterator();
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    @Override
-    public Media sobre(final Media media) {
-        Media med = media;
-        for (final Pagamento pagamento : this) {
-            med = pagamento.sobre(med);
-        }
-        return med;
+    public Pages<Pagamento> pages(final int limit) {
+        return new PagesSql<>(
+            this.session,
+            "SELECT COUNT(*) FROM pagamento",
+            "SELECT * FROM pagamento",
+            new ResultSetAsPagamento(this.session),
+            limit
+        );
     }
 }

@@ -23,17 +23,23 @@
  */
 package com.github.fabriciofx.mandacarupark.pagamentos;
 
+import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Server;
 import com.github.fabriciofx.mandacarupark.db.RandomName;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
-import com.github.fabriciofx.mandacarupark.server.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.ds.H2Memory;
 import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
+import com.github.fabriciofx.mandacarupark.pagamento.PagamentoHtml;
+import com.github.fabriciofx.mandacarupark.server.ServerH2;
+import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
+import com.jcabi.matchers.XhtmlMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
 import org.junit.Test;
+import java.util.List;
 
 public final class TestPagamentos {
     @Test
@@ -98,6 +104,42 @@ public final class TestPagamentos {
                     new Uuid("4c32b3dd-8636-43c0-9786-4804ca2b73f6")
                 ).isEmpty()
             );
+        }
+    }
+
+    @Test
+    public void html() throws Exception {
+        final String html = "<html><body><table><thead><td>Id</td>" +
+            "<td>Data/Hora</td><td>Valor</td></thead><tbody>" +
+            "<td>${id}</td><td>${dataHora}</td><td>${valor}</td>" +
+            "</tbody></table></body></html>";
+        final Session session = new NoAuth(
+            new H2Memory(
+                new RandomName()
+            )
+        );
+        try (
+            final Server server = new ServerH2(
+                session,
+                new ScriptSql("mandacarupark.sql")
+            )
+        ) {
+            server.start();
+            final Pagamentos pagamentos = new PagamentosSql(session);
+            final List<Pagamento> pagamento = pagamentos.procura(
+                new Uuid("4c32b3dd-8636-43c0-9786-4804ca2b73f5")
+            );
+            MatcherAssert.assertThat(
+                XhtmlMatchers.xhtml(
+                    new PagamentoHtml(pagamento.get(0), new HtmlTemplate(html)).html()
+                ),
+                XhtmlMatchers.hasXPaths(
+                    "/html/body/table/tbody/td[text()='4c32b3dd-8636-43c0-9786-4804ca2b73f5']",
+                    "/html/body/table/tbody/td[text()='21/07/2022 13:08:12']",
+                    "/html/body/table/tbody/td[text()='R$ 5,00']"
+                )
+            );
+
         }
     }
 }

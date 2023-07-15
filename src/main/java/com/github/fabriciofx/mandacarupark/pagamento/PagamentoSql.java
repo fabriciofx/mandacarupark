@@ -68,8 +68,11 @@ public final class PagamentoSql implements Pagamento {
             } else {
                 throw new RuntimeException("Dados inexistentes ou inválidos!");
             }
-            return media.with("dataHora", dataHora)
-                .with("valor", valor);
+            return media.begin("pagamento")
+                .with("id", this.id)
+                .with("dataHora", dataHora)
+                .with("valor", valor)
+                .end("pagamento");
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }

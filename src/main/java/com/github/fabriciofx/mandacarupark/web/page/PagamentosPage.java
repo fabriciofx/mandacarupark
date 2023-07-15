@@ -32,6 +32,7 @@ import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.web.HttpPage;
 import org.takes.Request;
 import org.takes.Response;
+import org.takes.rq.RqHref;
 import org.takes.rs.RsHtml;
 import java.io.IOException;
 
@@ -44,14 +45,39 @@ public final class PagamentosPage implements HttpPage {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Template header = new HtmlTemplate(
-            new ResourceAsStream("webapp/header.tpl")
+        final Pagamentos pagamentos = this.estacionamento.sobre(new MapMedia())
+            .select("pagamentos");
+        final int number = Integer.parseInt(
+            new RqHref.Smart(req).single("page", "1")
+        );
+        final int limit = Integer.parseInt(
+            new RqHref.Smart(req).single("limit", "1")
         );
         final Template main = new HtmlTemplate(
             new ResourceAsStream("webapp/pagamentos.tpl")
-        ).with("header", header.asString());
-        final Pagamentos pagamentos = this.estacionamento.sobre(new MapMedia())
-            .select("pagamentos");
-        return new RsHtml(new PagamentosHtml(pagamentos, main).html());
+        ).with(
+            "header",
+            new HtmlTemplate(
+                new ResourceAsStream("webapp/header.tpl")
+            ).asString()
+        ).with(
+            "footer",
+            new HtmlTemplate(
+                new Footer<>(
+                    pagamentos.pages(limit),
+                    number,
+                    limit,
+                    "http://localhost:8080/pagamentos"
+                )
+            ).asString()
+        );
+        return new RsHtml(
+            new PagamentosHtml(
+                pagamentos,
+                limit,
+                number - 1,
+                main
+            ).html()
+        );
     }
 }

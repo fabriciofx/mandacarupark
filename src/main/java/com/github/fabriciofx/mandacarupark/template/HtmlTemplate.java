@@ -28,6 +28,7 @@ import com.github.fabriciofx.mandacarupark.text.Text;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Matcher;
 
 public final class HtmlTemplate implements Template {
     private final Text content;
@@ -65,7 +66,7 @@ public final class HtmlTemplate implements Template {
         return new HtmlTemplate(
             this.content.asString().replaceAll(
                 "\\$\\{" + key + "}",
-                value.toString()
+                Matcher.quoteReplacement(value.toString())
             )
         );
     }

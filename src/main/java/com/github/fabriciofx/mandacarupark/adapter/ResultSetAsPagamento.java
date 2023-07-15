@@ -21,40 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.pagamento;
+package com.github.fabriciofx.mandacarupark.adapter;
 
-import com.github.fabriciofx.mandacarupark.DataHora;
-import com.github.fabriciofx.mandacarupark.Dinheiro;
-import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Pagamento;
+import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.id.Uuid;
+import com.github.fabriciofx.mandacarupark.pagamento.PagamentoSql;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public final class PagamentoFake implements Pagamento {
-    private final Id id;
-    private final DataHora dataHora;
-    private final Dinheiro valor;
+public final class ResultSetAsPagamento implements Adapter<Pagamento> {
+    private final Session session;
 
-    public PagamentoFake(
-        final Id id,
-        final DataHora dataHora,
-        final Dinheiro valor
-    ) {
-        this.id = id;
-        this.dataHora = dataHora;
-        this.valor = valor;
+    public ResultSetAsPagamento(final Session session) {
+        this.session = session;
     }
 
     @Override
-    public Id id() {
-        return this.id;
-    }
-
-    @Override
-    public Media sobre(final Media media) {
-        return media.begin("pagamento")
-            .with("id", this.id)
-            .with("dataHora", this.dataHora)
-            .with("valor", this.valor)
-            .end("pagamento");
+    public Pagamento adapt(final ResultSet rset) {
+        try {
+            return new PagamentoSql(this.session, new Uuid(rset.getString(1)));
+        } catch (final SQLException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

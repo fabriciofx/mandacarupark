@@ -27,7 +27,7 @@
         </a>
       </li>
       <li>
-        <a href="http://localhost:8080/pagamentos">
+        <a href="http://localhost:8080/pagamentos?page=1&amp;limit=1">
           Pagamentos
         </a>
       </li>

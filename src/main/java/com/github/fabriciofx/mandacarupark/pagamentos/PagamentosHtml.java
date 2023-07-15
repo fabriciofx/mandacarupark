@@ -25,28 +25,33 @@ package com.github.fabriciofx.mandacarupark.pagamentos;
 
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Dinheiro;
+import com.github.fabriciofx.mandacarupark.Html;
 import com.github.fabriciofx.mandacarupark.Id;
-import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
-import com.github.fabriciofx.mandacarupark.Html;
 import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Ticket;
+import com.github.fabriciofx.mandacarupark.db.pagination.Pages;
 import com.github.fabriciofx.mandacarupark.pagamento.PagamentoHtml;
-import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class PagamentosHtml implements Pagamentos, Html {
     private final Pagamentos pagamentos;
+    private final int limit;
+    private final int number;
     private final Template template;
 
     public PagamentosHtml(
         final Pagamentos pagamentos,
+        final int limit,
+        final int number,
         final Template template
     ) {
         this.pagamentos = pagamentos;
+        this.limit = limit;
+        this.number = number;
         this.template = template;
     }
 
@@ -70,13 +75,8 @@ public final class PagamentosHtml implements Pagamentos, Html {
     }
 
     @Override
-    public Iterator<Pagamento> iterator() {
-        return this.pagamentos.iterator();
-    }
-
-    @Override
-    public Media sobre(final Media media) {
-        return this.pagamentos.sobre(media);
+    public Pages<Pagamento> pages(final int limit) {
+        return this.pagamentos.pages(limit);
     }
 
     @Override
@@ -86,14 +86,15 @@ public final class PagamentosHtml implements Pagamentos, Html {
         final Matcher matcher = find.matcher(this.template.asString());
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
-            for (final Pagamento pagamento : this.pagamentos) {
+            for (final Pagamento pagamento : this.pagamentos.pages(this.limit).page(this.number).content()) {
                 Template page = this.template.create(matcher.group(1));
-                page = this.template.create(
-                    new PagamentoHtml(pagamento, page).html()
-                );
+                page = this.template.create(new PagamentoHtml(pagamento, page).html());
                 sb.append(page.asString());
             }
         }
-        return this.template.asString().replaceAll(regex, sb.toString());
+        return this.template.asString().replaceAll(
+            regex,
+            Matcher.quoteReplacement(sb.toString())
+        );
     }
 }

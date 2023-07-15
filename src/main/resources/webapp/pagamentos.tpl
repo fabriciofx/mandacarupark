@@ -27,6 +27,7 @@
             ${ps.end}
           </tbody>
         </table>
+        ${footer}
       </article>
     </section>
   </body>

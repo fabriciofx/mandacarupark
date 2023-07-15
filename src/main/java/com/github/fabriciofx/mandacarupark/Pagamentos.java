@@ -23,10 +23,12 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
+import com.github.fabriciofx.mandacarupark.db.pagination.Pages;
 import java.util.List;
 
-public interface Pagamentos extends Iterable<Pagamento>, Sobre {
+public interface Pagamentos {
     Pagamento pagamento(Ticket ticket, DataHora dataHora, Dinheiro valor);
     List<Pagamento> procura(Id id);
     int quantidade();
+    Pages<Pagamento> pages(int limit);
 }
