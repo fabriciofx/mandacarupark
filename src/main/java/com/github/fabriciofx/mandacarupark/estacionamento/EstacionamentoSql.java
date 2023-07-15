@@ -32,6 +32,7 @@ import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Periodo;
+import com.github.fabriciofx.mandacarupark.Permanencia;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Regras;
 import com.github.fabriciofx.mandacarupark.Saidas;
@@ -40,6 +41,7 @@ import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.locacoes.LocacoesSql;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
+import com.github.fabriciofx.mandacarupark.permanencia.PermanenciaOf;
 import com.github.fabriciofx.mandacarupark.regra.Cortesia;
 import com.github.fabriciofx.mandacarupark.ticket.TicketSql;
 
@@ -106,6 +108,14 @@ public final class EstacionamentoSql implements Estacionamento {
             throw new RuntimeException("Ticket não confere com a placa!");
         }
         this.saidas.saida(ticket, placa, dataHora);
+    }
+
+    @Override
+    public Permanencia permanencia(final Ticket ticket, final DataHora atual) {
+        return new PermanenciaOf(
+            ticket.sobre(new MapMedia()).select("dataHora"),
+            atual
+        );
     }
 
     @Override

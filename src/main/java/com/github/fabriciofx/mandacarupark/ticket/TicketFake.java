@@ -28,10 +28,8 @@ import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
-import com.github.fabriciofx.mandacarupark.Permanencia;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.permanencia.PermanenciaOf;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.Imagem;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemCodeQr;
 import com.github.fabriciofx.mandacarupark.ticket.imagem.ImagemPapel;
@@ -114,10 +112,5 @@ public final class TicketFake implements Ticket {
             ),
             this
         );
-    }
-
-    @Override
-    public Permanencia permanencia(final DataHora atual) {
-        return new PermanenciaOf(this.dataHora, atual);
     }
 }

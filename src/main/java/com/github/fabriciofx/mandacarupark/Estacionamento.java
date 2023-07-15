@@ -28,4 +28,12 @@ public interface Estacionamento extends Sobre {
     Dinheiro valor(Ticket ticket, DataHora termino);
     void pagamento(Ticket ticket, DataHora dataHora);
     void saida(Ticket ticket, Placa placa, DataHora dataHora);
+
+    /**
+     * Calcula o tempo de permanência.
+     * @param ticket O ticket que deseja verificar o tempo de permanência.
+     * @param atual A data e hora atual.
+     * @return O tempo de permanência.
+     */
+    Permanencia permanencia(Ticket ticket, DataHora atual);
 }

@@ -48,11 +48,4 @@ public interface Ticket extends Sobre {
      * @return Uma imagem do ticket.
      */
     Imagem imagem();
-
-    /**
-     * Calcula o tempo de permanência.
-     * @param atual A data e hora atual.
-     * @return O tempo de permanência.
-     */
-    Permanencia permanencia(DataHora atual);
 }

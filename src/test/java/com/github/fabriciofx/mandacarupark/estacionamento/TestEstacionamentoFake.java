@@ -27,6 +27,7 @@ import com.github.fabriciofx.mandacarupark.Entrada;
 import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
+import com.github.fabriciofx.mandacarupark.Permanencia;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Regras;
 import com.github.fabriciofx.mandacarupark.Saidas;
@@ -209,5 +210,26 @@ public final class TestEstacionamentoFake {
             sb.toString().contains("placa=ABC1234") &&
             sb.toString().contains("dataHora=02/08/2022 10:30")
         );
+    }
+
+    @Test
+    public void permanencia() {
+        final Estacionamento estacionamento = new EstacionamentoFake(
+            new EntradasFake(new PagamentosFake()),
+            new SaidasFake(),
+            new PagamentosFake(),
+            new RegrasFake()
+        );
+        final Ticket ticket = estacionamento.entrada(
+            new Uuid(),
+            new PlacaOf("ABC1234"),
+            new DataHoraOf("2023-07-01 13:37:14")
+        );
+        final Permanencia permanencia = estacionamento.permanencia(
+            ticket,
+            new DataHoraOf("2023-07-01 15:27:14")
+        );
+        Assert.assertEquals(1, permanencia.horas());
+        Assert.assertEquals(50, permanencia.minutos());
     }
 }

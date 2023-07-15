@@ -55,19 +55,4 @@ public final class TestTicket {
             )
         );
     }
-
-    @Test
-    public void permanencia() {
-        final Ticket ticket = new TicketFake(
-            new PagamentosFake(),
-            new Uuid("8c878e6f-ee13-4a37-a208-7510c2638944"),
-            new PlacaOf("ABC1234"),
-            new DataHoraOf("2023-07-01 13:37:14")
-        );
-        final Permanencia permanencia = ticket.permanencia(
-            new DataHoraOf("2023-07-01 15:27:14")
-        );
-        Assert.assertEquals(1, permanencia.horas());
-        Assert.assertEquals(50, permanencia.minutos());
-    }
 }
