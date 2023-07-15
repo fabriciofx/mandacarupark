@@ -25,51 +25,45 @@ package com.github.fabriciofx.mandacarupark.id;
 
 import com.github.fabriciofx.mandacarupark.Id;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
- * Uuid.
+ * RandomUuid.
  *
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.0.1
  */
-public final class Uuid implements Id, Comparable<Uuid> {
-    /**
-     * O uuid.
-     */
-    private final String numero;
+public final class UuidRandom implements Id, Comparable<UuidRandom> {
+    private final Id origin;
 
-    /**
-     * Ctor.
-     * @param numero Um número uuid.
-     */
-    public Uuid(final String numero) {
-        this.numero = numero;
+    public UuidRandom() {
+        this.origin = new Uuid(UUID.randomUUID().toString());
     }
 
     @Override
     public String numero() {
-        return this.numero;
+        return this.origin.numero();
     }
 
     @Override
     public boolean equals(final Object obj) {
-        return this == obj || obj instanceof Uuid
-            && Uuid.class.cast(obj).numero.equals(this.numero);
+        return this == obj || obj instanceof UuidRandom
+            && UuidRandom.class.cast(obj).numero().equals(this.numero());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.numero);
+        return Objects.hash(this.numero());
     }
 
     @Override
     public String toString() {
-        return this.numero;
+        return this.numero();
     }
 
     @Override
-    public int compareTo(final Uuid uuid) {
-        return this.numero.compareTo(uuid.numero);
+    public int compareTo(final UuidRandom uuid) {
+        return this.numero().compareTo(uuid.numero());
     }
 }

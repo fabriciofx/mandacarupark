@@ -34,7 +34,7 @@ import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasFake;
 import com.github.fabriciofx.mandacarupark.estacionamento.EstacionamentoFake;
-import com.github.fabriciofx.mandacarupark.id.Uuid;
+import com.github.fabriciofx.mandacarupark.id.UuidRandom;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.regra.DomingoGratis;
@@ -66,7 +66,7 @@ public final class TestLocacoesFake {
         Placa placa = new PlacaOf("ABC1234");
         final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
         Ticket ticket = estacionamento.entrada(
-            new Uuid(),
+            new UuidRandom(),
             placa,
             new DataHoraOf(dateTime)
         );
@@ -82,7 +82,7 @@ public final class TestLocacoesFake {
         // Locação 2
         placa = new PlacaOf("DEF5678");
         ticket = estacionamento.entrada(
-            new Uuid(),
+            new UuidRandom(),
             placa,
             new DataHoraOf(dateTime.plusMinutes(1))
         );
@@ -98,7 +98,7 @@ public final class TestLocacoesFake {
         // Locação 3
         placa = new PlacaOf("GHI9012");
         ticket = estacionamento.entrada(
-            new Uuid(),
+            new UuidRandom(),
             placa,
             new DataHoraOf(dateTime.plusMinutes(2))
         );

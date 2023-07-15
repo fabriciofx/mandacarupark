@@ -31,18 +31,18 @@ import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.RandomName;
 import com.github.fabriciofx.mandacarupark.db.ScriptSql;
-import com.github.fabriciofx.mandacarupark.server.ServerH2;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.ds.H2Memory;
 import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
 import com.github.fabriciofx.mandacarupark.estacionamento.EstacionamentoSql;
-import com.github.fabriciofx.mandacarupark.id.Uuid;
+import com.github.fabriciofx.mandacarupark.id.UuidRandom;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosSql;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.regras.RegrasOf;
 import com.github.fabriciofx.mandacarupark.saidas.SaidasSql;
+import com.github.fabriciofx.mandacarupark.server.ServerH2;
 import org.junit.Assert;
 import org.junit.Test;
 import java.time.LocalDateTime;
@@ -77,7 +77,7 @@ public final class TestRegraSql {
             final Placa placa = new PlacaOf("ABC1234");
             final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
             final Ticket ticket = estacionamento.entrada(
-                new Uuid(),
+                new UuidRandom(),
                 placa,
                 new DataHoraOf(dateTime)
             );
@@ -132,7 +132,7 @@ public final class TestRegraSql {
                 2022, 7, 31, 10, 30
             );
             final Ticket ticket = estacionamento.entrada(
-                new Uuid(),
+                new UuidRandom(),
                 placa,
                 new DataHoraOf(dateTime)
             );

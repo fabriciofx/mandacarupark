@@ -35,7 +35,7 @@ import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasFake;
-import com.github.fabriciofx.mandacarupark.id.Uuid;
+import com.github.fabriciofx.mandacarupark.id.UuidRandom;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosFake;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
@@ -64,7 +64,7 @@ public final class TestEstacionamentoFake {
             new RegrasFake()
         );
         final Ticket ticket = estacionamento.entrada(
-            new Uuid(),
+            new UuidRandom(),
             new PlacaOf("ABC1234"),
             new DataHoraOf(
                 LocalDateTime.of(2022, 8, 2, 10, 30)
@@ -104,7 +104,7 @@ public final class TestEstacionamentoFake {
         final Placa placa = new PlacaOf("ABC1234");
         final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
         final Ticket ticket = estacionamento.entrada(
-            new Uuid(),
+            new UuidRandom(),
             placa,
             new DataHoraOf(dateTime)
         );
@@ -149,7 +149,7 @@ public final class TestEstacionamentoFake {
                     2022, 8, 2, 10, 30
                 );
                 final Ticket ticket = estacionamento.entrada(
-                    new Uuid(),
+                    new UuidRandom(),
                     placa,
                     new DataHoraOf(dateTime)
                 );
@@ -180,14 +180,14 @@ public final class TestEstacionamentoFake {
             regras
         );
         estacionamento.entrada(
-            new Uuid(),
+            new UuidRandom(),
             new PlacaOf("ABC1234"),
             new DataHoraOf(
                 LocalDateTime.of(2022, 8, 2, 10, 30)
             )
         );
         estacionamento.entrada(
-            new Uuid(),
+            new UuidRandom(),
             new PlacaOf("XYZ9876"),
             new DataHoraOf(
                 LocalDateTime.of(2022, 8, 2, 11, 12)
@@ -221,7 +221,7 @@ public final class TestEstacionamentoFake {
             new RegrasFake()
         );
         final Ticket ticket = estacionamento.entrada(
-            new Uuid(),
+            new UuidRandom(),
             new PlacaOf("ABC1234"),
             new DataHoraOf("2023-07-01 13:37:14")
         );

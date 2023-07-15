@@ -28,6 +28,7 @@ import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
+import com.github.fabriciofx.mandacarupark.id.UuidRandom;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.web.HttpPage;
 import org.takes.Request;
@@ -51,7 +52,7 @@ public final class EntradaPage implements HttpPage {
         if (!form.single("ticket").equals("")) {
             id = new Uuid(form.single("ticket"));
         } else {
-            id = new Uuid();
+            id = new UuidRandom();
         }
         this.estacionamento.entrada(id, placa, new DataHoraOf());
         return new RsForward("/entradas");

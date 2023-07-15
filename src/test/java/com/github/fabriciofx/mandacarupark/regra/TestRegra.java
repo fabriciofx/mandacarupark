@@ -30,6 +30,7 @@ import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Regras;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
+import com.github.fabriciofx.mandacarupark.id.UuidRandom;
 import com.github.fabriciofx.mandacarupark.media.MapEntryOf;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
@@ -67,7 +68,7 @@ public final class TestRegra {
         final Placa placa = new PlacaOf("ABC1234");
         final LocalDateTime dateTime = LocalDateTime.of(2022, 8, 2, 10, 30);
         final Ticket ticket = estacionamento.entrada(
-            new Uuid(),
+            new UuidRandom(),
             placa,
             new DataHoraOf(dateTime)
         );
@@ -109,7 +110,7 @@ public final class TestRegra {
         final Placa placa = new PlacaOf("ABC1234");
         final LocalDateTime dateTime = LocalDateTime.of(2022, 7, 31, 10, 30);
         final Ticket ticket = estacionamento.entrada(
-            new Uuid(),
+            new UuidRandom(),
             placa,
             new DataHoraOf(dateTime)
         );
@@ -148,7 +149,7 @@ public final class TestRegra {
         );
         final Ticket ticket = new TicketFake(
             new PagamentosFake(),
-            new Uuid(),
+            new UuidRandom(),
             new PlacaOf("ABC1234"),
             new DataHoraOf("24/12/2022 12:45:20")
         );
@@ -174,7 +175,7 @@ public final class TestRegra {
         );
         final Ticket ticket = new TicketFake(
             new PagamentosFake(),
-            new Uuid(),
+            new UuidRandom(),
             new PlacaOf("ABC1234"),
             new DataHoraOf("24/12/2022 12:45:20")
         );
@@ -200,7 +201,7 @@ public final class TestRegra {
         );
         final Ticket ticket = new TicketFake(
             new PagamentosFake(),
-            new Uuid(),
+            new UuidRandom(),
             new PlacaOf("ABC1234"),
             new DataHoraOf("24/12/2022 12:45:20")
         );
