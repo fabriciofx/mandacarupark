@@ -36,7 +36,6 @@ public final class PagesSql<T> implements Pages<T> {
     private final Supplier<Integer> size;
     private final Adapter<T> adapter;
     private final Session session;
-    private final String countQuery;
     private final String allQuery;
     private final int limit;
 
@@ -62,7 +61,6 @@ public final class PagesSql<T> implements Pages<T> {
         };
         this.session = session;
         this.adapter = adapter;
-        this.countQuery = countQuery;
         this.allQuery = allQuery;
         this.limit = limit;
     }
