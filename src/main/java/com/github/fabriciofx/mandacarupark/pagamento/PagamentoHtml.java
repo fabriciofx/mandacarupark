@@ -8,22 +8,22 @@ import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
 
 public final class PagamentoHtml implements Pagamento, Html {
-    private final Pagamento pagamento;
+    private final Pagamento origin;
     private final Template template;
 
     public PagamentoHtml(final Pagamento pagamento, final Template template) {
-        this.pagamento = pagamento;
+        this.origin = pagamento;
         this.template = template;
     }
 
     @Override
     public Id id() {
-        return this.pagamento.id();
+        return this.origin.id();
     }
 
     @Override
     public Media sobre(final Media media) {
-        return this.pagamento.sobre(media);
+        return this.origin.sobre(media);
     }
 
     @Override

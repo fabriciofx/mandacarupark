@@ -37,7 +37,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class EntradasHtml implements Entradas, Html {
-    private final Entradas entradas;
+    private final Entradas origin;
     private final int limit;
     private final int number;
     private final Template template;
@@ -48,7 +48,7 @@ public final class EntradasHtml implements Entradas, Html {
         final int number,
         final Template template
     ) {
-        this.entradas = entradas;
+        this.origin = entradas;
         this.limit = limit;
         this.number = number;
         this.template = template;
@@ -60,17 +60,17 @@ public final class EntradasHtml implements Entradas, Html {
         final Placa placa,
         final DataHora dataHora
     ) {
-        return this.entradas.entrada(id, placa, dataHora);
+        return this.origin.entrada(id, placa, dataHora);
     }
 
     @Override
     public List<Entrada> procura(final Id id) {
-        return this.entradas.procura(id);
+        return this.origin.procura(id);
     }
 
     @Override
     public Pages<Entrada> pages(final int limit) {
-        return this.entradas.pages(limit);
+        return this.origin.pages(limit);
     }
 
     @Override
@@ -80,7 +80,7 @@ public final class EntradasHtml implements Entradas, Html {
         final Matcher matcher = find.matcher(this.template.asString());
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
-            for (final Entrada entrada : this.entradas.pages(this.limit).page(this.number).content()) {
+            for (final Entrada entrada : this.origin.pages(this.limit).page(this.number).content()) {
                 Template page = this.template.create(matcher.group(1));
                 page = this.template.create(new EntradaHtml(entrada, page).html());
                 sb.append(page.asString());

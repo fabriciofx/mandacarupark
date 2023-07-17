@@ -37,22 +37,22 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class LocacoesHtml implements Locacoes, Html {
-    private final Locacoes locacoes;
+    private final Locacoes origin;
     private final Template template;
 
     public LocacoesHtml(final Locacoes locacoes, final Template template) {
-        this.locacoes = locacoes;
+        this.origin = locacoes;
         this.template = template;
     }
 
     @Override
     public List<Locacao> procura(final Periodo periodo) {
-        return this.locacoes.procura(periodo);
+        return this.origin.procura(periodo);
     }
 
     @Override
     public Media sobre(final Media media) {
-        return this.locacoes.sobre(media);
+        return this.origin.sobre(media);
     }
 
     @Override
@@ -66,7 +66,7 @@ public final class LocacoesHtml implements Locacoes, Html {
             new DataHoraOf("31/12/2023 23:59:59")
         );
         while (matcher.find()) {
-            for (final Locacao locacao : this.locacoes.procura(periodo)) {
+            for (final Locacao locacao : this.origin.procura(periodo)) {
                 Template page = this.template.create(matcher.group(1));
                 page = this.template.create(
                     new LocacaoHtml(locacao, page).html()

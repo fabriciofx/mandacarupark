@@ -30,17 +30,17 @@ import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
 
 public final class LocacaoHtml implements Locacao, Html {
-    private final Locacao locacao;
+    private final Locacao origin;
     private final Template template;
 
     public LocacaoHtml(final Locacao locacao, final Template template) {
-        this.locacao = locacao;
+        this.origin = locacao;
         this.template = template;
     }
 
     @Override
     public Media sobre(final Media media) {
-        return this.locacao.sobre(media);
+        return this.origin.sobre(media);
     }
 
     @Override

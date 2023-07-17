@@ -38,7 +38,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class PagamentosHtml implements Pagamentos, Html {
-    private final Pagamentos pagamentos;
+    private final Pagamentos origin;
     private final int limit;
     private final int number;
     private final Template template;
@@ -49,7 +49,7 @@ public final class PagamentosHtml implements Pagamentos, Html {
         final int number,
         final Template template
     ) {
-        this.pagamentos = pagamentos;
+        this.origin = pagamentos;
         this.limit = limit;
         this.number = number;
         this.template = template;
@@ -61,22 +61,22 @@ public final class PagamentosHtml implements Pagamentos, Html {
         final DataHora dataHora,
         final Dinheiro valor
     ) {
-        return this.pagamentos.pagamento(ticket, dataHora, valor);
+        return this.origin.pagamento(ticket, dataHora, valor);
     }
 
     @Override
     public List<Pagamento> procura(final Id id) {
-        return this.pagamentos.procura(id);
+        return this.origin.procura(id);
     }
 
     @Override
     public int quantidade() {
-        return this.pagamentos.quantidade();
+        return this.origin.quantidade();
     }
 
     @Override
     public Pages<Pagamento> pages(final int limit) {
-        return this.pagamentos.pages(limit);
+        return this.origin.pages(limit);
     }
 
     @Override
@@ -86,7 +86,7 @@ public final class PagamentosHtml implements Pagamentos, Html {
         final Matcher matcher = find.matcher(this.template.asString());
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
-            for (final Pagamento pagamento : this.pagamentos.pages(this.limit).page(this.number).content()) {
+            for (final Pagamento pagamento : this.origin.pages(this.limit).page(this.number).content()) {
                 Template page = this.template.create(matcher.group(1));
                 page = this.template.create(new PagamentoHtml(pagamento, page).html());
                 sb.append(page.asString());

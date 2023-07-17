@@ -15,7 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class SaidasHtml implements Saidas, Html {
-    private final Saidas saidas;
+    private final Saidas origin;
     private final int limit;
     private final int number;
     private final Template template;
@@ -26,7 +26,7 @@ public final class SaidasHtml implements Saidas, Html {
         final int number,
         final Template template
     ) {
-        this.saidas = saidas;
+        this.origin = saidas;
         this.limit = limit;
         this.number = number;
         this.template = template;
@@ -38,17 +38,17 @@ public final class SaidasHtml implements Saidas, Html {
         final Placa placa,
         final DataHora dataHora
     ) {
-        return this.saidas.saida(ticket, placa, dataHora);
+        return this.origin.saida(ticket, placa, dataHora);
     }
 
     @Override
     public List<Saida> procura(final Id id) {
-        return this.saidas.procura(id);
+        return this.origin.procura(id);
     }
 
     @Override
     public Pages<Saida> pages(final int limit) {
-        return this.saidas.pages(limit);
+        return this.origin.pages(limit);
     }
 
     @Override
@@ -58,7 +58,7 @@ public final class SaidasHtml implements Saidas, Html {
         final Matcher matcher = find.matcher(this.template.asString());
         final StringBuilder sb = new StringBuilder();
         while (matcher.find()) {
-            for (final Saida saida : this.saidas.pages(this.limit).page(this.number).content()) {
+            for (final Saida saida : this.origin.pages(this.limit).page(this.number).content()) {
                 Template page = this.template.create(matcher.group(1));
                 page = this.template.create(new SaidaHtml(saida, page).html());
                 sb.append(page.asString());

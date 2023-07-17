@@ -32,32 +32,32 @@ import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
 
 public final class EntradaHtml implements Entrada, Html {
-    private final Entrada entrada;
+    private final Entrada origin;
     private final Template template;
 
     public EntradaHtml(final Entrada entrada, final Template template) {
-        this.entrada = entrada;
+        this.origin = entrada;
         this.template = template;
     }
 
     @Override
     public Id id() {
-        return this.entrada.id();
+        return this.origin.id();
     }
 
     @Override
     public Ticket ticket() {
-        return this.entrada.ticket();
+        return this.origin.ticket();
     }
 
     @Override
     public Media sobre(final Media media) {
-        return this.entrada.sobre(media);
+        return this.origin.sobre(media);
     }
 
     @Override
     public String html() {
-        final Media media = this.sobre(new MapMedia());
+        final Media media = this.origin.sobre(new MapMedia());
         return this.template.with("id", media.select("id"))
             .with("placa", media.select("placa"))
             .with("dataHora", media.select("dataHora"))
