@@ -54,6 +54,7 @@ public final class LocacaoFake implements Locacao {
     @Override
     public Media sobre(final Media media) {
         return media.begin("locacao")
+            .with("id", this.id)
             .with("placa", this.placa)
             .with("entrada", this.entrada)
             .with("saida", this.saida)
