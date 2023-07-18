@@ -47,7 +47,7 @@ public final class RelatorioXml implements Relatorio {
     public String conteudo() throws Exception {
         final Directives directives = new Directives().add("locacoes");
         Dinheiro total = new DinheiroOf("0.00");
-        for (final Locacao locacao : this.locacoes.pages(1, this.periodo).page(0).content()) {
+        for (final Locacao locacao : this.locacoes.pages(30, this.periodo).page(0).content()) {
             final Media media = locacao.sobre(new MapMedia());
             final Dinheiro valor = media.select("valor");
             total = new DinheiroOf(total.quantia().add(valor.quantia()));

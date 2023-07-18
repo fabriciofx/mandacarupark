@@ -56,7 +56,7 @@ public final class TestRelatorioLocacoesSql {
                     new RelatorioXml(
                         new LocacoesSql(session),
                         new PeriodoOf(
-                            LocalDateTime.of(2022, 7, 21, 12, 01),
+                            LocalDateTime.of(2022, 7, 21, 12, 1),
                             LocalDateTime.of(2022, 7, 21, 17, 12)
                         )
                     ).conteudo()
