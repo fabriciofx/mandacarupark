@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark.web.page;
 
+import com.github.fabriciofx.mandacarupark.text.Text;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -30,8 +31,12 @@ public final class ResourceAsStream extends InputStream {
     private final InputStream input;
 
     public ResourceAsStream(final String filename) {
+        this(() -> filename);
+    }
+
+    public ResourceAsStream(final Text filename) {
         this.input = ResourceAsStream.class.getClassLoader()
-            .getResourceAsStream(filename);
+            .getResourceAsStream(filename.asString());
     }
 
     @Override

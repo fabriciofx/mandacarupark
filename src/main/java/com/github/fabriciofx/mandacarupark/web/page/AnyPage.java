@@ -23,18 +23,18 @@
  */
 package com.github.fabriciofx.mandacarupark.web.page;
 
+import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import org.takes.Response;
 import org.takes.facets.fork.RqRegex;
 import org.takes.facets.fork.TkRegex;
 import org.takes.rs.RsHtml;
-import java.io.IOException;
 
 public final class AnyPage implements TkRegex {
     @Override
-    public Response act(final RqRegex req) throws IOException {
+    public Response act(final RqRegex req) {
         return new RsHtml(
             new ResourceAsStream(
-                String.format(
+                new Sprintf(
                     "webapp/%s",
                     req.matcher().group("path")
                 )
