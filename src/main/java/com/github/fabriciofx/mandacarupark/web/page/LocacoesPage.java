@@ -25,13 +25,17 @@ package com.github.fabriciofx.mandacarupark.web.page;
 
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Locacoes;
+import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.Template;
+import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.locacoes.LocacoesHtml;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.web.HttpPage;
 import org.takes.Request;
 import org.takes.Response;
+import org.takes.rq.RqHref;
 import org.takes.rs.RsHtml;
 import java.io.IOException;
 
@@ -44,37 +48,52 @@ public final class LocacoesPage implements HttpPage {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Template header = new HtmlTemplate(
-            new ResourceAsStream("webapp/header.tpl")
+        final Locacoes locacoes = this.estacionamento.sobre(new MapMedia())
+            .select("locacoes");
+        final String inicio = new RqHref.Smart(req).single(
+            "inicio",
+            "01/01/2022 00:00:00"
+        );
+        final String termino = new RqHref.Smart(req).single(
+            "termino",
+            "31/12/2023 23:59:59"
+        );
+        final int number = Integer.parseInt(
+            new RqHref.Smart(req).single("page", "1")
+        );
+        final int limit = Integer.parseInt(
+            new RqHref.Smart(req).single("limit", "1")
+        );
+        final Periodo periodo = new PeriodoOf(
+            new DataHoraOf(inicio),
+            new DataHoraOf(termino)
         );
         final Template main = new HtmlTemplate(
             new ResourceAsStream("webapp/locacoes.tpl")
-        ).with("header", header.asString());
-//        final RqFormBase form = new RqFormBase(req);
-//        final String inicio, termino;
-//        if (form.names().iterator().hasNext()) {
-//            inicio = form.param("inicio").iterator().next();
-//            termino = form.param("termino").iterator().next();
-//        } else {
-//            inicio = "01/01/2022 00:00:00";
-//            termino = "31/01/2023 23:59:59";
-//        }
-        final Locacoes locacoes = this.estacionamento.sobre(new MapMedia())
-            .select("locacoes");
-//        final InputStream body = new ByteArrayInputStream(
-//            locacoes.sobre(
-//                main,
-//                new PeriodoOf(
-//                    new DataHoraOf(inicio),
-//                    new DataHoraOf(termino)
-//                )
-//            ).toString().getBytes()
-//        );
-//        final InputStream body = new ByteArrayInputStream(
-//            locacoes.sobre(main).toString().getBytes()
-//        );
-//        return new RsHtml(body);
-        return new RsHtml(new LocacoesHtml(locacoes, main).html());
-
+        ).with(
+            "header",
+            new HtmlTemplate(
+                new ResourceAsStream("webapp/header.tpl")
+            ).asString()
+        ).with(
+            "footer",
+            new HtmlTemplate(
+                new Footer<>(
+                    locacoes.pages(limit, periodo),
+                    number,
+                    limit,
+                    "http://localhost:8080/locacoes"
+                )
+            ).asString()
+        );
+        return new RsHtml(
+            new LocacoesHtml(
+                locacoes,
+                limit,
+                number - 1,
+                periodo,
+                main
+            ).html()
+        );
     }
 }

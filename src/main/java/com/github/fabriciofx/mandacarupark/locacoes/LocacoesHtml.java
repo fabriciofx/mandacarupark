@@ -23,54 +23,52 @@
  */
 package com.github.fabriciofx.mandacarupark.locacoes;
 
+import com.github.fabriciofx.mandacarupark.Html;
 import com.github.fabriciofx.mandacarupark.Locacao;
 import com.github.fabriciofx.mandacarupark.Locacoes;
-import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Periodo;
-import com.github.fabriciofx.mandacarupark.Html;
 import com.github.fabriciofx.mandacarupark.Template;
-import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
+import com.github.fabriciofx.mandacarupark.db.pagination.Pages;
 import com.github.fabriciofx.mandacarupark.locacao.LocacaoHtml;
-import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class LocacoesHtml implements Locacoes, Html {
     private final Locacoes origin;
+    private final int limit;
+    private final int number;
+    private final Periodo periodo;
     private final Template template;
 
-    public LocacoesHtml(final Locacoes locacoes, final Template template) {
+    public LocacoesHtml(
+        final Locacoes locacoes,
+        final int limit,
+        final int number,
+        final Periodo periodo,
+        final Template template
+    ) {
         this.origin = locacoes;
+        this.limit = limit;
+        this.number = number;
+        this.periodo = periodo;
         this.template = template;
     }
 
     @Override
-    public List<Locacao> procura(final Periodo periodo) {
-        return this.origin.procura(periodo);
-    }
-
-    @Override
-    public Media sobre(final Media media) {
-        return this.origin.sobre(media);
+    public Pages<Locacao> pages(final int limit, final Periodo periodo) {
+        return this.origin.pages(limit, periodo);
     }
 
     @Override
     public String html() {
-        final String regex = "\\$\\{ls\\.begin}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ls\\.end}";
+        final String regex = "\\$\\{ls\\.begin}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ls\\.end}";
         final Pattern find = Pattern.compile(regex);
         final Matcher matcher = find.matcher(this.template.asString());
         final StringBuilder sb = new StringBuilder();
-        final Periodo periodo = new PeriodoOf(
-            new DataHoraOf("01/01/2022 00:00:00"),
-            new DataHoraOf("31/12/2023 23:59:59")
-        );
         while (matcher.find()) {
-            for (final Locacao locacao : this.origin.procura(periodo)) {
+            for (final Locacao locacao : this.origin.pages(this.limit, this.periodo).page(this.number).content()) {
                 Template page = this.template.create(matcher.group(1));
-                page = this.template.create(
-                    new LocacaoHtml(locacao, page).html()
-                );
+                page = this.template.create(new LocacaoHtml(locacao, page).html());
                 sb.append(page.asString());
             }
         }

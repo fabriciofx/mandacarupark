@@ -84,4 +84,9 @@ public final class PeriodoOf implements Periodo {
         return this.inicio.dateTime().getDayOfWeek() == dia &&
             this.termino.dateTime().getDayOfWeek() == dia;
     }
+
+    @Override
+    public String toString() {
+        return this.inicio + " a " + this.termino;
+    }
 }

@@ -27,15 +27,11 @@ import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Locacao;
 import com.github.fabriciofx.mandacarupark.Locacoes;
-import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.Saidas;
-import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
+import com.github.fabriciofx.mandacarupark.db.pagination.Pages;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
-import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
-import java.util.ArrayList;
-import java.util.List;
 
 public final class LocacoesFake implements Locacoes {
     private final Entradas entradas;
@@ -61,45 +57,7 @@ public final class LocacoesFake implements Locacoes {
     }
 
     @Override
-    public List<Locacao> procura(final Periodo periodo) {
-        final List<Locacao> itens = new ArrayList<>();
-//        for (Entrada entrada : this.entradas) {
-//            final Media media = entrada.sobre(new MapMedia());
-//            final DataHora dataHora = media.select("dataHora");
-//            if (periodo.contem(dataHora)) {
-//                final List<Saida> lista = this.saidas.procura(entrada.id());
-//                if (!lista.isEmpty()) {
-//                    final Saida saida = lista.get(0);
-//                    final List<Pagamento> pagamento = this.pagamentos.procura(
-//                        entrada.id()
-//                    );
-//                    itens.add(
-//                        new LocacaoFake(
-//                            entrada.id(),
-//                            media.select("placa"),
-//                            media.select("dataHora"),
-//                            saida.sobre(new MapMedia()).select("dataHora"),
-//                            pagamento.get(0).sobre(new MapMedia()).select("valor")
-//                        )
-//                    );
-//                }
-//            }
-//        }
-        return itens;
-    }
-
-    @Override
-    public Media sobre(final Media media) {
-        Media med = media;
-        for (final Locacao locacao : this.procura(
-            new PeriodoOf(
-                new DataHoraOf("01/01/2020 00:00:00"),
-                new DataHoraOf("31/12/2023 23:59:59")
-            )
-        )
-        ) {
-            med = locacao.sobre(med);
-        }
-        return med;
+    public Pages<Locacao> pages(int limit, final Periodo periodo) {
+        return null;
     }
 }

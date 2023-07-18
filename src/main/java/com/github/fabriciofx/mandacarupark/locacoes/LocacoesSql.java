@@ -25,18 +25,12 @@ package com.github.fabriciofx.mandacarupark.locacoes;
 
 import com.github.fabriciofx.mandacarupark.Locacao;
 import com.github.fabriciofx.mandacarupark.Locacoes;
-import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Periodo;
-import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
+import com.github.fabriciofx.mandacarupark.adapter.ResultSetAsLocacao;
 import com.github.fabriciofx.mandacarupark.db.Session;
-import com.github.fabriciofx.mandacarupark.db.stmt.Select;
-import com.github.fabriciofx.mandacarupark.id.Uuid;
-import com.github.fabriciofx.mandacarupark.locacao.LocacaoSql;
-import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
+import com.github.fabriciofx.mandacarupark.db.pagination.Pages;
+import com.github.fabriciofx.mandacarupark.db.pagination.pages.PagesSql;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
 
 public final class LocacoesSql implements Locacoes {
     private final Session session;
@@ -46,44 +40,21 @@ public final class LocacoesSql implements Locacoes {
     }
 
     @Override
-    public List<Locacao> procura(final Periodo periodo) {
-        try (
-            final ResultSet rset = new Select(
-                this.session,
-                new Sprintf(
-                    "SELECT * FROM locacao WHERE entrada >= '%s' AND saida <= '%s'",
-                    periodo.inicio().dateTime(),
-                    periodo.termino().dateTime()
-                )
-            ).result()
-        ) {
-            final List<Locacao> itens = new ArrayList<>();
-            while (rset.next()) {
-                itens.add(
-                    new LocacaoSql(
-                        this.session,
-                        new Uuid(rset.getString(1))
-                    )
-                );
-            }
-            return itens;
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    @Override
-    public Media sobre(final Media media) {
-        Media med = media;
-        for (final Locacao locacao : this.procura(
-                new PeriodoOf(
-                    new DataHoraOf("01/01/2020 00:00:00"),
-                    new DataHoraOf("31/12/2023 23:59:59")
-                )
-            )
-        ) {
-            med = locacao.sobre(med);
-        }
-        return med;
+    public Pages<Locacao> pages(final int limit, final Periodo periodo) {
+        return new PagesSql<>(
+            this.session,
+            new Sprintf(
+                "SELECT COUNT(*) FROM locacao WHERE entrada >= '%s' AND saida <= '%s'",
+                periodo.inicio().dateTime(),
+                periodo.termino().dateTime()
+            ).asString(),
+            new Sprintf(
+                "SELECT * FROM locacao WHERE entrada >= '%s' AND saida <= '%s'",
+                periodo.inicio().dateTime(),
+                periodo.termino().dateTime()
+            ).asString(),
+            new ResultSetAsLocacao(this.session),
+            limit
+        );
     }
 }

@@ -21,10 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.adapter;
 
-import com.github.fabriciofx.mandacarupark.db.pagination.Pages;
+import com.github.fabriciofx.mandacarupark.Locacao;
+import com.github.fabriciofx.mandacarupark.db.Session;
+import com.github.fabriciofx.mandacarupark.id.Uuid;
+import com.github.fabriciofx.mandacarupark.locacao.LocacaoSql;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public interface Locacoes {
-    Pages<Locacao> pages(int limit, Periodo periodo);
+public class ResultSetAsLocacao implements Adapter<Locacao> {
+    private final Session session;
+
+    public ResultSetAsLocacao(final Session session) {
+        this.session = session;
+    }
+
+    @Override
+    public Locacao adapt(final ResultSet rset) {
+        try {
+            return new LocacaoSql(this.session, new Uuid(rset.getString(1)));
+        } catch (final SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 }

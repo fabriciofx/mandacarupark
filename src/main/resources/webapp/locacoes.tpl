@@ -10,11 +10,11 @@
   <body>
     <section>
       ${header}
-      <form action="/locacoes" method="post">
+      <form action="/locacoes" method="get">
         <label for="inicio">Início</label>
-        <input type="datetime-local" id="inicio" name="inicio" required />
+        <input type="datetime-local" id="inicio" name="inicio" value="2023-01-01T00:00" required />
         <label for="termino">Término</label>
-        <input type="datetime-local" id="termino" name="termino" required />
+        <input type="datetime-local" id="termino" name="termino" value="2023-12-31T23:59" required />
         <button type="submit">Filtrar</button>
       </form>
       <article>
@@ -36,6 +36,7 @@
             ${ls.end}
           </tbody>
         </table>
+        ${footer}
       </article>
     </section>
   </body>

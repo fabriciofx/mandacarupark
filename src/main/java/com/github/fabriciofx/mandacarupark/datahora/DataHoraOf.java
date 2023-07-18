@@ -38,7 +38,7 @@ public final class DataHoraOf implements DataHora {
     public DataHoraOf(final String dataHora) {
         this(
             LocalDateTime.parse(
-                dataHora,
+                dataHora.replace('T', ' '),
                 new DateTimeFormatterBuilder()
                     .parseCaseInsensitive()
                     .appendOptional(
