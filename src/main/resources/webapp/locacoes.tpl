@@ -36,7 +36,7 @@
             ${ls.end}
           </tbody>
         </table>
-        ${footer}
+        ${pagination}
       </article>
     </section>
   </body>

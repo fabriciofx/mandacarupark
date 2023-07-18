@@ -28,13 +28,13 @@ import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import com.github.fabriciofx.mandacarupark.text.SprintfOf;
 import com.github.fabriciofx.mandacarupark.text.Text;
 
-public final class Footer<T> implements Text {
+public final class Pagination<T> implements Text {
     private final Pages<T> pages;
     private final int number;
     private final int limit;
     private final String url;
 
-    public Footer(
+    public Pagination(
         final Pages<T> pages,
         final int number,
         final int limit,
@@ -50,18 +50,18 @@ public final class Footer<T> implements Text {
     public String asString() {
         return new SprintfOf(
             "<div class=\"center\">\n%s%s%s\t\t</div>\n",
-            new Footer.Anterior(
+            new Pagination.Anterior(
                 this.url,
                 this.number,
                 this.limit
             ),
-            new Footer.Numeros(
+            new Pagination.Numeros(
                 this.url,
                 this.number,
                 this.limit,
                 this.pages.count()
             ),
-            new Footer.Proximo(
+            new Pagination.Proximo(
                 this.url,
                 this.number,
                 this.limit,

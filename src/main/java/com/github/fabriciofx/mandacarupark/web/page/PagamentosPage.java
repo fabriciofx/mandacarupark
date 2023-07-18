@@ -61,9 +61,9 @@ public final class PagamentosPage implements HttpPage {
                 new ResourceAsStream("webapp/header.tpl")
             ).asString()
         ).with(
-            "footer",
+            "pagination",
             new HtmlTemplate(
-                new Footer<>(
+                new Pagination<>(
                     pagamentos.pages(limit),
                     number,
                     limit,

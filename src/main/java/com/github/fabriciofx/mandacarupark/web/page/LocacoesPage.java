@@ -76,9 +76,9 @@ public final class LocacoesPage implements HttpPage {
                 new ResourceAsStream("webapp/header.tpl")
             ).asString()
         ).with(
-            "footer",
+            "pagination",
             new HtmlTemplate(
-                new Footer<>(
+                new Pagination<>(
                     locacoes.pages(limit, periodo),
                     number,
                     limit,

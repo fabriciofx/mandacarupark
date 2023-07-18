@@ -62,9 +62,9 @@ public final class SaidasPage implements HttpPage {
                 new ResourceAsStream("webapp/header.tpl")
             ).asString()
         ).with(
-            "footer",
+            "pagination",
             new HtmlTemplate(
-                new Footer<>(
+                new Pagination<>(
                     saidas.pages(limit),
                     number,
                     limit,
