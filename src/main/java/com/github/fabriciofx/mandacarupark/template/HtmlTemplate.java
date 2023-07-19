@@ -72,11 +72,6 @@ public final class HtmlTemplate implements Template {
     }
 
     @Override
-    public byte[] bytes() {
-        return this.toString().getBytes();
-    }
-
-    @Override
     public String asString() {
         return this.content.asString();
     }
