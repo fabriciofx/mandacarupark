@@ -23,12 +23,11 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
-import com.github.fabriciofx.mandacarupark.db.pagination.Pages;
+import com.github.fabriciofx.mandacarupark.db.Pagination;
 import java.util.List;
 
-public interface Pagamentos {
+public interface Pagamentos extends Pagination<Pagamento> {
     Pagamento pagamento(Ticket ticket, DataHora dataHora, Dinheiro valor);
     List<Pagamento> procura(Id id);
     int quantidade();
-    Pages<Pagamento> pages(int limit);
 }

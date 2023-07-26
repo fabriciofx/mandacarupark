@@ -21,12 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
+package com.github.fabriciofx.mandacarupark.db;
 
-import com.github.fabriciofx.mandacarupark.db.Pagination;
-import java.util.List;
+import com.github.fabriciofx.mandacarupark.db.pagination.Pages;
 
-public interface Saidas extends Pagination<Saida> {
-    Saida saida(Ticket ticket, Placa placa, DataHora dataHora);
-    List<Saida> procura(Id id);
+public interface Pagination<T> {
+    Pages<T> pages(int limit);
 }

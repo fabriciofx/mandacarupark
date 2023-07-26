@@ -23,11 +23,10 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
-import com.github.fabriciofx.mandacarupark.db.pagination.Pages;
+import com.github.fabriciofx.mandacarupark.db.Pagination;
 import java.util.List;
 
-public interface Entradas {
+public interface Entradas extends Pagination<Entrada> {
     Entrada entrada(Id id, Placa placa, DataHora dataHora);
     List<Entrada> procura(Id id);
-    Pages<Entrada> pages(int limit);
 }
