@@ -24,12 +24,14 @@
 package com.github.fabriciofx.mandacarupark.datahora;
 
 import com.github.fabriciofx.mandacarupark.DataHora;
+import com.github.fabriciofx.mandacarupark.Sticky;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Supplier;
 
 public final class DataHoraRandom implements DataHora {
-    private final DataHora origin;
+    private final Supplier<DataHora> origin;
 
     public DataHoraRandom(
         final LocalDateTime inicio,
@@ -39,9 +41,8 @@ public final class DataHoraRandom implements DataHora {
     }
 
     public DataHoraRandom(final DataHora inicio, final DataHora termino) {
-        this.origin = new DataHora() {
-            @Override
-            public LocalDateTime dateTime() {
+        this.origin = new Sticky<>(
+            () -> {
                 final long min = inicio.dateTime().toEpochSecond(
                     ZoneOffset.UTC
                 );
@@ -51,43 +52,30 @@ public final class DataHoraRandom implements DataHora {
                 final long random = ThreadLocalRandom.current().nextLong(
                     min, max
                 );
-                return LocalDateTime.ofEpochSecond(random, 0, ZoneOffset.UTC);
+                return new DataHoraOf(
+                    LocalDateTime.ofEpochSecond(random, 0, ZoneOffset.UTC)
+                );
             }
-
-            @Override
-            public String data() {
-                return new DataHoraOf(this.dateTime()).data();
-            }
-
-            @Override
-            public String hora() {
-                return new DataHoraOf(this.dateTime()).hora();
-            }
-
-            @Override
-            public String toString() {
-                return new DataHoraOf(this.dateTime()).toString();
-            }
-        };
+        );
     }
 
     @Override
     public LocalDateTime dateTime() {
-        return this.origin.dateTime();
+        return this.origin.get().dateTime();
     }
 
     @Override
     public String data() {
-        return this.origin.data();
+        return this.origin.get().data();
     }
 
     @Override
     public String hora() {
-        return this.origin.hora();
+        return this.origin.get().hora();
     }
 
     @Override
     public String toString() {
-        return this.origin.toString();
+        return this.origin.get().toString();
     }
 }
