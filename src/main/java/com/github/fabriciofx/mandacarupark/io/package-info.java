@@ -21,33 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.web.page;
 
-import com.github.fabriciofx.mandacarupark.Template;
-import com.github.fabriciofx.mandacarupark.io.ResourceAsStream;
-import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
-import com.github.fabriciofx.mandacarupark.text.Sprintf;
-import org.takes.Response;
-import org.takes.facets.fork.RqRegex;
-import org.takes.facets.fork.TkRegex;
-import org.takes.rs.RsHtml;
-
-public final class AnyPage implements TkRegex {
-    @Override
-    public Response act(final RqRegex req) {
-        final Template main = new HtmlTemplate(
-            new ResourceAsStream(
-                new Sprintf(
-                    "webapp/%s",
-                    req.matcher().group("path")
-                )
-            )
-        ).with(
-            "header",
-            new HtmlTemplate(
-                new ResourceAsStream("webapp/header.tpl")
-            ).asString()
-        );
-        return new RsHtml(main.asString());
-    }
-}
+/**
+ * I/O.
+ *
+ * @since 0.0.1
+ */
+package com.github.fabriciofx.mandacarupark.io;

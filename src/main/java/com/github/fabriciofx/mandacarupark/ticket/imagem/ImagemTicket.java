@@ -29,12 +29,12 @@ import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
+import com.github.fabriciofx.mandacarupark.io.ResourceAsStream;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
 
 public final class ImagemTicket implements Imagem {
     private final Imagem origin;
@@ -47,25 +47,21 @@ public final class ImagemTicket implements Imagem {
 
     @Override
     public BufferedImage imagem() {
-        final Media media = ticket.sobre(new MapMedia());
+        final Media media = this.ticket.sobre(new MapMedia());
         final Placa placa = media.select("placa");
         final DataHora dataHora = media.select("dataHora");
-        final InputStream font7 = Thread.currentThread()
-            .getContextClassLoader()
-            .getResourceAsStream("font/roboto-bold.ttf");
-        final InputStream font13 = Thread.currentThread()
-            .getContextClassLoader()
-            .getResourceAsStream("font/roboto-bold.ttf");
         final Font roboto7;
         final Font roboto13;
         try {
-            roboto7 = Font.createFont(Font.TRUETYPE_FONT, font7)
-                .deriveFont(7f);
-            roboto13 = Font.createFont(Font.TRUETYPE_FONT, font13)
-                .deriveFont(13f);
-        } catch (final FontFormatException ex) {
-            throw new RuntimeException(ex);
-        } catch (final IOException ex) {
+            roboto7 = Font.createFont(
+                Font.TRUETYPE_FONT,
+                new ResourceAsStream("font/roboto-bold.ttf")
+            ).deriveFont(7f);
+            roboto13 = Font.createFont(
+                Font.TRUETYPE_FONT,
+                new ResourceAsStream("font/roboto-bold.ttf")
+            ).deriveFont(13f);
+        } catch (final FontFormatException | IOException ex) {
             throw new RuntimeException(ex);
         }
         final BufferedImage imagem = new ImagemTexto(

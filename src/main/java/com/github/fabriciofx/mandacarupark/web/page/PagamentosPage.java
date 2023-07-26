@@ -26,6 +26,7 @@ package com.github.fabriciofx.mandacarupark.web.page;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Template;
+import com.github.fabriciofx.mandacarupark.io.ResourceAsStream;
 import com.github.fabriciofx.mandacarupark.media.MapMedia;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosHtml;
 import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;

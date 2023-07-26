@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark.web.page;
+package com.github.fabriciofx.mandacarupark.io;
 
 import com.github.fabriciofx.mandacarupark.text.Text;
 import java.io.IOException;
