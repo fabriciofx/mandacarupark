@@ -68,7 +68,7 @@ public final class LocacoesFake implements Locacoes {
     @Override
     public Pages<Locacao> pages(int limit, final Periodo periodo) {
         final List<Locacao> itens = new ArrayList<>();
-        for (final Entrada entrada : this.entradas.pages(30).page(0).content()) {
+        for (final Entrada entrada : this.entradas.pages(limit).page(0).content()) {
             final Media media = entrada.sobre(new MemMedia());
             final DataHora dataHora = media.select("dataHora");
             if (periodo.contem(dataHora)) {

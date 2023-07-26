@@ -55,6 +55,7 @@ public final class TestRelatorioLocacoesSql {
                 XhtmlMatchers.xhtml(
                     new RelatorioXml(
                         new LocacoesSql(session),
+                        30,
                         new PeriodoOf(
                             LocalDateTime.of(2022, 7, 21, 12, 1),
                             LocalDateTime.of(2022, 7, 21, 17, 12)

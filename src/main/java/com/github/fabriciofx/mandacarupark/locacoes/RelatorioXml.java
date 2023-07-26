@@ -37,9 +37,15 @@ import org.xembly.Xembler;
 public final class RelatorioXml implements Relatorio {
     private final Locacoes locacoes;
     private final Periodo periodo;
+    private final int limit;
 
-    public RelatorioXml(final Locacoes locacoes, final Periodo periodo) {
+    public RelatorioXml(
+        final Locacoes locacoes,
+        final int limit,
+        final Periodo periodo
+    ) {
         this.locacoes = locacoes;
+        this.limit = limit;
         this.periodo = periodo;
     }
 
@@ -47,7 +53,7 @@ public final class RelatorioXml implements Relatorio {
     public String conteudo() throws Exception {
         final Directives directives = new Directives().add("locacoes");
         Dinheiro total = new DinheiroOf("0.00");
-        for (final Locacao locacao : this.locacoes.pages(30, this.periodo).page(0).content()) {
+        for (final Locacao locacao : this.locacoes.pages(this.limit, this.periodo).page(0).content()) {
             final Media media = locacao.sobre(new MemMedia());
             final Dinheiro valor = media.select("valor");
             total = new DinheiroOf(total.quantia().add(valor.quantia()));
