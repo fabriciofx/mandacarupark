@@ -29,6 +29,7 @@ import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Locacao;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Placa;
+import com.github.fabriciofx.mandacarupark.permanencia.PermanenciaOf;
 
 public final class LocacaoFake implements Locacao {
     private final Id id;
@@ -58,6 +59,7 @@ public final class LocacaoFake implements Locacao {
             .with("placa", this.placa)
             .with("entrada", this.entrada)
             .with("saida", this.saida)
+            .with("permanencia", new PermanenciaOf(this.entrada, this.saida))
             .with("valor", this.valor)
             .end("locacao");
     }

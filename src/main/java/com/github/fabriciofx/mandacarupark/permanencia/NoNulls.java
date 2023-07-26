@@ -62,4 +62,18 @@ public final class NoNulls implements Permanencia {
         }
         return this.origin.sobre(media);
     }
+
+    @Override
+    public String asString() {
+        if (this.origin == null) {
+            throw new IllegalArgumentException(
+                "NULL ao invés de uma permanência válida"
+            );
+        }
+        final String resultado = this.origin.asString();
+        if (resultado == null) {
+            throw new RuntimeException("NULL ao invés de um resultado válido");
+        }
+        return resultado;
+    }
 }

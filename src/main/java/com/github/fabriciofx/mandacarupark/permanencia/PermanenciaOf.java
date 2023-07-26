@@ -26,6 +26,7 @@ package com.github.fabriciofx.mandacarupark.permanencia;
 import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Permanencia;
+import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.time.Duration;
 
 public final class PermanenciaOf implements Permanencia {
@@ -55,5 +56,10 @@ public final class PermanenciaOf implements Permanencia {
             .with("horas", this.horas())
             .with("minutos", this.minutos())
             .end("permanencia");
+    }
+
+    @Override
+    public String asString() {
+        return new Sprintf("%dh%02d", this.horas(), this.minutos()).asString();
     }
 }

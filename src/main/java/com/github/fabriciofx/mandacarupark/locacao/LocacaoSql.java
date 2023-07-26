@@ -33,6 +33,7 @@ import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
+import com.github.fabriciofx.mandacarupark.permanencia.PermanenciaOf;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import java.sql.ResultSet;
@@ -82,6 +83,7 @@ public final class LocacaoSql implements Locacao {
                 .with("placa", placa)
                 .with("entrada", entrada)
                 .with("saida", saida)
+                .with("permanencia", new PermanenciaOf(entrada, saida))
                 .with("valor", valor)
                 .end("locacao");
         } catch (final Exception ex) {

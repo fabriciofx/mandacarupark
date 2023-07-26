@@ -61,7 +61,7 @@ public final class LocacoesHtml implements Locacoes, Html {
 
     @Override
     public String html() {
-        final String regex = "\\$\\{ls\\.begin}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ls\\.end}";
+        final String regex = "\\$\\{ls\\.begin}(\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*.*\\s*)\\$\\{ls\\.end}";
         final Pattern find = Pattern.compile(regex);
         final Matcher matcher = find.matcher(this.template.asString());
         final StringBuilder sb = new StringBuilder();

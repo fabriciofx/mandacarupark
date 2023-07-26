@@ -23,7 +23,9 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
-public interface Permanencia extends Sobre {
+import com.github.fabriciofx.mandacarupark.text.Text;
+
+public interface Permanencia extends Sobre, Text {
     int horas();
     int minutos();
 }

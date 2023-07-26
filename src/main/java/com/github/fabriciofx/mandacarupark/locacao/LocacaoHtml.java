@@ -23,9 +23,10 @@
  */
 package com.github.fabriciofx.mandacarupark.locacao;
 
+import com.github.fabriciofx.mandacarupark.Html;
 import com.github.fabriciofx.mandacarupark.Locacao;
 import com.github.fabriciofx.mandacarupark.Media;
-import com.github.fabriciofx.mandacarupark.Html;
+import com.github.fabriciofx.mandacarupark.Permanencia;
 import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.media.MemMedia;
 
@@ -46,9 +47,11 @@ public final class LocacaoHtml implements Locacao, Html {
     @Override
     public String html() {
         final Media media = this.sobre(new MemMedia());
+        final Permanencia permanencia = media.select("permanencia");
         return this.template.with("placa", media.select("placa"))
             .with("entrada", media.select("entrada"))
             .with("saida", media.select("saida"))
+            .with("permanencia", permanencia.asString())
             .with("valor", media.select("valor"))
             .asString();
     }

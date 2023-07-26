@@ -23,6 +23,7 @@
             <td>Placa</td>
             <td>Entrada</td>
             <td>Saída</td>
+            <td>Permanência</td>
             <td>Valor</td>
           </thead>
           <tbody>
@@ -31,6 +32,7 @@
               <td>${placa}</td>
               <td>${entrada}</td>
               <td>${saida}</td>
+              <td>${permanencia}</td>
               <td>${valor}</td>
             </tr>
             ${ls.end}
