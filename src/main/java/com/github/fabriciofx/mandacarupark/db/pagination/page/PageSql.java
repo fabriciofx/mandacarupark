@@ -23,11 +23,12 @@
  */
 package com.github.fabriciofx.mandacarupark.db.pagination.page;
 
-import com.github.fabriciofx.mandacarupark.db.Session;
-import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.adapter.Adapter;
+import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.pagination.Page;
+import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
+import com.github.fabriciofx.mandacarupark.text.Text;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public final class PageSql<T> implements Page<T> {
     private final Supplier<List<T>> itens;
     private final Session session;
     private final Adapter<T> adapter;
-    private final String allQuery;
+    private final Text allQuery;
     private final int size;
     private final int limit;
     private final int number;
@@ -46,7 +47,7 @@ public final class PageSql<T> implements Page<T> {
     public PageSql(
         final Session session,
         final Adapter<T> adapter,
-        final String allQuery,
+        final Text allQuery,
         final int size,
         final int limit,
         final int number
@@ -57,7 +58,7 @@ public final class PageSql<T> implements Page<T> {
                     session,
                     new Sprintf(
                         "%s LIMIT %d OFFSET %d",
-                        allQuery,
+                        allQuery.asString(),
                         limit,
                         limit * number
                     )

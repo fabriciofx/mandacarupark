@@ -47,12 +47,12 @@ public final class LocacoesSql implements Locacoes {
                 "SELECT COUNT(*) FROM locacao WHERE entrada >= '%s' AND saida <= '%s'",
                 periodo.inicio().dateTime(),
                 periodo.termino().dateTime()
-            ).asString(),
+            ),
             new Sprintf(
                 "SELECT * FROM locacao WHERE entrada >= '%s' AND saida <= '%s'",
                 periodo.inicio().dateTime(),
                 periodo.termino().dateTime()
-            ).asString(),
+            ),
             new ResultSetAsLocacao(this.session),
             limit
         );

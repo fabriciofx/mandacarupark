@@ -25,10 +25,11 @@ package com.github.fabriciofx.mandacarupark.db.pagination.pages;
 
 import com.github.fabriciofx.mandacarupark.adapter.Adapter;
 import com.github.fabriciofx.mandacarupark.db.Session;
-import com.github.fabriciofx.mandacarupark.db.pagination.page.PageSql;
-import com.github.fabriciofx.mandacarupark.db.stmt.Select;
 import com.github.fabriciofx.mandacarupark.db.pagination.Page;
 import com.github.fabriciofx.mandacarupark.db.pagination.Pages;
+import com.github.fabriciofx.mandacarupark.db.pagination.page.PageSql;
+import com.github.fabriciofx.mandacarupark.db.stmt.Select;
+import com.github.fabriciofx.mandacarupark.text.Text;
 import java.sql.ResultSet;
 import java.util.function.Supplier;
 
@@ -36,13 +37,23 @@ public final class PagesSql<T> implements Pages<T> {
     private final Supplier<Integer> size;
     private final Adapter<T> adapter;
     private final Session session;
-    private final String allQuery;
+    private final Text allQuery;
     private final int limit;
 
     public PagesSql(
         final Session session,
         final String countQuery,
         final String allQuery,
+        final Adapter<T> adapter,
+        final int limit
+    ) {
+        this(session, () -> countQuery, () -> allQuery, adapter, limit);
+    }
+
+    public PagesSql(
+        final Session session,
+        final Text countQuery,
+        final Text allQuery,
         final Adapter<T> adapter,
         final int limit
     ) {
