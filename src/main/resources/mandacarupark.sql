@@ -127,9 +127,7 @@ SELECT entrada.id  AS id,
   saida.datahora   AS saida,
   pagamento.valor  AS valor
 FROM entrada
-       LEFT JOIN saida
-                 ON
-                   entrada.id = saida.id
-       LEFT JOIN pagamento
-                 ON
-                   pagamento.id = entrada.id;
+LEFT JOIN saida ON
+  entrada.id = saida.id
+LEFT JOIN pagamento ON
+  pagamento.id = entrada.id;
