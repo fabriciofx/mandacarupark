@@ -52,7 +52,7 @@ public final class EntradasPage implements HttpPage {
             new RqHref.Smart(req).single("page", "1")
         );
         final int limit = Integer.parseInt(
-            new RqHref.Smart(req).single("limit", "1")
+            new RqHref.Smart(req).single("limit", "10")
         );
         final Template main = new HtmlTemplate(
             new ResourceAsStream("webapp/entradas.tpl")

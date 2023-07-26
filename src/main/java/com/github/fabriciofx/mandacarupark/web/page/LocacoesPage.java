@@ -63,7 +63,7 @@ public final class LocacoesPage implements HttpPage {
             new RqHref.Smart(req).single("page", "1")
         );
         final int limit = Integer.parseInt(
-            new RqHref.Smart(req).single("limit", "1")
+            new RqHref.Smart(req).single("limit", "10")
         );
         final Periodo periodo = new PeriodoOf(
             new DataHoraOf(inicio),
