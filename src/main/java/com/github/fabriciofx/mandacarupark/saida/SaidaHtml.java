@@ -28,7 +28,7 @@ import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Html;
 import com.github.fabriciofx.mandacarupark.Saida;
 import com.github.fabriciofx.mandacarupark.Template;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.media.MemMedia;
 
 public final class SaidaHtml implements Saida, Html {
     private final Saida saida;
@@ -51,7 +51,7 @@ public final class SaidaHtml implements Saida, Html {
 
     @Override
     public String html() {
-        final Media media = this.sobre(new MapMedia());
+        final Media media = this.sobre(new MemMedia());
         return this.template.with("id", media.select("id"))
             .with("placa", media.select("placa"))
             .with("dataHora", media.select("dataHora"))

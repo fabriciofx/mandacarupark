@@ -27,7 +27,7 @@ import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Pagamentos;
 import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.io.ResourceAsStream;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.media.MemMedia;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosHtml;
 import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.web.HttpPage;
@@ -46,7 +46,7 @@ public final class PagamentosPage implements HttpPage {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Pagamentos pagamentos = this.estacionamento.sobre(new MapMedia())
+        final Pagamentos pagamentos = this.estacionamento.sobre(new MemMedia())
             .select("pagamentos");
         final int number = Integer.parseInt(
             new RqHref.Smart(req).single("page", "1")

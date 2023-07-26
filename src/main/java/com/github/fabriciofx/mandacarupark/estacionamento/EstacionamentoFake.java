@@ -37,7 +37,7 @@ import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Regras;
 import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.media.MemMedia;
 import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 import com.github.fabriciofx.mandacarupark.permanencia.PermanenciaOf;
 import com.github.fabriciofx.mandacarupark.regra.Cortesia;
@@ -79,7 +79,7 @@ public final class EstacionamentoFake implements Estacionamento {
     @Override
     public Dinheiro valor(final Ticket ticket, final DataHora termino) {
         final Periodo periodo = new PeriodoOf(
-            ticket.sobre(new MapMedia()).select("dataHora"),
+            ticket.sobre(new MemMedia()).select("dataHora"),
             termino
         );
         return this.regras.regra(
@@ -104,7 +104,7 @@ public final class EstacionamentoFake implements Estacionamento {
         if (!ticket.validado()) {
             throw new RuntimeException("Ticket não validado!");
         }
-        if (!ticket.sobre(new MapMedia()).select("placa").equals(placa)) {
+        if (!ticket.sobre(new MemMedia()).select("placa").equals(placa)) {
             throw new RuntimeException("Ticket não confere com a placa!");
         }
         this.saidas.saida(ticket, placa, dataHora);
@@ -113,7 +113,7 @@ public final class EstacionamentoFake implements Estacionamento {
     @Override
     public Permanencia permanencia(final Ticket ticket, final DataHora atual) {
         return new PermanenciaOf(
-            ticket.sobre(new MapMedia()).select("dataHora"),
+            ticket.sobre(new MemMedia()).select("dataHora"),
             atual
         );
     }

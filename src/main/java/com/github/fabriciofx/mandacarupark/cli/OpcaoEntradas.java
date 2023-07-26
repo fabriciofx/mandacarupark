@@ -28,7 +28,7 @@ import com.github.fabriciofx.mandacarupark.Entradas;
 import com.github.fabriciofx.mandacarupark.Estacionamento;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.console.Console;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.media.MemMedia;
 import com.github.fabriciofx.mandacarupark.text.TextTable;
 
 public final class OpcaoEntradas implements Opcao {
@@ -58,14 +58,14 @@ public final class OpcaoEntradas implements Opcao {
 
     @Override
     public void run() {
-        final Entradas entradas = this.estacionamento.sobre(new MapMedia())
+        final Entradas entradas = this.estacionamento.sobre(new MemMedia())
             .select("entradas");
         final int linhas = entradas.pages(1).count();
         final String[][] tabela = new String[linhas][3];
         int linha = 0;
         for (int pag = 0; pag < entradas.pages(1).count(); pag++) {
             for (final Entrada entrada : entradas.pages(1).page(pag).content()) {
-                final Media media = entrada.sobre(new MapMedia());
+                final Media media = entrada.sobre(new MemMedia());
                 tabela[linha][0] = String.format(
                     " %s ",
                     entrada.id().numero()

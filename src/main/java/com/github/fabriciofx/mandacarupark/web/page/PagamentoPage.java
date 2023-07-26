@@ -30,7 +30,7 @@ import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.media.MemMedia;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import com.github.fabriciofx.mandacarupark.web.HttpPage;
 import org.takes.Request;
@@ -51,7 +51,7 @@ public final class PagamentoPage implements HttpPage {
     public Response act(final Request req) throws IOException {
         final RqFormSmart form = new RqFormSmart(req);
         final Id id = new Uuid(form.single("ticket"));
-        final Entradas entradas = this.estacionamento.sobre(new MapMedia())
+        final Entradas entradas = this.estacionamento.sobre(new MemMedia())
             .select("entradas");
         final List<Entrada> entrada = entradas.procura(id);
         if (entrada.isEmpty()) {

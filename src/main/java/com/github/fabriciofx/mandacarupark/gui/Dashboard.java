@@ -33,7 +33,7 @@ import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.ds.H2Memory;
 import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.media.MemMedia;
 import com.github.fabriciofx.mandacarupark.server.ServerH2;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -127,7 +127,7 @@ public final class Dashboard extends Application {
             final Entradas entradas = new EntradasSql(session);
             for (int pag = 0; pag < entradas.pages(1).count(); pag++) {
                 for (final Entrada entrada : entradas.pages(1).page(pag).content()) {
-                    final Media media = entrada.sobre(new MapMedia());
+                    final Media media = entrada.sobre(new MemMedia());
                     final Map<String, String> linha = new HashMap<>();
                     linha.put("id", entrada.id().toString());
                     linha.put("placa", media.select("placa").toString());

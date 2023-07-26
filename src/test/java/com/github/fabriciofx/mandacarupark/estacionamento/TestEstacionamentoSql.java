@@ -38,7 +38,7 @@ import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
 import com.github.fabriciofx.mandacarupark.entradas.EntradasSql;
 import com.github.fabriciofx.mandacarupark.id.UuidRandom;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.media.MemMedia;
 import com.github.fabriciofx.mandacarupark.pagamentos.PagamentosSql;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.regra.DomingoGratis;
@@ -98,7 +98,7 @@ public final class TestEstacionamentoSql {
             }
             Assert.assertEquals(
                 "ABC1234",
-                entrada.get(0).sobre(new MapMedia()).select("placa").toString()
+                entrada.get(0).sobre(new MemMedia()).select("placa").toString()
             );
         }
     }

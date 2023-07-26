@@ -31,7 +31,7 @@ public final class PrintStreamMedia implements Media {
     private final Media media;
 
     public PrintStreamMedia() {
-        this(System.out, new MapMedia());
+        this(System.out, new MemMedia());
     }
 
     public PrintStreamMedia(final PrintStream stream, final Media media) {

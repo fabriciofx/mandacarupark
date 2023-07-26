@@ -27,10 +27,10 @@ import com.github.fabriciofx.mandacarupark.Media;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class MapMedia implements Media {
+public final class MemMedia implements Media {
     private final Map<String, Object> items;
 
-    public MapMedia(
+    public MemMedia(
         final String key1,
         final Object value1,
         final String key2,
@@ -53,7 +53,7 @@ public final class MapMedia implements Media {
         final Object value10
     ) {
         this(
-            MapMedia.of(
+            MemMedia.of(
                 new MapEntryOf<>(key1, value1),
                 new MapEntryOf<>(key2, value2),
                 new MapEntryOf<>(key3, value3),
@@ -68,7 +68,7 @@ public final class MapMedia implements Media {
         );
     }
 
-    public MapMedia(
+    public MemMedia(
         final String key1,
         final Object value1,
         final String key2,
@@ -89,7 +89,7 @@ public final class MapMedia implements Media {
         final Object value9
     ) {
         this(
-            MapMedia.of(
+            MemMedia.of(
                 new MapEntryOf<>(key1, value1),
                 new MapEntryOf<>(key2, value2),
                 new MapEntryOf<>(key3, value3),
@@ -103,7 +103,7 @@ public final class MapMedia implements Media {
         );
     }
 
-    public MapMedia(
+    public MemMedia(
         final String key1,
         final Object value1,
         final String key2,
@@ -122,7 +122,7 @@ public final class MapMedia implements Media {
         final Object value8
     ) {
         this(
-            MapMedia.of(
+            MemMedia.of(
                 new MapEntryOf<>(key1, value1),
                 new MapEntryOf<>(key2, value2),
                 new MapEntryOf<>(key3, value3),
@@ -135,7 +135,7 @@ public final class MapMedia implements Media {
         );
     }
 
-    public MapMedia(
+    public MemMedia(
         final String key1,
         final Object value1,
         final String key2,
@@ -152,7 +152,7 @@ public final class MapMedia implements Media {
         final Object value7
     ) {
         this(
-            MapMedia.of(
+            MemMedia.of(
                 new MapEntryOf<>(key1, value1),
                 new MapEntryOf<>(key2, value2),
                 new MapEntryOf<>(key3, value3),
@@ -164,7 +164,7 @@ public final class MapMedia implements Media {
         );
     }
 
-    public MapMedia(
+    public MemMedia(
         final String key1,
         final Object value1,
         final String key2,
@@ -179,7 +179,7 @@ public final class MapMedia implements Media {
         final Object value6
     ) {
         this(
-            MapMedia.of(
+            MemMedia.of(
                 new MapEntryOf<>(key1, value1),
                 new MapEntryOf<>(key2, value2),
                 new MapEntryOf<>(key3, value3),
@@ -190,7 +190,7 @@ public final class MapMedia implements Media {
         );
     }
 
-    public MapMedia(
+    public MemMedia(
         final String key1,
         final Object value1,
         final String key2,
@@ -203,7 +203,7 @@ public final class MapMedia implements Media {
         final Object value5
     ) {
         this(
-            MapMedia.of(
+            MemMedia.of(
                 new MapEntryOf<>(key1, value1),
                 new MapEntryOf<>(key2, value2),
                 new MapEntryOf<>(key3, value3),
@@ -213,7 +213,7 @@ public final class MapMedia implements Media {
         );
     }
 
-    public MapMedia(
+    public MemMedia(
         final String key1,
         final Object value1,
         final String key2,
@@ -224,7 +224,7 @@ public final class MapMedia implements Media {
         final Object value4
     ) {
         this(
-            MapMedia.of(
+            MemMedia.of(
                 new MapEntryOf<>(key1, value1),
                 new MapEntryOf<>(key2, value2),
                 new MapEntryOf<>(key3, value3),
@@ -233,7 +233,7 @@ public final class MapMedia implements Media {
         );
     }
 
-    public MapMedia(
+    public MemMedia(
         final String key1,
         final Object value1,
         final String key2,
@@ -242,7 +242,7 @@ public final class MapMedia implements Media {
         final Object value3
     ) {
         this(
-            MapMedia.of(
+            MemMedia.of(
                 new MapEntryOf<>(key1, value1),
                 new MapEntryOf<>(key2, value2),
                 new MapEntryOf<>(key3, value3)
@@ -250,29 +250,29 @@ public final class MapMedia implements Media {
         );
     }
 
-    public MapMedia(
+    public MemMedia(
         final String key1,
         final Object value1,
         final String key2,
         final Object value2
     ) {
         this(
-            MapMedia.of(
+            MemMedia.of(
                 new MapEntryOf<>(key1, value1),
                 new MapEntryOf<>(key2, value2)
             )
         );
     }
 
-    public MapMedia(final String key1, final Object value1) {
-        this(MapMedia.of(new MapEntryOf<>(key1, value1)));
+    public MemMedia(final String key1, final Object value1) {
+        this(MemMedia.of(new MapEntryOf<>(key1, value1)));
     }
 
-    public MapMedia() {
+    public MemMedia() {
         this(new HashMap<>());
     }
 
-    public MapMedia(final Map<String, Object> items) {
+    public MemMedia(final Map<String, Object> items) {
         this.items = items;
     }
 
@@ -293,9 +293,9 @@ public final class MapMedia implements Media {
     }
 
     @Override
-    public MapMedia with(final String key, final Object value) {
+    public MemMedia with(final String key, final Object value) {
         this.items.put(key, value);
-        return new MapMedia(this.items);
+        return new MemMedia(this.items);
     }
 
     @Override

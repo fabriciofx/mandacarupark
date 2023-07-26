@@ -38,7 +38,7 @@ import com.github.fabriciofx.mandacarupark.Saidas;
 import com.github.fabriciofx.mandacarupark.db.pagination.Pages;
 import com.github.fabriciofx.mandacarupark.db.pagination.pages.PagesFake;
 import com.github.fabriciofx.mandacarupark.locacao.LocacaoFake;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.media.MemMedia;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,9 +49,9 @@ public final class LocacoesFake implements Locacoes {
 
     public LocacoesFake(final Estacionamento estacionamento) {
         this(
-            estacionamento.sobre(new MapMedia()).select("entradas"),
-            estacionamento.sobre(new MapMedia()).select("saidas"),
-            estacionamento.sobre(new MapMedia()).select("pagamentos")
+            estacionamento.sobre(new MemMedia()).select("entradas"),
+            estacionamento.sobre(new MemMedia()).select("saidas"),
+            estacionamento.sobre(new MemMedia()).select("pagamentos")
         );
     }
 
@@ -69,7 +69,7 @@ public final class LocacoesFake implements Locacoes {
     public Pages<Locacao> pages(int limit, final Periodo periodo) {
         final List<Locacao> itens = new ArrayList<>();
         for (final Entrada entrada : this.entradas.pages(30).page(0).content()) {
-            final Media media = entrada.sobre(new MapMedia());
+            final Media media = entrada.sobre(new MemMedia());
             final DataHora dataHora = media.select("dataHora");
             if (periodo.contem(dataHora)) {
                 final List<Saida> lista = this.saidas.procura(entrada.id());
@@ -83,8 +83,8 @@ public final class LocacoesFake implements Locacoes {
                             entrada.id(),
                             media.select("placa"),
                             media.select("dataHora"),
-                            saida.sobre(new MapMedia()).select("dataHora"),
-                            pagamento.get(0).sobre(new MapMedia())
+                            saida.sobre(new MemMedia()).select("dataHora"),
+                            pagamento.get(0).sobre(new MemMedia())
                                 .select("valor")
                         )
                     );

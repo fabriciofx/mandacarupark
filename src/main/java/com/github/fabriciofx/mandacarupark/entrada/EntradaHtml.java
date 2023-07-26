@@ -29,7 +29,7 @@ import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.media.MemMedia;
 
 public final class EntradaHtml implements Entrada, Html {
     private final Entrada origin;
@@ -57,7 +57,7 @@ public final class EntradaHtml implements Entrada, Html {
 
     @Override
     public String html() {
-        final Media media = this.origin.sobre(new MapMedia());
+        final Media media = this.origin.sobre(new MemMedia());
         return this.template.with("id", media.select("id"))
             .with("placa", media.select("placa"))
             .with("dataHora", media.select("dataHora"))

@@ -5,7 +5,7 @@ import com.github.fabriciofx.mandacarupark.Id;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Pagamento;
 import com.github.fabriciofx.mandacarupark.Template;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.media.MemMedia;
 
 public final class PagamentoHtml implements Pagamento, Html {
     private final Pagamento origin;
@@ -28,7 +28,7 @@ public final class PagamentoHtml implements Pagamento, Html {
 
     @Override
     public String html() {
-        final Media media = this.sobre(new MapMedia());
+        final Media media = this.sobre(new MemMedia());
         return this.template.with("id", media.select("id"))
             .with("dataHora", media.select("dataHora"))
             .with("valor", media.select("valor"))

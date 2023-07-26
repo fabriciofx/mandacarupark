@@ -27,7 +27,7 @@ import com.github.fabriciofx.mandacarupark.Locacao;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Html;
 import com.github.fabriciofx.mandacarupark.Template;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.media.MemMedia;
 
 public final class LocacaoHtml implements Locacao, Html {
     private final Locacao origin;
@@ -45,7 +45,7 @@ public final class LocacaoHtml implements Locacao, Html {
 
     @Override
     public String html() {
-        final Media media = this.sobre(new MapMedia());
+        final Media media = this.sobre(new MemMedia());
         return this.template.with("placa", media.select("placa"))
             .with("entrada", media.select("entrada"))
             .with("saida", media.select("saida"))

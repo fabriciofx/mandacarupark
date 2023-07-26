@@ -30,7 +30,7 @@ import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Periodo;
 import com.github.fabriciofx.mandacarupark.Relatorio;
 import com.github.fabriciofx.mandacarupark.dinheiro.DinheiroOf;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.media.MemMedia;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 
@@ -48,7 +48,7 @@ public final class RelatorioXml implements Relatorio {
         final Directives directives = new Directives().add("locacoes");
         Dinheiro total = new DinheiroOf("0.00");
         for (final Locacao locacao : this.locacoes.pages(30, this.periodo).page(0).content()) {
-            final Media media = locacao.sobre(new MapMedia());
+            final Media media = locacao.sobre(new MemMedia());
             final Dinheiro valor = media.select("valor");
             total = new DinheiroOf(total.quantia().add(valor.quantia()));
             directives.add("locacao")

@@ -32,7 +32,7 @@ import com.github.fabriciofx.mandacarupark.Ticket;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
 import com.github.fabriciofx.mandacarupark.io.ResourceAsStream;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.media.MemMedia;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
@@ -57,7 +57,7 @@ public final class SaidaPage implements HttpPage {
         final RqFormSmart form = new RqFormSmart(req);
         final Placa placa = new PlacaOf(form.single("placa"));
         final Id id = new Uuid(form.single("ticket"));
-        final Entradas entradas = this.estacionamento.sobre(new MapMedia())
+        final Entradas entradas = this.estacionamento.sobre(new MemMedia())
             .select("entradas");
         final List<Entrada> entrada = entradas.procura(id);
         if (entrada.isEmpty()) {

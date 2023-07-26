@@ -30,7 +30,7 @@ import com.github.fabriciofx.mandacarupark.Template;
 import com.github.fabriciofx.mandacarupark.datahora.DataHoraOf;
 import com.github.fabriciofx.mandacarupark.io.ResourceAsStream;
 import com.github.fabriciofx.mandacarupark.locacoes.LocacoesHtml;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.media.MemMedia;
 import com.github.fabriciofx.mandacarupark.periodo.PeriodoOf;
 import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
 import com.github.fabriciofx.mandacarupark.web.HttpPage;
@@ -49,7 +49,7 @@ public final class LocacoesPage implements HttpPage {
 
     @Override
     public Response act(final Request req) throws IOException {
-        final Locacoes locacoes = this.estacionamento.sobre(new MapMedia())
+        final Locacoes locacoes = this.estacionamento.sobre(new MemMedia())
             .select("locacoes");
         final String inicio = new RqHref.Smart(req).single(
             "inicio",

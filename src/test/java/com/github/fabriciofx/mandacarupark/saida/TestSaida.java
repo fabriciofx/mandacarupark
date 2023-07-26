@@ -32,7 +32,7 @@ import com.github.fabriciofx.mandacarupark.db.Session;
 import com.github.fabriciofx.mandacarupark.db.ds.H2Memory;
 import com.github.fabriciofx.mandacarupark.db.session.NoAuth;
 import com.github.fabriciofx.mandacarupark.id.Uuid;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.media.MemMedia;
 import com.github.fabriciofx.mandacarupark.placa.PlacaOf;
 import com.github.fabriciofx.mandacarupark.server.ServerH2;
 import com.github.fabriciofx.mandacarupark.template.HtmlTemplate;
@@ -51,15 +51,15 @@ public final class TestSaida {
         );
         Assert.assertEquals(
             "8c878e6f-ee13-4a37-a208-7510c2638944",
-            saida.sobre(new MapMedia()).select("id").toString()
+            saida.sobre(new MemMedia()).select("id").toString()
         );
         Assert.assertEquals(
             "ABC1234",
-            saida.sobre(new MapMedia()).select("placa").toString()
+            saida.sobre(new MemMedia()).select("placa").toString()
         );
         Assert.assertEquals(
             "21/07/2022 17:11:12",
-            saida.sobre(new MapMedia()).select("dataHora").toString()
+            saida.sobre(new MemMedia()).select("dataHora").toString()
         );
     }
 
@@ -106,15 +106,15 @@ public final class TestSaida {
             );
             Assert.assertEquals(
                 "8c878e6f-ee13-4a37-a208-7510c2638944",
-                saida.sobre(new MapMedia()).select("id").toString()
+                saida.sobre(new MemMedia()).select("id").toString()
             );
             Assert.assertEquals(
                 "ABC1234",
-                saida.sobre(new MapMedia()).select("placa").toString()
+                saida.sobre(new MemMedia()).select("placa").toString()
             );
             Assert.assertEquals(
                 "21/07/2022 17:11:12",
-                saida.sobre(new MapMedia()).select("dataHora").toString()
+                saida.sobre(new MemMedia()).select("dataHora").toString()
             );
         }
     }

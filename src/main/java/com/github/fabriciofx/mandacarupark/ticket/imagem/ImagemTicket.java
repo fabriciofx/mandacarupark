@@ -27,7 +27,7 @@ import com.github.fabriciofx.mandacarupark.DataHora;
 import com.github.fabriciofx.mandacarupark.Media;
 import com.github.fabriciofx.mandacarupark.Placa;
 import com.github.fabriciofx.mandacarupark.Ticket;
-import com.github.fabriciofx.mandacarupark.media.MapMedia;
+import com.github.fabriciofx.mandacarupark.media.MemMedia;
 import com.github.fabriciofx.mandacarupark.text.Sprintf;
 import com.github.fabriciofx.mandacarupark.io.ResourceAsStream;
 import java.awt.Color;
@@ -47,7 +47,7 @@ public final class ImagemTicket implements Imagem {
 
     @Override
     public BufferedImage imagem() {
-        final Media media = this.ticket.sobre(new MapMedia());
+        final Media media = this.ticket.sobre(new MemMedia());
         final Placa placa = media.select("placa");
         final DataHora dataHora = media.select("dataHora");
         final Font roboto7;
