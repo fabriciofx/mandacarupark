@@ -39,7 +39,7 @@ public final class Chrome implements WebDriver {
     private final Supplier<WebDriver> browser;
 
     public Chrome() {
-        this.browser = new Cached<>(
+        this.browser = new Sticky<>(
             () -> {
                 final ChromeDriverService service = new ChromeDriverService
                     .Builder()
