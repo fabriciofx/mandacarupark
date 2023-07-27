@@ -24,7 +24,7 @@
 package com.github.fabriciofx.mandacarupark.datahora;
 
 import com.github.fabriciofx.mandacarupark.DataHora;
-import com.github.fabriciofx.mandacarupark.Sticky;
+import com.github.fabriciofx.mandacarupark.supplier.Sticky;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.concurrent.ThreadLocalRandom;

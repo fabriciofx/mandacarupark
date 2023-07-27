@@ -21,30 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.github.fabriciofx.mandacarupark;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Supplier;
-
-public final class Sticky<T> implements Supplier<T> {
-    private final Supplier<T> origin;
-    private final List<T> cache;
-
-    public Sticky(final Supplier<T> supplier) {
-        this(supplier, new ArrayList<>(0));
-    }
-
-    public Sticky(final Supplier<T> supplier, final List<T> cache) {
-        this.origin = supplier;
-        this.cache = cache;
-    }
-
-    @Override
-    public T get() {
-        if (this.cache.isEmpty()) {
-            this.cache.add(this.origin.get());
-        }
-        return this.cache.get(0);
-    }
-}
+/**
+ * Supplier.
+ *
+ * @since 0.0.1
+ */
+package com.github.fabriciofx.mandacarupark.supplier;

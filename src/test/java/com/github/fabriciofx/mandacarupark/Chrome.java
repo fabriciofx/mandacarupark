@@ -23,6 +23,7 @@
  */
 package com.github.fabriciofx.mandacarupark;
 
+import com.github.fabriciofx.mandacarupark.supplier.Sticky;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
