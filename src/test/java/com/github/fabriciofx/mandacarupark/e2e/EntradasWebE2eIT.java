@@ -102,7 +102,7 @@ public final class EntradasWebE2eIT {
                 sb.append(element.getText());
             }
             Assert.assertEquals(
-                "00eb2ff4-ac01-4fbe-bf08-b9f75c7216d8 NPT5913 02/10/2022 22:48:57",
+                "00eb2ff4-ac01-4fbe-bf08-b9f75c7216d8 NPT5913 02/10/2022 22:48:57 1017ec42-f8bf-4f3b-ae48-3791cdca38be IOP1234 02/10/2022 22:54:04 0382a94e-8e42-4904-818f-e2b9041873af FAB1234 02/10/2022 22:58:23",
                 sb.toString()
             );
             driver.quit();
