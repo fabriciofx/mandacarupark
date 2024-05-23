@@ -211,7 +211,7 @@
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-fxml</artifactId>
-      <version>23-ea+3</version>
+      <version>23-ea+18</version>
       <classifier>mac-aarch64</classifier>
     </dependency>
     <dependency>
