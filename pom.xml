@@ -217,7 +217,7 @@
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-graphics</artifactId>
-      <version>25-ea+8</version>
+      <version>25-ea+10</version>
       <classifier>mac-aarch64</classifier>
     </dependency>
     <dependency>
