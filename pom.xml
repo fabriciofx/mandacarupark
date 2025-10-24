@@ -206,7 +206,7 @@
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
-      <version>26-ea+12</version>
+      <version>26-ea+13</version>
       <classifier>mac-aarch64</classifier>
     </dependency>
     <dependency>
