@@ -36,7 +36,7 @@ jobs:
         os: [ubuntu-24.04, windows-2022]
         java: [11, 17, 23]
     steps:
-      - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493
+      - uses: actions/checkout@71cf2267d89c5cb81562390fa70a37fa40b1305e
       - uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
