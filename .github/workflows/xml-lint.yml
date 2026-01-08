@@ -32,5 +32,5 @@ jobs:
   xml-lint:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+      - uses: actions/checkout@064fe7f3312418007dea2b49a19844a9ee378f49
       - uses: g4s8/xcop-action@master
