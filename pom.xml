@@ -22,9 +22,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.fabriciofx</groupId>
   <artifactId>mandacarupark</artifactId>
@@ -88,9 +86,7 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.14.1</version>
           <configuration>
-            <source>23</source>
-            <target>23</target>
-            <release>23</release>
+            <release>17</release>
             <compilerArgs>
               <arg>-Xlint:all</arg>
               <arg>-Xlint:-processing</arg>
@@ -206,19 +202,19 @@
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
-      <version>27-ea+1</version>
+      <version>17.0.18</version>
       <classifier>mac-aarch64</classifier>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-fxml</artifactId>
-      <version>27-ea+1</version>
+      <version>17.0.18</version>
       <classifier>mac-aarch64</classifier>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-graphics</artifactId>
-      <version>27-ea+1</version>
+      <version>17.0.18</version>
       <classifier>mac-aarch64</classifier>
     </dependency>
     <dependency>
